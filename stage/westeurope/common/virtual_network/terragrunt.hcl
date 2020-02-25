@@ -1,9 +1,5 @@
 dependency "resource_group_common" {
   config_path = "../resource_group"
-
-  mock_outputs = {
-    resource_group_name = "fixture"
-  }
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -13,7 +9,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_virtual_network?ref=v0.0.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_virtual_network?ref=v0.0.16"
 }
 
 inputs = {
