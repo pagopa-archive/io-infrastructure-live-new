@@ -6,8 +6,8 @@ dependency "resource_group_siem" {
   }
 }
 
-dependency "subnets_siem" {
-  config_path = "../../siem/subnets"
+dependency "subnet_siem" {
+  config_path = "../subnet"
 
   mock_outputs = {
     reosurce_name       = "fixture"
@@ -29,7 +29,7 @@ inputs = {
   name                  = "vlog"
 
   size                  = "Standard_D4_v2"
-  subnet_id            =  dependency.subnets_siem.outputs.id
+  subnet_id            =  dependency.subnet_siem.outputs.id
   computer_name         = "Log Collector"
   admin_username        = "adminuser"
 
@@ -67,8 +67,3 @@ inputs = {
     destination_address_prefixes  = ["0.0.0.0/0"]
   }]
 }
-            
-            
-            
-            
-            
