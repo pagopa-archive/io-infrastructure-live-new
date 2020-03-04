@@ -29,7 +29,8 @@ inputs = {
   name                  = "vlog"
 
   size                  = "Standard_D4_v2"
-  subnet_id            =  dependency.subnet_siem.outputs.id
+  #subnet_id            =  dependency.subnet_siem.outputs.id
+  subnet_id             = "/subscriptions/ec285037-c673-4f58-b594-d7c480da4e8b/resourceGroups/io-s-rg-siem/providers/Microsoft.Network/virtualNetworks/io-s-vnet-siem/subnets/siem"
   computer_name         = "Log Collector"
   admin_username        = "adminuser"
 

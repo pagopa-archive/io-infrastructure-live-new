@@ -23,9 +23,14 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v0.0.22"
 }
 
+# Important !! 
+# It is mandatory that the associated subnet is named GatewaySubnet. 
+# Therefore, each virtual network can contain at most a single Virtual Network Gateway.
+# https://www.terraform.io/docs/providers/azurerm/r/virtual_network_gateway.html
+
 inputs = {
-  name                  = "siem"
+  name                  = "GatewaySubnet"
   virtual_network_name  = dependency.virtual_network_siem.outputs.resource_name
   resource_group_name   = dependency.resource_group_siem.outputs.resource_name
-  address_prefix        = "10.0.1.0/24"
+  address_prefix        = "10.0.128.0/24"
 }
