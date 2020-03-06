@@ -7,10 +7,6 @@ dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
 
-dependency "dns_zone" {
-  config_path = "../../../common/dns_zone"
-}
-
 dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
@@ -61,13 +57,5 @@ inputs = {
     name                  = dependency.virtual_network.outputs.resource_name
     resource_group_name   = dependency.virtual_network.outputs.resource_group_name
     subnet_address_prefix = "10.0.100.0/24"
-  }
-
-  custom_domain = {
-    name                     = "app-backend"
-    zone_name                = dependency.dns_zone.outputs.name
-    zone_resource_group_name = dependency.dns_zone.outputs.resource_group_name
-    key_vault_id             = dependency.key_vault.outputs.id
-    certificate_name         = "STAGE-IO-ITALIA-IT"
   }
 }
