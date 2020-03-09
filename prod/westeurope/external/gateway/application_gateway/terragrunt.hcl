@@ -30,6 +30,10 @@ dependency "app_service_appbackend" {
   config_path = "../../../internal/appbackend/app_service"
 }
 
+dependency "api_management" {
+  config_path = "../../../internal/api/apim/api_management"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -101,6 +105,38 @@ inputs = {
         cookie_based_affinity = "Disabled"
         request_timeout       = 180
         host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
+      }
+    },
+    {
+      name          = "apim"
+      a_record_name = "api"
+
+      http_listener = {
+        protocol  = "Https"
+        host_name = "api.prod.io.italia.it"
+      }
+
+      backend_address_pool = {
+        ip_addresses = dependency.api_management.outputs.private_ip_addresses
+        fqdns        = null
+      }
+
+      probe = {
+        host                = "api.prod.io.italia.it"
+        protocol            = "Http"
+        path                = "/status-0123456789abcdef"
+        interval            = 30
+        timeout             = 120
+        unhealthy_threshold = 8
+      }
+
+      backend_http_settings = {
+        protocol              = "Http"
+        port                  = 80
+        path                  = "/"
+        cookie_based_affinity = "Disabled"
+        request_timeout       = 180
+        host_name             = null
       }
     }
   ]
