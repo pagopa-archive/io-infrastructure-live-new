@@ -7,12 +7,16 @@ dependency "resource_group_siem" {
 }
 
 dependency "subnet_siem" {
-  config_path = "../subnet"
+  config_path = "../subnet_siem"
 
   mock_outputs = {
     reosurce_name       = "fixture"
     resource_group_name = "fixture"
   }
+}
+
+dependency "key_vault_common" {
+  config_path = "../../common/key_vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -21,7 +25,8 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v0.0.22"
+  #source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v0.0.22"
+  source  = "../../../../../io-infrastructure-modules-new/azurerm_linux_virtual_machine"
 }
 
 inputs = {
@@ -29,16 +34,15 @@ inputs = {
   name                  = "vlog"
 
   size                  = "Standard_D4_v2"
-  #subnet_id            =  dependency.subnet_siem.outputs.id
-  subnet_id             = "/subscriptions/ec285037-c673-4f58-b594-d7c480da4e8b/resourceGroups/io-s-rg-siem/providers/Microsoft.Network/virtualNetworks/io-s-vnet-siem/subnets/siem"
+  subnet_id            =  dependency.subnet_siem.outputs.id
   computer_name         = "Log Collector"
   admin_username        = "adminuser"
 
   source_image_reference = [{
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
+    publisher = "rsa-security-llc"
+    offer     = "rsa-nw-suite-11-3"
+    sku       = "rsa-nw-suite-11-3"
+    version   = "11.3.0"
   }]
 
   os_disk = {
@@ -50,10 +54,14 @@ inputs = {
     write_accelerator_enabled  = false 
   }
 
+  /*
   admin_ssh_key = [{
     username   = "adminuser"
     public_key = file("./id_rsa.pub")
   }]
+  */
+
+  key_vault_id    = dependency.key_vault_common.outputs.id
 
   security_rules = [{
     name                          = "SSH"
@@ -62,9 +70,17 @@ inputs = {
     direction                     = "Inbound"
     access                        = "Allow"
     protocol                      = "Tcp"
-    source_port_ranges            = ["0-65535"]
+    source_port_ranges            = ["*"]
     destination_port_ranges       = [22]
     source_address_prefixes       = ["0.0.0.0/0"]
     destination_address_prefixes  = ["0.0.0.0/0"]
   }]
+
+  plans = [{
+    name      = "rsa-nw-suite-11-3",
+    product   = "rsa-nw-suite-11-3",
+    publisher = "rsa-security-llc"
+    plan      = "hourly"
+  }]
+
 }
