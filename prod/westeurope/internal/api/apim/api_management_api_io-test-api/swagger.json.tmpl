@@ -1,0 +1,39 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "IO TEST API",
+    "version": "1.0.0",
+    "description": "TEST API for IO platform."
+  },
+  "host": "${host}",
+  "basePath": "/test",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/echo-request": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Request"
+          }
+        },
+        "operationId": "EchoRequest",
+        "summary": "EchoRequest",
+        "description": "Print the request"
+      }
+    },
+    "/print-envs": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Environment variables"
+          }
+        },
+        "operationId": "PrintEnvs",
+        "summary": "PrintEnvs",
+        "description": "Print environment variables"
+      }
+    }
+  }
+}

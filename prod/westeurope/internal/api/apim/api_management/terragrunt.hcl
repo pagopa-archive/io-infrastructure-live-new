@@ -1,3 +1,7 @@
+dependency "functions_test" {
+  config_path = "../../functions_test/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -22,7 +26,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v0.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v0.0.38"
 }
 
 inputs = {
@@ -40,6 +44,8 @@ inputs = {
   }
 
   named_values_map = {
+    io-functions-test-url = "https://${dependency.functions_test.outputs.default_hostname}"
+    io-functions-test-key = dependency.functions_test.outputs.default_key
   }
 
   custom_domains = {
