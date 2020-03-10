@@ -2,6 +2,10 @@ dependency "functions_test" {
   config_path = "../../functions_test/function_app"
 }
 
+dependency "functions_services" {
+  config_path = "../../functions_services/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -46,6 +50,9 @@ inputs = {
   named_values_map = {
     io-functions-test-url = "https://${dependency.functions_test.outputs.default_hostname}"
     io-functions-test-key = dependency.functions_test.outputs.default_key
+
+    io-functions-services-url = "https://${dependency.functions_services.outputs.default_hostname}"
+    io-functions-services-key = dependency.functions_services.outputs.default_key
   }
 
   custom_domains = {
