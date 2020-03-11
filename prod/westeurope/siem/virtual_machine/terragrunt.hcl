@@ -31,7 +31,6 @@ terraform {
 inputs = {
   resource_group_name   = dependency.resource_group_siem.outputs.resource_name
   name                  = "vlog"
-
   size                  = "Standard_D4_v2"
   subnet_id            =  dependency.subnet_siem.outputs.id
   computer_name         = "Log Collector"
@@ -58,9 +57,6 @@ inputs = {
     public_key = file("./mypubkey.pub")
   }]
   
-  # This has been used for staging 
-  #key_vault_id    = dependency.key_vault_common.outputs.id
-
   security_rules = [{
     name                          = "SSH"
     description                   = "Inbound ssh"
