@@ -29,12 +29,11 @@ terraform {
 }
 
 inputs = {
-  resource_group_name           = dependency.resource_group_siem.outputs.resource_name
-  name                          = "siem"
-  environment_short             = "s"
-  public_ip_allocation_method   = "Dynamic"
-  public_ip_sku                 = "Basic"
-  subnet_id                     = dependency.subnet_vngw.outputs.id
+  name                        = "siem"
+  public_ip_allocation_method = "Dynamic"
+  public_ip_sku               = "Basic"
+  subnet_id                   = dependency.subnet_vngw.outputs.id
+  resource_group_name         = dependency.resource_group_siem.outputs.resource_name
 
   ip_configurations = [{
     name                          = "vnetGatewayConfig"

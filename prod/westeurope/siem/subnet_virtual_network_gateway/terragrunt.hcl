@@ -29,8 +29,8 @@ terraform {
 # https://www.terraform.io/docs/providers/azurerm/r/virtual_network_gateway.html
 
 inputs = {
-  name                  = "GatewaySubnet"
-  virtual_network_name  = dependency.virtual_network_siem.outputs.resource_name
-  resource_group_name   = dependency.resource_group_siem.outputs.resource_name
-  address_prefix        = "10.10.1.0/24"
+  name                 = "GatewaySubnet"
+  virtual_network_name = dependency.virtual_network_siem.outputs.resource_name
+  resource_group_name  = dependency.resource_group_siem.outputs.resource_name
+  address_prefix       = "10.10.1.0/24"
 }
