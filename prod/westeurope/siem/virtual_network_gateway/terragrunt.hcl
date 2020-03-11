@@ -45,14 +45,12 @@ inputs = {
   vpn_type  = "RouteBased"
 
   vpn_client_configurations = [{
-    address_space = ["10.2.0.0/24"]
-    root_certificates = []
+    address_space         = ["10.2.0.0/24"]
+    root_certificates     = []
     radius_server_address = null
     radius_server_secret  = null
     vpn_client_protocols  = ["IkeV2", "OpenVPN"]
-    
-    revoked_certificates = []
-    
+    revoked_certificates  = []
   }]
 
   # Local Network Gateway
