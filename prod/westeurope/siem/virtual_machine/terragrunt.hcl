@@ -55,7 +55,7 @@ inputs = {
 
   admin_ssh_key = [{
     username   = "adminuser"
-    public_key = file("./id_rsa.pub")
+    public_key = file("./mypubkey.pub")
   }]
   
   # This has been used for staging 
