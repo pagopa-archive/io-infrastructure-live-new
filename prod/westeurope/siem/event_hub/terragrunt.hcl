@@ -20,5 +20,13 @@ inputs = {
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
   partition_count     = 4
   message_retention   = 5
-  sku                 = "Standard"           
+  sku                 = "Standard"     
+
+  eventhub_authorization_rules = [
+    {
+      listen  = true
+      send    = false 
+      manage  = false
+    }
+  ]     
 }
