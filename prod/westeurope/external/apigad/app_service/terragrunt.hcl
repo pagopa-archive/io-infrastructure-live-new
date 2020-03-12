@@ -35,8 +35,7 @@ inputs = {
   }
 
   app_enabled         = true
-  // TODO: Enable client certificate
-  client_cert_enabled = false
+  client_cert_enabled = true
   https_only          = true
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -44,17 +43,15 @@ inputs = {
   app_settings = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
-    // TODO: Enable settings
-    // GAD_PROXY_CHANGE_ORIGIN      = "false"
+    GAD_PROXY_CHANGE_ORIGIN      = "true"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      // TODO: Enable settings
-      // GAD_CA_CERTIFICATE_BASE64              = "apigad-GAD-CA-CERTIFICATE-BASE64"
-      // GAD_CLIENT_CERTIFICATE_VERIFIED_HEADER = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
-      // GAD_PROXY_TARGET                       = "apigad-GAD-PROXY-TARGET"
+      GAD_CA_CERTIFICATE_BASE64              = "apigad-GAD-CA-CERTIFICATE-BASE64"
+      GAD_CLIENT_CERTIFICATE_VERIFIED_HEADER = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
+      GAD_PROXY_TARGET                       = "apigad-GAD-PROXY-TARGET"
     }
   }
 

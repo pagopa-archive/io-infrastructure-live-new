@@ -1,6 +1,13 @@
 <policies>
     <inbound>
         <base />
+        <choose>
+            <when condition="@(context.User.Groups.Any(g => g.Name == "ApiAuthenticationClientCertificate") && !(context.Request.Headers.GetValueOrDefault("{{apigad-gad-client-certificate-verified-header}}", "false") == "true"))">
+                <return-response>
+                    <set-status code="403" reason="Invalid client certificate" />
+                </return-response>
+            </when>
+        </choose>
         <set-backend-service id="apim-generated-policy" base-url="{{io-functions-services-url}}/api/v1" />
         <set-header name="x-functions-key" exists-action="override">
             <value>{{io-functions-services-key}}</value>
@@ -34,7 +41,6 @@
                 <header>*</header>
             </expose-headers>
         </cors>
-
     </inbound>
     <outbound>
         <base />
