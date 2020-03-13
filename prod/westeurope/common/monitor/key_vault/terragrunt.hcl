@@ -38,5 +38,5 @@ inputs = {
       days    = 5
       enabled = true
     }
-  }] 
+  }]
 }

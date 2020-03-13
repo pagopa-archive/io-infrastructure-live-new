@@ -1,5 +1,5 @@
-dependency "vnet" {
-  config_path = "../../virtual_network"
+dependency "cdn_profile" {
+  config_path = "../../cdn/cdn_profile"
 }
 
 dependency "log_analytics_workspace" {
@@ -18,25 +18,16 @@ terraform {
 
 inputs = {
 
-  name                       = "vnet"
-  target_resource_id         = dependency.vnet.outputs.id
+  name                       = "cdnprofile"
+  target_resource_id         = dependency.cdn_profile.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  
+
   logs = [{
-    category = "VMProtectionAlerts"
+    category = "AzureCdnAccessLog"
     enabled  = true
     retention_policy = {
       days    = 5
       enabled = true
     }
   }]
-
-  metrics = [{
-    category = "AllMetrics"
-    enabled  = true
-    retention_policy = {
-      days    = 5
-      enabled = true
-    }
-  }] 
 }

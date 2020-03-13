@@ -1,5 +1,5 @@
-dependency "cdn_endpoint_assets" {
-  config_path = "../../cdn/cdn_endpoint_assets"
+dependency "redis_cache" {
+  config_path = "../../redis/redis_cache"
 }
 
 dependency "log_analytics_workspace" {
@@ -18,16 +18,16 @@ terraform {
 
 inputs = {
 
-  name                       = "cdnendpoint-assets"
-  target_resource_id         = dependency.cdn_endpoint_assets.outputs.id
+  name                       = "redis"
+  target_resource_id         = dependency.redis_cache.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  
-  logs = [{
-    category = "CoreAnalytics"
+
+  metrics = [{
+    category = "AllMetrics"
     enabled  = true
     retention_policy = {
       days    = 5
       enabled = true
     }
-  }] 
+  }]
 }
