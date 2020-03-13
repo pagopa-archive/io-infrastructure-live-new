@@ -77,8 +77,10 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "https://${dependency.functions_app.outputs.default_hostname}"
+    API_URL       = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
     API_KEY       = dependency.functions_app.outputs.default_key
+
+    // EXPOSED API
     API_BASE_PATH = "/api/v1"
 
     // REDIS
