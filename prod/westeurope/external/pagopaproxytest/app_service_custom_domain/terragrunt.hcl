@@ -31,8 +31,8 @@ inputs = {
 
   custom_domain = {
     name                     = "pagopaproxy-test"
-    zone_name                = dependency.dns_zone.outputs.name
-    zone_resource_group_name = dependency.dns_zone.outputs.resource_group_name
+    zone_name                = "io.italia.it"
+    zone_resource_group_name = "io-infra-rg"
     certificate_thumbprint   = dependency.app_service_certificate.outputs.thumbprint
   }
 

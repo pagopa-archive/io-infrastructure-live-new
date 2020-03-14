@@ -67,21 +67,21 @@ inputs = {
   frontend_port = 443
 
   custom_domains = {
-    zone_name                = dependency.dns_zone.outputs.name
-    zone_resource_group_name = dependency.dns_zone.outputs.resource_group_name
+    zone_name                = "io.italia.it"
+    zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "prod-io-italia-it"
+    certificate_name         = "io-italia-it"
   }
 
   services = [
     {
       name          = "appbackend"
-      a_record_name = "appbackend"
+      a_record_name = "app-backend"
 
       http_listener = {
         protocol  = "Https"
-        host_name = "appbackend.prod.io.italia.it"
+        host_name = "app-backend.io.italia.it"
       }
 
       backend_address_pool = {
@@ -113,7 +113,7 @@ inputs = {
 
       http_listener = {
         protocol  = "Https"
-        host_name = "api.prod.io.italia.it"
+        host_name = "api.io.italia.it"
       }
 
       backend_address_pool = {
@@ -122,7 +122,7 @@ inputs = {
       }
 
       probe = {
-        host                = "api.prod.io.italia.it"
+        host                = "api.io.italia.it"
         protocol            = "Http"
         path                = "/status-0123456789abcdef"
         interval            = 30

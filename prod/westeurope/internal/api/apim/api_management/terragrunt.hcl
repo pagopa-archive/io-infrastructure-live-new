@@ -64,15 +64,11 @@ inputs = {
 
   custom_domains = {
     key_vault_id     = dependency.key_vault.outputs.id
-    certificate_name = "prod-io-italia-it"
+    certificate_name = "io-italia-it"
     domains = [
       {
-        name    = "api.prod.io.italia.it"
+        name    = "api.io.italia.it"
         default = true
-      },
-      {
-        name    = "api-gad.prod.io.italia.it"
-        default = false
       }
     ]
   }
