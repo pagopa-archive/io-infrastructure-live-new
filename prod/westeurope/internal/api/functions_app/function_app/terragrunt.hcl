@@ -59,6 +59,7 @@ inputs = {
 
   app_settings = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
+    WEBSITE_RUN_FROM_PACKAGE = "1"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -71,7 +72,7 @@ inputs = {
     MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     // TODO: Change the urls
     FUNCTIONS_PUBLIC_URL = "https://localhost"
-    PUBLIC_API_URL       = "https://api.prod.io.italia.it/"
+    PUBLIC_API_URL       = "https://api.io.italia.it/"
     PUBLIC_API_KEY       = "fakekey"
   }
 
