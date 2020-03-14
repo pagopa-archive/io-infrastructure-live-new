@@ -70,7 +70,7 @@ inputs = {
     IDP_METADATA_REFRESH_INTERVAL_SECONDS  = "864000" # 10 days
 
     // CIE
-    CIE_METADATA_URL = "https://idserver.servizicie.interno.gov.it:8443/idp/shibboleth"
+    CIE_METADATA_URL = "https://idserver.servizicie.interno.gov.it:443/idp/shibboleth"
 
     // AUTHENTICATION
     AUTHENTICATION_BASE_PATH  = ""
