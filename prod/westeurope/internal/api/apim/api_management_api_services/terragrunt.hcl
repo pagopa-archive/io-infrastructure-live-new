@@ -2,8 +2,8 @@ dependency "api_management" {
   config_path = "../api_management"
 }
 
-dependency "api_management_product_io-api" {
-  config_path = "../api_management_product_io-api"
+dependency "api_management_product_io-services-api" {
+  config_path = "../api_management_product_io-services-api"
 }
 
 # Internal
@@ -34,6 +34,6 @@ inputs = {
   policy_xml            = file("policy.xml")
 
   product_ids = [
-    dependency.api_management_product_io-api.outputs.product_id
+    dependency.api_management_product_io-services-api.outputs.product_id
   ]
 }
