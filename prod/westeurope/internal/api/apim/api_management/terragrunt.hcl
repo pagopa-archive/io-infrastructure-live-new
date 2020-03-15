@@ -48,17 +48,16 @@ inputs = {
   }
 
   named_values_map = {
-    io-functions-test-url = "https://${dependency.functions_test.outputs.default_hostname}"
-    io-functions-test-key = dependency.functions_test.outputs.default_key
-
+    io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
     io-functions-services-url = "https://${dependency.functions_services.outputs.default_hostname}"
-    io-functions-services-key = dependency.functions_services.outputs.default_key
   }
 
   named_values_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       apigad-gad-client-certificate-verified-header = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
+      io-functions-test-key                         = "functest-KEY-APIM"
+      io-functions-services-key                     = "funcservices-KEY-APIM"
     }
   }
 

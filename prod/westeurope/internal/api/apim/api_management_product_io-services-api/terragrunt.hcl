@@ -17,11 +17,11 @@ terraform {
 }
 
 inputs = {
-  product_id            = "io-api"
+  product_id            = "io-services-api"
   resource_group_name   = dependency.resource_group.outputs.resource_name
   api_management_name   = dependency.api_management.outputs.name
-  display_name          = "IO API"
-  description           = "API for IO platform."
+  display_name          = "IO SERVICES API"
+  description           = "SERVICES API for IO platform."
   subscription_required = true
   approval_required     = false
   published             = true
