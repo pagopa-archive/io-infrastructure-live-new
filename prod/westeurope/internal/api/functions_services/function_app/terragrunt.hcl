@@ -42,7 +42,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.40"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.46"
 }
 
 inputs = {
@@ -58,7 +58,10 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
+    FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
+    WEBSITE_RUN_FROM_PACKAGE     = "1"
+    NODE_ENV                     = "production"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -69,8 +72,6 @@ inputs = {
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     MAIL_FROM_DEFAULT        = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
-    // TODO: Change the url
-    PUBLIC_API_URL = "https://localhost"
   }
 
   app_settings_secrets = {

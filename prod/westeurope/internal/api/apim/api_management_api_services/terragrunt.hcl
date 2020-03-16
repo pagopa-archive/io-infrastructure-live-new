@@ -2,8 +2,8 @@ dependency "api_management" {
   config_path = "../api_management"
 }
 
-dependency "api_management_product_io-api" {
-  config_path = "../api_management_product_io-api"
+dependency "api_management_product_io-services-api" {
+  config_path = "../api_management_product_io-services-api"
 }
 
 # Internal
@@ -27,13 +27,13 @@ inputs = {
   revision              = "1"
   display_name          = "IO SERVICES API"
   description           = "SERVICES API for IO platform."
-  host                  = "api.prod.io.italia.it"
+  host                  = "api.io.italia.it"
   path                  = "api/v1"
   protocols             = ["http"]
   swagger_json_template = file("swagger.json.tmpl")
   policy_xml            = file("policy.xml")
 
   product_ids = [
-    dependency.api_management_product_io-api.outputs.product_id
+    dependency.api_management_product_io-services-api.outputs.product_id
   ]
 }
