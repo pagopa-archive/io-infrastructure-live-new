@@ -79,7 +79,7 @@ inputs = {
     map = {
       MAILUP_USERNAME      = "common-MAILUP-USERNAME"
       MAILUP_SECRET        = "common-MAILUP-SECRET"
-      WEEBHOOK_CHANNEL_URL = "app-backend-WEBHOOK-CHANNEL-URL"
+      WEEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
     }
   }
 }
