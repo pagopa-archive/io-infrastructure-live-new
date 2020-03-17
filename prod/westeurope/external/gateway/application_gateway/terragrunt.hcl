@@ -117,12 +117,12 @@ inputs = {
       }
 
       backend_address_pool = {
-        ip_addresses = dependency.api_management.outputs.private_ip_addresses
-        fqdns        = null
+        ip_addresses = null
+        fqdns        = ["api-internal.io.italia.it"]
       }
 
       probe = {
-        host                = "api.io.italia.it"
+        host                = "api-internal.io.italia.it"
         protocol            = "Http"
         path                = "/status-0123456789abcdef"
         interval            = 30
@@ -136,7 +136,7 @@ inputs = {
         path                  = "/"
         cookie_based_affinity = "Disabled"
         request_timeout       = 180
-        host_name             = null
+        host_name             = "api-internal.io.italia.it"
       }
     }
   ]
