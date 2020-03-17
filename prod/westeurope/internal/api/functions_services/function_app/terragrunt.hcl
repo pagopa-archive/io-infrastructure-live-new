@@ -77,9 +77,9 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      MAILUP_USERNAME      = "common-MAILUP-USERNAME"
-      MAILUP_SECRET        = "common-MAILUP-SECRET"
-      WEEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
+      MAILUP_USERNAME     = "common-MAILUP-USERNAME"
+      MAILUP_SECRET       = "common-MAILUP-SECRET"
+      WEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
     }
   }
 }
