@@ -10,6 +10,10 @@ dependency "storage_account" {
   config_path = "../../storage/account"
 }
 
+dependency "storage_account_assets" {
+  config_path = "../../../../common/cdn/storage_account_assets"
+}
+
 dependency "storage_container_message-content" {
   config_path = "../../storage/container_message-content"
 }
@@ -69,6 +73,11 @@ inputs = {
     // TODO: Rename to STORAGE_CONNECTION_STRING
     QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
+
+    AssetsStorageConnection     = dependency.storage_account_assets.outputs.primary_connection_string
+    STATUS_ENDPOINT_URL         = "https://app-backend.io.italia.it/info"
+    STATUS_REFRESH_INTERVAL_MS  = "300000"
+
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
