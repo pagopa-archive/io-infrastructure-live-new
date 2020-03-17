@@ -72,7 +72,7 @@ inputs = {
     certificate_name = "io-italia-it"
     domains = [
       {
-        name    = "api.io.italia.it"
+        name    = "api-internal.io.italia.it"
         default = true
       }
     ]
