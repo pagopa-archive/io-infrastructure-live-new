@@ -26,7 +26,7 @@ inputs = {
     category = "AzureCdnAccessLog"
     enabled  = true
     retention_policy = {
-      days    = 5
+      days    = 365
       enabled = true
     }
   }]

@@ -1,5 +1,5 @@
-dependency "key_vault" {
-  config_path = "../../key_vault"
+dependency "gateway" {
+  config_path = "../../gateway/application_gateway"
 }
 
 dependency "log_analytics_workspace" {
@@ -17,18 +17,33 @@ terraform {
 }
 
 inputs = {
-
-  name                       = "key-vault"
-  target_resource_id         = dependency.key_vault.outputs.id
+  name                       = "gateway"
+  target_resource_id         = dependency.gateway.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
 
   logs = [{
-    category = "AuditEvent"
+    category = "ApplicationGatewayAccessLog"
     enabled  = true
     retention_policy = {
       days    = 365
       enabled = true
     }
+    },
+    {
+      category = "ApplicationGatewayPerformanceLog"
+      enabled  = true
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "ApplicationGatewayFirewallLog"
+      enabled  = true
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
   }]
 
   metrics = [{

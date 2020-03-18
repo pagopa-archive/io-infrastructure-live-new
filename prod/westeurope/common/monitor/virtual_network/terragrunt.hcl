@@ -26,7 +26,7 @@ inputs = {
     category = "VMProtectionAlerts"
     enabled  = true
     retention_policy = {
-      days    = 5
+      days    = 365
       enabled = true
     }
   }]
@@ -35,7 +35,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = true
     retention_policy = {
-      days    = 5
+      days    = 365
       enabled = true
     }
   }]
