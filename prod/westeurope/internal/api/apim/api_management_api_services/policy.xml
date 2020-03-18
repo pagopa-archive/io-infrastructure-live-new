@@ -24,9 +24,6 @@
         <set-header name="x-user-email" exists-action="override">
             <value>@(context.User.Email)</value>
         </set-header>
-        <set-header name="x-user-note" exists-action="override">
-            <value>@(Uri.EscapeUriString(context.User.Note != null ? context.User.Note : ""))</value>
-        </set-header>
         <cors>
             <allowed-origins>
                 <origin>*</origin>

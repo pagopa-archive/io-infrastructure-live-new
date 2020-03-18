@@ -10,14 +10,6 @@ dependency "storage_account" {
   config_path = "../../storage/account"
 }
 
-dependency "storage_container_message-content" {
-  config_path = "../../storage/container_message-content"
-}
-
-dependency "storage_table_subscriptionsfeedbyday" {
-  config_path = "../../storage/table_subscriptionsfeedbyday"
-}
-
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -46,13 +38,13 @@ terraform {
 }
 
 inputs = {
-  name                = "services"
+  name                = "public"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   virtual_network_info = {
     resource_group_name   = dependency.virtual_network.outputs.resource_group_name
     name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.103.0/24"
+    subnet_address_prefix = "10.0.105.0/24"
   }
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -66,20 +58,14 @@ inputs = {
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    // TODO: Rename to STORAGE_CONNECTION_STRING
-    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
-    // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
-    SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
-    MAIL_FROM_DEFAULT        = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    StorageConnection = dependency.storage_account.outputs.primary_connection_string
+    
+    VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      MAILUP_USERNAME     = "common-MAILUP-USERNAME"
-      MAILUP_SECRET       = "common-MAILUP-SECRET"
-      WEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
     }
   }
 }

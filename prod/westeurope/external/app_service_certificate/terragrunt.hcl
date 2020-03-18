@@ -20,5 +20,5 @@ inputs = {
   name                = "commonexternal"
   resource_group_name = dependency.resource_group.outputs.resource_name
   key_vault_id        = dependency.key_vault.outputs.id
-  certificate_name    = "prod-io-italia-it"
+  certificate_name    = "io-italia-it"
 }

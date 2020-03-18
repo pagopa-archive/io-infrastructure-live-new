@@ -70,15 +70,14 @@ inputs = {
     IDP_METADATA_REFRESH_INTERVAL_SECONDS  = "864000" # 10 days
 
     // CIE
-    CIE_METADATA_URL = "https://idserver.servizicie.interno.gov.it:8443/idp/shibboleth"
+    CIE_METADATA_URL = "https://idserver.servizicie.interno.gov.it:443/idp/shibboleth"
 
     // AUTHENTICATION
     AUTHENTICATION_BASE_PATH  = ""
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
-    API_KEY       = dependency.functions_app.outputs.default_key
+    API_URL = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH = "/api/v1"
@@ -106,6 +105,9 @@ inputs = {
       // SPID
       SAML_CERT = "appbackend-SAML-CERT"
       SAML_KEY  = "appbackend-SAML-KEY"
+
+      // FUNCTIONS
+      API_KEY = "funcapp-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"

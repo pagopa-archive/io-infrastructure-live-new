@@ -6,6 +6,10 @@ dependency "functions_services" {
   config_path = "../../functions_services/function_app"
 }
 
+dependency "functions_public" {
+  config_path = "../../functions_public/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -48,31 +52,28 @@ inputs = {
   }
 
   named_values_map = {
-    io-functions-test-url = "https://${dependency.functions_test.outputs.default_hostname}"
-    io-functions-test-key = dependency.functions_test.outputs.default_key
-
+    io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
     io-functions-services-url = "https://${dependency.functions_services.outputs.default_hostname}"
-    io-functions-services-key = dependency.functions_services.outputs.default_key
+    io-functions-public-url   = "https://${dependency.functions_public.outputs.default_hostname}"
   }
 
   named_values_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       apigad-gad-client-certificate-verified-header = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
+      io-functions-test-key                         = "functest-KEY-APIM"
+      io-functions-services-key                     = "funcservices-KEY-APIM"
+      io-functions-public-key                       = "funcpublic-KEY-APIM"
     }
   }
 
   custom_domains = {
     key_vault_id     = dependency.key_vault.outputs.id
-    certificate_name = "prod-io-italia-it"
+    certificate_name = "io-italia-it"
     domains = [
       {
-        name    = "api.prod.io.italia.it"
+        name    = "api-internal.io.italia.it"
         default = true
-      },
-      {
-        name    = "api-gad.prod.io.italia.it"
-        default = false
       }
     ]
   }
