@@ -12,8 +12,7 @@ include {
 }
 
 terraform {
-  #source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v0.0.29"
-  source = "../../../../../../../../io-infrastructure-modules-new/azurerm_monitor_diagnostic_setting"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v0.0.47"
 }
 
 inputs = {
@@ -22,45 +21,68 @@ inputs = {
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
 
   logs = [{
-    category = "GatewayLogs"
-    enabled  = true
+    category = "QueryRuntimeStatistics"
+    enabled  = false
     retention_policy = {
       days    = 365
       enabled = true
     }
+    },
+    {
+      category = "DataPlaneRequests"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "PartitionKeyStatistics"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "PartitionKeyRUConsumption"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "MongoRequests"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "ControlPlaneRequests"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
+    },
+    {
+      category = "CassandraRequests"
+      enabled  = false
+      retention_policy = {
+        days    = 365
+        enabled = true
+      }
   }]
 
   metrics = [{
-    category = "Gateway Requests"
+    category = "Requests"
     enabled  = true
     retention_policy = {
       days    = 365
-      enabled = true
+      enabled = false
     }
-    },
-    {
-      category = "Capacity"
-      enabled  = true
-      retention_policy = {
-        days    = 365
-        enabled = true
-      }
-    },
-    {
-      category = "EventHub Events"
-      enabled  = true
-      retention_policy = {
-        days    = 365
-        enabled = true
-      }
-    },
-    {
-      category = "Network Status"
-      enabled  = true
-      retention_policy = {
-        days    = 365
-        enabled = true
-      }
-    }
-  ]
+  }]
 }
