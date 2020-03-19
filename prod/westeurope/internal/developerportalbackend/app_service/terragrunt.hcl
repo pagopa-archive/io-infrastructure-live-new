@@ -56,7 +56,7 @@ inputs = {
     POST_LOGIN_URL               = "https://developer.io.italia.it"
     POST_LOGOUT_URL              = "https://developer.io.italia.it"
     REPLY_URL                    = "https://developer.io.italia.it"
-    ADMIN-API-URL                = "https://api.io.italia.it"
+    ADMIN_API_URL                = "https://api.io.italia.it"
     TENANT_ID                    = "agidweb.onmicrosoft.com"
   }
 
