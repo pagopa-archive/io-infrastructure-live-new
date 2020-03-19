@@ -24,8 +24,7 @@ inputs = {
   name                       = "cdnprofile"
   target_resource_id         = dependency.cdn_profile.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-
-  storage_account_id = dependency.storage_account.outputs.id
+  storage_account_id         = dependency.storage_account.outputs.id
 
   logs = [{
     category = "AzureCdnAccessLog"
