@@ -24,5 +24,5 @@ inputs = {
   name                = "assets"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
-  origin_host_name    = dependency.storage_account_assets.outputs.primary_blob_host
+  origin_host_name    = dependency.storage_account_assets.outputs.primary_web_host
 }
