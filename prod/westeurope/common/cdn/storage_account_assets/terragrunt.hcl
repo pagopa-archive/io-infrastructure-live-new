@@ -8,7 +8,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account?ref=v0.0.23"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account_static_website?ref=v0.0.47"
 }
 
 inputs = {
@@ -17,4 +17,5 @@ inputs = {
   account_tier             = "Standard"
   account_replication_type = "GRS"
   access_tier              = "Hot"
+  index_document           = "index.html"
 }
