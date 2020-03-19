@@ -16,8 +16,7 @@ include {
 }
 
 terraform {
-  #source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v0.0.29"
-  source = "../../../../../../io-infrastructure-modules-new/azurerm_monitor_diagnostic_setting"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v0.0.47"
 }
 
 inputs = {
@@ -25,8 +24,7 @@ inputs = {
   name                       = "vnet"
   target_resource_id         = dependency.vnet.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-
-  storage_account_id = dependency.storage_account.outputs.id
+  storage_account_id         = dependency.storage_account.outputs.id
 
   logs = [{
     category = "VMProtectionAlerts"

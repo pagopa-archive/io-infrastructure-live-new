@@ -1,7 +1,3 @@
-dependency "cdn_endpoint_assets" {
-  config_path = "../../cdn/cdn_endpoint_assets"
-}
-
 dependency "log_analytics_workspace" {
   config_path = "../../../common/log_analytics_workspace"
 }
@@ -21,8 +17,9 @@ terraform {
 
 inputs = {
 
-  name                       = "cdnendpoint-assets"
-  target_resource_id         = dependency.cdn_endpoint_assets.outputs.id
+  name                       = "cdnendpoint-developerportal"
+  # Note: this resource is not in this infrastructure project therefore we use the id instead of the dependency 
+  target_resource_id         = "/subscriptions/ec285037-c673-4f58-b594-d7c480da4e8b/resourceGroups/io-p-rg-common/providers/Microsoft.Cdn/profiles/io-p-cdn-common/endpoints/io-p-cdnendpoint-developerportal"
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
 
   storage_account_id = dependency.storage_account.outputs.id

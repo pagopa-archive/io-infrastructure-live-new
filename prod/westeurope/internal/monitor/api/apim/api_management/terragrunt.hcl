@@ -6,6 +6,10 @@ dependency "log_analytics_workspace" {
   config_path = "../../../../../common/log_analytics_workspace"
 }
 
+dependency "storage_account" {
+  config_path = "../../../../../common/storage_account_logs"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -20,6 +24,7 @@ inputs = {
   name                       = "apim-api"
   target_resource_id         = dependency.api_management.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
+  storage_account_id         = dependency.storage_account.outputs.id
 
   logs = [{
     category = "GatewayLogs"
