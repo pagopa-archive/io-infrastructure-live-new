@@ -2,8 +2,8 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "storage_account_assets" {
-  config_path = "../storage_account_assets"
+dependency "storage_account_developerportal" {
+  config_path = "../storage_account_developerportal"
 }
 
 # Common
@@ -17,12 +17,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v0.0.24"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v0.0.41"
 }
 
 inputs = {
-  name                = "assets"
+  name                = "developerportal"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
-  origin_host_name    = dependency.storage_account_assets.outputs.primary_web_host
+  origin_host_name    = dependency.storage_account_developerportal.outputs.primary_web_host
 }
