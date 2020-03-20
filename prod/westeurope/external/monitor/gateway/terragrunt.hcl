@@ -35,10 +35,10 @@ inputs = {
     },
     {
       category = "ApplicationGatewayPerformanceLog"
-      enabled  = true
+      enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -55,7 +55,7 @@ inputs = {
     enabled  = true
     retention_policy = {
       days    = 365
-      enabled = true
+      enabled = false
     }
   }]
 }
