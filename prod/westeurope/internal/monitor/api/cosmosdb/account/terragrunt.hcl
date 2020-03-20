@@ -25,7 +25,7 @@ inputs = {
     enabled  = false
     retention_policy = {
       days    = 365
-      enabled = true
+      enabled = false
     }
     },
     {
@@ -33,7 +33,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -41,7 +41,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -49,7 +49,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -57,7 +57,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -65,7 +65,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
@@ -73,7 +73,7 @@ inputs = {
       enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
   }]
 

@@ -39,31 +39,31 @@ inputs = {
     enabled  = true
     retention_policy = {
       days    = 365
-      enabled = true
+      enabled = false
     }
     },
     {
       category = "Capacity"
-      enabled  = true
+      enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
       category = "EventHub Events"
-      enabled  = true
+      enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     },
     {
       category = "Network Status"
-      enabled  = true
+      enabled  = false
       retention_policy = {
         days    = 365
-        enabled = true
+        enabled = false
       }
     }
   ]
