@@ -3,7 +3,7 @@ dependency "vnet" {
 }
 
 dependency "log_analytics_workspace" {
-  config_path = "../../../common/log_analytics_workspace"
+  config_path = "../../log_analytics_workspace"
 }
 
 # Include all settings from the root terragrunt.hcl file
