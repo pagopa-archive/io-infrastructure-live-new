@@ -13,7 +13,7 @@ terraform {
 }
 
 inputs = {
-  name                = "aggateway"
+  name                = "appgateway"
   resource_group_name = dependency.resource_group.outputs.resource_name
   sku                 = "Standard"
   allocation_method   = "Static"
