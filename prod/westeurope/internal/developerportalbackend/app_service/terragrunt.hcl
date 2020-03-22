@@ -57,7 +57,7 @@ inputs = {
     POST_LOGOUT_URL              = "https://developer.io.italia.it"
     REPLY_URL                    = "https://developer.io.italia.it"
     ADMIN_API_URL                = "http://api-internal.io.italia.it"
-    TENANT_ID                    = "agidweb.onmicrosoft.com"
+    TENANT_NAME                  = "agidweb"
   }
 
   app_settings_secrets = {
