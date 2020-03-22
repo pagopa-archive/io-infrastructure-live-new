@@ -47,7 +47,7 @@ inputs = {
     APIM_PRODUCT_NAME            = "io-services-api"
     APIM_USER_GROUPS             = "apilimitedmessagewrite,apiinforead,apimessageread,apilimitedprofileread"
     ARM_APIM                     = "io-p-apim-api"
-    ARM_RESOURCE_GROUP           = "io-p-rg-external"
+    ARM_RESOURCE_GROUP           = "io-p-rg-internal"
     USE_SERVICE_PRINCIPAL        = "1"
     CLIENT_NAME                  = "io-p-developer-portal-app"
     LOG_LEVEL                    = "info"
@@ -56,14 +56,14 @@ inputs = {
     POST_LOGIN_URL               = "https://developer.io.italia.it"
     POST_LOGOUT_URL              = "https://developer.io.italia.it"
     REPLY_URL                    = "https://developer.io.italia.it"
-    ADMIN_API_URL                = "https://api.io.italia.it"
+    ADMIN_API_URL                = "http://api-internal.io.italia.it"
     TENANT_ID                    = "agidweb.onmicrosoft.com"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      ADMIN_API_KEY               = "devportal-ADMIN-API-KEY"
+      ADMIN_API_KEY               = "apim-IO-SERVICE-KEY"
       ARM_SUBSCRIPTION_ID         = "devportal-ARM-SUBSCRIPTION-ID"
       ARM_TENANT_ID               = "devportal-ARM-TENANT-ID"
       CLIENT_ID                   = "devportal-CLIENT-ID" 

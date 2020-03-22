@@ -21,7 +21,7 @@ terraform {
 }
 
 inputs = {
-  name                = "developerportal"
+  name                = "developer"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
     name                = "io.italia.it"

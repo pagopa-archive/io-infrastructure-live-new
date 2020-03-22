@@ -17,6 +17,10 @@ dependency "api_management" {
   config_path = "../../../internal/api/apim/api_management"
 }
 
+dependency "app_service_developerportalbackend" {
+  config_path = "../../../internal/developerportalbackend/app_service"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
@@ -101,6 +105,38 @@ inputs = {
         cookie_based_affinity = "Disabled"
         request_timeout       = 180
         host_name             = "api-internal.io.italia.it"
+      }
+    },
+    {
+      name          = "developerportalbackend"
+      a_record_name = "developerportal-backend"
+
+      http_listener = {
+        protocol  = "Https"
+        host_name = "developerportal-backend.io.italia.it"
+      }
+
+      backend_address_pool = {
+        ip_addresses = null
+        fqdns        = [dependency.app_service_developerportalbackend.outputs.default_site_hostname]
+      }
+
+      probe = {
+        host                = dependency.app_service_developerportalbackend.outputs.default_site_hostname
+        protocol            = "Http"
+        path                = "/info"
+        interval            = 30
+        timeout             = 120
+        unhealthy_threshold = 8
+      }
+
+      backend_http_settings = {
+        protocol              = "Http"
+        port                  = 80
+        path                  = "/"
+        cookie_based_affinity = "Disabled"
+        request_timeout       = 180
+        host_name             = dependency.app_service_developerportalbackend.outputs.default_site_hostname
       }
     }
   ]
