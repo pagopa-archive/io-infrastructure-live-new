@@ -17,10 +17,10 @@ terraform {
 
 inputs = {
 
-  name = "cdnendpoint-developerportal"
+  name                       = "cdnendpoint-developerportal"
   target_resource_id         = dependency.cdn_endpoint_developerportal.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  
+
   logs = [{
     category = "CoreAnalytics"
     enabled  = true

@@ -1,5 +1,5 @@
-dependency "gateway" {
-  config_path = "../../gateway/application_gateway"
+dependency "appgateway" {
+  config_path = "../../appgateway/application_gateway"
 }
 
 dependency "log_analytics_workspace" {
@@ -20,8 +20,8 @@ terraform {
 }
 
 inputs = {
-  name                       = "gateway"
-  target_resource_id         = dependency.gateway.outputs.id
+  name                       = "appgateway"
+  target_resource_id         = dependency.appgateway.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
   storage_account_id         = dependency.storage_account.outputs.id
 
