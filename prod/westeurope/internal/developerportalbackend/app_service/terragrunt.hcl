@@ -47,7 +47,7 @@ inputs = {
     APIM_PRODUCT_NAME            = "io-services-api"
     APIM_USER_GROUPS             = "apilimitedmessagewrite,apiinforead,apimessageread,apilimitedprofileread"
     ARM_APIM                     = "io-p-apim-api"
-    ARM_RESOURCE_GROUP           = "io-p-rg-external"
+    ARM_RESOURCE_GROUP           = "io-p-rg-internal"
     USE_SERVICE_PRINCIPAL        = "1"
     CLIENT_NAME                  = "io-p-developer-portal-app"
     LOG_LEVEL                    = "info"
@@ -56,23 +56,23 @@ inputs = {
     POST_LOGIN_URL               = "https://developer.io.italia.it"
     POST_LOGOUT_URL              = "https://developer.io.italia.it"
     REPLY_URL                    = "https://developer.io.italia.it"
-    ADMIN_API_URL                = "https://api.io.italia.it"
-    TENANT_ID                    = "agidweb.onmicrosoft.com"
+    ADMIN_API_URL                = "http://api-internal.io.italia.it"
+    TENANT_NAME                  = "agidweb"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      admin-api-key               = "devportal-ADMIN-API-KEY"
-      arm-subscription-id         = "devportal-ARM-SUBSCRIPTION-ID"
-      arm-tenant-id               = "devportal-ARM-TENANT-ID"
-      client-id                   = "devportal-CLIENT-ID" 
-      client-secret               = "devportal-CLIENT-SECRET"
-      cookie-iv                   = "devportal-COOKIE-IV"
-      cookie-key                  = "devportal-COOKIE-KEY"
-      service-principal-client-id = "devportal-SERVICE-PRINCIPAL-CLIENT-ID"
-      service-principal-secret    = "devportal-SERVICE-PRINCIPAL-SECRET"
-      service-principal-tenant-id = "devportal-SERVICE-PRINCIPAL-TENANT-ID"
+      ADMIN_API_KEY               = "apim-IO-SERVICE-KEY"
+      ARM_SUBSCRIPTION_ID         = "devportal-ARM-SUBSCRIPTION-ID"
+      ARM_TENANT_ID               = "devportal-ARM-TENANT-ID"
+      CLIENT_ID                   = "devportal-CLIENT-ID" 
+      CLIENT_SECRET               = "devportal-CLIENT-SECRET"
+      COOKIE_IV                   = "devportal-COOKIE-IV"
+      COOKIE_KEY                  = "devportal-COOKIE-KEY"
+      SERVICE_PRINCIPAL_CLIENT_ID = "devportal-SERVICE-PRINCIPAL-CLIENT-ID"
+      SERVICE_PRINCIPAL_SECRET    = "devportal-SERVICE-PRINCIPAL-SECRET"
+      SERVICE_PRINCIPAL_TENANT_ID = "devportal-SERVICE-PRINCIPAL-TENANT-ID"
     }
   }
 
