@@ -80,6 +80,7 @@ inputs = {
       MAILUP_USERNAME     = "common-MAILUP-USERNAME"
       MAILUP_SECRET       = "common-MAILUP-SECRET"
       WEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
+      SANDBOX_FISCAL_CODE = "io-SANDBOX-FISCAL-CODE"
     }
   }
 }
