@@ -28,6 +28,14 @@ dependency "notification_hub" {
   config_path = "../../../common/notification_hub"
 }
 
+dependency "storage_account_logs" {
+  config_path = "../../../operations/storage_account_logs"
+}
+
+dependency "storage_queue_spid_logs" {
+  config_path = "../../../operations/storage_queue_spid_logs"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -98,6 +106,9 @@ inputs = {
     PAGOPA_API_URL      = "https://localhost"
     PAGOPA_API_URL_TEST = "https://localhost-test"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
+
+    SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
+    SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
