@@ -66,13 +66,14 @@ inputs = {
       ADMIN_API_KEY               = "apim-IO-SERVICE-KEY"
       ARM_SUBSCRIPTION_ID         = "devportal-ARM-SUBSCRIPTION-ID"
       ARM_TENANT_ID               = "devportal-ARM-TENANT-ID"
-      CLIENT_ID                   = "devportal-CLIENT-ID" 
+      CLIENT_ID                   = "devportal-CLIENT-ID"
       CLIENT_SECRET               = "devportal-CLIENT-SECRET"
       COOKIE_IV                   = "devportal-COOKIE-IV"
       COOKIE_KEY                  = "devportal-COOKIE-KEY"
       SERVICE_PRINCIPAL_CLIENT_ID = "devportal-SERVICE-PRINCIPAL-CLIENT-ID"
       SERVICE_PRINCIPAL_SECRET    = "devportal-SERVICE-PRINCIPAL-SECRET"
       SERVICE_PRINCIPAL_TENANT_ID = "devportal-SERVICE-PRINCIPAL-TENANT-ID"
+      SANDBOX_FISCAL_CODE         = "io-SANDBOX-FISCAL-CODE"
     }
   }
 

@@ -2,6 +2,10 @@ dependency "functions_test" {
   config_path = "../../functions_test/function_app"
 }
 
+dependency "functions_admin" {
+  config_path = "../../functions_admin/function_app"
+}
+
 dependency "functions_services" {
   config_path = "../../functions_services/function_app"
 }
@@ -53,6 +57,7 @@ inputs = {
 
   named_values_map = {
     io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
+    io-functions-admin-url    = "https://${dependency.functions_admin.outputs.default_hostname}"
     io-functions-services-url = "https://${dependency.functions_services.outputs.default_hostname}"
     io-functions-public-url   = "https://${dependency.functions_public.outputs.default_hostname}"
   }
@@ -62,6 +67,7 @@ inputs = {
     map = {
       apigad-gad-client-certificate-verified-header = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
       io-functions-test-key                         = "functest-KEY-APIM"
+      io-functions-admin-key                        = "funcadmin-KEY-APIM"
       io-functions-services-key                     = "funcservices-KEY-APIM"
       io-functions-public-key                       = "funcpublic-KEY-APIM"
     }
