@@ -14,6 +14,10 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
+dependency "storage_account_logs" {
+  config_path = "../../../../operations/storage_account_logs"
+}
+
 dependency "storage_container_message-content" {
   config_path = "../../storage/container_message-content"
 }
@@ -73,6 +77,8 @@ inputs = {
     // TODO: Rename to STORAGE_CONNECTION_STRING
     QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
+
+    LogsStorageConnection       = dependency.storage_account_logs.outputs.primary_connection_string
 
     AssetsStorageConnection     = dependency.storage_account_assets.outputs.primary_connection_string
     STATUS_ENDPOINT_URL         = "https://app-backend.io.italia.it/info"
