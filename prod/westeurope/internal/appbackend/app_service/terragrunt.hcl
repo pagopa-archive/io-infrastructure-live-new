@@ -44,7 +44,7 @@ inputs = {
   app_service_plan_info = {
     kind     = "Windows"
     sku_tier = "PremiumV2"
-    sku_size = "P1v2"
+    sku_size = "P3v2"
   }
 
   app_enabled         = true
