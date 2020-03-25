@@ -1,4 +1,4 @@
-dependency "resource_group_common" {
+dependency "resource_group" {
   config_path = "../../resource_group"
 
   mock_outputs = {
@@ -6,8 +6,8 @@ dependency "resource_group_common" {
   }
 }
 
-dependency "virtual_network_common" {
-  config_path = "../../virtual_network"
+dependency "virtual_network" {
+  config_path = "../virtual_network"
 
   mock_outputs = {
     resource_group_name = "fixture"
@@ -30,7 +30,7 @@ terraform {
 
 inputs = {
   name                 = "GatewaySubnet"
-  virtual_network_name = dependency.virtual_network_common.outputs.resource_name
-  resource_group_name  = dependency.resource_group_common.outputs.resource_name
-  address_prefix       = "10.0.210.0/24"
+  virtual_network_name = dependency.virtual_network.outputs.resource_name
+  resource_group_name  = dependency.resource_group.outputs.resource_name
+  address_prefix       = "10.251.1.0/26"
 }
