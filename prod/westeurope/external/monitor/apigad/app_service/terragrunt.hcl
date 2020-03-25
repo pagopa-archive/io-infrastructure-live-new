@@ -6,8 +6,8 @@ dependency "log_analytics_workspace" {
   config_path = "../../../../common/log_analytics_workspace"
 }
 
-dependency "storage_account" {
-  config_path = "../../../../common/storage_account_logs"
+dependency "storage_account_logs" {
+  config_path = "../../../../operations/storage_account_logs"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -23,7 +23,7 @@ inputs = {
   name                       = "apigad"
   target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  storage_account_id         = dependency.storage_account.outputs.id
+  storage_account_id         = dependency.storage_account_logs.outputs.id
 
   logs = [{
     category = "AppServiceHTTPLogs"
