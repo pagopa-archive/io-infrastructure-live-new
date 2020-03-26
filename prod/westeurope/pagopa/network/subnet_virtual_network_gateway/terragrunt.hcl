@@ -32,5 +32,5 @@ inputs = {
   name                 = "GatewaySubnet"
   virtual_network_name = dependency.virtual_network.outputs.resource_name
   resource_group_name  = dependency.resource_group.outputs.resource_name
-  address_prefix       = "10.251.1.0/26"
+  address_prefix       = "10.250.1.160/28"
 }

@@ -14,5 +14,5 @@ terraform {
 inputs = {
   name                = "pagopa"
   resource_group_name = dependency.resource_group.outputs.resource_name
-  address_space       = ["10.251.1.0/24"]
+  address_space       = ["10.250.1.160/27"]
 }
