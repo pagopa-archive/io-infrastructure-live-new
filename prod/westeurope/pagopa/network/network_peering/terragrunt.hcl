@@ -36,8 +36,7 @@ include {
 }
 
 terraform {
-  #source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_virtual_network_peering?ref=v0.0.47"
-  source = "../../../../../../io-infrastructure-modules-new/azurerm_virtual_network_peering"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_virtual_network_peering?ref=v0.0.48"
 }
 
 inputs = {
