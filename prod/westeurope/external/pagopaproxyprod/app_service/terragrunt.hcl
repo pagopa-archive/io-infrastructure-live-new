@@ -15,6 +15,10 @@ dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
 }
 
+dependency "redis" {
+  config_path = "../../../common/redis/redis_cache"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -44,11 +48,24 @@ inputs = {
   app_settings = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
+
+    REDIS_DB_URL      = dependency.redis.outputs.hostname
+    REDIS_DB_PORT     = dependency.redis.outputs.ssl_port
+    REDIS_DB_PASSWORD = dependency.redis.outputs.primary_access_key
+    REDIS_USE_CLUSTER = true
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      PAGOPA_HOST                = "pagopaproxyprod-PAGOPA-HOST"
+      PAGOPA_PORT                = "pagopaproxyprod-PAGOPA-PORT"
+      PAGOPA_PASSWORD            = "pagopaproxyprod-PAGOPA-PASSWORD"
+      PAGOPA_ID_PSP              = "pagopaproxyprod-PAGOPA-ID-PSP"
+      PAGOPA_ID_INT_PSP          = "pagopaproxyprod-PAGOPA-ID-INT-PSP"
+      PAGOPA_ID_CANALE           = "pagopaproxyprod-PAGOPA-ID-CANALE"
+      PAGOPA_ID_CANALE_PAGAMENTO = "pagopaproxyprod-PAGOPA-ID-CANALE-PAGAMENTO"
+      PAGOPA_WS_URI              = "pagopaproxyprod-PAGOPA-WS-URI"
     }
   }
 
