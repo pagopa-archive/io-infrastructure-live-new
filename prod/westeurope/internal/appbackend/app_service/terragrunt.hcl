@@ -7,7 +7,12 @@ dependency "functions_app" {
   config_path = "../../api/functions_app/function_app"
 }
 
-// Common
+# Push notifications origin
+dependency "functions_services" {
+  config_path = "../../api/functions_services/function_app"
+}
+
+# Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
@@ -97,7 +102,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE : "0.0.0.0/0"
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.functions_services.outputs.possible_outbound_ip_addresses
     AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
 
     // PAGOPA
