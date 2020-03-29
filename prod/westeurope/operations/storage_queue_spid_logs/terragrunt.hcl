@@ -14,5 +14,5 @@ terraform {
 
 inputs = {
   name                     = "spidmsgitems"
-  resource_group_name      = dependency.storage_account.outputs.resource_name
+  storage_account_name     = dependency.storage_account.outputs.resource_name
 }
