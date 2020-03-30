@@ -12,6 +12,15 @@ dependency "functions_services" {
   config_path = "../../api/functions_services/function_app"
 }
 
+# External
+dependency "app_service_pagopaproxyprod" {
+  config_path = "../../../external/pagopaproxyprod/app_service"
+}
+
+dependency "app_service_pagopaproxytest" {
+  config_path = "../../../external/pagopaproxytest/app_service"
+}
+
 # Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -107,9 +116,9 @@ inputs = {
 
     // PAGOPA
     ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    // TODO: Fix the connection
-    PAGOPA_API_URL      = "https://localhost"
-    PAGOPA_API_URL_TEST = "https://localhost-test"
+    PAGOPA_API_URL      = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_PROD = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST = "http://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
