@@ -56,7 +56,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.29"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.51"
 }
 
 inputs = {
@@ -112,7 +112,7 @@ inputs = {
 
     // PUSH NOTIFICATIONS
     ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.functions_services.outputs.possible_outbound_ip_addresses
-    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
+    AZURE_NH_HUB_NAME            = dependency.notification_hub.outputs.name
 
     // PAGOPA
     ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
@@ -150,5 +150,12 @@ inputs = {
     name                  = dependency.virtual_network.outputs.resource_name
     resource_group_name   = dependency.virtual_network.outputs.resource_group_name
     subnet_address_prefix = "10.0.100.0/25"
+  }
+
+  application_logs = {
+    key_vault_id             = dependency.key_vault.outputs.id
+    key_vault_secret_sas_url = "logs-APPBACKEND-SAS-URL"
+    level                    = "Information"
+    retention_in_days        = 90
   }
 }
