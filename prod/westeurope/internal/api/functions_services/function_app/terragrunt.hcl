@@ -49,6 +49,12 @@ inputs = {
   name                = "services"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
+  app_service_plan_info = {
+    kind     = "elastic"
+    sku_tier = "ElasticPremium"
+    sku_size = "EP3"
+  }
+
   virtual_network_info = {
     resource_group_name   = dependency.virtual_network.outputs.resource_group_name
     name                  = dependency.virtual_network.outputs.resource_name
@@ -58,10 +64,11 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME     = "node"
-    WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
-    NODE_ENV                     = "production"
+    FUNCTIONS_WORKER_RUNTIME       = "node"
+    WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
+    WEBSITE_RUN_FROM_PACKAGE       = "1"
+    FUNCTIONS_WORKER_PROCESS_COUNT = 4
+    NODE_ENV                       = "production"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
