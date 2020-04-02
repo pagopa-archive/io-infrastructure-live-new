@@ -79,7 +79,6 @@ inputs = {
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
 
     LogsStorageConnection       = dependency.storage_account_logs.outputs.primary_connection_string
-
     AssetsStorageConnection     = dependency.storage_account_assets.outputs.primary_connection_string
     STATUS_ENDPOINT_URL         = "https://app-backend.io.italia.it/info"
     STATUS_REFRESH_INTERVAL_MS  = "300000"
