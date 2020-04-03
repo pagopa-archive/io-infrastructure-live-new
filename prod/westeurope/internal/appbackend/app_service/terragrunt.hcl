@@ -117,9 +117,8 @@ inputs = {
 
     // PAGOPA
     ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    PAGOPA_API_URL      = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_PROD = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_TEST = "http://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
+    PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
