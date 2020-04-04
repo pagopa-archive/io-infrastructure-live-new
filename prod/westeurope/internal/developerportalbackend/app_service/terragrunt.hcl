@@ -1,3 +1,8 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
+# Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
@@ -21,7 +26,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.41"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.56"
 }
 
 inputs = {
@@ -80,9 +85,5 @@ inputs = {
   // TODO: Add ip restriction
   allowed_ips = []
 
-  virtual_network_info = {
-    name                  = dependency.virtual_network.outputs.resource_name
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    subnet_address_prefix = "10.0.106.0/24"
-  }
+  subnet_id = dependency.subnet.outputs.id
 }
