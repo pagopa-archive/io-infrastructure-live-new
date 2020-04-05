@@ -56,8 +56,8 @@ inputs = {
   }
 
   named_values_map = {
-    io-functions-admin-url    = "https://${dependency.functions_admin.outputs.default_hostname}"
-    io-functions-services-url = "https://${dependency.functions_services.outputs.default_hostname}"
+    io-functions-admin-url    = "http://${dependency.functions_admin.outputs.default_hostname}"
+    io-functions-services-url = "http://${dependency.functions_services.outputs.default_hostname}"
     io-functions-public-url   = "http://${dependency.functions_public.outputs.default_hostname}"
     io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
   }
