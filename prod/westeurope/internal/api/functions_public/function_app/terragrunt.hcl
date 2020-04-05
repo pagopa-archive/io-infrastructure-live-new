@@ -1,3 +1,7 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -34,18 +38,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.46"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.61"
 }
 
 inputs = {
   name                = "public"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.105.0/24"
-  }
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -68,4 +66,6 @@ inputs = {
     map = {
     }
   }
+
+  subnet_id = dependency.subnet.outputs.id
 }
