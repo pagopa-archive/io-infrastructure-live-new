@@ -7,6 +7,10 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -52,6 +56,11 @@ inputs = {
       TEST_SECRET = "common-TEST-SECRET"
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
 
   subnet_id = dependency.subnet.outputs.id
 }

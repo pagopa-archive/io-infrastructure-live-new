@@ -19,6 +19,10 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -53,11 +57,11 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
-    COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
-    COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
-    COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
+    COSMOSDB_URI      = dependency.cosmosdb_account.outputs.endpoint
+    COSMOSDB_KEY      = dependency.cosmosdb_account.outputs.primary_master_key
+    COSMOSDB_NAME     = dependency.cosmosdb_database.outputs.name
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
-    
+
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
   }
 
@@ -66,6 +70,11 @@ inputs = {
     map = {
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
 
   subnet_id = dependency.subnet.outputs.id
 }
