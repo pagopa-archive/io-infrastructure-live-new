@@ -2,6 +2,10 @@ dependency "public_ip" {
   config_path = "../public_ip"
 }
 
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 # External
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -36,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v0.0.50"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v0.0.59"
 }
 
 inputs = {
@@ -54,11 +58,7 @@ inputs = {
     ip = dependency.public_ip.outputs.ip_address
   }
 
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.0.0/25"
-  }
+  subnet_id = dependency.subnet.outputs.id
 
   frontend_port = 443
 
