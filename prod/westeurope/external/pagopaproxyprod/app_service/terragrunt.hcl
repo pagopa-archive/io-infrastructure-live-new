@@ -2,6 +2,16 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Internal
+dependency "subnet_appbackend" {
+  config_path = "../../../internal/appbackend/subnet"
+}
+
+# Pagopa
+dependency "subnet_agpagopagateway" {
+  config_path = "../../../pagopa/network/subnet_agpagopagateway"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -69,8 +79,12 @@ inputs = {
     }
   }
 
-  // TODO: Add ip restriction
   allowed_ips = []
+
+  allowed_subnets = [
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_agpagopagateway.outputs.id
+  ]
 
   virtual_network_info = {
     name                  = dependency.virtual_network.outputs.resource_name

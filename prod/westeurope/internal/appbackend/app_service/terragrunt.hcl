@@ -17,7 +17,15 @@ dependency "functions_services" {
   config_path = "../../api/functions_services/function_app"
 }
 
+dependency "subnet_funcservices" {
+  config_path = "../../api/functions_services/subnet"
+}
+
 # External
+dependency "subnet_appgateway" {
+  config_path = "../../../external/appgateway/subnet"
+}
+
 dependency "app_service_pagopaproxyprod" {
   config_path = "../../../external/pagopaproxyprod/app_service"
 }
@@ -106,7 +114,7 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
+    API_URL = "http://${dependency.functions_app.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH = "/api/v1"
@@ -149,7 +157,10 @@ inputs = {
   // TODO: Add ip restriction
   allowed_ips = []
 
-  allowed_subnets = []
+  allowed_subnets = [
+    dependency.subnet_appgateway.outputs.id,
+    dependency.subnet_funcservices.outputs.id,
+  ]
 
   subnet_id = dependency.subnet.outputs.id
 
