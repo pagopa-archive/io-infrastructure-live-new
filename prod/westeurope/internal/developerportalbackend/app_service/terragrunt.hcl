@@ -7,6 +7,11 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# External
+dependency "subnet_apigateway" {
+  config_path = "../../../external/apigateway/subnet"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -84,6 +89,10 @@ inputs = {
 
   // TODO: Add ip restriction
   allowed_ips = []
+
+  allowed_subnets = [
+    dependency.subnet_apigateway.outputs.id
+  ]
 
   subnet_id = dependency.subnet.outputs.id
 }
