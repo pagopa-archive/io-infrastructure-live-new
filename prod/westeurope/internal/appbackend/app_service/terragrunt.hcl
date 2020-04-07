@@ -1,3 +1,8 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
+# Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
@@ -12,7 +17,15 @@ dependency "functions_services" {
   config_path = "../../api/functions_services/function_app"
 }
 
+dependency "subnet_funcservices" {
+  config_path = "../../api/functions_services/subnet"
+}
+
 # External
+dependency "subnet_appgateway" {
+  config_path = "../../../external/appgateway/subnet"
+}
+
 dependency "app_service_pagopaproxyprod" {
   config_path = "../../../external/pagopaproxyprod/app_service"
 }
@@ -56,7 +69,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.51"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.54"
 }
 
 inputs = {
@@ -101,7 +114,7 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
+    API_URL = "http://${dependency.functions_app.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH = "/api/v1"
@@ -117,9 +130,8 @@ inputs = {
 
     // PAGOPA
     ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    PAGOPA_API_URL      = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_PROD = "http://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_TEST = "http://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
+    PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
@@ -145,13 +157,12 @@ inputs = {
   // TODO: Add ip restriction
   allowed_ips = []
 
-  allowed_subnets = []
+  allowed_subnets = [
+    dependency.subnet_appgateway.outputs.id,
+    dependency.subnet_funcservices.outputs.id,
+  ]
 
-  virtual_network_info = {
-    name                  = dependency.virtual_network.outputs.resource_name
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    subnet_address_prefix = "10.0.100.0/25"
-  }
+  subnet_id = dependency.subnet.outputs.id
 
   application_logs = {
     key_vault_id             = dependency.key_vault.outputs.id

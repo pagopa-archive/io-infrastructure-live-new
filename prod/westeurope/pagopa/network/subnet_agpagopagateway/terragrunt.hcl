@@ -1,9 +1,5 @@
 dependency "resource_group" {
   config_path = "../../resource_group"
-
-  mock_outputs = {
-    resource_group_name = "fixture"
-  }
 }
 
 dependency "virtual_network" {
@@ -24,8 +20,8 @@ terraform {
 }
 
 inputs = {
-  name                 = "appgateway"
+  name                 = "agpagopagateway"
   virtual_network_name = dependency.virtual_network.outputs.resource_name
   resource_group_name  = dependency.resource_group.outputs.resource_name
-  address_prefix       = "10.251.1.64/26"
+  address_prefix       = "10.250.1.176/28"
 }

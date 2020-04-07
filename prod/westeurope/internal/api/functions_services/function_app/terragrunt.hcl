@@ -1,3 +1,7 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -23,6 +27,10 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -42,26 +50,28 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.49"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.61"
 }
 
 inputs = {
   name                = "services"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.103.0/24"
+  app_service_plan_info = {
+    kind     = "elastic"
+    sku_tier = "ElasticPremium"
+    sku_size = "EP3"
   }
+
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME     = "node"
-    WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
-    NODE_ENV                     = "production"
+    FUNCTIONS_WORKER_RUNTIME       = "node"
+    WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
+    WEBSITE_RUN_FROM_PACKAGE       = "1"
+    FUNCTIONS_WORKER_PROCESS_COUNT = 4
+    NODE_ENV                       = "production"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -83,4 +93,11 @@ inputs = {
       SANDBOX_FISCAL_CODE = "io-SANDBOX-FISCAL-CODE"
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
+
+  subnet_id = dependency.subnet.outputs.id
 }

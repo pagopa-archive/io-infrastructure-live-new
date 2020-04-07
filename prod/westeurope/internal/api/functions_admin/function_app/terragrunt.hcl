@@ -1,3 +1,7 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -13,6 +17,10 @@ dependency "storage_account" {
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
+}
+
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
 }
 
 # Common
@@ -38,18 +46,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.46"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.61"
 }
 
 inputs = {
   name                = "admin"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.102.0/24"
-  }
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -70,7 +72,6 @@ inputs = {
     AZURE_APIM                = "io-p-apim-api"
     AZURE_APIM_HOST           = "api-internal.io.italia.it"
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
-
   }
 
   app_settings_secrets = {
@@ -89,4 +90,11 @@ inputs = {
       SERVICE_PRINCIPAL_TENANT_ID = "common-AZURE-TENANT-ID"
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
+
+  subnet_id = dependency.subnet.outputs.id
 }

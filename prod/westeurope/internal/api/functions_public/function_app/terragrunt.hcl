@@ -1,3 +1,7 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -13,6 +17,10 @@ dependency "storage_account" {
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
+}
+
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
 }
 
 # Common
@@ -34,18 +42,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.46"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.61"
 }
 
 inputs = {
   name                = "public"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.105.0/24"
-  }
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -55,11 +57,11 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
-    COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
-    COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
-    COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
+    COSMOSDB_URI      = dependency.cosmosdb_account.outputs.endpoint
+    COSMOSDB_KEY      = dependency.cosmosdb_account.outputs.primary_master_key
+    COSMOSDB_NAME     = dependency.cosmosdb_database.outputs.name
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
-    
+
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
   }
 
@@ -68,4 +70,11 @@ inputs = {
     map = {
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
+
+  subnet_id = dependency.subnet.outputs.id
 }
