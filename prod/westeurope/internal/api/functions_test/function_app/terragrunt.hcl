@@ -1,6 +1,14 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
+}
+
+dependency "subnet_apimapi" {
+  config_path = "../../../api/apim/subnet"
 }
 
 # Common
@@ -23,18 +31,12 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.46"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v0.0.61"
 }
 
 inputs = {
   name                = "test"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  virtual_network_info = {
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    name                  = dependency.virtual_network.outputs.resource_name
-    subnet_address_prefix = "10.0.201.0/24"
-  }
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -54,4 +56,11 @@ inputs = {
       TEST_SECRET = "common-TEST-SECRET"
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id
+  ]
+
+  subnet_id = dependency.subnet.outputs.id
 }

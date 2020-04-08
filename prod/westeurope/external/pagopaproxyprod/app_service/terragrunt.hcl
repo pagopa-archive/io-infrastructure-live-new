@@ -2,6 +2,16 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Internal
+dependency "subnet_appbackend" {
+  config_path = "../../../internal/appbackend/subnet"
+}
+
+# Pagopa
+dependency "subnet_agpagopagateway" {
+  config_path = "../../../pagopa/network/subnet_agpagopagateway"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -13,6 +23,10 @@ dependency "key_vault" {
 
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
+}
+
+dependency "redis" {
+  config_path = "../../../common/redis/redis_cache"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -44,16 +58,33 @@ inputs = {
   app_settings = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
+
+    REDIS_DB_URL      = dependency.redis.outputs.hostname
+    REDIS_DB_PORT     = dependency.redis.outputs.ssl_port
+    REDIS_DB_PASSWORD = dependency.redis.outputs.primary_access_key
+    REDIS_USE_CLUSTER = true
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      PAGOPA_HOST                = "pagopaproxyprod-PAGOPA-HOST"
+      PAGOPA_PORT                = "pagopaproxyprod-PAGOPA-PORT"
+      PAGOPA_PASSWORD            = "pagopaproxyprod-PAGOPA-PASSWORD"
+      PAGOPA_ID_PSP              = "pagopaproxyprod-PAGOPA-ID-PSP"
+      PAGOPA_ID_INT_PSP          = "pagopaproxyprod-PAGOPA-ID-INT-PSP"
+      PAGOPA_ID_CANALE           = "pagopaproxyprod-PAGOPA-ID-CANALE"
+      PAGOPA_ID_CANALE_PAGAMENTO = "pagopaproxyprod-PAGOPA-ID-CANALE-PAGAMENTO"
+      PAGOPA_WS_URI              = "pagopaproxyprod-PAGOPA-WS-URI"
     }
   }
 
-  // TODO: Add ip restriction
   allowed_ips = []
+
+  allowed_subnets = [
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_agpagopagateway.outputs.id
+  ]
 
   virtual_network_info = {
     name                  = dependency.virtual_network.outputs.resource_name

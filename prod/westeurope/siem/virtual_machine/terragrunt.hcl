@@ -29,8 +29,9 @@ terraform {
 }
 
 inputs = {
-  name                = "vlog"
-  size                = "Standard_D4_v2"
+  name = "vlog"
+  size = "Standard_D4_v2"
+
   subnet_id           = dependency.subnet_siem.outputs.id
   computer_name       = "Log Collector"
   admin_username      = "adminuser"

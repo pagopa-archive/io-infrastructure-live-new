@@ -2,18 +2,13 @@ dependency "app_service" {
   config_path = "../app_service"
 }
 
+dependency "app_service_certificate" {
+  config_path = "../app_service_certificate"
+}
+
 // External
 dependency "resource_group" {
   config_path = "../../resource_group"
-}
-
-dependency "app_service_certificate" {
-  config_path = "../../app_service_certificate"
-}
-
-// Common
-dependency "dns_zone" {
-  config_path = "../../../common/dns_zone"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -30,13 +25,12 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   custom_domain = {
-    name                     = "pagopaproxy-test"
+    name                     = "pagopaproxytest"
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     certificate_thumbprint   = dependency.app_service_certificate.outputs.thumbprint
   }
 
-  ssl_state             = "IpBasedEnabled"
   app_service_name      = dependency.app_service.outputs.name
   default_site_hostname = dependency.app_service.outputs.default_site_hostname
 }

@@ -1,3 +1,8 @@
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
+# Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
@@ -7,7 +12,29 @@ dependency "functions_app" {
   config_path = "../../api/functions_app/function_app"
 }
 
-// Common
+# Push notifications origin
+dependency "functions_services" {
+  config_path = "../../api/functions_services/function_app"
+}
+
+dependency "subnet_funcservices" {
+  config_path = "../../api/functions_services/subnet"
+}
+
+# External
+dependency "subnet_appgateway" {
+  config_path = "../../../external/appgateway/subnet"
+}
+
+dependency "app_service_pagopaproxyprod" {
+  config_path = "../../../external/pagopaproxyprod/app_service"
+}
+
+dependency "app_service_pagopaproxytest" {
+  config_path = "../../../external/pagopaproxytest/app_service"
+}
+
+# Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
@@ -28,13 +55,21 @@ dependency "notification_hub" {
   config_path = "../../../common/notification_hub"
 }
 
+dependency "storage_account_logs" {
+  config_path = "../../../operations/storage_account_logs"
+}
+
+dependency "storage_queue_spid_logs" {
+  config_path = "../../../operations/storage_queue_spid_logs"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.29"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v0.0.54"
 }
 
 inputs = {
@@ -44,7 +79,7 @@ inputs = {
   app_service_plan_info = {
     kind     = "Windows"
     sku_tier = "PremiumV2"
-    sku_size = "P1v2"
+    sku_size = "P3v2"
   }
 
   app_enabled         = true
@@ -65,7 +100,9 @@ inputs = {
     SAML_LOGOUT_CALLBACK_URL               = "https://app-backend.io.italia.it/slo"
     SAML_ISSUER                            = "https://app-backend.io.italia.it"
     SAML_ATTRIBUTE_CONSUMING_SERVICE_INDEX = "0"
+    SAML_ACCEPTED_CLOCK_SKEW_MS            = "2000"
     SPID_VALIDATOR_URL                     = "https://validator.spid.gov.it"
+    SPID_TESTENV_URL                       = "https://spidtestenv2.io.italia.it"
     IDP_METADATA_URL                       = "https://registry.SPID.gov.it/metadata/idp/spid-entities-idps.xml"
     IDP_METADATA_REFRESH_INTERVAL_SECONDS  = "864000" # 10 days
 
@@ -77,7 +114,7 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "https://${dependency.functions_app.outputs.default_hostname}/api/v1"
+    API_URL = "http://${dependency.functions_app.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH = "/api/v1"
@@ -88,15 +125,17 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE : "0.0.0.0/0"
-    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.functions_services.outputs.possible_outbound_ip_addresses
+    AZURE_NH_HUB_NAME            = dependency.notification_hub.outputs.name
 
     // PAGOPA
     ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    // TODO: Fix the connection
-    PAGOPA_API_URL      = "https://localhost"
-    PAGOPA_API_URL_TEST = "https://localhost-test"
+    PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
+
+    SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
+    SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
@@ -118,11 +157,17 @@ inputs = {
   // TODO: Add ip restriction
   allowed_ips = []
 
-  allowed_subnets = []
+  allowed_subnets = [
+    dependency.subnet_appgateway.outputs.id,
+    dependency.subnet_funcservices.outputs.id,
+  ]
 
-  virtual_network_info = {
-    name                  = dependency.virtual_network.outputs.resource_name
-    resource_group_name   = dependency.virtual_network.outputs.resource_group_name
-    subnet_address_prefix = "10.0.100.0/25"
+  subnet_id = dependency.subnet.outputs.id
+
+  application_logs = {
+    key_vault_id             = dependency.key_vault.outputs.id
+    key_vault_secret_sas_url = "logs-APPBACKEND-SAS-URL"
+    level                    = "Information"
+    retention_in_days        = 90
   }
 }
