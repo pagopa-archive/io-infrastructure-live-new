@@ -18,5 +18,5 @@ inputs = {
   account_kind             = "StorageV2"
   account_tier             = "Standard"
   account_replication_type = "GRS"
-  access_tier              = "Cool"
+  access_tier              = "Hot"
 }
