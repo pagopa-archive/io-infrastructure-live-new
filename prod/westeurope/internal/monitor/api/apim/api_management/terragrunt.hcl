@@ -24,8 +24,7 @@ include {
 }
 
 terraform {
-  #source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v0.0.47"
-  source = "../../../../../../../../io-infrastructure-modules-new/azurerm_monitor_diagnostic_setting"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.2"
 }
 
 inputs = {
