@@ -40,9 +40,9 @@ inputs = {
     private_ip_address_allocation = "Dynamic"
   }]
 
-  sku       = "VpnGw1"
-  type      = "Vpn"
-  vpn_type  = "RouteBased"
+  sku      = "VpnGw1"
+  type     = "Vpn"
+  vpn_type = "RouteBased"
 
   vpn_client_configurations = [{
     address_space         = ["10.2.0.0/24"]
@@ -61,5 +61,5 @@ inputs = {
 
   # Network Connection Gateway
   connection_type = "IPsec"
-  key_vault_id    = dependency.key_vault_common.outputs.id 
+  key_vault_id    = dependency.key_vault_common.outputs.id
 }
