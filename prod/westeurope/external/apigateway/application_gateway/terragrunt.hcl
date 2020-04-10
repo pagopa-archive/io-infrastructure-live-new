@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.1"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.3"
 }
 
 inputs = {
@@ -140,5 +140,17 @@ inputs = {
       }
     }
   ]
+
+  waf_configuration = {
+    enabled                  = true
+    firewall_mode            = "Prevention"
+    rule_set_type            = "OWASP"
+    rule_set_version         = "3.1"
+    request_body_check       = true
+    file_upload_limit_mb     = 100
+    max_request_body_size_kb = 128
+
+    disabled_rule_groups = []
+  }
 }
 
