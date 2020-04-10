@@ -12,14 +12,14 @@ include {
 }
 
 terraform {
-  # source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v0.0.27"
-  source = "../../../../../io-infrastructure-modules-new/azurerm_eventhub"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.2"
 }
 
 inputs = {
   namespce_name       = "siem"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
   sku                 = "Standard"
+  
   eventhubs           = [
     {
       name = "io-p-evh-siem"
@@ -56,5 +56,5 @@ inputs = {
       send    = false 
       manage  = false
     }
-  ]     
+  ]
 }

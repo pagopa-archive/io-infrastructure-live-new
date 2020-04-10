@@ -25,13 +25,14 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v0.0.39"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v2.0.1"
 }
 
 inputs = {
-  name                = "vlog"
-  size                = "Standard_D4_v2"
-  subnet_id           =  dependency.subnet_siem.outputs.id
+  name = "vlog"
+  size = "Standard_D4_v2"
+
+  subnet_id           = dependency.subnet_siem.outputs.id
   computer_name       = "Log Collector"
   admin_username      = "adminuser"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
@@ -49,14 +50,15 @@ inputs = {
     storage_account_type      = "Standard_LRS"
     disk_size_gb              = "150"
     disk_encryption_set_id    = null
-    write_accelerator_enabled = false 
+    write_accelerator_enabled = false
   }
 
   admin_ssh_key = [{
     username   = "adminuser"
     public_key = file("./mypubkey.pub")
   }]
-  
+
+  # SSH access from Leonardo subnet only
   security_rules = [{
     name                         = "SSH"
     description                  = "Inbound ssh"
@@ -66,7 +68,7 @@ inputs = {
     protocol                     = "Tcp"
     source_port_ranges           = ["*"]
     destination_port_ranges      = [22]
-    source_address_prefixes      = ["0.0.0.0/0"]
+    source_address_prefixes      = ["172.28.0.0/16"]
     destination_address_prefixes = ["0.0.0.0/0"]
   }]
 
