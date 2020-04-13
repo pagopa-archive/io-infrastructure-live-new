@@ -94,6 +94,7 @@ inputs = {
 
     // ENVIRONMENT
     NODE_ENV = "production"
+    FETCH_KEEPALIVE_ENABLED = "true"
 
     // SPID
     SAML_CALLBACK_URL                      = "https://app-backend.io.italia.it/assertionConsumerService"
