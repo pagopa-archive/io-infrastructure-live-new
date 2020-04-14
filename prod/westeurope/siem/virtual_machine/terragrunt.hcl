@@ -25,7 +25,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v2.0.1"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_linux_virtual_machine?ref=v2.0.12"
 }
 
 inputs = {
@@ -36,6 +36,7 @@ inputs = {
   computer_name       = "Log Collector"
   admin_username      = "adminuser"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
+  assign_public_ip    = false
 
   source_image_reference = [{
     publisher = "rsa-security-llc"
