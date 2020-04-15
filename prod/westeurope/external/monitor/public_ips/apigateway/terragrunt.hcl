@@ -35,23 +35,23 @@ inputs = {
     category = "DDoSProtectionNotifications"
     enabled  = true
     retention_policy = {
-      days    = 365
-      enabled = true
+      days    = null
+      enabled = false
     }
     },
     {
       category = "DDoSMitigationFlowLogs"
       enabled  = true
       retention_policy = {
-        days    = 365
-        enabled = true
+        days    = null
+        enabled = false
       }
     },
     {
       category = "DDoSMitigationReports"
       enabled  = false
       retention_policy = {
-        days    = 0
+        days    = null
         enabled = false
       }
   }]
@@ -60,7 +60,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = false
     retention_policy = {
-      days    = 0
+      days    = null
       enabled = false
     }
   }]

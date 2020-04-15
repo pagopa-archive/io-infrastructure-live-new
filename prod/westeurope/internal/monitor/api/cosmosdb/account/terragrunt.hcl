@@ -24,7 +24,7 @@ inputs = {
     category = "QueryRuntimeStatistics"
     enabled  = false
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
     },
@@ -32,7 +32,7 @@ inputs = {
       category = "DataPlaneRequests"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -40,7 +40,7 @@ inputs = {
       category = "PartitionKeyStatistics"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -48,7 +48,7 @@ inputs = {
       category = "PartitionKeyRUConsumption"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -56,7 +56,7 @@ inputs = {
       category = "MongoRequests"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -64,7 +64,7 @@ inputs = {
       category = "ControlPlaneRequests"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -72,7 +72,7 @@ inputs = {
       category = "CassandraRequests"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
   }]
@@ -81,7 +81,7 @@ inputs = {
     category = "Requests"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]

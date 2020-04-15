@@ -49,7 +49,7 @@ inputs = {
       category = "ApplicationGatewayPerformanceLog"
       enabled  = false
       retention_policy = {
-        days    = 0
+        days    = null
         enabled = false
       }
     },
@@ -57,8 +57,8 @@ inputs = {
       category = "ApplicationGatewayFirewallLog"
       enabled  = true
       retention_policy = {
-        days    = 365
-        enabled = true
+        days    = 1
+        enabled = false
       }
   }]
 
@@ -66,7 +66,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = false
     retention_policy = {
-      days    = 0
+      days    = null
       enabled = false
     }
   }]

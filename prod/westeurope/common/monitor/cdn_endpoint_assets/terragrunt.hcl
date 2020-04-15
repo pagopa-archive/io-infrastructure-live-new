@@ -25,7 +25,7 @@ inputs = {
     category = "CoreAnalytics"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]

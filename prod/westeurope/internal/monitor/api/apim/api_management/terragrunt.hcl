@@ -50,7 +50,7 @@ inputs = {
     category = "Gateway Requests"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = 1
       enabled = false
     }
     },
@@ -58,7 +58,7 @@ inputs = {
       category = "Capacity"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -66,7 +66,7 @@ inputs = {
       category = "EventHub Events"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -74,7 +74,7 @@ inputs = {
       category = "Network Status"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     }

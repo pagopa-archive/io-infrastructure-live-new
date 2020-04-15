@@ -37,23 +37,23 @@ inputs = {
       category = "AppServiceConsoleLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
     {
       category = "AppServiceAppLogs"
-      enabled  = false
+      enabled  = true
       retention_policy = {
-        days    = 365
-        enabled = true
+        days    = 1
+        enabled = false
       }
     },
     {
       category = "AppServiceFileAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -61,7 +61,7 @@ inputs = {
       category = "AppServiceAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
   }]
@@ -70,7 +70,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = 1
       enabled = false
     }
   }]
