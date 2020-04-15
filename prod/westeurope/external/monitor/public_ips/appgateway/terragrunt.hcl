@@ -37,8 +37,8 @@ inputs = {
     category = "DDoSProtectionNotifications"
     enabled  = true
     retention_policy = {
-      days    = false
-      enabled = null
+      days    = null
+      enabled = false
     }
     },
     {
