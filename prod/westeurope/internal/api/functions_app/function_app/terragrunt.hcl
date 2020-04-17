@@ -58,7 +58,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.12"
 }
 
 inputs = {
@@ -95,6 +95,7 @@ inputs = {
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    DPO_EMAIL_ADDRESS        = "dpo@pagopa.it"
     PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
     FUNCTIONS_PUBLIC_URL     = "https://api.io.italia.it/public"
   }
