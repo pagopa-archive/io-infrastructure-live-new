@@ -17,10 +17,6 @@ dependency "functions_app" {
 }
 
 # Push notifications origin
-dependency "functions_services" {
-  config_path = "../../api/functions_services/function_app"
-}
-
 dependency "subnet_funcservices" {
   config_path = "../../api/functions_services/subnet"
 }
@@ -73,7 +69,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.11"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.12"
 }
 
 inputs = {
@@ -136,11 +132,10 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.functions_services.outputs.possible_outbound_ip_addresses
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_funcservices.outputs.address_prefix
     AZURE_NH_HUB_NAME            = dependency.notification_hub.outputs.name
 
     // PAGOPA
-    ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
@@ -162,6 +157,9 @@ inputs = {
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
       AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
+
+      // PAGOPA
+      ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
     }
   }
 

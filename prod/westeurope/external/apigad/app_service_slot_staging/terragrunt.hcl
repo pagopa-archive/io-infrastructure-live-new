@@ -1,3 +1,7 @@
+dependency "app_service" {
+  config_path = "../app_service"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -21,28 +25,19 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.12"
-
-  after_hook "check_slots" {
-    commands     = ["apply"]
-    execute      = ["echo", "Remember to do check also the app_service slots!"]
-    run_on_error = true
-  }
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.12"
 }
 
 inputs = {
-  name                = "apigad"
+  name                = "staging"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  app_service_plan_info = {
-    kind     = "Windows"
-    sku_tier = "PremiumV2"
-    sku_size = "P3v2"
-  }
+  app_service_name    = dependency.app_service.outputs.name
+  app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
 
   app_enabled         = true
   client_cert_enabled = true
   https_only          = true
+  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
