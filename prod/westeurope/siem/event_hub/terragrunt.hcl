@@ -12,7 +12,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.12"
 }
 
 inputs = {
@@ -22,7 +22,7 @@ inputs = {
 
   eventhubs = [
     {
-      name              = "io-p-evh-siem"
+      name              = "io-p-evh-siem-monitor"
       partition_count   = 4
       message_retention = 5
     },
@@ -35,14 +35,6 @@ inputs = {
 
   eventhub_authorization_rules = [
     {
-      /* this is not used anymore but can't be removed since it will recreate the other ruled which are in use */
-      name          = "io-prod-ehr-true"
-      eventhub_name = "io-p-evh-siem"
-      listen        = true
-      send          = false
-      manage        = false
-    },
-    {
       name          = "io-prod-ehr-logs"
       eventhub_name = "io-p-evh-siem-logs"
       listen        = true
@@ -51,7 +43,7 @@ inputs = {
     },
     {
       name          = "io-prod-ehr-monitor"
-      eventhub_name = "io-p-evh-siem"
+      eventhub_name = "io-p-evh-siem-monitor"
       listen        = true
       send          = false
       manage        = false
