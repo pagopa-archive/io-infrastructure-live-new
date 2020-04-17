@@ -12,13 +12,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.12"
 }
 
 inputs = {
   name                       = "pagopaproxytest-logs"
   target_resource_id         = dependency.app_service.outputs.id
-  log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
   storage_account_id         = dependency.storage_account_logs.outputs.id
 
   logs = [{

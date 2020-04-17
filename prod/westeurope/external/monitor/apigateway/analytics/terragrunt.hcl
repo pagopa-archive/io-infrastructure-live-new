@@ -20,14 +20,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.12"
 }
 
 inputs = {
   name                         = "apigateway-analytics"
   target_resource_id           = dependency.apigateway.outputs.id
   log_analytics_workspace_id   = dependency.log_analytics_workspace.outputs.id
-  storage_account_id           = dependency.storage_account_logs.outputs.id
   eventhub_name                = dependency.event_hub_siem.outputs.name[1]
   eventhub_namespace_name      = dependency.event_hub_siem.outputs.eventhub_namespace_name
   eventhub_authorization_rule  = "RootManageSharedAccessKey"

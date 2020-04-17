@@ -3,7 +3,7 @@ dependency "api_management" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../../operations/storage_account_logs"
+  config_path = "../../../../../../operations/storage_account_logs"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -12,14 +12,14 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.12"
 }
 
 inputs = {
-  name                         = "apim-api-logs"
-  target_resource_id           = dependency.api_management.outputs.id
-  storage_account_id           = dependency.storage_account_logs.outputs.id
-  
+  name               = "apim-api-logs"
+  target_resource_id = dependency.api_management.outputs.id
+  storage_account_id = dependency.storage_account_logs.outputs.id
+
   logs = [{
     category = "GatewayLogs"
     enabled  = true
