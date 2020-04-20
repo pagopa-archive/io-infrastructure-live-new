@@ -103,9 +103,10 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      MAILUP_USERNAME = "common-MAILUP-USERNAME"
-      MAILUP_SECRET   = "common-MAILUP-SECRET"
-      PUBLIC_API_KEY  = "apim-IO-SERVICE-KEY"
+      MAILUP_USERNAME       = "common-MAILUP-USERNAME"
+      MAILUP_SECRET         = "common-MAILUP-SECRET"
+      PUBLIC_API_KEY        = "apim-IO-SERVICE-KEY"
+      SPID_LOGS_PUBLIC_KEY  = "funcapp-KEY-SPIDLOGS-PUB"
     }
   }
 
