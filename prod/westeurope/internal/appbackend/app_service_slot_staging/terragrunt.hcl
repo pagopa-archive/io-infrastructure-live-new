@@ -107,6 +107,8 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    APPINSIGHTS_SAMPLING_PERCENTAGE     = "100"
+ 
     // SPID
     SAML_CALLBACK_URL                      = "https://app-backend.io.italia.it/assertionConsumerService"
     SAML_LOGOUT_CALLBACK_URL               = "https://app-backend.io.italia.it/slo"
