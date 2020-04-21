@@ -1,13 +1,9 @@
 dependency "app_service" {
-  config_path = "../../../appbackend/app_service"
+  config_path = "../../../../appbackend/app_service"
 }
 
 dependency "log_analytics_workspace" {
-  config_path = "../../../../common/log_analytics_workspace"
-}
-
-dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../../common/log_analytics_workspace"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -20,17 +16,16 @@ terraform {
 }
 
 inputs = {
-  name                       = "appbackend"
+  name                       = "appbackend-analytics"
   target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  storage_account_id         = dependency.storage_account_logs.outputs.id
 
   logs = [{
     category = "AppServiceHTTPLogs"
     enabled  = true
     retention_policy = {
-      days    = 365
-      enabled = true
+      days    = null
+      enabled = false
     }
     },
     {
@@ -43,7 +38,7 @@ inputs = {
     },
     {
       category = "AppServiceAppLogs"
-      enabled  = false
+      enabled  = true
       retention_policy = {
         days    = null
         enabled = false
