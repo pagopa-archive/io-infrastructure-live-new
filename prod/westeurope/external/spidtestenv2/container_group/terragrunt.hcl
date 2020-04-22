@@ -8,7 +8,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_container_group?ref=v2.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_container_group?ref=v2.0.13"
 }
 
 inputs = {
@@ -26,11 +26,28 @@ inputs = {
         protocol = "TCP"
       }
     ]
-    commands = ["python", "spid-testenv.py", "-c", "/containershare/config.yml"]
+    commands       = ["python", "spid-testenv.py", "-c", "/containershare/config.yml"]
+    liveness_probe = null
+
+    liveness_probe = {
+      exec                  = []
+      initial_delay_seconds = 180
+      period_seconds        = 10
+      failure_threshold     = 3
+      success_threshold     = 1
+      timeout_seconds       = 40
+
+      http_get = {
+        path   = "/"
+        port   = 443
+        scheme = "Https"
+      }
+    }
   }
 
   dns_cname_record = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
   }
+
 }
