@@ -29,14 +29,13 @@ inputs = {
     commands       = ["python", "spid-testenv.py", "-c", "/containershare/config.yml"]
     liveness_probe = null
 
-
     liveness_probe = {
       exec                  = []
-      initial_delay_seconds = 40
-      period_seconds        = 5
-      failure_threshold     = 10
-      success_threshold     = 3
-      timeout_seconds       = 10
+      initial_delay_seconds = 180
+      period_seconds        = 10
+      failure_threshold     = 3
+      success_threshold     = 1
+      timeout_seconds       = 40
 
       http_get = {
         path   = "/"
