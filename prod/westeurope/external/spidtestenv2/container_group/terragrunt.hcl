@@ -39,7 +39,7 @@ inputs = {
       timeout_seconds       = 10
 
       http_get = {
-        path   = "/info"
+        path   = "/"
         port   = 443
         scheme = "Https"
       }
