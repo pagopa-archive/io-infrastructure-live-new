@@ -12,21 +12,41 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.15"
 }
 
 inputs = {
-  name                = "siem"
+  namespace_name      = "siem"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
-  partition_count     = 4
-  message_retention   = 5
   sku                 = "Standard"
+
+  eventhubs = [
+    {
+      name              = "io-p-evh-siem-monitor"
+      partition_count   = 4
+      message_retention = 5
+    },
+    {
+      name              = "io-p-evh-siem-logs"
+      partition_count   = 4
+      message_retention = 5
+    },
+  ]
 
   eventhub_authorization_rules = [
     {
-      listen = true
-      send   = false
-      manage = false
+      name          = "io-prod-ehr-logs"
+      eventhub_name = "io-p-evh-siem-logs"
+      listen        = true
+      send          = false
+      manage        = false
+    },
+    {
+      name          = "io-prod-ehr-monitor"
+      eventhub_name = "io-p-evh-siem-monitor"
+      listen        = true
+      send          = false
+      manage        = false
     }
   ]
 }
