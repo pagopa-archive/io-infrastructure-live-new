@@ -12,11 +12,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_eventhub?ref=v2.0.15"
 }
 
 inputs = {
-  namespce_name       = "siem"
+  namespace_name      = "siem"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
   sku                 = "Standard"
 
