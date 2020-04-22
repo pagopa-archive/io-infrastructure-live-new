@@ -14,4 +14,5 @@ terraform {
 inputs = {
   name                = "common"
   resource_group_name = dependency.resource_group.outputs.resource_name
+  retention_in_days   = 90
 }

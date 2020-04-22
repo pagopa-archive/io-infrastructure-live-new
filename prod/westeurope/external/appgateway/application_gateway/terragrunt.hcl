@@ -116,11 +116,20 @@ inputs = {
 
     disabled_rule_groups = [
       {
-        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
         rules           = []
       },
       {
-        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
+        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
+        rules = [
+          920300,
+          920310,
+          920311,
+          920320
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
         rules           = []
       }
     ]

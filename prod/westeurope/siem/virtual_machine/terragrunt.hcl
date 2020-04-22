@@ -36,6 +36,7 @@ inputs = {
   computer_name       = "Log Collector"
   admin_username      = "adminuser"
   resource_group_name = dependency.resource_group_siem.outputs.resource_name
+  assign_public_ip    = false
 
   source_image_reference = [{
     publisher = "rsa-security-llc"

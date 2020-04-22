@@ -1,13 +1,9 @@
 dependency "app_service" {
-  config_path = "../../../apigad/app_service"
+  config_path = "../../../../pagopaproxytest/app_service"
 }
 
 dependency "log_analytics_workspace" {
-  config_path = "../../../../common/log_analytics_workspace"
-}
-
-dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../../common/log_analytics_workspace"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -20,40 +16,39 @@ terraform {
 }
 
 inputs = {
-  name                       = "apigad"
+  name                       = "pagopaproxytest-analytics"
   target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
-  storage_account_id         = dependency.storage_account_logs.outputs.id
-
+ 
   logs = [{
     category = "AppServiceHTTPLogs"
     enabled  = true
     retention_policy = {
-      days    = 365
-      enabled = true
+      days    = null
+      enabled = false
     }
     },
     {
       category = "AppServiceConsoleLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
     {
       category = "AppServiceAppLogs"
-      enabled  = false
+      enabled  = true
       retention_policy = {
-        days    = 365
-        enabled = true
+        days    = null
+        enabled = false
       }
     },
     {
       category = "AppServiceFileAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -61,7 +56,7 @@ inputs = {
       category = "AppServiceAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
   }]
@@ -70,7 +65,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]
