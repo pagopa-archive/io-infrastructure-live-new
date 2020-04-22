@@ -1,21 +1,17 @@
 dependency "api_management" {
-  config_path = "../../../../api/apim/api_management"
+  config_path = "../../../../../api/apim/api_management"
 }
 
 dependency "log_analytics_workspace" {
-  config_path = "../../../../../common/log_analytics_workspace"
-}
-
-dependency "storage_account_logs" {
-  config_path = "../../../../../operations/storage_account_logs"
+  config_path = "../../../../../../common/log_analytics_workspace"
 }
 
 dependency "resource_group_siem" {
-  config_path = "../../../../../siem/resource_group"
+  config_path = "../../../../../../siem/resource_group"
 }
 
 dependency "event_hub_siem" {
-  config_path = "../../../../../siem/event_hub"
+  config_path = "../../../../../../siem/event_hub"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -28,10 +24,9 @@ terraform {
 }
 
 inputs = {
-  name                         = "apim-api"
+  name                         = "apim-api-analytics"
   target_resource_id           = dependency.api_management.outputs.id
   log_analytics_workspace_id   = dependency.log_analytics_workspace.outputs.id
-  storage_account_id           = dependency.storage_account_logs.outputs.id
   eventhub_name                = dependency.event_hub_siem.outputs.name[1]
   eventhub_namespace_name      = dependency.event_hub_siem.outputs.eventhub_namespace_name
   eventhub_authorization_rule  = "RootManageSharedAccessKey"
@@ -41,8 +36,8 @@ inputs = {
     category = "GatewayLogs"
     enabled  = true
     retention_policy = {
-      days    = 365
-      enabled = true
+      days    = null
+      enabled = false
     }
   }]
 
@@ -50,7 +45,7 @@ inputs = {
     category = "Gateway Requests"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
     },
@@ -58,7 +53,7 @@ inputs = {
       category = "Capacity"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -66,7 +61,7 @@ inputs = {
       category = "EventHub Events"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -74,7 +69,7 @@ inputs = {
       category = "Network Status"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     }

@@ -1,5 +1,5 @@
-dependency "cosmosdb_account" {
-  config_path = "../../../../api/cosmosdb/account"
+dependency "app_service" {
+  config_path = "../../../../apigad/app_service"
 }
 
 dependency "log_analytics_workspace" {
@@ -16,20 +16,20 @@ terraform {
 }
 
 inputs = {
-  name                       = "cosmosdb-account"
-  target_resource_id         = dependency.cosmosdb_account.outputs.id
+  name                       = "apigad-analytics"
+  target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
 
   logs = [{
-    category = "QueryRuntimeStatistics"
-    enabled  = false
+    category = "AppServiceHTTPLogs"
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
     }
     },
     {
-      category = "DataPlaneRequests"
+      category = "AppServiceConsoleLogs"
       enabled  = false
       retention_policy = {
         days    = null
@@ -37,7 +37,15 @@ inputs = {
       }
     },
     {
-      category = "PartitionKeyStatistics"
+      category = "AppServiceAppLogs"
+      enabled  = true
+      retention_policy = {
+        days    = null
+        enabled = false
+      }
+    },
+    {
+      category = "AppServiceFileAuditLogs"
       enabled  = false
       retention_policy = {
         days    = null
@@ -45,31 +53,7 @@ inputs = {
       }
     },
     {
-      category = "PartitionKeyRUConsumption"
-      enabled  = false
-      retention_policy = {
-        days    = null
-        enabled = false
-      }
-    },
-    {
-      category = "MongoRequests"
-      enabled  = false
-      retention_policy = {
-        days    = null
-        enabled = false
-      }
-    },
-    {
-      category = "ControlPlaneRequests"
-      enabled  = false
-      retention_policy = {
-        days    = null
-        enabled = false
-      }
-    },
-    {
-      category = "CassandraRequests"
+      category = "AppServiceAuditLogs"
       enabled  = false
       retention_policy = {
         days    = null
@@ -78,7 +62,7 @@ inputs = {
   }]
 
   metrics = [{
-    category = "Requests"
+    category = "AllMetrics"
     enabled  = true
     retention_policy = {
       days    = null

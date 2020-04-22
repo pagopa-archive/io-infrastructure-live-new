@@ -25,7 +25,7 @@ inputs = {
     category = "AuditEvent"
     enabled  = false
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]
@@ -34,7 +34,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = true
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]

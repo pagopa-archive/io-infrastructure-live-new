@@ -1,21 +1,9 @@
 dependency "apigateway" {
-  config_path = "../../apigateway/application_gateway"
-}
-
-dependency "resource_group_siem" {
-  config_path = "../../../siem/resource_group"
-}
-
-dependency "log_analytics_workspace" {
-  config_path = "../../../common/log_analytics_workspace"
+  config_path = "../../../apigateway/application_gateway"
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../operations/storage_account_logs"
-}
-
-dependency "event_hub_siem" {
-  config_path = "../../../siem/event_hub"
+  config_path = "../../../../operations/storage_account_logs"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -28,14 +16,9 @@ terraform {
 }
 
 inputs = {
-  name                         = "apigateway"
+  name                         = "apigateway-logs"
   target_resource_id           = dependency.apigateway.outputs.id
-  log_analytics_workspace_id   = dependency.log_analytics_workspace.outputs.id
   storage_account_id           = dependency.storage_account_logs.outputs.id
-  eventhub_name                = dependency.event_hub_siem.outputs.name[1]
-  eventhub_namespace_name      = dependency.event_hub_siem.outputs.eventhub_namespace_name
-  eventhub_authorization_rule  = "RootManageSharedAccessKey"
-  eventhub_resource_group_name = dependency.resource_group_siem.outputs.resource_name
 
   logs = [{
     category = "ApplicationGatewayAccessLog"
@@ -49,16 +32,16 @@ inputs = {
       category = "ApplicationGatewayPerformanceLog"
       enabled  = false
       retention_policy = {
-        days    = 0
+        days    = null
         enabled = false
       }
     },
     {
       category = "ApplicationGatewayFirewallLog"
-      enabled  = true
+      enabled  = false
       retention_policy = {
-        days    = 365
-        enabled = true
+        days    = null
+        enabled = false
       }
   }]
 
@@ -66,7 +49,7 @@ inputs = {
     category = "AllMetrics"
     enabled  = false
     retention_policy = {
-      days    = 0
+      days    = null
       enabled = false
     }
   }]

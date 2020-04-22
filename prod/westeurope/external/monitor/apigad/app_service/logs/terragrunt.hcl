@@ -1,13 +1,9 @@
 dependency "app_service" {
-  config_path = "../../../appbackend/app_service"
-}
-
-dependency "log_analytics_workspace" {
-  config_path = "../../../../common/log_analytics_workspace"
+  config_path = "../../../../apigad/app_service"
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../../operations/storage_account_logs"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -20,9 +16,8 @@ terraform {
 }
 
 inputs = {
-  name                       = "appbackend"
+  name                       = "apigad-logs"
   target_resource_id         = dependency.app_service.outputs.id
-  log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
   storage_account_id         = dependency.storage_account_logs.outputs.id
 
   logs = [{
@@ -37,7 +32,7 @@ inputs = {
       category = "AppServiceConsoleLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -45,7 +40,7 @@ inputs = {
       category = "AppServiceAppLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -53,7 +48,7 @@ inputs = {
       category = "AppServiceFileAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
     },
@@ -61,16 +56,16 @@ inputs = {
       category = "AppServiceAuditLogs"
       enabled  = false
       retention_policy = {
-        days    = 365
+        days    = null
         enabled = false
       }
   }]
 
   metrics = [{
     category = "AllMetrics"
-    enabled  = true
+    enabled  = false
     retention_policy = {
-      days    = 365
+      days    = null
       enabled = false
     }
   }]

@@ -1,5 +1,5 @@
-dependency "public_ip" {
-  config_path = "../../../apigateway/public_ip"
+dependency "appgateway" {
+  config_path = "../../../appgateway/application_gateway"
 }
 
 dependency "resource_group_siem" {
@@ -24,15 +24,16 @@ terraform {
 }
 
 inputs = {
-  name                         = "pip-apigateway"
-  target_resource_id           = dependency.public_ip.outputs.id
+  name                         = "appgateway-analytics"
+  target_resource_id           = dependency.appgateway.outputs.id
   log_analytics_workspace_id   = dependency.log_analytics_workspace.outputs.id
   eventhub_name                = dependency.event_hub_siem.outputs.name[1]
   eventhub_namespace_name      = dependency.event_hub_siem.outputs.eventhub_namespace_name
   eventhub_authorization_rule  = "RootManageSharedAccessKey"
   eventhub_resource_group_name = dependency.resource_group_siem.outputs.resource_name
+
   logs = [{
-    category = "DDoSProtectionNotifications"
+    category = "ApplicationGatewayAccessLog"
     enabled  = true
     retention_policy = {
       days    = null
@@ -40,16 +41,16 @@ inputs = {
     }
     },
     {
-      category = "DDoSMitigationFlowLogs"
-      enabled  = true
+      category = "ApplicationGatewayPerformanceLog"
+      enabled  = false
       retention_policy = {
         days    = null
         enabled = false
       }
     },
     {
-      category = "DDoSMitigationReports"
-      enabled  = false
+      category = "ApplicationGatewayFirewallLog"
+      enabled  = true
       retention_policy = {
         days    = null
         enabled = false
@@ -58,7 +59,7 @@ inputs = {
 
   metrics = [{
     category = "AllMetrics"
-    enabled  = false
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
