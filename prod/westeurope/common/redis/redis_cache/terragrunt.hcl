@@ -2,6 +2,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "storage_account" {
+  config_path = "../storage_account"
+}
+
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
@@ -26,5 +30,9 @@ inputs = {
   sku_name              = "Premium"
   enable_authentication = true
 
-  // TODO: Enable backup
+  backup_configuration = {
+    frequency                 = 60
+    max_snapshot_count        = 1
+    storage_connection_string = dependency.storage_account.outputs.primary_blob_connection_string
+  }
 }
