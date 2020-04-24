@@ -31,8 +31,8 @@ inputs = {
   enable_authentication = true
 
   backup_configuration = {
-    frequency = 60
-    max_snapshot_count = 1
+    frequency                 = 60
+    max_snapshot_count        = 1
     storage_connection_string = dependency.storage_account.outputs.primary_blob_connection_string
   }
 }
