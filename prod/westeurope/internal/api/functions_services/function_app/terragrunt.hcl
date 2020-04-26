@@ -97,6 +97,7 @@ inputs = {
     map = {
       MAILUP_USERNAME     = "common-MAILUP-USERNAME"
       MAILUP_SECRET       = "common-MAILUP-SECRET"
+      SENDGRID_API_KEY    = "common-SENDGRID-APIKEY"
       WEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
       SANDBOX_FISCAL_CODE = "io-SANDBOX-FISCAL-CODE"
     }
