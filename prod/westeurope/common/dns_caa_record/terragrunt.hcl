@@ -2,10 +2,6 @@ dependency "resource_group" {
   config_path = "../resource_group"
 }
 
-dependency "dns_zone" {
-  config_path = "../dns_zone"
-}
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -18,7 +14,7 @@ terraform {
 inputs = {
   name                = "io.italia.it"
   resource_group_name = dependency.resource_group.outputs.resource_name
-  zone_name           = dependency.dns_zone.outputs.name
+  zone_name           = "io.italia.it"
   ttl                 = 300
 
   records = [{
