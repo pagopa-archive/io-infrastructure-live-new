@@ -46,7 +46,8 @@ inputs = {
   }]
 
   os_disk = {
-    name                      = "log-collector-disk"
+    # Disk name replaced from a backup.
+    name                      = "iopvmvlog-osdisk-20200414-164933"
     caching                   = "ReadWrite"
     storage_account_type      = "Standard_LRS"
     disk_size_gb              = "150"
@@ -79,5 +80,4 @@ inputs = {
     publisher = "rsa-security-llc"
     plan      = "hourly"
   }]
-
 }
