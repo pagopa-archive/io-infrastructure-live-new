@@ -21,5 +21,10 @@ inputs = {
     flags = 0
     tag   = "issue"
     value = "letsencrypt.org"
-  }]
+    },
+    {
+      flags = 0
+      tag   = "iodef"
+      value = "mailto:security+caa@pagopa.it"
+  },]
 }
