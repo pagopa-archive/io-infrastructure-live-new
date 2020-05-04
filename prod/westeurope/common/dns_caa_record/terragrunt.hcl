@@ -20,6 +20,6 @@ inputs = {
   records = [{
     flags = 0
     tag   = "issue"
-    value = "io.italia.it"
+    value = "letsencrypt.org"
   }]
 }
