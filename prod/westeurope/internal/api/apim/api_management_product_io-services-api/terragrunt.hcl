@@ -13,7 +13,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management_product?ref=v2.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management_product?ref=v2.0.19"
 }
 
 inputs = {
@@ -25,4 +25,5 @@ inputs = {
   subscription_required = true
   approval_required     = false
   published             = true
+  policy_xml            = file("policy.xml")
 }
