@@ -11,7 +11,7 @@ include {
 }
 
 terraform {
-  source = "../../../../../io-infrastructure-modules-new/azurerm_subnet"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.0.20"
 }
 
 inputs = {
