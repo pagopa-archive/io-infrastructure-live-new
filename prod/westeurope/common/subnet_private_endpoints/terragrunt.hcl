@@ -1,4 +1,4 @@
-#  TEMP SUBNET USED WHEN MOVING/RESIZING OTHER APPGATEWAY SUBNETS
+#  Subnet to place all private endpoints
 
 # Common
 dependency "virtual_network" {
