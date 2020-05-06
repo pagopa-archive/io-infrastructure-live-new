@@ -1,4 +1,4 @@
-# Internal
+# Private endpoint 
 dependency "resource_group" {
   config_path = "../../resource_group"
 }

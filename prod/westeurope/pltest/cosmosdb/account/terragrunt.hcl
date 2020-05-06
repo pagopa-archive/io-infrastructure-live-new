@@ -1,4 +1,4 @@
-# Internal
+# Temp resource gruop to test cosmosdb private endpoints
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
