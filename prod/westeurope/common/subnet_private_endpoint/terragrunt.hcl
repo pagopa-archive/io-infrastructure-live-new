@@ -32,9 +32,9 @@ inputs = {
       actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
     }
   }
-
-  service_endpoints = [
-    "Microsoft.Web"
-  ]
   */
+  service_endpoints = [
+    "Microsoft.AzureCosmosDB"
+  ]
+
 }

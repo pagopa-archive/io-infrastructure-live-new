@@ -29,6 +29,9 @@ inputs = {
   }
 
   service_endpoints = [
+    "Microsoft.AzureCosmosDB",
     "Microsoft.Web"
   ]
+
+  enforce_private_link_endpoint_network_policies = true
 }

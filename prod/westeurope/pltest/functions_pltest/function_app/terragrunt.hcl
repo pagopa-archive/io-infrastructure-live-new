@@ -48,6 +48,11 @@ inputs = {
 
     TEST_SETTING1 = "VALUE1"
     TEST_SETTING2 = "VALUE2"
+
+    # ref: https://docs.microsoft.com/en-us/azure/app-service/web-sites-integrate-with-vnet
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
+
   }
 
   app_settings_secrets = {
