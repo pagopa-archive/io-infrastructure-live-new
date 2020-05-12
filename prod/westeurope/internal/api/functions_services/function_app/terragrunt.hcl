@@ -50,7 +50,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.14"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.24"
 }
 
 inputs = {
@@ -90,6 +90,11 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
+
+    # DNS Config for private endpoints resolution
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
+
   }
 
   app_settings_secrets = {

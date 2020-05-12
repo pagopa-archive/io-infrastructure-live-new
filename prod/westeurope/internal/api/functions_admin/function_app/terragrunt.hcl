@@ -46,7 +46,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.14"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.24"
 }
 
 inputs = {
@@ -72,6 +72,10 @@ inputs = {
     AZURE_APIM                = "io-p-apim-api"
     AZURE_APIM_HOST           = "api-internal.io.italia.it"
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
+
+    # DNS Config for private endpoints resolution
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
   }
 
   app_settings_secrets = {

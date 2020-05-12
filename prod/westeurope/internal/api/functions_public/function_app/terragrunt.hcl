@@ -42,7 +42,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.14"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.24"
 }
 
 inputs = {
@@ -63,6 +63,10 @@ inputs = {
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
+
+    # DNS Config for private endpoints resolution
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
   }
 
   app_settings_secrets = {
