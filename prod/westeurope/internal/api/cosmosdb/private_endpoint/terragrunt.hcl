@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_endpoint?ref=v2.0.24"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_endpoint?ref=v2.0.23"
 }
 
 inputs = {
@@ -32,5 +32,4 @@ inputs = {
     subresource_names              = ["Sql"]
   }
 
-  private_dns_zone_name = "privatelink.documents.azure.com"
 }
