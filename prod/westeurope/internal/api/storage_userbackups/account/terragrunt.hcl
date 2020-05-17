@@ -1,6 +1,6 @@
 # Internal
 dependency "resource_group" {
-  config_path = "../../../../resource_group"
+  config_path = "../../../resource_group"
 }
 
 # Include all settings from the root terragrunt.hcl file
