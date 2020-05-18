@@ -12,6 +12,7 @@ terraform {
 }
 
 inputs = {
-  name                 = "user-data-download"
-  storage_account_name = dependency.storage_account.outputs.resource_name
+  name                  = "user-data-download"
+  storage_account_name  = dependency.storage_account.outputs.resource_name
+  container_access_type = "blob"
 }
