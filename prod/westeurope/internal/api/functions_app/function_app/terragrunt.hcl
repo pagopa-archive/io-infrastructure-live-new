@@ -118,12 +118,12 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
-  }
 
-  // Push notifications
-  AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
-  NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
-  NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+    // Push notifications
+    AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
+    NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
+    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+  }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
