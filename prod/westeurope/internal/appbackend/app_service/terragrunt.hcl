@@ -59,6 +59,14 @@ dependency "storage_queue_spid_logs" {
   config_path = "../../../operations/storage_queue_spid_logs"
 }
 
+dependency "notification_queue" {
+  config_path = "../../api/storage_notifications/queue_push-notifications"
+}
+
+dependency "notification_storage_account" {
+  config_path = "../../api/storage_notifications/account"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -147,6 +155,9 @@ inputs = {
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
+
+    NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
+    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
