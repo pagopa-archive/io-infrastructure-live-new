@@ -1,3 +1,6 @@
+dependency "subnet_funcbonus" {
+  config_path = "../../functions_bonus/subnet"
+}
 
 # Internal
 dependency "resource_group" {
@@ -36,5 +39,6 @@ inputs = {
 
   is_virtual_network_filter_enabled = true
   allowed_virtual_network_subnet_ids = [
+    dependency.subnet_funcbonus.outputs.id
   ]
 }
