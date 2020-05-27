@@ -1,4 +1,4 @@
-# Autoscaling appbackend
+# Autoscaling pagopaproxy
 dependency "app_service" {
   config_path = "../app_service"
 }
@@ -18,7 +18,7 @@ terraform {
 
 
 inputs = {
-  name = "autoscaling-appbackend"
+  name = "autoscaling-appapigad"
 
   resource_group_name = dependency.resource_group.outputs.resource_name
   target_resource_id  = dependency.app_service.outputs.app_service_plan_id
@@ -27,8 +27,8 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 2
-      minimum = 3
+      default = 1
+      minimum = 1
       maximum = 10
     }
 
