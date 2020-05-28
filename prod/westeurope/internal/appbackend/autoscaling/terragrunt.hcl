@@ -33,6 +33,7 @@ inputs = {
     }
 
     rules = [{
+      name = "ScaleOutCpu"
       metric_trigger = {
         metric_name        = "CpuPercentage"
         metric_resource_id = dependency.app_service.outputs.app_service_plan_id
@@ -52,6 +53,7 @@ inputs = {
       }
       },
       {
+        name = "ScaleInCpu"
         metric_trigger = {
           metric_name        = "CpuPercentage"
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
@@ -71,7 +73,7 @@ inputs = {
         }
       },
       {
-        # Http Queue length
+        name = "ScaleOutHttpQueueLength"
         metric_trigger = {
           metric_name        = "HttpQueueLength"
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
@@ -91,6 +93,7 @@ inputs = {
         }
       },
       {
+        name = "ScaleInHttpQueueLength"
         metric_trigger = {
           metric_name        = "HttpQueueLength"
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
