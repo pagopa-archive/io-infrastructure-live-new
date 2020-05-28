@@ -152,5 +152,11 @@ inputs = {
 
     disabled_rule_groups = []
   }
+
+  autoscale_configuration = {
+    min_capacity = 2
+    max_capacity = 10
+  }
+
 }
 
