@@ -143,7 +143,7 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Prevention"
+    firewall_mode            = "Detection"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
