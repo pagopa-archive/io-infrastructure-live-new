@@ -77,7 +77,8 @@ inputs = {
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
-    INPS_SERVICE_HOST = "https://localhost"
+    // INPS SERVICE CONFIGURATION
+    INPS_SERVICE_ENDPOINT   = "https://example.inps.it:50777/svc"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
