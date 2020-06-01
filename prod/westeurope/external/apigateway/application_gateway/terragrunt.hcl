@@ -54,7 +54,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = null
   }
 
   public_ip_info = {
@@ -143,7 +143,7 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Prevention"
+    firewall_mode            = "Detection"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
