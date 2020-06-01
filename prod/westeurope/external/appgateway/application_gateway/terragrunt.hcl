@@ -107,32 +107,14 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Prevention"
+    firewall_mode            = "Detection"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
 
-    disabled_rule_groups = [
-      {
-        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
-        rules           = []
-      },
-      {
-        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
-        rules = [
-          920300,
-          920310,
-          920311,
-          920320
-        ]
-      },
-      {
-        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
-        rules           = []
-      }
-    ]
+    disabled_rule_groups = []
   }
 }
 
