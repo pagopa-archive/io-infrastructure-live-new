@@ -7,9 +7,14 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# Api
+# App Backend Api
 dependency "functions_app" {
   config_path = "../../api/functions_app/function_app"
+}
+
+# Bonus Api
+dependency "functions_bonus" {
+  config_path = "../../api/functions_bonus/function_app"
 }
 
 # Push notifications origin
@@ -135,9 +140,11 @@ inputs = {
 
     // FUNCTIONS
     API_URL = "http://${dependency.functions_app.outputs.default_hostname}/api/v1"
+    BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH = "/api/v1"
+    BONUS_API_BASE_PATH = "/api/v1"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -169,6 +176,7 @@ inputs = {
 
       // FUNCTIONS
       API_KEY = "funcapp-KEY-APPBACKEND"
+      BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
