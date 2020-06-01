@@ -72,6 +72,7 @@ inputs = {
           cooldown  = "PT5M"
         }
       }
+      # TODO: the following rules need to be activated before the golive expected the 15th June
       /*
       {
         # Http Queue length
