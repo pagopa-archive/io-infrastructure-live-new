@@ -40,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.26"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.27"
 }
 
 inputs = {
@@ -50,7 +50,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = null
   }
 
   public_ip_info = {
@@ -107,32 +107,14 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Prevention"
+    firewall_mode            = "Detection"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
 
-    disabled_rule_groups = [
-      {
-        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
-        rules           = []
-      },
-      {
-        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
-        rules = [
-          920300,
-          920310,
-          920311,
-          920320
-        ]
-      },
-      {
-        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
-        rules           = []
-      }
-    ]
+    disabled_rule_groups = []
   }
 
   autoscale_configuration = {
