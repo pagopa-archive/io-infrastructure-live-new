@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.26"
 }
 
 inputs = {
@@ -152,5 +152,11 @@ inputs = {
 
     disabled_rule_groups = []
   }
+
+  autoscale_configuration = {
+    min_capacity = 2
+    max_capacity = 10
+  }
+
 }
 
