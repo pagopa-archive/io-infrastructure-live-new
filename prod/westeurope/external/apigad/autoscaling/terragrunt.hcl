@@ -27,7 +27,7 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 1
+      default = 2
       minimum = 1
       maximum = 10
     }
@@ -71,7 +71,8 @@ inputs = {
           value     = "1"
           cooldown  = "PT5M"
         }
-      },
+      }
+      /*
       {
         # Http Queue length
         name = "ScaleOutHttpQueueLength"
@@ -112,7 +113,8 @@ inputs = {
           value     = "1"
           cooldown  = "PT5M"
         }
-    }]
+    }
+    */]
 
     fixed_date = null
     recurrence = null
