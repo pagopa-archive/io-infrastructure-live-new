@@ -87,6 +87,8 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      INPS_SERVICE_CERT = "PagoPA-IO-INPS"
+      INPS_SERVICE_KEY  = "PagoPA-IO-INPS-KEY"
     }
   }
 
