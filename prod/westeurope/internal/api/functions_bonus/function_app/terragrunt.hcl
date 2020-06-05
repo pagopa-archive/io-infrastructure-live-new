@@ -33,7 +33,7 @@ dependency "key_vault" {
 }
 
 dependency "storage_account_bonus" {
-  config_path = "../../storage_bonus"
+  config_path = "../../storage_bonus/account"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -75,8 +75,6 @@ inputs = {
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
-    INPS_SERVICE_HOST = "https://localhost"
-
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
@@ -89,11 +87,19 @@ inputs = {
 
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      INPS_SERVICE_CERT = "io-INPS-BONUS-CERT"
+      INPS_SERVICE_KEY  = "io-INPS-BONUS-KEY"
+
+      INPS_SERVICE_ENDPOINT = "io-INPS-BONUS-ENDPOINT"
+      SERVICES_API_KEY      = "io-INPS-BONUS-API-KEY"
     }
   }
 
