@@ -71,8 +71,6 @@ inputs = {
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
-    INPS_SERVICE_HOST = "https://localhost"
-
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
@@ -82,13 +80,19 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      INPS_SERVICE_CERT = "PagoPA-IO-INPS"
-      INPS_SERVICE_KEY  = "PagoPA-IO-INPS-KEY"
+      INPS_SERVICE_CERT = "io-INPS-BONUS-CERT"
+      INPS_SERVICE_KEY  = "io-INPS-BONUS-KEY"
+
+      INPS_SERVICE_ENDPOINT = "io-INPS-BONUS-ENDPOINT"
+      SERVICES_API_KEY      = "io-INPS-BONUS-API-KEY"
     }
   }
 
