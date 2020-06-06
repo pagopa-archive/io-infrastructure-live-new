@@ -70,18 +70,26 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.28"
 }
 
 inputs = {
   name                = "app"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
+  resources_prefix = {
+    function_app = "fn3"
+    app_service_plan = "fn3"
+    storage_account = "fn3"
+  }
+
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
     sku_size = "EP3"
   }
+
+  runtime_version = "~3"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -124,6 +132,8 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
     #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
@@ -134,14 +144,14 @@ inputs = {
     #"AzureWebJobs.GetService.Disabled"                             = "1"
     #"AzureWebJobs.GetUserDataProcessing.Disabled"                  = "1"
     #"AzureWebJobs.GetVisibleServices.Disabled"                     = "1"
-    "AzureWebJobs.HandleNHNotificationCall.Disabled"               = "1"
-    "AzureWebJobs.HandleNHNotificationCallActivity.Disabled"       = "1"
-    "AzureWebJobs.HandleNHNotificationCallOrchestrator.Disabled"   = "1"
+    #"AzureWebJobs.HandleNHNotificationCall.Disabled"               = "1"
+    #"AzureWebJobs.HandleNHNotificationCallActivity.Disabled"       = "1"
+    #"AzureWebJobs.HandleNHNotificationCallOrchestrator.Disabled"   = "1"
     #"AzureWebJobs.SendUserDataProcessingEmailActivity.Disabled"    = "1"
     #"AzureWebJobs.SendValidationEmailActivity.Disabled"            = "1"
     #"AzureWebJobs.SendWelcomeMessagesActivity.Disabled"            = "1"
     #"AzureWebJobs.StartEmailValidationProcess.Disabled"            = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
+    #"AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
     #"AzureWebJobs.UpdateProfile.Disabled"                          = "1"
     #"AzureWebJobs.UpdateSubscriptionsFeedActivity.Disabled"        = "1"
     #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
