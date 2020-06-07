@@ -21,10 +21,9 @@ terraform {
 }
 
 inputs = {
-  name                = "bonus"
+  name                = "user-bonuses"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/fiscalCode"
 }
-
