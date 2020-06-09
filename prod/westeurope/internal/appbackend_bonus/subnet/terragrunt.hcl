@@ -9,15 +9,15 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.0.27"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.0.28"
 }
 
 inputs = {
-  name = "appbackend3"
+  name = "appbackendbonus"
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
-  address_prefix       = "10.0.160.0/24"
+  address_prefixs      = ["10.0.160.0/24"]
 
   delegation = {
     name = "default"

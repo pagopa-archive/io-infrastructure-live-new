@@ -1,4 +1,4 @@
-# Autoscaling pagopaproxy
+# Autoscaling appbackendbonus
 dependency "app_service" {
   config_path = "../app_service"
 }
@@ -13,12 +13,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.0.27"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.0.29"
 }
 
 
 inputs = {
-  name = "autoscaling-appapigad"
+  name = "autoscaling-appbackendbonus"
 
   resource_group_name = dependency.resource_group.outputs.resource_name
   target_resource_id  = dependency.app_service.outputs.app_service_plan_id
@@ -28,7 +28,7 @@ inputs = {
 
     capacity = {
       default = 2
-      minimum = 1
+      minimum = 2
       maximum = 10
     }
 
@@ -75,7 +75,6 @@ inputs = {
       # TODO: the following rules need to be activated before the golive expected the 15th June
       /*
       {
-        # Http Queue length
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {
           metric_name        = "HttpQueueLength"
@@ -115,7 +114,8 @@ inputs = {
           cooldown  = "PT5M"
         }
     }
-    */]
+    */
+    ]
 
     fixed_date = null
     recurrence = null
