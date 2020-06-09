@@ -96,6 +96,12 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      INPS_SERVICE_CERT = "io-INPS-BONUS-CERT"
+      INPS_SERVICE_KEY  = "io-INPS-BONUS-KEY"
+
+      INPS_SERVICE_ENDPOINT = "io-INPS-BONUS-ENDPOINT"
+      ADE_SERVICE_ENDPOINT  = "io-ADE-BONUS-ENDPOINT"
+      SERVICES_API_KEY      = "io-INPS-BONUS-API-KEY"
     }
   }
 
