@@ -74,6 +74,7 @@ inputs = {
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
+    COSMOSDB_CONNECTION_STRING   = "AccountEndpoint=${dependency.cosmosdb_bonus_account.outputs.endpoint};AccountKey=${dependency.cosmosdb_bonus_account.outputs.primary_master_key};"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
