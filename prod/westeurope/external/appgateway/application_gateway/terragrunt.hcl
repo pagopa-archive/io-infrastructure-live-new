@@ -21,6 +21,10 @@ dependency "app_service_appbackend" {
   config_path = "../../../internal/appbackend/app_service"
 }
 
+dependency "app_service_appbackend_bonus" {
+  config_path = "../../../internal/appbackend_bonus/app_service"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
@@ -50,7 +54,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = null
   }
 
   public_ip_info = {
@@ -82,11 +86,12 @@ inputs = {
 
       backend_address_pool = {
         ip_addresses = null
-        fqdns        = [dependency.app_service_appbackend.outputs.default_site_hostname]
+        fqdns = [dependency.app_service_appbackend.outputs.default_site_hostname,
+        dependency.app_service_appbackend_bonus.outputs.default_site_hostname]
       }
 
       probe = {
-        host                = dependency.app_service_appbackend.outputs.default_site_hostname
+        host                = null
         protocol            = "Http"
         path                = "/info"
         interval            = 30
@@ -100,7 +105,7 @@ inputs = {
         path                  = "/"
         cookie_based_affinity = "Disabled"
         request_timeout       = 180
-        host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
+        host_name             = null
       }
     }
   ]
