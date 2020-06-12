@@ -36,6 +36,10 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "storage_account_bonus" {
+  config_path = "../../storage_bonus/account"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -87,6 +91,11 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    # Storage account connection string:
+    BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     # Disabled functions on slot
     #"AzureWebJobs.FunctionName.Disabled" = "1"
