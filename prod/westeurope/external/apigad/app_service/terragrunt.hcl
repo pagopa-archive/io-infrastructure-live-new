@@ -55,7 +55,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      GAD_CA_CERTIFICATE_BASE64              = "apigad-GAD-CA-CERTIFICATE-BASE64"
+      GAD_CA_CERTIFICATE_BASE64              = "io-PAGOPA-INTERNAL-CA-CERT"
       GAD_CLIENT_CERTIFICATE_VERIFIED_HEADER = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
       GAD_PROXY_TARGET                       = "apigad-GAD-PROXY-TARGET"
     }
