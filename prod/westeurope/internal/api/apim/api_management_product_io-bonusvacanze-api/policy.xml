@@ -13,7 +13,11 @@
 <policies>
     <inbound>
         <base />
-        <rate-limit calls="150" renewal-period="5" remaining-calls-header-name="x-rate-limit-remaining" retry-after-header-name="x-rate-limit-retry-after" />
+        <choose>
+          <when condition="@(context.User.Groups.Any(g => g.Name != "ApiNoRateLimit"))">
+            <rate-limit calls="150" renewal-period="5" remaining-calls-header-name="x-rate-limit-remaining" retry-after-header-name="x-rate-limit-retry-after" />
+          </when>
+        </choose>
     </inbound>
     <backend>
         <base />
