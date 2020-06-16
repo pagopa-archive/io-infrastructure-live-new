@@ -26,12 +26,10 @@ inputs = {
   profile_name        = dependency.cdn_profile.outputs.resource_name
   origin_host_name    = dependency.storage_account_assets.outputs.primary_web_host
 
-  global_delivery_rule_cache_expiration_action = [
-    {
-      behavior = "Override"
-      duration = "08:00:00"
-    }
-  ]
+  global_delivery_rule_cache_expiration_action = {
+    behavior = "Override"
+    duration = "08:00:01"
+  }
 
   # Note: match_values = ["/services-data","/bonus"] works but the Azure portal displays only
   # the first item for each rule generating confusion on the actual set of rules applied 
