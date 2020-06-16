@@ -25,7 +25,7 @@ terraform {
 }
 
 inputs = {
-  name                = "assets"
+  name                = "assets.cdn"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
     name                = "io.italia.it"
