@@ -15,7 +15,7 @@
         <base />
         <choose>
           <when condition="@(context.User.Groups.All(g => g.Name != "ApiNoRateLimit"))">
-            <rate-limit calls="150" renewal-period="5" />
+            <rate-limit calls="150" renewal-period="5" remaining-calls-header-name="x-rate-limit-remaining" retry-after-header-name="x-rate-limit-retry-after" />
           </when>
         </choose>
     </inbound>
