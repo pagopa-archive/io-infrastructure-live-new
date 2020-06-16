@@ -165,6 +165,9 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // Feature flags
+    FF_BONUS_ENABLED = 1
   }
 
   app_settings_secrets = {
