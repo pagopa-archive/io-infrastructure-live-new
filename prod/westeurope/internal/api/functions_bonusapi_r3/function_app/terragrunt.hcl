@@ -10,6 +10,10 @@ dependency "cosmosdb_bonus_database" {
   config_path = "../../cosmosdb_bonus/database"
 }
 
+dependency "storage_account_bonus" {
+  config_path = "../../storage_bonus/account"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -72,6 +76,8 @@ inputs = {
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
+
+    STORAGE_BONUS_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
 
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
