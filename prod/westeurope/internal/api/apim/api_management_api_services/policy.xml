@@ -8,6 +8,11 @@
                 </return-response>
             </when>
         </choose>
+        <choose>
+            <when condition="@(context.User.Groups.All(g => g.Name != "ApiNoRateLimit"))">
+                <rate-limit calls="150" renewal-period="5" remaining-calls-header-name="x-rate-limit-remaining" retry-after-header-name="x-rate-limit-retry-after" />
+          </when>
+        </choose>
         <set-backend-service id="apim-generated-policy" base-url="{{io-functions-services-url}}/api/v1" />
         <set-header name="x-functions-key" exists-action="override">
             <value>{{io-functions-services-key}}</value>

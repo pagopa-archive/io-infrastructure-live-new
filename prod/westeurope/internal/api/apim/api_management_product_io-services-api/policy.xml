@@ -14,7 +14,7 @@
     <inbound>
         <base />
         <choose>
-          <when condition="@(context.User.Groups.Any(g => g.Name != "ApiNoRateLimit"))">
+          <when condition="@(context.User.Groups.All(g => g.Name != "ApiNoRateLimit"))">
             <rate-limit calls="150" renewal-period="5" />
           </when>
         </choose>
