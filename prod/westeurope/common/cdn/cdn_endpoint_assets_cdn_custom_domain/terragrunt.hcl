@@ -1,7 +1,3 @@
-# WARNING. This CDN endpoint custom domain is deprecated and is kept only for
-# backward compatibility in case some component depends on it. 
-# Please use the new custom domain "assets.cdn".
-
 dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
@@ -29,7 +25,7 @@ terraform {
 }
 
 inputs = {
-  name                = "assets"
+  name                = "assets.cdn"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
     name                = "io.italia.it"

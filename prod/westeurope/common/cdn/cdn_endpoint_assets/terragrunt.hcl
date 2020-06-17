@@ -28,7 +28,7 @@ inputs = {
 
   global_delivery_rule_cache_expiration_action = {
     behavior = "Override"
-    duration = "08:00:01"
+    duration = "08:00:00"
   }
 
   # Note: match_values = ["/services-data","/bonus"] works but the Azure portal displays only
