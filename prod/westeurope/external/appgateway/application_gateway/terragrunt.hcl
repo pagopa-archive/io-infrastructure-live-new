@@ -127,6 +127,12 @@ inputs = {
         ]
       },
       {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+        rules = [
+          932150
+        ]
+      },
+      {
         rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
         rules = [
           942200,
