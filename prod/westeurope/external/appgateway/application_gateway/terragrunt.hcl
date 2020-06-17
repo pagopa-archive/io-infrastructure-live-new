@@ -135,11 +135,13 @@ inputs = {
       {
         rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
         rules = [
+          942190,
           942200,
           942260,
           942330,
           942340,
           942370,
+          942380,
           942430,
           942450
         ]
