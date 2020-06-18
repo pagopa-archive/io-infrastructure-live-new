@@ -50,7 +50,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = null
   }
 
   public_ip_info = {
