@@ -27,7 +27,7 @@ inputs = {
   kind                = "GlobalDocumentDB"
 
   consistency_policy = {
-    consistency_level       = "Session"
+    consistency_level       = "Strong"
     max_interval_in_seconds = null
     max_staleness_prefix    = null
   }
