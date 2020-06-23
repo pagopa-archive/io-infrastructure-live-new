@@ -8,11 +8,10 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_table?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_table?ref=v2.0.31"
 }
 
 inputs = {
   name                 = "inpslogs"
   storage_account_name = dependency.storage_account.outputs.resource_name
 }
-
