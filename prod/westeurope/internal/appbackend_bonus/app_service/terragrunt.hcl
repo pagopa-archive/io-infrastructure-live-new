@@ -1,7 +1,3 @@
-dependency "app_service" {
-  config_path = "../app_service"
-}
-
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -82,19 +78,28 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.29"
+
+  after_hook "check_slots" {
+    commands     = ["apply"]
+    execute      = ["echo", "Remember to do check also the app_service slots!"]
+    run_on_error = true
+  }
 }
 
 inputs = {
-  name                = "staging"
+  name                = "appbackendbonus"
   resource_group_name = dependency.resource_group.outputs.resource_name
-  app_service_name    = dependency.app_service.outputs.name
-  app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
+
+  app_service_plan_info = {
+    kind     = "Windows"
+    sku_tier = "PremiumV2"
+    sku_size = "P3v2"
+  }
 
   app_enabled         = true
   client_cert_enabled = false
   https_only          = false
-  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -134,11 +139,11 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH = "/api/v1"
+    API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
 
     // REDIS
@@ -160,9 +165,6 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
-
-    // Feature flags
-    FF_BONUS_ENABLED = 1
   }
 
   app_settings_secrets = {
@@ -173,7 +175,7 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY = "funcapp-KEY-APPBACKEND"
+      API_KEY       = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS

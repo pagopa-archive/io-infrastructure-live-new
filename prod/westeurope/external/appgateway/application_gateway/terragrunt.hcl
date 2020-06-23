@@ -50,7 +50,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = null
   }
 
   public_ip_info = {
@@ -107,14 +107,47 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Detection"
+    firewall_mode            = "Prevention"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
 
-    disabled_rule_groups = []
+    disabled_rule_groups = [
+      {
+        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
+        rules = []
+      },
+      {
+        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
+        rules = [
+          920300,
+          920320
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+        rules = [
+          932150
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+        rules = [
+          942190,
+          942200,
+          942260,
+          942330,
+          942340,
+          942370,
+          942380,
+          942430,
+          942440,
+          942450
+        ]
+      }
+    ]
   }
 
   autoscale_configuration = {

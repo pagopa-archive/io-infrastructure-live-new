@@ -36,6 +36,10 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "storage_account_bonus" {
+  config_path = "../../storage_bonus/account"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -76,8 +80,7 @@ inputs = {
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
-
-    INPS_SERVICE_HOST = "https://localhost"
+    COSMOSDB_CONNECTION_STRING   = dependency.cosmosdb_bonus_account.outputs.connection_strings[0]
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -89,6 +92,11 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
+    # Storage account connection string:
+    BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+
     # Disabled functions on slot
     #"AzureWebJobs.FunctionName.Disabled" = "1"
   }
@@ -96,6 +104,16 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      INPS_SERVICE_CERT = "io-INPS-BONUS-CERT"
+      INPS_SERVICE_KEY  = "io-INPS-BONUS-KEY"
+
+      ADE_SERVICE_CERT = "io-ADE-BONUS-CERT"
+      ADE_SERVICE_KEY  = "io-ADE-BONUS-KEY"
+      ADE_HMAC_SECRET  = "io-ADE-HMAC-SECRET"
+
+      INPS_SERVICE_ENDPOINT = "io-INPS-BONUS-ENDPOINT"
+      ADE_SERVICE_ENDPOINT  = "io-ADE-BONUS-ENDPOINT"
+      SERVICES_API_KEY      = "io-INPS-BONUS-API-KEY"
     }
   }
 
