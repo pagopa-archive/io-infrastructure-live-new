@@ -12,6 +12,6 @@ terraform {
 }
 
 inputs = {
-  name                  = "push-notifications"
-  storage_account_name  = dependency.storage_account.outputs.resource_name
+  name                 = "push-notifications"
+  storage_account_name = dependency.storage_account.outputs.resource_name
 }

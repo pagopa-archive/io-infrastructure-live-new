@@ -29,6 +29,7 @@ inputs = {
   }
 
   service_endpoints = [
-    "Microsoft.Web"
+    "Microsoft.Web",
+    "Microsoft.Storage"
   ]
 }

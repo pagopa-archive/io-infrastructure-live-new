@@ -30,6 +30,7 @@ inputs = {
 
   service_endpoints = [
     "Microsoft.Web",
-    "Microsoft.AzureCosmosDB"
+    "Microsoft.AzureCosmosDB",
+    "Microsoft.Storage"
   ]
 }

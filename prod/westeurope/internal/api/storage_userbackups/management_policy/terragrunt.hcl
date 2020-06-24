@@ -13,11 +13,11 @@ terraform {
 }
 
 inputs = {
-  storage_account_id   = dependency.storage_account.outputs.id
+  storage_account_id = dependency.storage_account.outputs.id
 
   rules = [
     {
-      name = "deleteafter3yrs"
+      name    = "deleteafter3yrs"
       enabled = true
       filters = {
         prefix_match = ["user-data-backup"]

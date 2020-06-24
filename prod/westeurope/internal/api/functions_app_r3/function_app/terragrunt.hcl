@@ -78,9 +78,9 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
-    function_app = "fn3"
+    function_app     = "fn3"
     app_service_plan = "fn3"
-    storage_account = "fn3"
+    storage_account  = "fn3"
   }
 
   app_service_plan_info = {

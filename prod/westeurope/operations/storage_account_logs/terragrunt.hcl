@@ -3,6 +3,15 @@ dependency "resource_group" {
   config_path = "../resource_group"
 }
 
+# Subnets
+dependency "subnet_io-p-fn3-app" {
+  config_path = "../../internal/api/functions_app_r3/subnet/"
+}
+
+dependency "subnet_func_app" {
+  config_path = "../../internal/api/functions_app/subnet/"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -19,4 +28,11 @@ inputs = {
   account_tier             = "Standard"
   account_replication_type = "GRS"
   access_tier              = "Hot"
+
+  network_rules = {
+    default_action             = "Deny"
+    bypass                     = null
+    ip_rules                   = [""]
+    virtual_network_subnet_ids = [dependency.subnet_io-p-fn3-app.outputs.id, dependency.subnet_func_app.outputs.id]
+  }
 }
