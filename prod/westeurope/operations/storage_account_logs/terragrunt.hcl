@@ -12,6 +12,14 @@ dependency "subnet_func_app" {
   config_path = "../../internal/api/functions_app/subnet/"
 }
 
+dependency "subnet_abbbackend" {
+  config_path = "../../internal/appbackend/subnet/"
+}
+
+dependency "subnet_abbbackendbonus" {
+  config_path = "../../internal/appbackend_bonus/subnet/"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -33,6 +41,11 @@ inputs = {
     default_action             = "Deny"
     bypass                     = null
     ip_rules                   = [""]
-    virtual_network_subnet_ids = [dependency.subnet_io-p-fn3-app.outputs.id, dependency.subnet_func_app.outputs.id]
+    virtual_network_subnet_ids = [
+      dependency.subnet_io-p-fn3-app.outputs.id,
+      dependency.subnet_func_app.outputs.id,
+      dependency.subnet_abbbackend.outputs.id,
+      dependency.subnet_abbbackendbonus.outputs.id
+      ]
   }
 }
