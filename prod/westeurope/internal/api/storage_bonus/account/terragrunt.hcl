@@ -18,7 +18,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account?ref=v2.0.31"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account?ref=v2.0.32"
 }
 
 inputs = {
@@ -33,7 +33,8 @@ inputs = {
     default_action = "Deny"
     bypass         = null
     ip_rules       = [""]
-    virtual_network_subnet_ids = [dependency.subnet_func_bonus.outputs.id,
-    dependency.subnet_func_bonusapi_r3.outputs.id]
+    virtual_network_subnet_ids = [
+      dependency.subnet_func_bonus.outputs.id,
+      dependency.subnet_func_bonusapi_r3.outputs.id]
   }
 }

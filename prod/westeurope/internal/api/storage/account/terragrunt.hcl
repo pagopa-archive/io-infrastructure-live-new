@@ -45,8 +45,10 @@ inputs = {
     default_action = "Deny"
     bypass         = null
     ip_rules       = [""]
-    virtual_network_subnet_ids = [dependency.subnet_io-p-fn3-app.outputs.id, dependency.subnet_func_admin.outputs.id,
-      dependency.subnet_func_app.outputs.id, dependency.subnet_func_public.outputs.id,
+    virtual_network_subnet_ids = [dependency.subnet_io-p-fn3-app.outputs.id,
+      dependency.subnet_func_admin.outputs.id,
+      dependency.subnet_func_app.outputs.id,
+      dependency.subnet_func_public.outputs.id,
       dependency.subnet_func_services.outputs.id
     ]
   }
