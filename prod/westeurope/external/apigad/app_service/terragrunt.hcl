@@ -41,7 +41,7 @@ inputs = {
   }
 
   app_enabled         = true
-  client_cert_enabled = true
+  client_cert_enabled = false
   https_only          = true
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -50,6 +50,8 @@ inputs = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     GAD_PROXY_CHANGE_ORIGIN      = "true"
+
+    DISABLE_CLIENT_CERTIFICATE_VERIFICATION = "true"
   }
 
   app_settings_secrets = {

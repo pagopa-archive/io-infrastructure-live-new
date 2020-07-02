@@ -168,6 +168,9 @@ inputs = {
 
     // Feature flags
     FF_BONUS_ENABLED = 1
+
+    # No downtime on slots swap
+    WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
   }
 
   app_settings_secrets = {

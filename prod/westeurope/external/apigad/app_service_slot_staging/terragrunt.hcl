@@ -35,7 +35,7 @@ inputs = {
   app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
 
   app_enabled         = true
-  client_cert_enabled = true
+  client_cert_enabled = false
   https_only          = true
   auto_swap_slot_name = "production"
 
@@ -45,6 +45,8 @@ inputs = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     GAD_PROXY_CHANGE_ORIGIN      = "true"
+
+    DISABLE_CLIENT_CERTIFICATE_VERIFICATION = "true"
   }
 
   app_settings_secrets = {
