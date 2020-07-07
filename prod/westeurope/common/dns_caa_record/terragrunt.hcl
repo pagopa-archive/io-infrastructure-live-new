@@ -18,9 +18,14 @@ inputs = {
   ttl                 = 300
 
   records = [{
-    flags = 0
-    tag   = "issue"
-    value = "letsencrypt.org"
+      flags = 0
+      tag   = "issue"
+      value = "letsencrypt.org"
+    },
+    {
+      flags = 0
+      tag   = "issue"
+      value = "digicert.com"
     },
     {
       flags = 0
