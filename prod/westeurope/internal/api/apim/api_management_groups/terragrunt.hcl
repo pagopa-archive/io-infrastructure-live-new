@@ -116,6 +116,10 @@ inputs = {
     {
       display_name = "ApiUserAdmin"
       name         = "apiuseradmin"
+    },
+    {
+      display_name = "ApiNoRateLimit"
+      name         = "apinoratelimit"
     }
   ]
 }
