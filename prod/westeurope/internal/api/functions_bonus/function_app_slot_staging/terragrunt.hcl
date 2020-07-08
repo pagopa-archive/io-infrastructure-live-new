@@ -40,6 +40,10 @@ dependency "storage_account_bonus" {
   config_path = "../../storage_bonus/account"
 }
 
+dependency "storage_table_bonusleasebindings" {
+  config_path = "../../storage_bonus/table_bonusleasebindings"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -91,6 +95,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    BONUS_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_bonusleasebindings.outputs.name
 
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
