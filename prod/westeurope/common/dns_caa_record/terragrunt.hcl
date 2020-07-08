@@ -13,11 +13,12 @@ terraform {
 
 inputs = {
   name                = "io.italia.it"
-  resource_group_name = dependency.resource_group.outputs.resource_name
   zone_name           = "io.italia.it"
+  resource_group_name = "io-infra-rg"
   ttl                 = 300
 
-  records = [{
+  records = [
+    {
       flags = 0
       tag   = "issue"
       value = "letsencrypt.org"
@@ -31,5 +32,6 @@ inputs = {
       flags = 0
       tag   = "iodef"
       value = "mailto:security+caa@pagopa.it"
-  },]
+    }
+  ]
 }
