@@ -42,6 +42,9 @@ inputs = {
   ]
 
   is_virtual_network_filter_enabled = true
+
+  ip_range = "23.97.147.242,13.69.61.42,137.117.159.137,104.47.161.199,104.47.157.240"
+
   allowed_virtual_network_subnet_ids = [
     dependency.subnet_funcbonus.outputs.id,
     dependency.subnet_fn3bonusapi.outputs.id
