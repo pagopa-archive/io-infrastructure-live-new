@@ -10,6 +10,10 @@ dependency "functions_services" {
   config_path = "../../functions_services/function_app"
 }
 
+dependency "functions_services_r3" {
+  config_path = "../../functions_services_r3/function_app"
+}
+
 dependency "functions_public" {
   config_path = "../../functions_public/function_app"
 }
@@ -64,6 +68,7 @@ inputs = {
     io-functions-services-url = "http://${dependency.functions_services.outputs.default_hostname}"
     io-functions-public-url   = "http://${dependency.functions_public.outputs.default_hostname}"
     io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
+    io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
     io-functions-bonusapi-url = "http://${dependency.functions_bonusapi.outputs.default_hostname}"
   }
 
@@ -75,6 +80,7 @@ inputs = {
       io-functions-services-key                     = "funcservices-KEY-APIM"
       io-functions-public-key                       = "funcpublic-KEY-APIM"
       io-functions-test-key                         = "functest-KEY-APIM"
+      io-fn3-services-key                           = "fn3services-KEY-APIM"
       io-functions-bonusapi-key                     = "funcbonusapi-KEY-APIM"
     }
   }
