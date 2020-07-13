@@ -111,7 +111,7 @@ inputs = {
       SERVICE_PRINCIPAL_SECRET    = "ad-APPCLIENT-APIM-SECRET"
       SERVICE_PRINCIPAL_TENANT_ID = "common-AZURE-TENANT-ID"
 
-      PUBLIC_API_KEY               = "apim-IO-SERVICE-KEY"
+      PUBLIC_API_KEY               = "apim-IO-GDPR-SERVICE-KEY"
     }
   }
 
