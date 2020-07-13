@@ -87,12 +87,12 @@ inputs = {
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
 
     MessageContentStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
+    MESSAGE_CONTAINER_NAME          = dependency.storage_container_message-content.outputs.name
 
     UserDataArchiveStorageConnection = dependency.storage_account_user-data-download.outputs.primary_connection_string
-    USER_DATA_CONTAINER_NAME = dependency.storage_container_user-data-download.outputs.name
+    USER_DATA_CONTAINER_NAME         = dependency.storage_container_user-data-download.outputs.name
 
-    PUBLIC_API_URL = "http://api-internal.io.italia.it/"
+    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
     PUBLIC_DOWNLOAD_BASE_URL = "${dependency.storage_account_user-data-download.outputs.primary_web_host}/${dependency.storage_container_user-data-download.outputs.name}"
   }
 
