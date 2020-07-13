@@ -59,7 +59,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.32"
 }
 
 inputs = {
@@ -67,6 +67,9 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
+
+  # site_config
+  pre_warmed_instance_count = 1
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"
