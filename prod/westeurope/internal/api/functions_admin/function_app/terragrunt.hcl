@@ -40,6 +40,19 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
+dependency "storage_container_message-content" {
+  config_path = "../../storage/container_message-content"
+}
+
+dependency "storage_account_user-data-download" {
+  config_path = "../../storage_user-data-download/account"
+}
+
+dependency "storage_container_user-data-download" {
+  config_path = "../../storage_user-data-download/container_user-data-download"
+}
+
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -72,6 +85,15 @@ inputs = {
     AZURE_APIM                = "io-p-apim-api"
     AZURE_APIM_HOST           = "api-internal.io.italia.it"
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
+
+    MessageContentStorageConnection = dependency.storage_account.outputs.primary_connection_string
+    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
+
+    UserDataArchiveStorageConnection = dependency.storage_account_user-data-download.outputs.primary_connection_string
+    USER_DATA_CONTAINER_NAME = dependency.storage_container_user-data-download.outputs.name
+
+    PUBLIC_API_URL = "http://api-internal.io.italia.it/"
+    PUBLIC_DOWNLOAD_BASE_URL = "${dependency.storage_account_user-data-download.outputs.primary_web_host}/${dependency.storage_container_user-data-download.outputs.name}"
   }
 
   app_settings_secrets = {
@@ -88,6 +110,8 @@ inputs = {
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
       SERVICE_PRINCIPAL_SECRET    = "ad-APPCLIENT-APIM-SECRET"
       SERVICE_PRINCIPAL_TENANT_ID = "common-AZURE-TENANT-ID"
+
+      PUBLIC_API_KEY               = "apim-IO-SERVICE-KEY"
     }
   }
 
