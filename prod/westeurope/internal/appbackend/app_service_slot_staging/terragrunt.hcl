@@ -25,6 +25,9 @@ dependency "functions_bonus" {
 dependency "subnet_funcservices" {
   config_path = "../../api/functions_services/subnet"
 }
+dependency "subnet_fn3services" {
+  config_path = "../../api/functions_services_r3/subnet"
+}
 
 # External
 dependency "subnet_appgateway" {
@@ -147,8 +150,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_funcservices.outputs.address_prefix
-    AZURE_NH_HUB_NAME            = dependency.notification_hub.outputs.name
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = join(",", [dependency.subnet_funcservices.outputs.address_prefix, dependency.subnet_fn3services.outputs.address_prefix])
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
@@ -181,7 +183,6 @@ inputs = {
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
-      AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
@@ -194,6 +195,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_funcservices.outputs.id,
+    dependency.subnet_fn3services.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id
