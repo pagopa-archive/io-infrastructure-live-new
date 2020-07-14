@@ -95,7 +95,7 @@ inputs = {
     USER_DATA_CONTAINER_NAME         = dependency.storage_container_user-data-download.outputs.name
 
     PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
-    PUBLIC_DOWNLOAD_BASE_URL = "${dependency.storage_account_user-data-download.outputs.primary_web_host}/${dependency.storage_container_user-data-download.outputs.name}"
+    PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_web_host}/${dependency.storage_container_user-data-download.outputs.name}"
   }
 
   app_settings_secrets = {
