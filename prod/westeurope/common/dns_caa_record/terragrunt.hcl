@@ -12,7 +12,7 @@ terraform {
 }
 
 inputs = {
-  name                = "io.italia.it"
+  name                = "@"
   zone_name           = "io.italia.it"
   resource_group_name = "io-infra-rg"
   ttl                 = 300
