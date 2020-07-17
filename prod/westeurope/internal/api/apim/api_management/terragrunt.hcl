@@ -72,7 +72,6 @@ inputs = {
     map = {
       apigad-gad-client-certificate-verified-header = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
       io-functions-admin-key                        = "funcadmin-KEY-APIM"
-      io-functions-services-key                     = "funcservices-KEY-APIM"
       io-functions-public-key                       = "funcpublic-KEY-APIM"
       io-functions-test-key                         = "functest-KEY-APIM"
       io-fn3-services-key                           = "fn3services-KEY-APIM"
