@@ -6,10 +6,6 @@ dependency "functions_admin" {
   config_path = "../../functions_admin/function_app"
 }
 
-dependency "functions_services" {
-  config_path = "../../functions_services/function_app"
-}
-
 dependency "functions_services_r3" {
   config_path = "../../functions_services_r3/function_app"
 }
@@ -65,7 +61,6 @@ inputs = {
 
   named_values_map = {
     io-functions-admin-url    = "http://${dependency.functions_admin.outputs.default_hostname}"
-    io-functions-services-url = "http://${dependency.functions_services.outputs.default_hostname}"
     io-functions-public-url   = "http://${dependency.functions_public.outputs.default_hostname}"
     io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
