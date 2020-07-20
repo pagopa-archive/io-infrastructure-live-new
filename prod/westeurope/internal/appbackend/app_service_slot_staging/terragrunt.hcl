@@ -22,9 +22,6 @@ dependency "functions_bonus" {
 }
 
 # Push notifications origin
-dependency "subnet_funcservices" {
-  config_path = "../../api/functions_services/subnet"
-}
 dependency "subnet_fn3services" {
   config_path = "../../api/functions_services_r3/subnet"
 }
@@ -150,7 +147,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = join(",", [dependency.subnet_funcservices.outputs.address_prefix, dependency.subnet_fn3services.outputs.address_prefix])
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
@@ -194,7 +191,6 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
-    dependency.subnet_funcservices.outputs.id,
     dependency.subnet_fn3services.outputs.id,
   ]
 
