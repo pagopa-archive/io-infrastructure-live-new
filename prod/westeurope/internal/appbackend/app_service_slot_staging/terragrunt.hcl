@@ -29,6 +29,11 @@ dependency "subnet_fn3services" {
   config_path = "../../api/functions_services_r3/subnet"
 }
 
+# Session endpoints allowed origin
+dependency "subnet_funcadmin" {
+  config_path = "../../api/functions_admin/subnet"
+}
+
 # External
 dependency "subnet_appgateway" {
   config_path = "../../../external/appgateway/subnet"
