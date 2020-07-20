@@ -26,6 +26,11 @@ dependency "subnet_fn3services" {
   config_path = "../../api/functions_services_r3/subnet"
 }
 
+# Session endpoints allowed origin
+dependency "subnet_funcadmin" {
+  config_path = "../../api/functions_admin/subnet"
+}
+
 # External
 dependency "subnet_appgateway" {
   config_path = "../../../external/appgateway/subnet"
@@ -148,6 +153,9 @@ inputs = {
 
     // PUSH NOTIFICATIONS
     ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
+
+    // LOCK / UNLOCK SESSION ENDPOINTS
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
