@@ -97,6 +97,11 @@ inputs = {
 
     PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
     PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_blob_host}/${dependency.storage_container_user-data-download.outputs.name}"
+
+    SESSION_API_URL                 = "???",
+    USER_DATA_BACKUP_CONTAINER_NAME = "???"
+    USER_DATA_DELETE_DELAY_DAYS     = 24
+
   }
 
   app_settings_secrets = {
@@ -115,6 +120,8 @@ inputs = {
       SERVICE_PRINCIPAL_TENANT_ID = "common-AZURE-TENANT-ID"
 
       PUBLIC_API_KEY = "apim-IO-GDPR-SERVICE-KEY"
+
+      SESSION_API_KEY = "???"
     }
   }
 
