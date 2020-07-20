@@ -152,6 +152,9 @@ inputs = {
     // PUSH NOTIFICATIONS
     ALLOW_NOTIFY_IP_SOURCE_RANGE = join(",", [dependency.subnet_funcservices.outputs.address_prefix, dependency.subnet_fn3services.outputs.address_prefix])
 
+    // LOCK / UNLOCK SESSION ENDPOINTS
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin.outputs.address_prefix
+
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
