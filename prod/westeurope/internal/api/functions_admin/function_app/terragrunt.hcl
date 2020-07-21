@@ -100,7 +100,7 @@ inputs = {
 
     SESSION_API_URL                 = "???",
     USER_DATA_BACKUP_CONTAINER_NAME = "???"
-    USER_DATA_DELETE_DELAY_DAYS     = 24
+    USER_DATA_DELETE_DELAY_DAYS     = 7
 
   }
 
