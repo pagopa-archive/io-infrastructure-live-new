@@ -52,6 +52,17 @@ dependency "storage_container_user-data-download" {
   config_path = "../../storage_user-data-download/container_user-data-download"
 }
 
+dependency "storage_account_userbackups" {
+  config_path = "../../storage_userbackups/account"
+}
+
+dependency "storage_container_user-data-backup" {
+  config_path = "../../storage_userbackups/container_user-data-backup"
+}
+
+dependency "app_service_appbackend" {
+  config_path = "../../../appbackend/app_service"
+}
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -98,8 +109,9 @@ inputs = {
     PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
     PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_blob_host}/${dependency.storage_container_user-data-download.outputs.name}"
 
-    SESSION_API_URL                 = "???",
-    USER_DATA_BACKUP_CONTAINER_NAME = "???"
+    SESSION_API_URL                 = "https://${dependency.app_service_appbackend.outputs.default_site_hostname}/api/v1"
+    UserDataBackupStorageConnection = dependency.storage_account_userbackups.outputs.primary_connection_string
+    USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
     USER_DATA_DELETE_DELAY_DAYS     = 7
 
   }
@@ -121,7 +133,7 @@ inputs = {
 
       PUBLIC_API_KEY = "apim-IO-GDPR-SERVICE-KEY"
 
-      SESSION_API_KEY = "???"
+      SESSION_API_KEY = "appbackend-PRE-SHARED-KEY"
     }
   }
 
