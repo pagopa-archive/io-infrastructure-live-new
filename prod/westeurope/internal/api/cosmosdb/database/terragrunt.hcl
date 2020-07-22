@@ -12,7 +12,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_database?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_database?ref=v2.0.33"
 }
 
 inputs = {
@@ -20,4 +20,3 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
 }
-

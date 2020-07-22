@@ -12,14 +12,14 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.33"
 }
 
 inputs = {
   name                       = "pagopaproxytest-analytics"
   target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
- 
+
   logs = [{
     category = "AppServiceHTTPLogs"
     enabled  = true
