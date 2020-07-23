@@ -17,7 +17,7 @@ inputs = {
 
   rules = [
     {
-      name    = "deleteafteryrs"
+      name    = "deleteafter2yrs"
       enabled = true
       filters = {
         prefix_match = ["spidassertions"]
