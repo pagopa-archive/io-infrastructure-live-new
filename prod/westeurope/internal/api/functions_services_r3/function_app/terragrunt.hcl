@@ -58,9 +58,9 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
-    function_app = "fn3"
+    function_app     = "fn3"
     app_service_plan = "fn3"
-    storage_account = "fn3"
+    storage_account  = "fn3"
   }
 
   app_service_plan_info = {
@@ -104,11 +104,12 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      MAILUP_USERNAME     = "common-MAILUP-USERNAME"
-      MAILUP_SECRET       = "common-MAILUP-SECRET"
-      SENDGRID_API_KEY    = "common-SENDGRID-APIKEY"
-      WEBHOOK_CHANNEL_URL = "appbackend-WEBHOOK-CHANNEL-URL"
-      SANDBOX_FISCAL_CODE = "io-SANDBOX-FISCAL-CODE"
+      MAILUP_USERNAME                      = "common-MAILUP-USERNAME"
+      MAILUP_SECRET                        = "common-MAILUP-SECRET"
+      SENDGRID_API_KEY                     = "common-SENDGRID-APIKEY"
+      WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
+      SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
+      EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
     }
   }
 
