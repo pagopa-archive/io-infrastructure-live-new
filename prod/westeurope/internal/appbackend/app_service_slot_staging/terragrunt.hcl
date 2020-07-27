@@ -73,6 +73,10 @@ dependency "storage_queue_spid_logs" {
   config_path = "../../../operations/storage_queue_spid_logs"
 }
 
+dependency "storage_queue_users_login" {
+  config_path = "../../../operations/storage_queue_users_login"
+}
+
 dependency "notification_queue" {
   config_path = "../../api/storage_notifications/queue_push-notifications"
 }
@@ -167,6 +171,10 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // USERSLOGIN
+    USERS_LOGIN_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
+    USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
     FF_BONUS_ENABLED = 1

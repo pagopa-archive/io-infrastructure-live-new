@@ -69,6 +69,10 @@ dependency "storage_queue_spid_logs" {
   config_path = "../../../operations/storage_queue_spid_logs"
 }
 
+dependency "storage_queue_users_login" {
+  config_path = "../../../operations/storage_queue_users_login"
+}
+
 dependency "notification_queue" {
   config_path = "../../api/storage_notifications/queue_push-notifications"
 }
@@ -144,11 +148,11 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH = "/api/v1"
+    API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
 
     // REDIS
@@ -173,6 +177,10 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
+    // USERSLOGIN
+    USERS_LOGIN_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
+    USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
+
     // Feature flags
     FF_BONUS_ENABLED = 1
 
@@ -188,11 +196,11 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY = "funcapp-KEY-APPBACKEND"
+      API_KEY       = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
-      PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
+      PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
