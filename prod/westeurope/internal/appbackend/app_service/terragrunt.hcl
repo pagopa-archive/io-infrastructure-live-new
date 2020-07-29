@@ -213,6 +213,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
+    dependency.subnet_funcadmin.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id
