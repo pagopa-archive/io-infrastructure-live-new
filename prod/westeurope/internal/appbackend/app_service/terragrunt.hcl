@@ -87,7 +87,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.33"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -213,6 +213,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
+    dependency.subnet_funcadmin.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id
