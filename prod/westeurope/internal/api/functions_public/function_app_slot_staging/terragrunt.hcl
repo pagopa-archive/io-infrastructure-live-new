@@ -75,6 +75,8 @@ inputs = {
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
+
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
   }
 
   app_settings_secrets = {

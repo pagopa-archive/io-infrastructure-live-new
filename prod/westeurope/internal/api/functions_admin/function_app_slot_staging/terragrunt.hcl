@@ -129,10 +129,11 @@ inputs = {
     USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
     USER_DATA_DELETE_DELAY_DAYS     = 7
 
-    // Disabled functions
+    // Disabled functions - Slot settings only.
     "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
 
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
   }
 
   app_settings_secrets = {

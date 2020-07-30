@@ -97,7 +97,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
   }
 
   app_settings_secrets = {

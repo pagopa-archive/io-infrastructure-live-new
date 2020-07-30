@@ -133,9 +133,9 @@ inputs = {
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
     # Deployment slot setting.
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    // Disabled functions
+    // Disabled functions - Slot settings only
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
