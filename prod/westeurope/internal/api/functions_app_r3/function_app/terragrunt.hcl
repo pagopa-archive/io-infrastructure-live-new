@@ -19,7 +19,7 @@ dependency "storage_account_assets" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../operations/storage_account_logs/account"
 }
 
 dependency "storage_container_message-content" {

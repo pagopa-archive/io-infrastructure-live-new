@@ -62,7 +62,7 @@ dependency "notification_hub" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../operations/storage_account_logs"
+  config_path = "../../../operations/storage_account_logs/account"
 }
 
 dependency "storage_queue_spid_logs" {
