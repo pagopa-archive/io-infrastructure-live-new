@@ -8,8 +8,7 @@ include {
 }
 
 terraform {
-  # source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_logic_app?ref=v2.0.34"
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_logic_app?ref=174140521-add-logic-app-module"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_logic_app?ref=v2.0.34"
 }
 
 inputs = {
