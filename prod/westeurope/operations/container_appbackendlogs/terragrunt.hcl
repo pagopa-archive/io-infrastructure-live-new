@@ -1,5 +1,5 @@
 dependency "storage_account" {
-  config_path = "../storage_account_logs"
+  config_path = "../storage_account_logs/account"
 }
 
 # Include all settings from the root terragrunt.hcl file
