@@ -78,7 +78,7 @@ inputs = {
 
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
 
-    SLOT_TASK_HUBNAME = "default"
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
   }
 
