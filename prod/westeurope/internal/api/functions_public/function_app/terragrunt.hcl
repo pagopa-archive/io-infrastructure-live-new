@@ -42,7 +42,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.25"
 }
 
 inputs = {
@@ -63,8 +63,6 @@ inputs = {
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
-
-    SLOT_TASK_HUBNAME = "default"
   }
 
   app_settings_secrets = {
