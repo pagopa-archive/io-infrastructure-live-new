@@ -6,16 +6,24 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "cosmosdb_bonus_account" {
-  config_path = "../../cosmosdb_bonus/account"
+dependency "cosmosdb_account" {
+  config_path = "../../cosmosdb/account"
 }
 
-dependency "cosmosdb_bonus_database" {
-  config_path = "../../cosmosdb_bonus/database"
+dependency "cosmosdb_database" {
+  config_path = "../../cosmosdb/database"
 }
 
-dependency "storage_account_bonus" {
-  config_path = "../../storage_bonus/account"
+dependency "storage_account" {
+  config_path = "../../storage/account"
+}
+
+dependency "storage_container_message-content" {
+  config_path = "../../storage/container_message-content"
+}
+
+dependency "storage_table_subscriptionsfeedbyday" {
+  config_path = "../../storage/table_subscriptionsfeedbyday"
 }
 
 # Internal
@@ -46,7 +54,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.28"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.34"
 }
 
 inputs = {
@@ -60,8 +68,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 2
-
+  # this is not supported yet in azure terraform provider. So far add the slot name from the portal.
   auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -73,19 +80,15 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    # DNS configuration to use private dns zones
-    // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
-    //WEBSITE_DNS_SERVER     = "168.63.129.16"
-    //WEBSITE_VNET_ROUTE_ALL = 1
-
-    STORAGE_BONUS_CONNECTION_STRING  = dependency.storage_account_bonus.outputs.primary_connection_string
-    REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
-
-    COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
-    COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
-    COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
-
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
+    COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
+    COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
+    // TODO: Rename to STORAGE_CONNECTION_STRING
+    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
+    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
+    // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
+    SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    MAIL_FROM_DEFAULT        = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -96,17 +99,16 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
-
-    APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
-
-    # Disabled functions on slot - slot settings only
-    "AzureWebJobs.RedeemedBonusesQueueTrigger.Disabled" = "1"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      SERVICES_API_KEY = "apim-BONUSVACANZE-SERVICE-KEY"
+      MAILUP_USERNAME                      = "common-MAILUP-USERNAME"
+      MAILUP_SECRET                        = "common-MAILUP-SECRET"
+      WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
+      SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
+      EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
     }
   }
 
