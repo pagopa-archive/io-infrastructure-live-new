@@ -54,7 +54,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.34"
 }
 
 inputs = {
@@ -68,7 +68,9 @@ inputs = {
 
   runtime_version = "~3"
 
-  # auto_swap_slot_name = "production"
+
+  # this is not supported yet in azure terraform provider. So far add the slot name from the portal.
+  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
