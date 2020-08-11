@@ -6,6 +6,10 @@ dependency "functions_admin" {
   config_path = "../../functions_admin/function_app"
 }
 
+dependency "functions_admin_r3" {
+  config_path = "../../functions_admin_r3/function_app"
+}
+
 dependency "functions_services_r3" {
   config_path = "../../functions_services_r3/function_app"
 }
@@ -61,6 +65,7 @@ inputs = {
 
   named_values_map = {
     io-functions-admin-url    = "http://${dependency.functions_admin.outputs.default_hostname}"
+    io-fn3-admin-url          = "http://${dependency.functions_admin_r3.outputs.default_hostname}"
     io-functions-public-url   = "http://${dependency.functions_public.outputs.default_hostname}"
     io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
@@ -72,6 +77,7 @@ inputs = {
     map = {
       apigad-gad-client-certificate-verified-header = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
       io-functions-admin-key                        = "funcadmin-KEY-APIM"
+      io-fn3-admin-key                              = "fn3admin-KEY-APIM"
       io-functions-public-key                       = "funcpublic-KEY-APIM"
       io-functions-test-key                         = "functest-KEY-APIM"
       io-fn3-services-key                           = "fn3services-KEY-APIM"
