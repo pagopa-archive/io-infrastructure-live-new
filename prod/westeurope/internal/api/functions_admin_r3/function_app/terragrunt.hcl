@@ -121,6 +121,7 @@ inputs = {
     UserDataBackupStorageConnection = dependency.storage_account_userbackups.outputs.primary_connection_string
     USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
     USER_DATA_DELETE_DELAY_DAYS     = 6
+    FF_ENABLE_USER_DATA_DELETE      = 1
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
