@@ -70,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.32"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.34"
 }
 
 inputs = {
@@ -112,7 +112,8 @@ inputs = {
     SESSION_API_URL                 = "https://${dependency.app_service_appbackend.outputs.default_site_hostname}"
     UserDataBackupStorageConnection = dependency.storage_account_userbackups.outputs.primary_connection_string
     USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
-    USER_DATA_DELETE_DELAY_DAYS     = 7
+    USER_DATA_DELETE_DELAY_DAYS     = 6
+    FF_ENABLE_USER_DATA_DELETE      = 1
 
   }
 
