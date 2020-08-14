@@ -79,8 +79,16 @@ inputs = {
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
-  # site_config
+  resources_prefix = {
+    function_app     = "fn3"
+    app_service_plan = "fn3"
+    storage_account  = "fn3"
+  }
+
+
   pre_warmed_instance_count = 1
+
+  runtime_version = "~3"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"
@@ -114,6 +122,12 @@ inputs = {
     USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
     USER_DATA_DELETE_DELAY_DAYS     = 6
     FF_ENABLE_USER_DATA_DELETE      = 1
+
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+    // Disabled functions - Slot settings only.
+    "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
+    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
 
   }
 

@@ -7,7 +7,7 @@ dependency "resource_group_siem" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../operations/storage_account_logs/account"
 }
 
 # Include all settings from the root terragrunt.hcl file

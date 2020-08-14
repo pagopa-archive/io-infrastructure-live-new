@@ -19,7 +19,7 @@ dependency "storage_account_assets" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../operations/storage_account_logs/account"
 }
 
 dependency "storage_container_message-content" {
@@ -70,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.28"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.34"
 }
 
 inputs = {
@@ -78,15 +78,15 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
-    function_app = "fn3"
+    function_app     = "fn3"
     app_service_plan = "fn3"
-    storage_account = "fn3"
+    storage_account  = "fn3"
   }
 
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP3"
+    sku_size = "EP1"
   }
 
   runtime_version = "~3"

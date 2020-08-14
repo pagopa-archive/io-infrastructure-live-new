@@ -27,8 +27,8 @@ dependency "subnet_fn3services" {
 }
 
 # Session endpoints allowed origin
-dependency "subnet_funcadmin" {
-  config_path = "../../api/functions_admin/subnet"
+dependency "subnet_funcadmin_r3" {
+  config_path = "../../api/functions_admin_r3/subnet"
 }
 
 # External
@@ -66,11 +66,15 @@ dependency "notification_hub" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../operations/storage_account_logs"
+  config_path = "../../../operations/storage_account_logs/account"
 }
 
 dependency "storage_queue_spid_logs" {
   config_path = "../../../operations/storage_queue_spid_logs"
+}
+
+dependency "storage_queue_users_login" {
+  config_path = "../../../operations/storage_queue_users_login"
 }
 
 dependency "notification_queue" {
@@ -87,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.33"
 }
 
 inputs = {
@@ -139,11 +143,11 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH = "/api/v1"
+    API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
 
     // REDIS
@@ -155,7 +159,7 @@ inputs = {
     ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
 
     // LOCK / UNLOCK SESSION ENDPOINTS
-    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin.outputs.address_prefix
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
@@ -167,6 +171,10 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // USERSLOGIN
+    USERS_LOGIN_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
+    USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
     FF_BONUS_ENABLED = 1
@@ -183,11 +191,11 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY = "funcapp-KEY-APPBACKEND"
+      API_KEY       = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
-      PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
+      PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
@@ -200,6 +208,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
+    dependency.subnet_funcadmin_r3.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id
