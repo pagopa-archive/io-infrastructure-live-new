@@ -8,7 +8,7 @@ dependency "resource_group" {
 }
 
 dependency "app_service_certificate" {
-  config_path = "../app_service_certificate"
+  config_path = "../../app_service_certificate"
 }
 
 // Common
