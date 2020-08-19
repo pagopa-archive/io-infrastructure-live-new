@@ -54,7 +54,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.36"
 }
 
 inputs = {
@@ -117,5 +117,6 @@ inputs = {
     dependency.subnet_apimapi.outputs.id
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
