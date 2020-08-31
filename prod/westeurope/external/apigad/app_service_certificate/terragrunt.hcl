@@ -17,7 +17,7 @@ terraform {
 }
 
 inputs = {
-  name                = "commonexternal"
+  name                = "apigad"
   resource_group_name = dependency.resource_group.outputs.resource_name
   key_vault_id        = dependency.key_vault.outputs.id
   certificate_name    = "api-gad-io-italia-it"
