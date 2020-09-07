@@ -1,3 +1,4 @@
+# Internal
 dependency "storage_account" {
   config_path = "../storage_account_logs/account"
 }
@@ -8,10 +9,10 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_container?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_queue?ref=v2.0.25"
 }
 
 inputs = {
-  name                 = "appbackendlogs"
+  name                 = "userslogin"
   storage_account_name = dependency.storage_account.outputs.resource_name
 }

@@ -40,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.34"
 }
 
 inputs = {
@@ -62,12 +62,11 @@ inputs = {
 
   frontend_port = 443
 
-  custom_domains = {
+  custom_domain = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "io-italia-it"
   }
 
   services = [
@@ -78,6 +77,8 @@ inputs = {
       http_listener = {
         protocol  = "Https"
         host_name = "app-backend.io.italia.it"
+        # Note the certificate name can not contain dot.
+        ssl_certificate_name = "app-backend-io-italia-it"
       }
 
       backend_address_pool = {
@@ -117,13 +118,19 @@ inputs = {
     disabled_rule_groups = [
       {
         rule_group_name = "REQUEST-913-SCANNER-DETECTION"
-        rules = []
+        rules           = []
       },
       {
         rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
         rules = [
           920300,
           920320
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-930-APPLICATION-ATTACK-LFI"
+        rules = [
+          930120
         ]
       },
       {
@@ -135,8 +142,10 @@ inputs = {
       {
         rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
         rules = [
+          942100,
           942190,
           942200,
+          942210,
           942250,
           942260,
           942330,

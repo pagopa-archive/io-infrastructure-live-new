@@ -17,13 +17,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v2.0.31"
 }
 
 inputs = {
-  name                = "bonus"
+  name                = "bonus-activations"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
-  partition_key_path  = "/fiscalCode"
+  partition_key_path  = "/id"
 }

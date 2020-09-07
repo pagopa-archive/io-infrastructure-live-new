@@ -46,11 +46,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.36"
 }
 
 inputs = {
-  name                = "staging"
+  name                       = "staging"
   resource_group_name        = dependency.resource_group.outputs.resource_name
   function_app_name          = dependency.function_app.outputs.name
   function_app_resource_name = dependency.function_app.outputs.resource_name
@@ -78,7 +78,7 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
-    STORAGE_BONUS_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
+    STORAGE_BONUS_CONNECTION_STRING  = dependency.storage_account_bonus.outputs.primary_connection_string
     REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
 
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
@@ -99,7 +99,7 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
 
-    # Disabled functions on slot
+    # Disabled functions on slot - slot settings only
     "AzureWebJobs.RedeemedBonusesQueueTrigger.Disabled" = "1"
   }
 
@@ -115,5 +115,6 @@ inputs = {
     dependency.subnet_apimapi.outputs.id
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }

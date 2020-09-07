@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.34"
 }
 
 inputs = {
@@ -54,7 +54,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = 0
   }
 
   public_ip_info = {
@@ -66,12 +66,11 @@ inputs = {
 
   frontend_port = 443
 
-  custom_domains = {
+  custom_domain = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "io-italia-it"
   }
 
   services = [
@@ -80,8 +79,9 @@ inputs = {
       a_record_name = "api"
 
       http_listener = {
-        protocol  = "Https"
-        host_name = "api.io.italia.it"
+        protocol             = "Https"
+        host_name            = "api.io.italia.it"
+        ssl_certificate_name = "api-io-italia-it"
       }
 
       backend_address_pool = {
@@ -112,8 +112,9 @@ inputs = {
       a_record_name = "developerportal-backend"
 
       http_listener = {
-        protocol  = "Https"
-        host_name = "developerportal-backend.io.italia.it"
+        protocol             = "Https"
+        host_name            = "developerportal-backend.io.italia.it"
+        ssl_certificate_name = "developerportal-backend-io-italia-it"
       }
 
       backend_address_pool = {
