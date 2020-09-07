@@ -1,5 +1,5 @@
 # WARNING. This CDN endpoint custom domain is deprecated and is kept only for
-# backward compatibility in case some component depends on it. 
+# backward compatibility in case some component depends on it.
 # Please use the new custom domain "assets.cdn".
 
 dependency "cdn_profile" {
@@ -25,7 +25,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.0.37"
 }
 
 inputs = {
