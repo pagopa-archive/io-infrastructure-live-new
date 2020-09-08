@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v2.0.37"
 }
 
 inputs = {
@@ -27,4 +27,3 @@ inputs = {
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/fiscalCode"
 }
-
