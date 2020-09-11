@@ -188,6 +188,8 @@ inputs = {
     // Feature flags
     FF_BONUS_ENABLED = 1
 
+    TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
+
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
   }
@@ -208,6 +210,9 @@ inputs = {
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
+      
+      // TEST LOGIN
+      TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
     }
   }
 
