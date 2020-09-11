@@ -135,6 +135,8 @@ inputs = {
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
   }
 
   app_settings_secrets = {
@@ -155,6 +157,10 @@ inputs = {
       PUBLIC_API_KEY = "apim-IO-GDPR-SERVICE-KEY"
 
       SESSION_API_KEY = "appbackend-PRE-SHARED-KEY"
+
+      __DISABLED__SENDGRID_API_KEY = "common-SENDGRID-APIKEY"
+      MAILUP_USERNAME              = "common-MAILUP2-USERNAME"
+      MAILUP_SECRET                = "common-MAILUP2-SECRET"
     }
   }
 
