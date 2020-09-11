@@ -166,6 +166,9 @@ inputs = {
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
+    // MYPORTAL
+    MYPORTAL_BASE_PATH  = "/myportal/api/v1"
+
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
 
@@ -204,6 +207,8 @@ inputs = {
 
       // TEST LOGIN
       TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
+      // MYPORTAL
+      ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
     }
   }
 
