@@ -23,10 +23,6 @@ dependency "subnet_fn3services" {
 }
 
 # Session endpoints allowed origin
-dependency "subnet_funcadmin" {
-  config_path = "../../api/functions_admin/subnet"
-}
-
 dependency "subnet_funcadmin_r3" {
   config_path = "../../api/functions_admin_r3/subnet"
 }
@@ -168,7 +164,7 @@ inputs = {
     ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
 
     // LOCK / UNLOCK SESSION ENDPOINTS
-    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = join(", ", [dependency.subnet_funcadmin.outputs.address_prefix, dependency.subnet_funcadmin_r3.outputs.address_prefix])
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
@@ -176,7 +172,7 @@ inputs = {
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     // MYPORTAL
-    MYPORTAL_BASE_PATH  = "/myportal/api/v1"
+    MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
@@ -228,7 +224,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
-    dependency.subnet_funcadmin.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
   ]
 
