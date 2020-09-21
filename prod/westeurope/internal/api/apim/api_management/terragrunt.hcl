@@ -46,7 +46,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v2.0.39"
 }
 
 inputs = {
@@ -87,7 +87,7 @@ inputs = {
 
   custom_domains = {
     key_vault_id     = dependency.key_vault.outputs.id
-    certificate_name = "io-italia-it"
+    certificate_name = "api-internal-io-italia-it"
     domains = [
       {
         name    = "api-internal.io.italia.it"
