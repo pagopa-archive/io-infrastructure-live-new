@@ -1,3 +1,7 @@
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -41,13 +45,23 @@ include {
   path = find_in_parent_folders()
 }
 
+
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.38"
 }
 
 inputs = {
-  name                = "public"
-  resource_group_name = dependency.resource_group.outputs.resource_name
+  name                       = "staging"
+  resource_group_name        = dependency.resource_group.outputs.resource_name
+  function_app_name          = dependency.function_app.outputs.name
+  function_app_resource_name = dependency.function_app.outputs.resource_name
+  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name       = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+
+  runtime_version = "~3"
+
+  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -63,6 +77,8 @@ inputs = {
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
+
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
   }
 
   app_settings_secrets = {
@@ -76,5 +92,6 @@ inputs = {
     dependency.subnet_apimapi.outputs.id
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
