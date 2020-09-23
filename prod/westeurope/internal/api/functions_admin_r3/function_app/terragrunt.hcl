@@ -125,10 +125,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    // Disabled functions - Slot settings only.
-    "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
-    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
-
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
   }
 
