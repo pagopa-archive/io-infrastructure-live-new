@@ -64,6 +64,10 @@ dependency "app_service_appbackend" {
   config_path = "../../../appbackend/app_service"
 }
 
+dependency "storage_table_subscriptionsfeedbyday" {
+  config_path = "../../storage/table_subscriptionsfeedbyday"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -125,11 +129,10 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    // Disabled functions - Slot settings only.
-    "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
-    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
-
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+
+    SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
