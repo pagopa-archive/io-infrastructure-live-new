@@ -1,3 +1,14 @@
+generate "provider" {
+  path = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents = <<EOF
+provider "azurerm" {
+  version = "=2.22.0"
+  features {}
+}
+EOF
+}
+
 # Configure common remote state
 remote_state {
   backend = "azurerm"
