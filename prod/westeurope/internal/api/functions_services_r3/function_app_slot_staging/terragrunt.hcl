@@ -99,6 +99,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    IO_FUNCTIONS_ADMIN_BASE_URL = http://api-internal.io.italia.it/
   }
 
   app_settings_secrets = {
@@ -109,6 +111,7 @@ inputs = {
       WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
       SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
+      IO_FUNCTIONS_ADMIN_API_TOKEN         = "io-FUNCTIONS-ADMIN-API-TOKEN"
     }
   }
 
