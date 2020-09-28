@@ -66,7 +66,7 @@ inputs = {
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP1"
+    sku_size = "EP3"
   }
 
   runtime_version = "~3"
