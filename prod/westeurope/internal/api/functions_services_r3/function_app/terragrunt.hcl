@@ -100,7 +100,7 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    IO_FUNCTIONS_ADMIN_BASE_URL = http://api-internal.io.italia.it/
+    IO_FUNCTIONS_ADMIN_BASE_URL = "http://api-internal.io.italia.it"
   }
 
   app_settings_secrets = {
