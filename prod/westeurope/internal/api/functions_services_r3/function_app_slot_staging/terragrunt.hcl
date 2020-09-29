@@ -112,7 +112,7 @@ inputs = {
       WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
       SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
-      IO_FUNCTIONS_ADMIN_API_TOKEN         = "io-FUNCTIONS-ADMIN-API-TOKEN"
+      IO_FUNCTIONS_ADMIN_API_TOKEN         = "apim-IO-SERVICE-KEY"
     }
   }
 
