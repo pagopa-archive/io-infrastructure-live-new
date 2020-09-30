@@ -1,3 +1,7 @@
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -70,11 +74,11 @@ inputs = {
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    
+
     CachedStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
-    AssetsStorageConnection    = dependency.storage_account_assets.outputs.primary_connection_string
-    
+    AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
+
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"

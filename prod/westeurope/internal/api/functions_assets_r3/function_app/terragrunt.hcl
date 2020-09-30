@@ -78,8 +78,8 @@ inputs = {
 
     CachedStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
-    AssetsStorageConnection    = dependency.storage_account_assets.outputs.primary_connection_string
-    
+    AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
+
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
@@ -95,7 +95,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      
+
     }
   }
 }
