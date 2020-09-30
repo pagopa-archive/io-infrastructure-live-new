@@ -13,7 +13,7 @@ terraform {
 }
 
 inputs = {
-  name = "fn3app"
+  name = "fn3assets"
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
