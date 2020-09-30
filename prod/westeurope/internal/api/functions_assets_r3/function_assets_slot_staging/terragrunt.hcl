@@ -89,7 +89,6 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     // Disable functions
-    #"AzureWebJobs.GetService.Disabled"                             = "1"
     #"AzureWebJobs.GetVisibleServices.Disabled"                     = "1"
     #"AzureWebJobs.GetServiceByRevision.Disabled"                   = "1"
   }
