@@ -1,7 +1,3 @@
-dependency "subnet" {
-  config_path = "../subnet"
-}
-
 dependency "cosmosdb_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -74,7 +70,8 @@ inputs = {
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
+    
+    CachedStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     AssetsStorageConnection    = dependency.storage_account_assets.outputs.primary_connection_string
     
@@ -97,10 +94,5 @@ inputs = {
     }
   }
 
-  allowed_subnets = [
-    dependency.subnet.outputs.id
-  ]
-
-  subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
 }
