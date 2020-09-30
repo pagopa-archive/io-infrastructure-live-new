@@ -338,6 +338,249 @@
           }
         ]
       }
+    },
+    "/services": {
+      "post": {
+        "operationId": "createService",
+        "summary": "Create Service",
+        "description": "Create a new Service with the attributes provided in the request payload.\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "A service can invoke the IO API by providing the relative API key\n(every service has an associated primary and secondary API key).\nThrough the API a service can send messages to the IO users\nthat haven't opted out from it. Service metadata are used\nto qualify the sender of these messages to the recipient.",
+            "schema": {
+              "$ref": "#/definitions/ServicePayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service created.",
+            "schema": {
+              "$ref": "#/definitions/ServiceWithSubscriptionKeys"
+            }
+          },
+          "400": {
+            "description": "Invalid payload.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "429": {
+            "description": "Too many requests."
+          },
+          "500": {
+            "description": "The service cannot be created.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      },
+      "get": {
+        "operationId": "getUserServices",
+        "summary": "Get User Services",
+        "description": "Retrieve the identifiers of the services owned by the calling user\n",
+        "responses": {
+          "200": {
+            "description": "The list of service ids.",
+            "schema": {
+              "$ref": "#/definitions/ServiceIdCollection"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "429": {
+            "description": "Too many requests."
+          }
+        }
+      }
+    },
+    "/services/{service_id}": {
+      "parameters": [
+        {
+          "name": "service_id",
+          "in": "path",
+          "type": "string",
+          "required": true,
+          "description": "The ID of an existing Service."
+        }
+      ],
+      "get": {
+        "operationId": "getService",
+        "summary": "Get Service",
+        "description": "Retrieve a previously created service with the provided service ID.\nThis API operation needs the same API key of the service being retrieved\notherwise 403 forbidden will be returned to the caller.\n",
+        "responses": {
+          "200": {
+            "description": "Service found.",
+            "schema": {
+              "$ref": "#/definitions/ServiceWithSubscriptionKeys"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "No service found for the provided ID."
+          },
+          "429": {
+            "description": "Too many requests."
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateService",
+        "summary": "Update Service",
+        "description": "Update a previously created service with the provided service ID\nThis API operation needs the same API key of the service being retrieved\notherwise 403 forbidden will be returned to the caller.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The updated service payload.",
+            "schema": {
+              "$ref": "#/definitions/ServicePayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Service updated.",
+            "schema": {
+              "$ref": "#/definitions/ServiceWithSubscriptionKeys"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "No service found for the provided ID."
+          },
+          "429": {
+            "description": "Too many requests."
+          },
+          "500": {
+            "description": "The service cannot be updated.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/services/{service_id}/logo": {
+      "parameters": [
+        {
+          "name": "service_id",
+          "in": "path",
+          "type": "string",
+          "required": true,
+          "description": "The ID of an existing Service."
+        }
+      ],
+      "put": {
+        "summary": "Upload service logo.",
+        "description": "Upsert a logo for an existing service.\nThis API operation needs the same API key of the service being retrieved\notherwise 403 forbidden will be returned to the caller.\n",
+        "operationId": "uploadServiceLogo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Logo"
+            },
+            "description": "A base64 string representation of the service logo PNG image. It can be the service own logo or the organization logo."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logo uploaded."
+          },
+          "400": {
+            "description": "Invalid payload.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "No service found for the provided ID."
+          },
+          "500": {
+            "description": "The service logo cannot be uploaded.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/services/{service_id}/keys": {
+      "put": {
+        "summary": "Regenerate Service Key",
+        "description": "Regenerate the specified key for the Service identified by the provided id.\nThis API operation needs the same API key of the service being retrieved\notherwise 403 forbidden will be returned to the caller.",
+        "operationId": "regenerateServiceKey",
+        "parameters": [
+          {
+            "name": "service_id",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "The ID of an existing Service."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubscriptionKeyTypePayload"
+            },
+            "description": "The type of the key to be regenerated (PRIMARY_KEY or SECONDARY_KEY)."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The subscription keys for the service.",
+            "schema": {
+              "$ref": "#/definitions/SubscriptionKeys"
+            }
+          },
+          "400": {
+            "description": "Invalid payload.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Service not found."
+          },
+          "500": {
+            "description": "Cannot regenerate service key.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -551,7 +794,7 @@
           "description": "Metadata needed to process pagoPA payments.",
           "properties": {
             "amount": {
-              "description": "Amount of payment in euro cent. PagoPA accepts up to 999999999 euro cents.",
+              "description": "Amount of payment in euro cent. PagoPA accepts up to 9999999999 euro cents.",
               "type": "integer",
               "minimum": 1,
               "maximum": 9999999999
@@ -567,6 +810,34 @@
             }
           },
           "required": ["amount", "notice_number"]
+        },
+        "prescription_data": {
+          "type": "object",
+          "description": "Metadata needed to process medical prescriptions.",
+          "properties": {
+            "nre": {
+              "description": "The field *Numero ricetta elettronica* identifies the medical prescription at national level.",
+              "type": "string",
+              "minLength": 15,
+              "maxLength": 15
+            },
+            "iup": {
+              "description": "The field *Identificativo Unico di Prescrizione* identifies the medical prescription at regional level.",
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 16
+            },
+            "prescriber_fiscal_code": {
+              "type": "string",
+              "description": "Fiscal code of the Doctor that made the prescription.",
+              "format": "FiscalCode",
+              "x-import": "italia-ts-commons/lib/strings",
+              "example": "TCNZRO80R13C555Y"
+            }
+          },
+          "required": [
+            "nre"
+          ]
         },
         "due_date": {
           "$ref": "#/definitions/Timestamp"
@@ -599,6 +870,261 @@
         }
       },
       "required": ["content"]
+    },
+    "CIDR": {
+      "type": "string",
+      "description": "Describes a single IP or a range of IPs.",
+      "pattern": "^([0-9]{1,3}[.]){3}[0-9]{1,3}(/([0-9]|[1-2][0-9]|3[0-2]))?$"
+    },
+    "ServicePayload": {
+      "description": "A payload used to create/update a service for a user.",
+      "type": "object",
+      "properties": {
+        "service_name": {
+          "$ref": "#/definitions/ServiceName"
+        },
+        "department_name": {
+          "$ref": "#/definitions/DepartmentName"
+        },
+        "organization_name": {
+          "$ref": "#/definitions/OrganizationName"
+        },
+        "organization_fiscal_code": {
+          "type": "string",
+          "description": "Organization fiscal code.",
+          "format": "OrganizationFiscalCode",
+          "x-import": "italia-ts-commons/lib/strings",
+          "example": "12345678901"
+        },
+        "authorized_cidrs": {
+          "description": "Allowed source IPs or CIDRs for this service.\nWhen empty, every IP address it's authorized to call the IO API on behalf of the service.",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CIDR"
+          }
+        },
+        "version": {
+          "type": "integer"
+        },
+        "require_secure_channels": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true, messages won't trigger email notifications (only push)."
+        },
+        "is_visible": {
+          "type": "boolean",
+          "default": false,
+          "description": "When true the service appears in the service list, otherwise is hidden."
+        },
+        "service_metadata": {
+          "$ref": "#/definitions/ServiceMetadata"
+        }
+      },
+      "required": [
+        "service_name",
+        "department_name",
+        "organization_name",
+        "organization_fiscal_code",
+        "authorized_cidrs"
+      ]
+    },
+    "Service": {
+      "description": "A service tied to user's subscription.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/ServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "service_id": {
+              "$ref": "#/definitions/ServiceId"
+            },
+            "authorized_recipients": {
+              "description": "If non empty, the service will be able\nto send messages only to these fiscal codes.",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FiscalCode"
+              }
+            },
+            "max_allowed_payment_amount": {
+              "description": "Maximum amount in euro cents that a service is allowed to charge to a user.",
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 9999999999,
+              "default": 0
+            }
+          },
+          "required": [
+            "service_id",
+            "authorized_recipients"
+          ]
+        }
+      ]
+    },
+    "ServiceMetadata": {
+      "type": "object",
+      "description": "A set of metadata properties related to this service.",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "app_ios": {
+          "type": "string",
+          "minLength": 1
+        },
+        "app_android": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tos_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "privacy_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "address": {
+          "type": "string",
+          "minLength": 1
+        },
+        "phone": {
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pec": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cta": {
+          "type": "string",
+          "minLength": 1
+        },
+        "token_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "support_url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "$ref": "#/definitions/ServiceScope"
+        }
+      },
+      "required": [
+        "scope"
+      ]
+    },
+    "ServiceScope": {
+      "type": "string",
+      "x-extensible-enum": [
+        "NATIONAL",
+        "LOCAL"
+      ]
+    },
+    "ServiceId": {
+      "type": "string",
+      "description": "The ID of the Service. Equals the subscriptionId of a registered\nAPI user.",
+      "minLength": 1
+    },
+    "ServiceName": {
+      "type": "string",
+      "description": "The name of the service. Will be added to the content of sent messages.",
+      "minLength": 1
+    },
+    "OrganizationName": {
+      "type": "string",
+      "description": "The organization that runs the service. Will be added to the content\nof sent messages to identify the sender.",
+      "minLength": 1
+    },
+    "DepartmentName": {
+      "type": "string",
+      "description": "The department inside the organization that runs the service. Will\nbe added to the content of sent messages.",
+      "minLength": 1
+    },
+    "SubscriptionKeys": {
+      "type": "object",
+      "properties": {
+        "primary_key": {
+          "type": "string"
+        },
+        "secondary_key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "primary_key",
+        "secondary_key"
+      ]
+    },
+    "ServiceWithSubscriptionKeys": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Service"
+        },
+        {
+          "$ref": "#/definitions/SubscriptionKeys"
+        }
+      ]
+    },
+    "ServiceIdCollection": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceId"
+          }
+        }
+      },
+      "required": [
+        "items"
+      ]
+    },
+    "Logo": {
+      "type": "object",
+      "properties": {
+        "logo": {
+          "type": "string",
+          "format": "byte",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "logo"
+      ]
+    },
+    "SubscriptionKeyTypePayload": {
+      "type": "object",
+      "properties": {
+        "key_type": {
+          "$ref": "#/definitions/SubscriptionKeyType"
+        }
+      },
+      "required": [
+        "key_type"
+      ]
+    },
+    "SubscriptionKeyType": {
+      "type": "string",
+      "x-extensible-enum": [
+        "PRIMARY_KEY",
+        "SECONDARY_KEY"
+      ]
     }
   },
   "responses": {},
@@ -633,7 +1159,7 @@
       "type": "apiKey",
       "name": "Ocp-Apim-Subscription-Key",
       "in": "header",
-      "description": "The API key obtained through the developer portal."
+      "description": "The API key obtained through the developer portal or the getService operation."
     }
   }
 }
