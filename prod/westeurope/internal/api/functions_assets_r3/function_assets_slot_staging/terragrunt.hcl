@@ -89,7 +89,6 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     // Disable functions
-    #"AzureWebJobs.GetServiceByRevision.Disabled"                   = "1"
   }
 
   app_settings_secrets = {
