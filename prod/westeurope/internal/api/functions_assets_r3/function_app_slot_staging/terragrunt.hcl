@@ -88,15 +88,14 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
+    STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
+    STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
     // Disable functions
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      STATIC_WEB_ASSETS_ENDPOINT  = common-STATIC-WEB-ASSETS-ENDPOINT
-      STATIC_BLOB_ASSETS_ENDPOINT = common-STATIC-BLOB-ASSETS-ENDPOINT
     }
   }
 
