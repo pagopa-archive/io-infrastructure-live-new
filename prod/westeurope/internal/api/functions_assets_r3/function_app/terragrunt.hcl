@@ -90,6 +90,8 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    SERVICES_BY_SCOPE_BLOB_ID = visible-services-by-scope.json
+
   }
 
   app_settings_secrets = {
