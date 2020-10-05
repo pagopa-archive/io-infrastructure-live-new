@@ -89,7 +89,7 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    SERVICES_BY_SCOPE_BLOB_ID = visible-services-by-scope.json
+    SERVICES_BY_SCOPE_BLOB_ID = "visible-services-by-scope.json"
 
     // Disable functions
   }
