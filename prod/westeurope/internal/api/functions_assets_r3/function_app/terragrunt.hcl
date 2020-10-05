@@ -95,7 +95,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      STATIC_WEB_ASSETS_ENDPOINT  = common-STATIC-WEB-ASSETS-ENDPOINT
+      STATIC_WEB_ASSETS_ENDPOINT  = "common-STATIC-WEB-ASSETS-ENDPOINT"
       STATIC_BLOB_ASSETS_ENDPOINT = common-STATIC-BLOB-ASSETS-ENDPOINT
     }
   }
