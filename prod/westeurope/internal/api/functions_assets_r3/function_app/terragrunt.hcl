@@ -89,15 +89,14 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
-    SERVICES_BY_SCOPE_BLOB_ID = "visible-services-by-scope.json"
+    STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
+    STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
 
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-
     }
   }
 }

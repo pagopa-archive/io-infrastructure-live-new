@@ -87,10 +87,9 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
-    SERVICES_BY_SCOPE_BLOB_ID = "visible-services-by-scope.json"
-
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
+    STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
+    STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
     // Disable functions
   }
 
