@@ -9,11 +9,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_web_application_firewall_policy?ref=v2.1.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_web_application_firewall_policy?ref=v2.1.3"
 }
 
 inputs = {
-  name                = "wafpolicy"
+  name                = "appgateway-policy"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   custom_rules = [{
@@ -30,7 +30,8 @@ inputs = {
         variable_name = "RemoteAddr"
         selector      = null
       }]
-
+      negation_condition = false
+      transforms         = []
     }]
 
   }]
