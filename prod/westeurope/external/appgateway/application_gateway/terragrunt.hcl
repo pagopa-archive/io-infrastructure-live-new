@@ -103,6 +103,8 @@ inputs = {
         request_timeout       = 180
         host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
 
@@ -110,17 +112,17 @@ inputs = {
     name = "HttpHeader"
 
     rewrite_rules = [{
-      name          = "RemoveHeaders"
+      name          = "CleanUpHeaders"
       rule_sequence = 100
       condition     = null
       request_header_configurations = [
         {
           header_name  = "X-Forwarded-For"
-          header_value = ""
+          header_value = "{var_client_ip}"
         },
         {
           header_name  = "X-Client-Ip"
-          header_value = ""
+          header_value = "{var_client_ip}"
         },
       ]
 
