@@ -142,6 +142,27 @@ inputs = {
     }
   ]
 
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "RemoveHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = ""
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = ""
+        },
+      ]
+      response_header_configurations = []
+    }]
+  }]
+
   waf_configuration = {
     enabled                  = true
     firewall_mode            = "Detection"
