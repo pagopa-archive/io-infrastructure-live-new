@@ -40,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
 }
 
 inputs = {
@@ -105,6 +105,29 @@ inputs = {
       }
     }
   ]
+
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "RemoveHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = ""
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = ""
+        },
+      ]
+
+      response_header_configurations = []
+
+    }]
+  }]
 
   waf_configuration = {
     enabled                  = true
