@@ -2,13 +2,14 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "storage_account_assets" {
-  config_path = "../storage_account_assets"
-}
-
 # Common
 dependency "resource_group" {
   config_path = "../../resource_group"
+}
+
+# Internal
+dependency "function_app" {
+  config_path = "../../../internal/api/functions_assets_r3/function_app"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -24,11 +25,24 @@ inputs = {
   name                = "assets"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
-  origin_host_name    = dependency.storage_account_assets.outputs.primary_web_host
+  origin_host_name    = dependency.function_app.outputs.default_hostname
 
-  global_delivery_rule_cache_expiration_action = {
-    behavior = "Override"
-    duration = "08:00:00"
+
+  global_delivery_rule = {
+
+    cache_expiration_action = {
+      behavior = "Override"
+      duration = "08:00:00"
+    }
+
+    cache_key_query_string_action = null
+    modify_request_header_action = {
+      action = "Append"
+      name   = "x-functions-key"
+      value  = "todo" #dependency.function_app.outputs.default_key
+    }
+    modify_response_header_action = null
+
   }
 
   # Note: match_values = ["/services-data","/bonus"] works but the Azure portal displays only
