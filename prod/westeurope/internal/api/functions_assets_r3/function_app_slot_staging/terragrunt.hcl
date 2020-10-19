@@ -18,18 +18,9 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
-dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs/account"
-}
-
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
-}
-
-# Common
-dependency "virtual_network" {
-  config_path = "../../../../common/virtual_network"
 }
 
 dependency "application_insights" {
@@ -87,7 +78,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
+    SLOT_TASK_HUBNAME           = "StagingTaskHub"
     STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
     STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
     // Disable functions
