@@ -450,11 +450,54 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "403": {
             "description": "Forbidden"
           },
           "404": {
             "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update user",
+        "description": "Update an existing ADB2C User.",
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "type": "string",
+            "format": "email",
+            "required": true,
+            "description": "The email of the User"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpdatePayload"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The updated User",
+            "schema": {
+              "$ref": "#/definitions/UserUpdated"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "500": {
             "description": "Internal server error"
@@ -494,6 +537,9 @@
           },
           "400": {
             "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "403": {
             "description": "Forbidden"
@@ -547,6 +593,9 @@
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "403": {
             "description": "Forbidden"
           },
@@ -579,7 +628,7 @@
         "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Service"
+            "$ref": "#/definitions/ServiceIdWithVersion"
           }
         },
         "page_size": {
@@ -621,6 +670,9 @@
     "OrganizationFiscalCode": {
       "$ref": "https://raw.githubusercontent.com/teamdigitale/io-functions-commons/master/openapi/definitions.yaml#/OrganizationFiscalCode"
     },
+    "FiscalCode": {
+      "$ref": "https://raw.githubusercontent.com/teamdigitale/io-functions-commons/master/openapi/definitions.yaml#/FiscalCode"
+    },
     "ExtendedProfile": {
       "$ref": "https://raw.githubusercontent.com/teamdigitale/io-functions-commons/master/openapi/definitions.yaml#/ExtendedProfile"
     },
@@ -655,9 +707,30 @@
         "last_name": {
           "type": "string",
           "minLength": 1
+        },
+        "token_name": {
+          "type": "string",
+          "minLength": 1
         }
       },
       "required": ["email", "first_name", "last_name"]
+    },
+    "UserUpdatePayload": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "last_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "token_name": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     },
     "UserCreated": {
       "allOf": [
@@ -672,6 +745,28 @@
             }
           },
           "required": ["id"]
+        }
+      ]
+    },
+    "UserUpdated": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/UserUpdatePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "email": {
+              "$ref": "#/definitions/EmailAddress"
+            },
+            "id": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "email"
+          ]
         }
       ]
     },
@@ -805,56 +900,23 @@
       "required": ["display_name"]
     },
     "Subscription": {
-      "type": "object",
-      "properties": {
-        "allow_tracing": {
-          "type": "boolean"
+      "allOf": [
+        {
+          "$ref": "#/definitions/SubscriptionKeys"
         },
-        "created_date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "display_name": {
-          "type": "string"
-        },
-        "end_date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "expiration_date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "id": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "notification_date": {
-          "type": "string"
-        },
-        "owner_id": {
-          "type": "string"
-        },
-        "scope": {
-          "type": "string"
-        },
-        "start_date": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "state": {
-          "$ref": "#/definitions/SubscriptionState"
-        },
-        "state_comment": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string"
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            }
+          },
+          "required": ["scope"]
         }
-      },
-      "required": ["scope"]
+      ]
     },
     "SubscriptionState": {
       "type": "string",
@@ -881,6 +943,10 @@
           "items": {
             "$ref": "#/definitions/Subscription"
           }
+        },
+        "token_name": {
+          "type": "string",
+          "minLength": 1
         }
       }
     },
@@ -898,6 +964,29 @@
     "UserState": {
       "type": "string",
       "x-extensible-enum": ["active", "blocked", "pending", "deleted"]
+    },
+    "ServiceIdWithVersion": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer"
+        }
+      }
+    },
+    "ServerInfo": {
+      "type": "object",
+      "title": "Server information",
+      "properties": {
+        "version": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ]
     }
   },
   "responses": {},
@@ -909,7 +998,7 @@
       "maxLength": 16,
       "minLength": 16,
       "required": true,
-      "description": "The sandbox fiscal code of the user, all upper case.",
+      "description": "The user's sandbox fiscal code, all upper case.",
       "pattern": "[A-Z]{6}[0-9]{2}A[0-9]{2}Y[0-9]{3}X",
       "x-example": "SPNDNL80A13Y555X"
     }
