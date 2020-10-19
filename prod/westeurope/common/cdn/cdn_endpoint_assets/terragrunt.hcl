@@ -18,7 +18,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.5"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.4"
 }
 
 inputs = {
@@ -39,7 +39,7 @@ inputs = {
     modify_request_header_action = {
       action = "Append"
       name   = "x-functions-key"
-      value  = "todo" #dependency.function_app.outputs.default_key
+      value  = dependency.function_app.outputs.default_key
     }
     modify_response_header_action = null
 
