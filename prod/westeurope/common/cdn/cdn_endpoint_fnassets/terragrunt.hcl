@@ -22,7 +22,7 @@ terraform {
 }
 
 inputs = {
-  name                = "assetstest"
+  name                = "fnassets"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
   origin_host_name    = dependency.function_app.outputs.default_hostname
