@@ -25,12 +25,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.1.5"
 }
 
 inputs = {
   name                = "assets"
   resource_group_name = dependency.resource_group.outputs.resource_name
+  ttl = 120
   dns_zone = {
     name                = "io.italia.it"
     resource_group_name = "io-infra-rg"
