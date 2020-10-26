@@ -2,8 +2,8 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "cdn_endpoint_assets" {
-  config_path = "../cdn_endpoint_assets"
+dependency "cdn_endpoint_fnassets" {
+  config_path = "../cdn_endpoint_fnassets"
 }
 
 # Common
@@ -33,7 +33,7 @@ inputs = {
   }
   profile_name = dependency.cdn_profile.outputs.resource_name
   endpoint = {
-    name     = dependency.cdn_endpoint_assets.outputs.resource_name
-    hostname = dependency.cdn_endpoint_assets.outputs.hostname
+    name     = dependency.cdn_endpoint_fnassets.outputs.resource_name
+    hostname = dependency.cdn_endpoint_fnassets.outputs.hostname
   }
 }
