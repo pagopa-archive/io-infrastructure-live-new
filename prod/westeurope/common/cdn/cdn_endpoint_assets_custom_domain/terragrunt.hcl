@@ -31,7 +31,7 @@ terraform {
 inputs = {
   name                = "assets"
   resource_group_name = dependency.resource_group.outputs.resource_name
-  ttl = 120
+  ttl                 = 120
   dns_zone = {
     name                = "io.italia.it"
     resource_group_name = "io-infra-rg"
