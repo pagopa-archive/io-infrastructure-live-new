@@ -236,6 +236,59 @@
         ]
       }
     },
+    "/organizations/{organization_fiscal_code}/logo": {
+      "parameters": [
+        {
+          "name": "organization_fiscal_code",
+          "in": "path",
+          "type": "string",
+          "required": true,
+          "description": "The organization's fiscal code"
+        }
+      ],
+      "put": {
+        "summary": "Upload Organization Logo",
+        "description": "Upload an organization logo for the given organization fiscal code.",
+        "operationId": "uploadOrganizationLogo",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Logo"
+            },
+            "description": "The logo payload"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Logo uploaded.",
+            "headers": {
+              "Location": {
+                "description": "Link to the uploaded logo",
+                "type": "string"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/development-profiles/{fiscal_code}": {
       "post": {
         "tags": ["restricted"],
