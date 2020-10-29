@@ -177,7 +177,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
     dependency.subnet_azure_devops.outputs.id
   ]
 
