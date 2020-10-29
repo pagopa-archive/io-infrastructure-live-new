@@ -44,6 +44,10 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 dependency "storage_container_message-content" {
   config_path = "../../storage/container_message-content"
 }
@@ -174,6 +178,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id
+    dependency.subnet_azure_devops.outputs.id
   ]
 
   subnet_id       = dependency.subnet.outputs.id
