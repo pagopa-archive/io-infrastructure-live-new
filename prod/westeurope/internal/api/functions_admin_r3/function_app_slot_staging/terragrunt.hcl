@@ -44,6 +44,10 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 dependency "storage_container_message-content" {
   config_path = "../../storage/container_message-content"
 }
@@ -79,7 +83,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.6"
 }
 
 inputs = {
@@ -152,9 +156,9 @@ inputs = {
 
       AZURE_SUBSCRIPTION_ID = "common-AZURE-SUBSCRIPTION-ID"
 
-      ADB2C_TENANT_ID  = "adb2c-TENANT-NAME"
-      ADB2C_CLIENT_ID  = "devportal-CLIENT-ID"
-      ADB2C_CLIENT_KEY = "devportal-CLIENT-SECRET"
+      ADB2C_TENANT_ID            = "adb2c-TENANT-NAME"
+      ADB2C_CLIENT_ID            = "devportal-CLIENT-ID"
+      ADB2C_CLIENT_KEY           = "devportal-CLIENT-SECRET"
       ADB2C_TOKEN_ATTRIBUTE_NAME = "adb2c-TOKEN-ATTRIBUTE-NAME"
 
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
@@ -173,7 +177,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_azure_devops.outputs.id
   ]
 
   subnet_id       = dependency.subnet.outputs.id
