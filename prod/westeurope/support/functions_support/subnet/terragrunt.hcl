@@ -9,11 +9,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.1.5"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.1.6"
 }
 
 inputs = {
-  name = "appsupport"
+  name = "fn3support"
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
