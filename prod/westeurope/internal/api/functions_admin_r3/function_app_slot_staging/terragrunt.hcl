@@ -83,7 +83,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.6"
 }
 
 inputs = {
@@ -156,9 +156,9 @@ inputs = {
 
       AZURE_SUBSCRIPTION_ID = "common-AZURE-SUBSCRIPTION-ID"
 
-      ADB2C_TENANT_ID  = "adb2c-TENANT-NAME"
-      ADB2C_CLIENT_ID  = "devportal-CLIENT-ID"
-      ADB2C_CLIENT_KEY = "devportal-CLIENT-SECRET"
+      ADB2C_TENANT_ID            = "adb2c-TENANT-NAME"
+      ADB2C_CLIENT_ID            = "devportal-CLIENT-ID"
+      ADB2C_CLIENT_KEY           = "devportal-CLIENT-SECRET"
       ADB2C_TOKEN_ATTRIBUTE_NAME = "adb2c-TOKEN-ATTRIBUTE-NAME"
 
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
