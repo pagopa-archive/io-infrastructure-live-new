@@ -3,28 +3,20 @@ dependency "subnet" {
 }
 
 
-/*
-dependency "storage_account" {
-  config_path = "../../storage/account"
-}
-
-dependency "storage_table_subscriptionsfeedbyday" {
-  config_path = "../../storage/table_subscriptionsfeedbyday"
-}
-*/
-
 # Support
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-/*
-# Common
-dependency "virtual_network" {
-  config_path = "../../../../common/virtual_network"
+dependency "storage_account" {
+  config_path = "../../storage_dashboard/account"
 }
-*/
 
+dependency "storage_table_dashboardlog" {
+  config_path = "../../storage_dashboard/table_dashboardlog"
+}
+
+# common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
@@ -76,6 +68,10 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
+
+    # TODO
+    DASHBOARD_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_dashboardlog.outputs.name
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
   }
