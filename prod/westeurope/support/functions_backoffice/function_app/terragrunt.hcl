@@ -74,11 +74,21 @@ inputs = {
     DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_backoffice.outputs.name
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+
+      # PostgreSQL database connection
+      POSTGRES_HOSTNAME = "cs-POSTGRES-HOSTNAME"
+      POSTGRES_PORT     = "cs-POSTGRES-PORT"
+      POSTGRES_USERNAME = "cs-POSTGRES-USERNAME"
+      POSTGRES_PASSWORD = "cs-POSTGRES-PASSWORD"
+      POSTGRES_DB_NAME  = "cs-POSTGRES-DB-NAME"
+      POSTGRES_SCHEMA   = "cs-POSTGRES-SCHEMA"
     }
   }
 
