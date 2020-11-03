@@ -9,14 +9,16 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account?ref=v2.1.6"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account?ref=v2.1.8"
 }
 
 inputs = {
-  name                     = "dashboard"
+  name                     = "backoffice"
   resource_group_name      = dependency.resource_group.outputs.resource_name
   account_kind             = "StorageV2"
   account_tier             = "Standard"
   account_replication_type = "GRS"
   access_tier              = "Hot"
+
+  enbable_versioning = true
 }

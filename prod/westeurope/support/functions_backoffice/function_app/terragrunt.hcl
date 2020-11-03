@@ -9,11 +9,11 @@ dependency "resource_group" {
 }
 
 dependency "storage_account" {
-  config_path = "../../storage_dashboard/account"
+  config_path = "../../storage_backoffice/account"
 }
 
-dependency "storage_table_dashboardlog" {
-  config_path = "../../storage_dashboard/table_dashboardlog"
+dependency "storage_table_backoffice" {
+  config_path = "../../storage_backoffice/table_dashboardlog"
 }
 
 # common
@@ -35,7 +35,7 @@ terraform {
 }
 
 inputs = {
-  name                = "support"
+  name                = "backoffice"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
@@ -71,7 +71,7 @@ inputs = {
 
     # TODO
     DASHBOARD_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
-    DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_dashboardlog.outputs.name
+    DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_backoffice.outputs.name
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
   }
