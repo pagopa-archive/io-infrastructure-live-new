@@ -18,7 +18,7 @@ terraform {
 inputs = {
   name                = "support"
   resource_group_name = dependency.resource_group.outputs.resource_name
-  address_space       = ["10.20.0.0/24"]
+  address_space       = ["10.230.1.0/24"]
 
   ddos_protection_plan = {
     id     = dependency.network_ddos_protection_plan.outputs.id
