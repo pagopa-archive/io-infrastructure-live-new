@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.8"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.9"
 }
 
 inputs = {
@@ -31,32 +31,22 @@ inputs = {
     duration = "08:00:00"
   }
 
-  /* #TODO: do we need to cache some content?
-  delivery_rule_url_path_condition_cache_expiration_action = [
-    {
-      name         = "servicesdatacache"
-      order        = 1
-      operator     = "BeginsWith"
-      match_values = ["/services-data"]
-      behavior     = "Override"
-      duration     = "00:15:00"
-    },
-    {
-      name         = "bonuscache"
-      order        = 2
-      operator     = "BeginsWith"
-      match_values = ["/bonus"]
-      behavior     = "Override"
-      duration     = "00:15:00"
-    },
-    {
-      name         = "statuscache"
-      order        = 3
-      operator     = "BeginsWith"
-      match_values = ["/status"]
-      behavior     = "Override"
-      duration     = "00:05:00"
+  delivery_rule_request_scheme_condition = [{
+    name         = "httpsredirect"
+    order        = 1
+    operator     = "Equal"
+    match_values = ["HTTP"]
+
+    url_redirect_action = {
+      redirect_type = "PermanentRedirect"
+      protocol      = "Https"
+      hostname      = null
+      path          = null
+      fragment      = null
+      query_string  = null
     }
-  ]
-  */
+
+
+  }]
+
 }
