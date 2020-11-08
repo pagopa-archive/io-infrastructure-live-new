@@ -18,4 +18,5 @@ inputs = {
   account_replication_type = "GRS"
   access_tier              = "Hot"
   index_document           = "index.html"
+  error_404_document       = "index.html"
 }
