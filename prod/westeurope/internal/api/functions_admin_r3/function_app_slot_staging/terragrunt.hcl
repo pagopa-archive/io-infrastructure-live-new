@@ -83,7 +83,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.6"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -96,8 +96,6 @@ inputs = {
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   runtime_version = "~3"
-
-  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
