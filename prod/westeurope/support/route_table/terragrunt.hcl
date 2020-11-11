@@ -26,7 +26,7 @@ inputs = {
   routes = [{
     name                   = "to-centro-stella-subnet"
     address_prefix         = "10.70.132.0/24"
-    next_hop_type          = "VirtualNetworkGateway"
-    next_hop_in_ip_address = null
+    next_hop_type          = "VirtualAppliance"
+    next_hop_in_ip_address = "10.70.249.10"
   }]
 }
