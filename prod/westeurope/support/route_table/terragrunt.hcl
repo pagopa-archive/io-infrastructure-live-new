@@ -23,10 +23,17 @@ inputs = {
 
   subnet_id = dependency.subnet_fn3support.outputs.id
 
+  # Production
   routes = [{
-    name                   = "to-centro-stella-subnet"
+    name                   = "to-centro-stella-prod-subnet"
     address_prefix         = "10.70.132.0/24"
     next_hop_type          = "VirtualAppliance"
     next_hop_in_ip_address = "10.70.249.10"
+    },
+    {
+      name                   = "to-centro-stella-uat-subnet"
+      address_prefix         = "10.70.67.0/24"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.70.249.10"
   }]
 }
