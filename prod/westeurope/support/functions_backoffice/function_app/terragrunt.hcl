@@ -31,7 +31,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.7"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.11"
 }
 
 inputs = {
@@ -75,7 +75,6 @@ inputs = {
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-
   }
 
   app_settings_secrets = {
@@ -90,6 +89,11 @@ inputs = {
       POSTGRES_DB_NAME  = "cs-POSTGRES-DB-NAME"
       POSTGRES_SCHEMA   = "cs-POSTGRES-SCHEMA"
     }
+  }
+
+  # TODO: use a dependency to resolve the origin
+  cors = {
+    allowed_origins = ["https://backoffice.io.italia.it"]
   }
 
   allowed_subnets = []
