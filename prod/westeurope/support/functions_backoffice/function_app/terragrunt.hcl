@@ -25,6 +25,10 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+dependency "cdn_endpoint_custom_domain" {
+  config_path = "../../../common/cdn/cdn_endpoint_backoffice_custom_domain"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -93,7 +97,7 @@ inputs = {
 
   # TODO: use a dependency to resolve the origin
   cors = {
-    allowed_origins = ["https://backoffice.io.italia.it"]
+    allowed_origins = [replace(format("https://%s", dependency.cdn_endpoint_custom_domain.outputs.fqdn), ".it.", ".it")]
   }
 
   allowed_subnets = []
