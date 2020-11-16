@@ -5,9 +5,7 @@
         <set-header name="x-functions-key" exists-action="override">
             <value>{{io-fn3-backoffice-key}}</value>
         </set-header>
-        <rate-limit-by-key  calls="20"
-          renewal-period="30"
-          counter-key="@(context.Request.IpAddress)" />
+        <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
     </inbound>
     <outbound>
         <base />
