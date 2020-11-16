@@ -1,0 +1,12 @@
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service base-url="{{io-fn3-backoffice-url}}/test" />
+        <set-header name="x-functions-key" exists-action="override">
+            <value>{{io-fn3-backoffice-key}}</value>
+        </set-header>
+    </inbound>
+    <outbound>
+        <base />
+    </outbound>
+</policies>
