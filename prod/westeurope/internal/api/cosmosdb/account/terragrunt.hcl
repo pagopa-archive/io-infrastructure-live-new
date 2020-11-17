@@ -11,16 +11,16 @@ dependency "subnet_fn_app" {
   config_path = "../../functions_app_r3/subnet"
 }
 
+dependency "subnet_fn_assets" {
+  config_path = "../../functions_assets_r3/subnet"
+}
+
 dependency "subnet_fn_public" {
   config_path = "../../functions_public_r3/subnet"
 }
 
 dependency "subnet_fn_service" {
   config_path = "../../functions_services_r3/subnet"
-}
-
-dependency "subnet_fn_assets" {
-  config_path = "../../functions_assets_r3/subnet"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -58,8 +58,8 @@ inputs = {
   allowed_virtual_network_subnet_ids = [
     dependency.subnet_fn_admin.outputs.id,
     dependency.subnet_fn_app.outputs.id,
+    dependency.subnet_fn_assets.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_service.outputs.id,
-    dependency.subnet_fn_assets.outputs.id,
   ]
 }
