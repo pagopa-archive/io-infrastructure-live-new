@@ -167,7 +167,7 @@ inputs = {
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     // MYPORTAL
-    MYPORTAL_BASE_PATH  = "/myportal/api/v1"
+    MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
@@ -190,7 +190,7 @@ inputs = {
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
 
-    JWT_SUPPORT_TOKEN_ISSUER = "app-backend.io.italia.it"
+    JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 604800
   }
 
