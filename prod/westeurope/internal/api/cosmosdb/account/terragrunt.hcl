@@ -19,6 +19,10 @@ dependency "subnet_fn_service" {
   config_path = "../../functions_services_r3/subnet"
 }
 
+dependency "subnet_fn_assets" {
+  config_path = "../../functions_assets_r3/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -56,5 +60,6 @@ inputs = {
     dependency.subnet_fn_app.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_service.outputs.id,
+    dependency.subnet_fn_assets.outputs.id,
   ]
 }

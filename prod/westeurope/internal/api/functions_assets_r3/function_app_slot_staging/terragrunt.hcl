@@ -40,6 +40,10 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -87,7 +91,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
+    SLOT_TASK_HUBNAME           = "StagingTaskHub"
     STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
     STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
     // Disable functions
@@ -99,5 +103,6 @@ inputs = {
     }
   }
 
+  subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
 }
