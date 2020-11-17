@@ -3,13 +3,29 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "subnet_fn_admin" {
+  config_path = "../../functions_admin_r3/subnet"
+}
+
+dependency "subnet_fn_app" {
+  config_path = "../../functions_app_r3/subnet"
+}
+
+dependency "subnet_fn_public" {
+  config_path = "../../functions_public_r3/subnet"
+}
+
+dependency "subnet_fn_service" {
+  config_path = "../../functions_services_r3/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v2.1.11"
 }
 
 inputs = {
@@ -33,5 +49,12 @@ inputs = {
     }
   ]
 
-  is_virtual_network_filter_enabled = false
+  is_virtual_network_filter_enabled = true
+
+  allowed_virtual_network_subnet_ids = [
+    dependency.subnet_fn_admin.outputs.id,
+    dependency.subnet_fn_app.outputs.id,
+    dependency.subnet_fn_public.outputs.id,
+    dependency.subnet_fn_service.outputs.id,
+  ]
 }
