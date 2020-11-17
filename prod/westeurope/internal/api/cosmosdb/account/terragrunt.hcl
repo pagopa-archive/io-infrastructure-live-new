@@ -55,6 +55,9 @@ inputs = {
 
   is_virtual_network_filter_enabled = true
 
+  # this ip range allows the io-p-fn3-slackbot to access. So far that function has not subnet assiciated.
+  ip_range = "23.97.147.242,13.69.61.42,137.117.159.137,104.47.161.199,104.47.157.240"
+
   allowed_virtual_network_subnet_ids = [
     dependency.subnet_fn_admin.outputs.id,
     dependency.subnet_fn_app.outputs.id,
