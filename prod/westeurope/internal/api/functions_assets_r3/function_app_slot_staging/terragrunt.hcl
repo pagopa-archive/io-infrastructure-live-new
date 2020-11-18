@@ -60,8 +60,6 @@ inputs = {
 
   runtime_version = "~3"
 
-  auto_swap_slot_name = "production"
-
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
@@ -87,7 +85,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
+    SLOT_TASK_HUBNAME           = "StagingTaskHub"
     STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
     STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
     // Disable functions
