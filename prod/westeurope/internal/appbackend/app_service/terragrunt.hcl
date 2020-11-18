@@ -194,6 +194,9 @@ inputs = {
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
+
+    JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
+    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
   }
 
   app_settings_secrets = {
@@ -221,6 +224,7 @@ inputs = {
 
       // BPD
       ALLOW_BPD_IP_SOURCE_RANGE : "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
+      JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
 
