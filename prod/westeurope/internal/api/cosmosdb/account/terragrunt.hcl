@@ -74,8 +74,8 @@ inputs = {
   ip_range = format("%s,%s,%s,%s",
     local.fn3_slackbot_outbound_ips,
     local.other_azure_ips,
-    join(",", dependency.logic_app_get_profiles.outputs.workflow_outbound_ip_addresses),
-    join(",", dependency.logic_app_privacy_upsert_user_data_processing.outputs.workflow_outbound_ip_addresses)
+    join(",", dependency.logic_app_get_profiles.outputs.connector_outbound_ip_addresses),
+    join(",", dependency.logic_app_privacy_upsert_user_data_processing.outputs.connector_outbound_ip_addresses)
   )
 
   allowed_virtual_network_subnet_ids = [
