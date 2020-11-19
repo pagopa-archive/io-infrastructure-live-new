@@ -92,10 +92,16 @@ inputs = {
       POSTGRES_PASSWORD = "cs-POSTGRES-PASSWORD"
       POSTGRES_DB_NAME  = "cs-POSTGRES-DB-NAME"
       POSTGRES_SCHEMA   = "cs-POSTGRES-SCHEMA"
+
+      # AD B2C support
+      JWT_SUPPORT_TOKEN_PUBLIC_RSA_CERTIFICATE = "bo-JWT-SUPPORT-TOKEN-PUBLIC-RSA-CERTIFICATE"
+      ADB2C_CLIENT_ID                          = "bo-CLIENT-ID"
+      ADB2C_POLICY_NAME                        = "bo-POLICY-NAME"
+      ADB2C_TENANT_NAME                        = "bo-TENANT-NAME"
+
     }
   }
 
-  # TODO: use a dependency to resolve the origin
   cors = {
     allowed_origins = [replace(format("https://%s", dependency.cdn_endpoint_custom_domain.outputs.fqdn), ".it.", ".it")]
   }
