@@ -40,6 +40,10 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -97,5 +101,6 @@ inputs = {
     }
   }
 
+  subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
 }
