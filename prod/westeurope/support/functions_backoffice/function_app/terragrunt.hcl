@@ -102,10 +102,6 @@ inputs = {
     }
   }
 
-  cors = {
-    allowed_origins = [replace(format("https://%s", dependency.cdn_endpoint_custom_domain.outputs.fqdn), ".it.", ".it")]
-  }
-
   allowed_subnets = []
 
   subnet_id = dependency.subnet.outputs.id
