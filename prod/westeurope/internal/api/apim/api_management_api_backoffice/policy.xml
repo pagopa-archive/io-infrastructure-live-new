@@ -1,0 +1,13 @@
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service base-url="{{io-fn3-backoffice-url}}" />
+        <set-header name="x-functions-key" exists-action="override">
+            <value>{{io-fn3-backoffice-key}}</value>
+        </set-header>
+        <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
+    </inbound>
+    <outbound>
+        <base />
+    </outbound>
+</policies>
