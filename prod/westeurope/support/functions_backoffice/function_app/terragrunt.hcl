@@ -60,7 +60,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.19.0"
+    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -73,7 +73,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    # TODO
     DASHBOARD_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
     DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_backoffice.outputs.name
 
