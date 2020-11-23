@@ -78,6 +78,12 @@ inputs = {
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    # TODO
+    IN_MEMORY_CACHE_TTL = 300
+
+
+    ADB2C_ADMIN_GROUP_NAME = "Admin"
+
   }
 
   app_settings_secrets = {
@@ -97,6 +103,9 @@ inputs = {
       ADB2C_CLIENT_ID                          = "bo-CLIENT-ID"
       ADB2C_POLICY_NAME                        = "bo-POLICY-NAME"
       ADB2C_TENANT_NAME                        = "bo-TENANT-NAME"
+
+      ADB2C_CLIENT_KEY = "bo-CLIENT-KEY"
+      ADB2C_TENANT_ID  = "bo-TENANT-ID"
 
     }
   }
