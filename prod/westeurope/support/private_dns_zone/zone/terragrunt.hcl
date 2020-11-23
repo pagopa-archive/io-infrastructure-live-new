@@ -13,6 +13,6 @@ terraform {
 }
 
 inputs = {
-  name                = "privatelink.postgres.database.azure.com"
+  name                = "postgres.database.azure.com"
   resource_group_name = dependency.resource_group.outputs.resource_name
 }
