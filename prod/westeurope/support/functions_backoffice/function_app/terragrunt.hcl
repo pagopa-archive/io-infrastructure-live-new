@@ -78,9 +78,8 @@ inputs = {
 
     #SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    # TODO
-    IN_MEMORY_CACHE_TTL = 300
-
+    # milliseconds
+    IN_MEMORY_CACHE_TTL = 3600000
 
     ADB2C_ADMIN_GROUP_NAME = "Admin"
 
