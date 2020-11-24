@@ -83,6 +83,9 @@ inputs = {
 
     ADB2C_ADMIN_GROUP_NAME = "Admin"
 
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = "1"
+
   }
 
   app_settings_secrets = {
