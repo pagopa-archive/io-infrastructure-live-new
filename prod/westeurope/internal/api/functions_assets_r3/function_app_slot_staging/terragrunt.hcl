@@ -44,6 +44,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -100,6 +104,11 @@ inputs = {
     map = {
     }
   }
+
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
+  ]
 
   subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
