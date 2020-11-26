@@ -44,6 +44,10 @@ dependency "storage_table_bonusleasebindings" {
   config_path = "../../storage_bonus/table_bonusleasebindings"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -65,8 +69,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 5
-
+  pre_warmed_instance_count = 1
   auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -127,7 +130,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
