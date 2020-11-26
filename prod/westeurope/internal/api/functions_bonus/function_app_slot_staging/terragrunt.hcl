@@ -44,6 +44,10 @@ dependency "storage_table_bonusleasebindings" {
   config_path = "../../storage_bonus/table_bonusleasebindings"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -65,9 +69,8 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 5
-
-  auto_swap_slot_name = "production"
+  pre_warmed_instance_count = 1
+  auto_swap_slot_name       = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -77,6 +80,9 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
+
+    APPINSIGHTS_SAMPLING_PERCENTAGE = 100
+    SERVICES_REQUEST_TIMEOUT_MS     = 5000
 
     # DNS configuration to use private dns zones
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
@@ -127,7 +133,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
