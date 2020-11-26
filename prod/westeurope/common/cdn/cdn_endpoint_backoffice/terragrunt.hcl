@@ -26,19 +26,35 @@ inputs = {
   profile_name        = dependency.cdn_profile.outputs.resource_name
   origin_host_name    = dependency.storage_account_backoffice.outputs.primary_web_host
 
+  is_http_allowed = true
+
   global_delivery_rule_cache_expiration_action = {
     behavior = "Override"
     duration = "08:00:00"
   }
 
+  delivery_rule_url_path_condition_cache_expiration_action = [
+    {
+      # ATTENTION: this is rule is goind to fail due to this issue:
+      # https://github.com/terraform-providers/terraform-provider-azurerm/issues/8770
+      # so far has been applied manually on the portal.
+      name         = "NoCache"
+      order        = 2
+      operator     = "Any"
+      match_values = ["*"]
+      behavior     = "Override"
+      duration     = "00:00:05"
+    },
+  ]
+
   delivery_rule_request_scheme_condition = [{
-    name         = "httpsredirect"
+    name         = "EnforceHTTPS"
     order        = 1
     operator     = "Equal"
     match_values = ["HTTP"]
 
     url_redirect_action = {
-      redirect_type = "PermanentRedirect"
+      redirect_type = "Found"
       protocol      = "Https"
       hostname      = null
       path          = null
