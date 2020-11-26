@@ -67,7 +67,7 @@ inputs = {
   storage_account_name       = dependency.function_app.outputs.storage_account.name
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
-  runtime_version = "~3"
+  runtime_version = "3.0.13901.0"
 
   pre_warmed_instance_count = 1
   auto_swap_slot_name = "production"
@@ -80,6 +80,9 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
+
+    APPINSIGHTS_SAMPLING_PERCENTAGE = 100
+    SERVICES_REQUEST_TIMEOUT_MS = 5000
 
     # DNS configuration to use private dns zones
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
@@ -99,7 +102,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     BONUS_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_bonusleasebindings.outputs.name
 
