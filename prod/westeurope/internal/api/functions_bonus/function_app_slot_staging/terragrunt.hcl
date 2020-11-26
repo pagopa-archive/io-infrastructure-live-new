@@ -67,7 +67,7 @@ inputs = {
   storage_account_name       = dependency.function_app.outputs.storage_account.name
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
-  runtime_version = "3.0.13901.0"
+  runtime_version = "~3"
 
   pre_warmed_instance_count = 1
   auto_swap_slot_name = "production"
@@ -102,7 +102,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     BONUS_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_bonusleasebindings.outputs.name
 
