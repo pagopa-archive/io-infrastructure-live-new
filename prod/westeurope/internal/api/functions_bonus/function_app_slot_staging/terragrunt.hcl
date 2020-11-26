@@ -70,7 +70,7 @@ inputs = {
   runtime_version = "~3"
 
   pre_warmed_instance_count = 1
-  auto_swap_slot_name = "production"
+  auto_swap_slot_name       = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -82,7 +82,7 @@ inputs = {
     NODE_ENV                       = "production"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 100
-    SERVICES_REQUEST_TIMEOUT_MS = 5000
+    SERVICES_REQUEST_TIMEOUT_MS     = 5000
 
     # DNS configuration to use private dns zones
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
