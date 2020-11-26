@@ -48,6 +48,10 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -85,8 +89,8 @@ inputs = {
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
-    
-    MAIL_FROM         = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     // we keep this while we wait for new app version to be deployed
     MAIL_FROM_DEFAULT = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
@@ -100,7 +104,7 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    IO_FUNCTIONS_ADMIN_BASE_URL = "http://api-internal.io.italia.it"
+    IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
   }
 
@@ -118,7 +122,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
