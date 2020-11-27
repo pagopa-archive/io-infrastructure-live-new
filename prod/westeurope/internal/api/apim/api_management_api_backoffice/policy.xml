@@ -24,5 +24,8 @@
     </inbound>
     <outbound>
         <base />
+        <set-header name="cache-control" exists-action="override">
+            <value>no-store</value>
+        </set-header>
     </outbound>
 </policies>
