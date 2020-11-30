@@ -73,7 +73,7 @@ inputs = {
         }
       }
       # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+    /*
       {
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {
