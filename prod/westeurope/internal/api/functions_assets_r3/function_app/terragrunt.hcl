@@ -23,6 +23,10 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "subnet" {
+  config_path = "../subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -100,6 +104,8 @@ inputs = {
     }
   }
 
-  # function key is used to set cdn header.
+  subnet_id = dependency.subnet.outputs.id
+
+  # this function key is used to set cdn header.
   export_keys = true
 }
