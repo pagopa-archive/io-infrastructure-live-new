@@ -28,7 +28,7 @@ inputs = {
 
     capacity = {
       default = 2
-      minimum = 2
+      minimum = 1
       maximum = 10
     }
 

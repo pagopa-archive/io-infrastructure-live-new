@@ -28,7 +28,7 @@ inputs = {
 
     capacity = {
       default = 2
-      minimum = 2
+      minimum = 1
       maximum = 10
     }
 
@@ -73,7 +73,7 @@ inputs = {
         }
       }
       # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+    /*
       {
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {
