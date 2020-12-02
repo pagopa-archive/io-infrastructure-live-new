@@ -104,7 +104,7 @@ inputs = {
           time_grain         = "PT1M"
           statistic          = "Average"
           time_window        = "PT2H"
-          time_aggregation   = "Average"
+          time_aggregation   = "Count"
           operator           = "LessThan"
           threshold          = 5
         }
