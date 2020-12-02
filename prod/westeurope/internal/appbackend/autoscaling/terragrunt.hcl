@@ -27,12 +27,14 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 4
-      minimum = 4
-      maximum = 10
+      default = 5
+      minimum = 5
+      maximum = 20
     }
 
-    rules = [{
+    rules = [
+      /*
+      {
       name = "ScaleOutCpu"
       metric_trigger = {
         metric_name        = "CpuPercentage"
@@ -52,6 +54,7 @@ inputs = {
         cooldown  = "PT5M"
       }
       },
+      /*
       {
         name = "ScaleInCpu"
         metric_trigger = {
@@ -72,8 +75,7 @@ inputs = {
           cooldown  = "PT5M"
         }
       }
-      # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+      */
       {
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {
@@ -84,13 +86,13 @@ inputs = {
           time_window        = "PT1M"
           time_aggregation   = "Average"
           operator           = "GreaterThan"
-          threshold          = 5
+          threshold          = 60
         }
 
         scale_action = {
           direction = "Increase"
           type      = "ChangeCount"
-          value     = "1"
+          value     = "5"
           cooldown  = "PT5M"
         }
       },
@@ -104,17 +106,16 @@ inputs = {
           time_window        = "PT5M"
           time_aggregation   = "Average"
           operator           = "LessThan"
-          threshold          = 3
+          threshold          = 30
         }
 
         scale_action = {
           direction = "Decrease"
           type      = "ChangeCount"
-          value     = "1"
+          value     = "5"
           cooldown  = "PT5M"
         }
-    }
-    */
+      }
     ]
 
     fixed_date = null
