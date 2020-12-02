@@ -7,13 +7,19 @@ dependency "app_service" {
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
+
+# common
+dependency "key_vault" {
+  config_path = "../../../common/key_vault"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.14"
 }
 
 
@@ -101,7 +107,7 @@ inputs = {
         metric_trigger = {
           metric_name        = "HttpQueueLength"
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
-          time_grain         = "PT1M"
+          time_grain         = "PT5M"
           statistic          = "Average"
           time_window        = "PT2H"
           time_aggregation   = "Count"
@@ -127,7 +133,8 @@ inputs = {
     email = {
       send_to_subscription_administrator    = false
       send_to_subscription_co_administrator = false
-      custom_emails                         = ["io-operations@pagopa.it"]
+      custom_emails                         = ["appbackend-AUTOSCALING-NOTIFICATION-EMAILS"]
     }
+    key_vault_id = dependency.key_vault.outputs.id
   }
 }
