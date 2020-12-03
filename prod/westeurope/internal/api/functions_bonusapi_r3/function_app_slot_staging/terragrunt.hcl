@@ -101,8 +101,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
-
     # Disabled functions on slot - slot settings only
     "AzureWebJobs.RedeemedBonusesQueueTrigger.Disabled" = "1"
   }
