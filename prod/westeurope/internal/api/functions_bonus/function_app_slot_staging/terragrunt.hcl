@@ -81,8 +81,7 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    APPINSIGHTS_SAMPLING_PERCENTAGE = 100
-    SERVICES_REQUEST_TIMEOUT_MS     = 5000
+    SERVICES_REQUEST_TIMEOUT_MS = 5000
 
     # DNS configuration to use private dns zones
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
