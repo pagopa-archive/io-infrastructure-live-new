@@ -1,369 +1,537 @@
 {
-   "swagger": "2.0",
-   "info": {
-      "version": "1.1.0",
-      "title": "IO Function Backoffice",
-      "contact": {
-         "name": "IO team",
-         "url": "https://forum.italia.it/c/progetto-io"
-      },
-      "x-logo": {
-         "url": "https://io.italia.it/assets/img/io-logo-blue.svg"
-      },
-      "description": "Documentation of the io-function-backoffice\n"
-   },
-   "host": "${host}",
-   "basePath": "/api/v1",
-   "schemes": [
-      "https"
-   ],
-   "security": [
-      {
-         "Bearer": []
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1.0",
+    "title": "IO Function Backoffice",
+    "contact": {
+      "name": "IO team",
+      "url": "https://forum.italia.it/c/progetto-io"
+    },
+    "x-logo": {
+      "url": "https://io.italia.it/assets/img/io-logo-blue.svg"
+    },
+    "description": "Documentation of the io-function-backoffice\n"
+  },
+  "host": "${host}",
+  "basePath": "/api/v1",
+  "schemes": [
+    "https"
+  ],
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "paths": {
+    "/bpd/citizen": {
+      "get": {
+        "operationId": "GetBPDCitizen",
+        "summary": "Get BPD Citizen info",
+        "description": "Get the Citizen BPD info",
+        "parameters": [
+          {
+            "$ref": "#/parameters/CitizenID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/BPDCitizen"
+            },
+            "examples": {
+              "application/json": {
+                "fiscal_code": "AAABBB01C02D345A",
+                "timestamp_tc": "2011-10-05T14:48:00.000Z",
+                "payoff_instr": "IT90M0300203280482653729744",
+                "payoff_instr_type": "IBAN",
+                "enabled": "true",
+                "insert_date": "2011-10-05T14:48:00.000Z",
+                "insert_user": "Bank",
+                "update_date": "2011-10-05T14:48:00.000Z",
+                "update_user": "Bank",
+                "payment_methods": [
+                  {
+                    "payment_instrument_hpan": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+                    "payment_instrument_status": "ACTIVE",
+                    "payment_instrument_insert_date": "2011-10-05T14:48:00.000Z",
+                    "payment_instrument_insert_user": "Bank",
+                    "payment_instrument_update_date": "2011-10-05T14:48:00.000Z",
+                    "payment_instrument_update_user": "Bank"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
       }
-   ],
-   "paths": {
-      "/bpd/citizen": {
-         "get": {
-            "operationId": "GetBPDCitizen",
-            "summary": "Get BPD Citizen info",
-            "description": "Get the Citizen BPD info",
-            "parameters": [
-               {
-                  "$ref": "#/parameters/CitizenID"
-               }
-            ],
-            "responses": {
-               "200": {
-                  "description": "Found.",
-                  "schema": {
-                     "$ref": "#/definitions/BPDCitizen"
-                  },
-                  "examples": {
-                     "application/json": {
-                        "fiscal_code": "AAABBB01C02D345A",
-                        "timestamp_tc": "2011-10-05T14:48:00.000Z",
-                        "payoff_instr": "IT90M0300203280482653729744",
-                        "payoff_instr_type": "IBAN",
-                        "enabled": "true",
-                        "insert_date": "2011-10-05T14:48:00.000Z",
-                        "insert_user": "Bank",
-                        "update_date": "2011-10-05T14:48:00.000Z",
-                        "update_user": "Bank",
-                        "payment_methods": [
-                           {
-                              "payment_instrument_hpan": "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
-                              "payment_instrument_status": "ACTIVE",
-                              "payment_instrument_insert_date": "2011-10-05T14:48:00.000Z",
-                              "payment_instrument_insert_user": "Bank",
-                              "payment_instrument_update_date": "2011-10-05T14:48:00.000Z",
-                              "payment_instrument_update_user": "Bank"
-                           }
-                        ]
-                     }
-                  }
-               },
-               "400": {
-                  "description": "Invalid request.",
-                  "schema": {
-                     "$ref": "#/definitions/ProblemJson"
-                  }
-               },
-               "401": {
-                  "description": "Unauthorized"
-               },
-               "404": {
-                  "description": "Not found.",
-                  "schema": {
-                     "$ref": "#/definitions/ProblemJson"
-                  }
-               },
-               "500": {
-                  "description": "Internal server Error",
-                  "schema": {
-                     "$ref": "#/definitions/ProblemJson"
-                  }
-               }
+    },
+    "/bpd/transactions": {
+      "get": {
+        "operationId": "GetBPDTransactions",
+        "summary": "Get BPD transactions info list",
+        "description": "Get the BPD transactions info list",
+        "parameters": [
+          {
+            "$ref": "#/parameters/CitizenID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/BPDTransactionList"
             }
-         }
-      },
-      "/bpd/transactions": {
-         "get": {
-            "operationId": "GetBPDTransactions",
-            "summary": "Get BPD transactions info list",
-            "description": "Get the BPD transactions info list",
-            "parameters": [
-               {
-                  "$ref": "#/parameters/CitizenID"
-               }
-            ],
-            "responses": {
-               "200": {
-                  "description": "Found.",
-                  "schema": {
-                     "$ref": "#/definitions/BPDTransactionList"
-                  }
-               },
-               "400": {
-                  "description": "Invalid request.",
-                  "schema": {
-                     "$ref": "#/definitions/ProblemJson"
-                  }
-               },
-               "401": {
-                  "description": "Unauthorized"
-               },
-               "500": {
-                  "description": "Internal server Error",
-                  "schema": {
-                     "$ref": "#/definitions/ProblemJson"
-                  }
-               }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
             }
-         }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
       }
-   },
-   "consumes": [
-      "application/json"
-   ],
-   "produces": [
-      "application/json"
-   ],
-   "definitions": {
-      "FiscalCode": {
-         "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/FiscalCode"
-      },
-      "ProblemJson": {
-         "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/ProblemJson"
-      },
-      "BPDCitizen": {
-         "type": "object",
-         "properties": {
-            "fiscal_code": {
-               "$ref": "#/definitions/FiscalCode"
-            },
-            "timestamp_tc": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "payoff_instr": {
-               "type": "string"
-            },
-            "payoff_instr_type": {
-               "type": "string"
-            },
-            "insert_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "insert_user": {
-               "type": "string"
-            },
-            "update_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "update_user": {
-               "type": "string"
-            },
-            "enabled": {
-               "type": "boolean"
-            },
-            "payment_methods": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/PaymentMethod"
-               }
+    },
+    "/bpd/payment-instruments/:hpan": {
+      "get": {
+        "operationId": "GetBPDPaymentInstrument",
+        "summary": "Get hpan detail",
+        "description": "Get hpan detail related to a fiscal code",
+        "parameters": [
+          {
+            "$ref": "#/parameters/CitizenID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/BPDTransactionList"
             }
-         },
-         "required": [
-            "fiscal_code",
-            "timestamp_tc",
-            "payment_methods"
-         ]
-      },
-      "PaymentMethod": {
-         "type": "object",
-         "properties": {
-            "payment_instrument_hpan": {
-               "type": "string"
-            },
-            "payment_instrument_status": {
-               "type": "string",
-               "enum": [
-                  "ACTIVE",
-                  "INACTIVE"
-               ]
-            },
-            "payment_instrument_insert_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "payment_instrument_insert_user": {
-               "type": "string"
-            },
-            "payment_instrument_update_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "payment_instrument_update_user": {
-               "type": "string"
+          },
+          "400": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
             }
-         },
-         "required": [
-            "payment_instrument_hpan",
-            "payment_instrument_status"
-         ]
-      },
-      "SupportToken": {
-         "type": "string",
-         "pattern": "^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$",
-         "description": "A JWT token used by Support Team"
-      },
-      "CitizenID": {
-         "description": "Fiscal Code or Support Token for Citizen Identification",
-         "x-one-of": true,
-         "allOf": [
-            {
-               "$ref": "#/definitions/FiscalCode"
-            },
-            {
-               "$ref": "#/definitions/SupportToken"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
             }
-         ]
-      },
-      "BPDTransactionList": {
-         "type": "object",
-         "properties": {
-            "transactions": {
-               "type": "array",
-               "items": {
-                  "$ref": "#/definitions/BPDTransaction"
-               }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
             }
-         },
-         "required": [
-            "transactions"
-         ]
-      },
-      "BPDTransaction": {
-         "type": "object",
-         "properties": {
-            "hpan": {
-               "type": "string"
-            },
-            "trx_timestamp": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "acquirer_id": {
-               "type": "string"
-            },
-            "acquirer": {
-               "type": "string"
-            },
-            "acquirer_descr": {
-               "type": "string"
-            },
-            "id_trx_acquirer": {
-               "type": "string"
-            },
-            "id_trx_issuer": {
-               "type": "string"
-            },
-            "operation_type": {
-               "type": "string"
-            },
-            "operation_type_descr": {
-               "type": "string"
-            },
-            "circuit_type": {
-               "type": "string"
-            },
-            "circuit_type_descr": {
-               "type": "string"
-            },
-            "amount": {
-               "type": "number"
-            },
-            "amount_currency": {
-               "type": "string"
-            },
-            "amount_currency_descr": {
-               "type": "string"
-            },
-            "score": {
-               "type": "number"
-            },
-            "award_period_id": {
-               "type": "number"
-            },
-            "merchant_id": {
-               "type": "string"
-            },
-            "correlation_id": {
-               "type": "string"
-            },
-            "bin": {
-               "type": "string"
-            },
-            "terminal_id": {
-               "type": "string"
-            },
-            "enabled": {
-               "type": "boolean"
-            },
-            "insert_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "insert_user": {
-               "type": "string"
-            },
-            "update_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "update_user": {
-               "type": "string"
-            },
-            "payment_instrument_insert_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "payment_instrument_insert_user": {
-               "type": "string"
-            },
-            "payment_instrument_update_date": {
-               "type": "string",
-               "format": "dateTime"
-            },
-            "payment_instrument_update_user": {
-               "type": "string"
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
             }
-         },
-         "required": [
-            "acquirer",
-            "id_trx_acquirer",
-            "trx_timestamp",
-            "hpan"
-         ]
+          }
+        }
       }
-   },
-   "parameters": {
-      "CitizenID": {
-         "name": "x-citizen-id",
-         "in": "header",
-         "description": "The fiscal code of the user or the JWT' s support token",
-         "type": "string",
-         "required": true
-      }
-   },
-   "securityDefinitions": {
-      "Bearer": {
-         "type": "apiKey",
-         "name": "Authorization",
-         "in": "header"
-      }
-   }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "FiscalCode": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/FiscalCode"
+    },
+    "ProblemJson": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/ProblemJson"
+    },
+    "PaymentMethodStatus": {
+      "type": "string",
+      "enum": [
+        "ACTIVE",
+        "INACTIVE"
+      ]
+    },
+    "PaymentMethodDetails": {
+      "type": "object",
+      "properties": {
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "hpan": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "update_user": {
+          "type": "string"
+        },
+        "insert_user": {
+          "type": "string"
+        },
+        "activation_periods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ActivationPeriods"
+          }
+        }
+      },
+      "required": [
+        "fiscal_code",
+        "hpan",
+        "activation_periods",
+        "enabled"
+      ]
+    },
+    "ActivationPeriods": {
+      "type": "object",
+      "properties": {
+        "enrollment": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "cancellation": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "hist_insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "hist_insert_user": {
+          "type": "string"
+        },
+        "hist_update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "hist_update_user": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/PaymentMethodStatus"
+        }
+      },
+      "required": [
+        "enrollment",
+        "status"
+      ]
+    },
+    "BPDCitizen": {
+      "type": "object",
+      "properties": {
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "timestamp_tc": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "payoff_instr": {
+          "type": "string"
+        },
+        "payoff_instr_type": {
+          "type": "string"
+        },
+        "insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "insert_user": {
+          "type": "string"
+        },
+        "update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "update_user": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "payment_methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PaymentMethod"
+          }
+        }
+      },
+      "required": [
+        "fiscal_code",
+        "timestamp_tc",
+        "payment_methods"
+      ]
+    },
+    "PaymentMethod": {
+      "type": "object",
+      "properties": {
+        "payment_instrument_hpan": {
+          "type": "string"
+        },
+        "payment_instrument_status": {
+          "$ref": "#/definitions/PaymentMethodStatus"
+        },
+        "payment_instrument_insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "payment_instrument_insert_user": {
+          "type": "string"
+        },
+        "payment_instrument_update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "payment_instrument_update_user": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "payment_instrument_hpan",
+        "payment_instrument_status"
+      ]
+    },
+    "SupportToken": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9-_=]+[.][A-Za-z0-9-_=]+[.][A-Za-z0-9-_.+/=]*$",
+      "description": "A JWT token used by Support Team"
+    },
+    "CitizenID": {
+      "description": "Fiscal Code or Support Token for Citizen Identification",
+      "x-one-of": true,
+      "allOf": [
+        {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        {
+          "$ref": "#/definitions/SupportToken"
+        }
+      ]
+    },
+    "BPDTransactionList": {
+      "type": "object",
+      "properties": {
+        "transactions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/BPDTransaction"
+          }
+        }
+      },
+      "required": [
+        "transactions"
+      ]
+    },
+    "BPDTransaction": {
+      "type": "object",
+      "properties": {
+        "hpan": {
+          "type": "string"
+        },
+        "trx_timestamp": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "acquirer_id": {
+          "type": "string"
+        },
+        "acquirer": {
+          "type": "string"
+        },
+        "acquirer_descr": {
+          "type": "string",
+          "enum": [
+            "Nexi",
+            "IntesaSanPaolo",
+            "Poste",
+            "Unicredit",
+            "BancaSella",
+            "Nexi_UBI",
+            "Nexi_ICCREA",
+            "AmericanExpress",
+            "Satispay",
+            "ICCREA",
+            "Diners",
+            "Axepta_BNP",
+            "SumUP",
+            "Bancomat",
+            "BancomatPay",
+            "SiaPay",
+            "Paytipper",
+            "Reiffeisen",
+            "Cedacri",
+            "Deutsche",
+            "MPS",
+            "EquensWorldline",
+            "Other"
+          ]
+        },
+        "id_trx_acquirer": {
+          "type": "string"
+        },
+        "id_trx_issuer": {
+          "type": "string"
+        },
+        "operation_type": {
+          "type": "string"
+        },
+        "operation_type_descr": {
+          "type": "string",
+          "enum": [
+            "Payment",
+            "Transfer",
+            "ApplePay",
+            "GooglePay",
+            "Other"
+          ]
+        },
+        "circuit_type": {
+          "type": "string"
+        },
+        "circuit_type_descr": {
+          "type": "string",
+          "enum": [
+            "Pagobancomat",
+            "Visa",
+            "Mastercard",
+            "Amex",
+            "JCB",
+            "UnionPay",
+            "Diners",
+            "Codice_PostePay",
+            "BancomatPay",
+            "SatisPay",
+            "Circuito_Privativo",
+            "Other"
+          ]
+        },
+        "amount": {
+          "type": "number"
+        },
+        "amount_currency": {
+          "type": "string"
+        },
+        "amount_currency_descr": {
+          "type": "string"
+        },
+        "score": {
+          "type": "number"
+        },
+        "award_period_id": {
+          "type": "number"
+        },
+        "merchant_id": {
+          "type": "string"
+        },
+        "correlation_id": {
+          "type": "string"
+        },
+        "bin": {
+          "type": "string"
+        },
+        "terminal_id": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "insert_user": {
+          "type": "string"
+        },
+        "update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "update_user": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "acquirer",
+        "id_trx_acquirer",
+        "trx_timestamp",
+        "hpan"
+      ]
+    }
+  },
+  "parameters": {
+    "CitizenID": {
+      "name": "x-citizen-id",
+      "in": "header",
+      "description": "The fiscal code of the user or the JWT' s support token",
+      "type": "string",
+      "required": true
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
 }
