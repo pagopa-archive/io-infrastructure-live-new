@@ -134,21 +134,28 @@
         }
       }
     },
-    "/bpd/payment-instruments/:hpan": {
+    "/bpd/payment-instruments/{hpan}": {
       "get": {
         "operationId": "GetBPDPaymentInstrument",
-        "summary": "Get hpan detail",
-        "description": "Get hpan detail related to a fiscal code",
+        "summary": "Get BPD hpan detail",
+        "description": "Get BPD hpan detail related to a fiscal code",
         "parameters": [
           {
             "$ref": "#/parameters/CitizenID"
+          },
+          {
+            "name": "hpan",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "The hpan of a payment instrument"
           }
         ],
         "responses": {
           "200": {
             "description": "Found.",
             "schema": {
-              "$ref": "#/definitions/BPDTransactionList"
+              "$ref": "#/definitions/PaymentMethodDetails"
             }
           },
           "400": {
