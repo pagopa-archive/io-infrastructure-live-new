@@ -89,10 +89,10 @@ inputs = {
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
           time_grain         = "PT1M"
           statistic          = "Average"
-          time_window        = "PT1M"
-          time_aggregation   = "Count"
+          time_window        = "PT5M"
+          time_aggregation   = "Average"
           operator           = "GreaterThan"
-          threshold          = 15
+          threshold          = 10
         }
 
         scale_action = {
@@ -109,8 +109,8 @@ inputs = {
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
           time_grain         = "PT5M"
           statistic          = "Average"
-          time_window        = "PT2H"
-          time_aggregation   = "Count"
+          time_window        = "PT1H"
+          time_aggregation   = "Average"
           operator           = "LessThan"
           threshold          = 5
         }
