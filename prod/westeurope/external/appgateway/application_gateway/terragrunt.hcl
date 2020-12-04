@@ -40,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.15"
 }
 
 inputs = {
@@ -105,6 +105,13 @@ inputs = {
       }
 
       rewrite_rule_set_name = "HttpHeader"
+
+
+      connection_draining = {
+        enabled           = true
+        drain_timeout_sec = 20
+      }
+
     }
   ]
 
