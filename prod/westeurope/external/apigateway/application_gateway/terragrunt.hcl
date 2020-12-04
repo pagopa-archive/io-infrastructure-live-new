@@ -170,14 +170,61 @@ inputs = {
 
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Detection"
+    firewall_mode            = "Prevention"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
 
-    disabled_rule_groups = []
+    disabled_rule_groups = [
+      {
+        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
+        rules = [
+          913101
+        ]
+      }
+      {
+        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
+        rules = [
+          920300,
+          920320,
+          920340,
+          920341,
+          920420,
+          920470
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+        rules = [
+          932150
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-941-APPLICATION-ATTACK-XSS"
+        rules = [
+          941150,
+          941320,
+          941330,
+          941340
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+        rules = [
+          942110,
+          942130,
+          942200,
+          942240,
+          942260,
+          942370,
+          942430,
+          942440,
+          942450
+        ]
+      }
+    ]
   }
 
   autoscale_configuration = {
