@@ -2,8 +2,8 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "cdn_endpoint_assets" {
-  config_path = "../cdn_endpoint_assets"
+dependency "cdn_endpoint_backoffice" {
+  config_path = "../cdn_endpoint_backoffice"
 }
 
 # Common
@@ -21,11 +21,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint_custom_domain?ref=v2.1.8"
 }
 
 inputs = {
-  name                = "assets.cdn"
+  name                = "backoffice"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
     name                = "io.italia.it"
@@ -33,7 +33,7 @@ inputs = {
   }
   profile_name = dependency.cdn_profile.outputs.resource_name
   endpoint = {
-    name     = dependency.cdn_endpoint_assets.outputs.resource_name
-    hostname = dependency.cdn_endpoint_assets.outputs.hostname
+    name     = dependency.cdn_endpoint_backoffice.outputs.resource_name
+    hostname = dependency.cdn_endpoint_backoffice.outputs.hostname
   }
 }

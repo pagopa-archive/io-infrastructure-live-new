@@ -16,6 +16,9 @@ include {
   path = find_in_parent_folders()
 }
 
+## Note this endpoint shouldn't be used anymore.
+#  Use instead: cdn_endpoint_fnassets
+
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.0"
 }

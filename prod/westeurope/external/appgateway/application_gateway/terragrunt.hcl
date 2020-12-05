@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.2"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.14"
 }
 
 inputs = {
@@ -107,13 +107,38 @@ inputs = {
         request_timeout       = 180
         host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
 
   firewall_policy_id = dependency.firewall_custom_rules.outputs.id
 
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "CleanUpHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_client_ip}"
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = "{var_client_ip}"
+        },
+      ]
+
+      response_header_configurations = []
+
+    }]
+  }]
+
   autoscale_configuration = {
-    min_capacity = 2
-    max_capacity = 10
+    min_capacity = 10
+    max_capacity = 20
   }
 }

@@ -68,6 +68,7 @@ inputs = {
     REPLY_URL                    = "https://developer.io.italia.it"
     ADMIN_API_URL                = "http://api-internal.io.italia.it"
     TENANT_NAME                  = "agidweb"
+    LOGO_URL                     = "https://assets.cdn.io.italia.it/logos"
   }
 
   app_settings_secrets = {

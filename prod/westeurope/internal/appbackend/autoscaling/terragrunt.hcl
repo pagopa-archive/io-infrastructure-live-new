@@ -7,13 +7,19 @@ dependency "app_service" {
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
+
+# common
+dependency "key_vault" {
+  config_path = "../../../common/key_vault"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.14"
 }
 
 
@@ -27,12 +33,14 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 3
-      minimum = 3
-      maximum = 10
+      default = 5
+      minimum = 5
+      maximum = 20
     }
 
-    rules = [{
+    rules = [
+      /*
+      {
       name = "ScaleOutCpu"
       metric_trigger = {
         metric_name        = "CpuPercentage"
@@ -52,6 +60,7 @@ inputs = {
         cooldown  = "PT5M"
       }
       },
+      /*
       {
         name = "ScaleInCpu"
         metric_trigger = {
@@ -72,8 +81,7 @@ inputs = {
           cooldown  = "PT5M"
         }
       }
-      # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+      */
       {
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {
@@ -81,16 +89,16 @@ inputs = {
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
           time_grain         = "PT1M"
           statistic          = "Average"
-          time_window        = "PT1M"
+          time_window        = "PT5M"
           time_aggregation   = "Average"
           operator           = "GreaterThan"
-          threshold          = 5
+          threshold          = 10
         }
 
         scale_action = {
           direction = "Increase"
           type      = "ChangeCount"
-          value     = "1"
+          value     = "5"
           cooldown  = "PT5M"
         }
       },
@@ -99,22 +107,21 @@ inputs = {
         metric_trigger = {
           metric_name        = "HttpQueueLength"
           metric_resource_id = dependency.app_service.outputs.app_service_plan_id
-          time_grain         = "PT1M"
+          time_grain         = "PT5M"
           statistic          = "Average"
-          time_window        = "PT5M"
+          time_window        = "PT1H"
           time_aggregation   = "Average"
           operator           = "LessThan"
-          threshold          = 3
+          threshold          = 5
         }
 
         scale_action = {
           direction = "Decrease"
           type      = "ChangeCount"
-          value     = "1"
+          value     = "5"
           cooldown  = "PT5M"
         }
-    }
-    */
+      }
     ]
 
     fixed_date = null
@@ -126,7 +133,8 @@ inputs = {
     email = {
       send_to_subscription_administrator    = false
       send_to_subscription_co_administrator = false
-      custom_emails                         = ["io-operations@pagopa.it"]
+      custom_emails                         = ["appbackend-AUTOSCALING-NOTIFICATION-EMAILS"]
     }
+    key_vault_id = dependency.key_vault.outputs.id
   }
 }
