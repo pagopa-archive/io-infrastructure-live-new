@@ -36,7 +36,7 @@ inputs = {
   },
   {
     name = "block-specific-uri"
-    priority = 1
+    priority = 2
     rule_type = "MatchRule"
     action = "Block"
 
