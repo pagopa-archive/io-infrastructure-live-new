@@ -117,6 +117,8 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
     #QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
     #MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
 
