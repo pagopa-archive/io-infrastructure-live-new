@@ -40,7 +40,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.26"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
 }
 
 inputs = {
@@ -62,12 +62,11 @@ inputs = {
 
   frontend_port = 443
 
-  custom_domains = {
+  custom_domain = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "io-italia-it"
   }
 
   services = [
@@ -78,6 +77,8 @@ inputs = {
       http_listener = {
         protocol  = "Https"
         host_name = "app-backend.io.italia.it"
+        # Note the certificate name can not contain dot.
+        ssl_certificate_name = "app-backend-io-italia-it"
       }
 
       backend_address_pool = {
@@ -102,8 +103,33 @@ inputs = {
         request_timeout       = 180
         host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
+
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "CleanUpHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_client_ip}"
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = "{var_client_ip}"
+        },
+      ]
+
+      response_header_configurations = []
+
+    }]
+  }]
 
   waf_configuration = {
     enabled                  = true
@@ -117,7 +143,7 @@ inputs = {
     disabled_rule_groups = [
       {
         rule_group_name = "REQUEST-913-SCANNER-DETECTION"
-        rules = []
+        rules           = []
       },
       {
         rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
@@ -160,7 +186,7 @@ inputs = {
   }
 
   autoscale_configuration = {
-    min_capacity = 2
-    max_capacity = 10
+    min_capacity = 10
+    max_capacity = 20
   }
 }

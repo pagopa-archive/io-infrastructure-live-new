@@ -44,6 +44,10 @@ dependency "storage_account_assets" {
   config_path = "../../../../common/cdn/storage_account_assets"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 dependency "storage_container_message-content" {
   config_path = "../../storage/container_message-content"
 }
@@ -68,6 +72,9 @@ dependency "app_service_appbackend" {
   config_path = "../../../appbackend/app_service"
 }
 
+dependency "storage_table_subscriptionsfeedbyday" {
+  config_path = "../../storage/table_subscriptionsfeedbyday"
+}
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -76,7 +83,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.36"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -89,8 +96,6 @@ inputs = {
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   runtime_version = "~3"
-
-  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -135,6 +140,11 @@ inputs = {
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+
+    SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
@@ -144,9 +154,10 @@ inputs = {
 
       AZURE_SUBSCRIPTION_ID = "common-AZURE-SUBSCRIPTION-ID"
 
-      ADB2C_TENANT_ID  = "adb2c-TENANT-NAME"
-      ADB2C_CLIENT_ID  = "devportal-CLIENT-ID"
-      ADB2C_CLIENT_KEY = "devportal-CLIENT-SECRET"
+      ADB2C_TENANT_ID            = "adb2c-TENANT-NAME"
+      ADB2C_CLIENT_ID            = "devportal-CLIENT-ID"
+      ADB2C_CLIENT_KEY           = "devportal-CLIENT-SECRET"
+      ADB2C_TOKEN_ATTRIBUTE_NAME = "adb2c-TOKEN-ATTRIBUTE-NAME"
 
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
       SERVICE_PRINCIPAL_SECRET    = "ad-APPCLIENT-APIM-SECRET"
@@ -155,12 +166,17 @@ inputs = {
       PUBLIC_API_KEY = "apim-IO-GDPR-SERVICE-KEY"
 
       SESSION_API_KEY = "appbackend-PRE-SHARED-KEY"
+
+      __DISABLED__SENDGRID_API_KEY = "common-SENDGRID-APIKEY"
+      MAILUP_USERNAME              = "common-MAILUP2-USERNAME"
+      MAILUP_SECRET                = "common-MAILUP2-SECRET"
     }
   }
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_azure_devops.outputs.id
   ]
 
   subnet_id       = dependency.subnet.outputs.id

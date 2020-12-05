@@ -70,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -86,7 +86,7 @@ inputs = {
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP1"
+    sku_size = "EP2"
   }
 
   runtime_version = "~3"

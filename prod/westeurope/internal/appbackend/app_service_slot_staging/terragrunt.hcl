@@ -91,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.33"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.0"
 }
 
 inputs = {
@@ -166,6 +166,12 @@ inputs = {
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
+    // MYPORTAL
+    MYPORTAL_BASE_PATH = "/myportal/api/v1"
+
+    // BPD
+    BPD_BASE_PATH = "/bpd/api/v1"
+
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
 
@@ -179,8 +185,13 @@ inputs = {
     // Feature flags
     FF_BONUS_ENABLED = 1
 
+    TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
+
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
+
+    JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
+    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
   }
 
   app_settings_secrets = {
@@ -199,6 +210,16 @@ inputs = {
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
+
+      // TEST LOGIN
+      TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
+
+      // MYPORTAL
+      ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
+
+      // BPD
+      ALLOW_BPD_IP_SOURCE_RANGE : "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
+      JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
 

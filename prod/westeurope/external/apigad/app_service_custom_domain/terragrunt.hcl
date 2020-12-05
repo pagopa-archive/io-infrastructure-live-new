@@ -8,7 +8,7 @@ dependency "resource_group" {
 }
 
 dependency "app_service_certificate" {
-  config_path = "../../app_service_certificate"
+  config_path = "../app_service_certificate"
 }
 
 // Common
@@ -22,7 +22,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_custom_domain?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_custom_domain?ref=v2.1.0"
 }
 
 inputs = {

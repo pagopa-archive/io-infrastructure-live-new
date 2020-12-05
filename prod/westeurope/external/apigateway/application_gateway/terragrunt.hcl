@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
 }
 
 inputs = {
@@ -106,6 +106,9 @@ inputs = {
         request_timeout       = 180
         host_name             = "api-internal.io.italia.it"
       }
+
+      rewrite_rule_set_name = "HttpHeader"
+
     },
     {
       name          = "developerportalbackend"
@@ -139,8 +142,31 @@ inputs = {
         request_timeout       = 180
         host_name             = dependency.app_service_developerportalbackend.outputs.default_site_hostname
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
+
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "CleanUpHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_client_ip}"
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = "{var_client_ip}"
+        },
+      ]
+      response_header_configurations = []
+    }]
+  }]
 
   waf_configuration = {
     enabled                  = true

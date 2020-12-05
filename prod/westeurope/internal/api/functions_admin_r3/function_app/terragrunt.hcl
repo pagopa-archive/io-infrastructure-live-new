@@ -64,13 +64,17 @@ dependency "app_service_appbackend" {
   config_path = "../../../appbackend/app_service"
 }
 
+dependency "storage_table_subscriptionsfeedbyday" {
+  config_path = "../../storage/table_subscriptionsfeedbyday"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -125,10 +129,10 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    // Disabled functions - Slot settings only.
-    "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
-    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
+    SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
   }
 
   app_settings_secrets = {
@@ -141,6 +145,7 @@ inputs = {
       ADB2C_TENANT_ID  = "adb2c-TENANT-NAME"
       ADB2C_CLIENT_ID  = "devportal-CLIENT-ID"
       ADB2C_CLIENT_KEY = "devportal-CLIENT-SECRET"
+      ADB2C_TOKEN_ATTRIBUTE_NAME = "adb2c-TOKEN-ATTRIBUTE-NAME"
 
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
       SERVICE_PRINCIPAL_SECRET    = "ad-APPCLIENT-APIM-SECRET"
@@ -149,6 +154,10 @@ inputs = {
       PUBLIC_API_KEY = "apim-IO-GDPR-SERVICE-KEY"
 
       SESSION_API_KEY = "appbackend-PRE-SHARED-KEY"
+
+      __DISABLED__SENDGRID_API_KEY = "common-SENDGRID-APIKEY"
+      MAILUP_USERNAME              = "common-MAILUP2-USERNAME"
+      MAILUP_SECRET                = "common-MAILUP2-SECRET"
     }
   }
 

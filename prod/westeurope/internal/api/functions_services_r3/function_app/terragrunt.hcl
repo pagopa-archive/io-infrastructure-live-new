@@ -50,7 +50,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -88,7 +88,10 @@ inputs = {
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
-    MAIL_FROM_DEFAULT        = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    
+    MAIL_FROM         = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    // we keep this while we wait for new app version to be deployed
+    MAIL_FROM_DEFAULT = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -99,6 +102,9 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+    IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
   }
 
   app_settings_secrets = {
@@ -109,6 +115,7 @@ inputs = {
       WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
       SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
+      IO_FUNCTIONS_ADMIN_API_TOKEN         = "apim-IO-SERVICE-KEY"
     }
   }
 

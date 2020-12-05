@@ -40,13 +40,17 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.36"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -60,7 +64,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 2
+  pre_warmed_instance_count = 1
 
   auto_swap_slot_name = "production"
 
@@ -97,8 +101,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
-
     # Disabled functions on slot - slot settings only
     "AzureWebJobs.RedeemedBonusesQueueTrigger.Disabled" = "1"
   }
@@ -112,7 +114,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

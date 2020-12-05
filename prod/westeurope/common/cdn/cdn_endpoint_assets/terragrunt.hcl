@@ -16,8 +16,11 @@ include {
   path = find_in_parent_folders()
 }
 
+## Note this endpoint shouldn't be used anymore.
+#  Use instead: cdn_endpoint_fnassets
+
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.0.31"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.0"
 }
 
 inputs = {
@@ -32,7 +35,7 @@ inputs = {
   }
 
   # Note: match_values = ["/services-data","/bonus"] works but the Azure portal displays only
-  # the first item for each rule generating confusion on the actual set of rules applied 
+  # the first item for each rule generating confusion on the actual set of rules applied
   delivery_rule_url_path_condition_cache_expiration_action = [
     {
       name         = "servicesdatacache"
@@ -57,7 +60,7 @@ inputs = {
       match_values = ["/status"]
       behavior     = "Override"
       duration     = "00:05:00"
-    }    
+    }
   ]
 
 }
