@@ -16,14 +16,14 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.0"
 }
 
 inputs = {
   name                  = "common"
   resource_group_name   = dependency.resource_group.outputs.resource_name
   capacity              = 1
-  shard_count           = 1
+  shard_count           = 2
   enable_non_ssl_port   = false
   subnet_id             = dependency.subnet.outputs.id
   family                = "P"

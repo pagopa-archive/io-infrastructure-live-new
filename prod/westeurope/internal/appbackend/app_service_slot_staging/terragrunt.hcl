@@ -22,8 +22,13 @@ dependency "functions_bonus" {
 }
 
 # Push notifications origin
-dependency "subnet_funcservices" {
-  config_path = "../../api/functions_services/subnet"
+dependency "subnet_fn3services" {
+  config_path = "../../api/functions_services_r3/subnet"
+}
+
+# Session endpoints allowed origin
+dependency "subnet_funcadmin_r3" {
+  config_path = "../../api/functions_admin_r3/subnet"
 }
 
 # External
@@ -61,11 +66,15 @@ dependency "notification_hub" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../operations/storage_account_logs"
+  config_path = "../../../operations/storage_account_logs/account"
 }
 
 dependency "storage_queue_spid_logs" {
   config_path = "../../../operations/storage_queue_spid_logs"
+}
+
+dependency "storage_queue_users_login" {
+  config_path = "../../../operations/storage_queue_users_login"
 }
 
 dependency "notification_queue" {
@@ -82,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.0"
 }
 
 inputs = {
@@ -134,11 +143,11 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH = "/api/v1"
+    API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
 
     // REDIS
@@ -147,19 +156,42 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_funcservices.outputs.address_prefix
-    AZURE_NH_HUB_NAME            = dependency.notification_hub.outputs.name
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
+
+    // LOCK / UNLOCK SESSION ENDPOINTS
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
+    // MYPORTAL
+    MYPORTAL_BASE_PATH = "/myportal/api/v1"
+
+    // BPD
+    BPD_BASE_PATH = "/bpd/api/v1"
+
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // USERSLOGIN
+    USERS_LOGIN_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
+    USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
+
+    // Feature flags
+    FF_BONUS_ENABLED = 1
+
+    TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
+
+    # No downtime on slots swap
+    WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
+
+    JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
+    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
   }
 
   app_settings_secrets = {
@@ -170,15 +202,24 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY = "funcapp-KEY-APPBACKEND"
+      API_KEY       = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
-      PRE_SHARED_KEY    = "appbackend-PRE-SHARED-KEY"
-      AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
+      PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
       // PAGOPA
       ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
+
+      // TEST LOGIN
+      TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
+
+      // MYPORTAL
+      ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
+
+      // BPD
+      ALLOW_BPD_IP_SOURCE_RANGE : "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
+      JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
 
@@ -187,7 +228,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
-    dependency.subnet_funcservices.outputs.id,
+    dependency.subnet_fn3services.outputs.id,
+    dependency.subnet_funcadmin_r3.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

@@ -20,11 +20,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.1.0"
 }
 
-# Important !! 
-# It is mandatory that the associated subnet is named GatewaySubnet. 
+# Important !!
+# It is mandatory that the associated subnet is named GatewaySubnet.
 # Therefore, each virtual network can contain at most a single Virtual Network Gateway.
 # https://www.terraform.io/docs/providers/azurerm/r/virtual_network_gateway.html
 

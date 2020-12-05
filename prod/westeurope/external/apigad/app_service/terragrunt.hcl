@@ -21,7 +21,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.1"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -41,7 +41,7 @@ inputs = {
   }
 
   app_enabled         = true
-  client_cert_enabled = true
+  client_cert_enabled = false
   https_only          = true
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -50,12 +50,14 @@ inputs = {
     WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     GAD_PROXY_CHANGE_ORIGIN      = "true"
+
+    DISABLE_CLIENT_CERTIFICATE_VERIFICATION = "true"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      GAD_CA_CERTIFICATE_BASE64              = "apigad-GAD-CA-CERTIFICATE-BASE64"
+      GAD_CA_CERTIFICATE_BASE64              = "io-PAGOPA-INTERNAL-CA-CERT"
       GAD_CLIENT_CERTIFICATE_VERIFIED_HEADER = "apigad-GAD-CLIENT-CERTIFICATE-VERIFIED-HEADER"
       GAD_PROXY_TARGET                       = "apigad-GAD-PROXY-TARGET"
     }

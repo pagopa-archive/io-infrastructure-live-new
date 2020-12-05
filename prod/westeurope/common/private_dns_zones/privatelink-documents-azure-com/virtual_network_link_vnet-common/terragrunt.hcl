@@ -17,13 +17,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone_virtual_network_link?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone_virtual_network_link?ref=v2.1.0"
 }
 
 inputs = {
   name                  = dependency.virtual_network.outputs.resource_name
-  // TODO: The module must return the name as a signle value
-  private_dns_zone_name = dependency.private_dns_zone.outputs.name[0]
+  private_dns_zone_name = dependency.private_dns_zone.outputs.name
   resource_group_name   = dependency.resource_group.outputs.resource_name
   virtual_network_id    = dependency.virtual_network.outputs.id
 }

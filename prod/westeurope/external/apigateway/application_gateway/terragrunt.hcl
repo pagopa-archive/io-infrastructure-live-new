@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.26"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
 }
 
 inputs = {
@@ -54,7 +54,7 @@ inputs = {
   sku = {
     name     = "WAF_v2"
     tier     = "WAF_v2"
-    capacity = 1
+    capacity = 0
   }
 
   public_ip_info = {
@@ -66,12 +66,11 @@ inputs = {
 
   frontend_port = 443
 
-  custom_domains = {
+  custom_domain = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "io-italia-it"
   }
 
   services = [
@@ -80,8 +79,9 @@ inputs = {
       a_record_name = "api"
 
       http_listener = {
-        protocol  = "Https"
-        host_name = "api.io.italia.it"
+        protocol             = "Https"
+        host_name            = "api.io.italia.it"
+        ssl_certificate_name = "api-io-italia-it"
       }
 
       backend_address_pool = {
@@ -106,14 +106,18 @@ inputs = {
         request_timeout       = 180
         host_name             = "api-internal.io.italia.it"
       }
+
+      rewrite_rule_set_name = "HttpHeader"
+
     },
     {
       name          = "developerportalbackend"
       a_record_name = "developerportal-backend"
 
       http_listener = {
-        protocol  = "Https"
-        host_name = "developerportal-backend.io.italia.it"
+        protocol             = "Https"
+        host_name            = "developerportal-backend.io.italia.it"
+        ssl_certificate_name = "developerportal-backend-io-italia-it"
       }
 
       backend_address_pool = {
@@ -138,8 +142,31 @@ inputs = {
         request_timeout       = 180
         host_name             = dependency.app_service_developerportalbackend.outputs.default_site_hostname
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
+
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "CleanUpHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_client_ip}"
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = "{var_client_ip}"
+        },
+      ]
+      response_header_configurations = []
+    }]
+  }]
 
   waf_configuration = {
     enabled                  = true
@@ -159,4 +186,3 @@ inputs = {
   }
 
 }
-

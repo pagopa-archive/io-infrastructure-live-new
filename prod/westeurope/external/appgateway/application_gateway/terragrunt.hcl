@@ -44,7 +44,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.0.30"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
 }
 
 inputs = {
@@ -66,12 +66,11 @@ inputs = {
 
   frontend_port = 443
 
-  custom_domains = {
+  custom_domain = {
     zone_name                = "io.italia.it"
     zone_resource_group_name = "io-infra-rg"
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
-    certificate_name         = "io-italia-it"
   }
 
   services = [
@@ -82,6 +81,8 @@ inputs = {
       http_listener = {
         protocol  = "Https"
         host_name = "app-backend.io.italia.it"
+        # Note the certificate name can not contain dot.
+        ssl_certificate_name = "app-backend-io-italia-it"
       }
 
       backend_address_pool = {
@@ -107,23 +108,90 @@ inputs = {
         request_timeout       = 180
         host_name             = null
       }
+
+      rewrite_rule_set_name = "HttpHeader"
     }
   ]
 
+  rewrite_rule_sets = [{
+    name = "HttpHeader"
+
+    rewrite_rules = [{
+      name          = "CleanUpHeaders"
+      rule_sequence = 100
+      condition     = null
+      request_header_configurations = [
+        {
+          header_name  = "X-Forwarded-For"
+          header_value = "{var_client_ip}"
+        },
+        {
+          header_name  = "X-Client-Ip"
+          header_value = "{var_client_ip}"
+        },
+      ]
+
+      response_header_configurations = []
+
+    }]
+  }]
+
   waf_configuration = {
     enabled                  = true
-    firewall_mode            = "Detection"
+    firewall_mode            = "Prevention"
     rule_set_type            = "OWASP"
     rule_set_version         = "3.1"
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
 
-    disabled_rule_groups = []
+    disabled_rule_groups = [
+      {
+        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
+        rules           = []
+      },
+      {
+        rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
+        rules = [
+          920300,
+          920320
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-930-APPLICATION-ATTACK-LFI"
+        rules = [
+          930120
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-932-APPLICATION-ATTACK-RCE"
+        rules = [
+          932150
+        ]
+      },
+      {
+        rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
+        rules = [
+          942100,
+          942190,
+          942200,
+          942210,
+          942250,
+          942260,
+          942330,
+          942340,
+          942370,
+          942380,
+          942430,
+          942440,
+          942450
+        ]
+      }
+    ]
   }
 
   autoscale_configuration = {
-    min_capacity = 2
-    max_capacity = 10
+    min_capacity = 10
+    max_capacity = 20
   }
 }

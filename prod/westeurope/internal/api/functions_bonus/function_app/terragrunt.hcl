@@ -36,13 +36,17 @@ dependency "storage_account_bonus" {
   config_path = "../../storage_bonus/account"
 }
 
+dependency "storage_table_bonusleasebindings" {
+  config_path = "../../storage_bonus/table_bonusleasebindings"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.27"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -74,7 +78,7 @@ inputs = {
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
-
+    COSMOSDB_CONNECTION_STRING   = dependency.cosmosdb_bonus_account.outputs.connection_strings[0]
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
@@ -84,6 +88,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+    BONUS_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_bonusleasebindings.outputs.name
 
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
@@ -98,9 +104,13 @@ inputs = {
       INPS_SERVICE_CERT = "io-INPS-BONUS-CERT"
       INPS_SERVICE_KEY  = "io-INPS-BONUS-KEY"
 
+      ADE_SERVICE_CERT = "io-ADE-BONUS-CERT"
+      ADE_SERVICE_KEY  = "io-ADE-BONUS-KEY"
+      ADE_HMAC_SECRET  = "io-ADE-HMAC-SECRET"
+
       INPS_SERVICE_ENDPOINT = "io-INPS-BONUS-ENDPOINT"
       ADE_SERVICE_ENDPOINT  = "io-ADE-BONUS-ENDPOINT"
-      SERVICES_API_KEY      = "io-INPS-BONUS-API-KEY"
+      SERVICES_API_KEY      = "apim-BONUSVACANZE-SERVICE-KEY"
     }
   }
 

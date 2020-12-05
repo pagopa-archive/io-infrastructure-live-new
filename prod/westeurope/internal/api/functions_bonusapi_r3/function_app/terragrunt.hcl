@@ -10,6 +10,10 @@ dependency "cosmosdb_bonus_database" {
   config_path = "../../cosmosdb_bonus/database"
 }
 
+dependency "storage_account_bonus" {
+  config_path = "../../storage_bonus/account"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -38,7 +42,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.28"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -54,10 +58,12 @@ inputs = {
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP3"
+    sku_size = "EP1"
   }
 
   runtime_version = "~3"
+
+  pre_warmed_instance_count = 1
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -73,9 +79,14 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
+    STORAGE_BONUS_CONNECTION_STRING  = dependency.storage_account_bonus.outputs.primary_connection_string
+    REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
+
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -86,11 +97,14 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
+    APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICES_API_KEY = "apim-BONUSVACANZE-SERVICE-KEY"
     }
   }
 

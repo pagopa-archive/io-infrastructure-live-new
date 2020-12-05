@@ -7,7 +7,7 @@ dependency "resource_group_siem" {
 }
 
 dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs"
+  config_path = "../../../../operations/storage_account_logs/account"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -16,7 +16,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.0.25"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v2.1.0"
 }
 
 inputs = {
