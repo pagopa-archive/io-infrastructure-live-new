@@ -7,6 +7,10 @@ dependency "subnet_appbackend" {
   config_path = "../../../internal/appbackend/subnet"
 }
 
+dependency "subnet_appbackend_new" {
+  config_path = "../../../internal/appbackend_new/subnet"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -84,7 +88,8 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_appbackend_new.outputs.id,
   ]
 
   virtual_network_info = {

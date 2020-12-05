@@ -2,6 +2,10 @@ dependency "subnet" {
   config_path = "../../appbackend/subnet/"
 }
 
+dependency "subnet_appbackend_new" {
+  config_path = "../../../internal/appbackend_new/subnet"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -235,6 +239,7 @@ inputs = {
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
+    dependency.subnet_appbackend_new.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

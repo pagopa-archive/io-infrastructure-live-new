@@ -21,8 +21,8 @@ dependency "app_service_appbackend" {
   config_path = "../../../internal/appbackend/app_service"
 }
 
-dependency "app_service_appbackend_bonus" {
-  config_path = "../../../internal/appbackend_bonus/app_service"
+dependency "app_service_appbackend_new" {
+  config_path = "../../../internal/appbackend_new/app_service"
 }
 
 # Common
@@ -88,7 +88,7 @@ inputs = {
       backend_address_pool = {
         ip_addresses = null
         fqdns = [dependency.app_service_appbackend.outputs.default_site_hostname,
-        dependency.app_service_appbackend_bonus.outputs.default_site_hostname]
+        dependency.app_service_appbackend_new.outputs.default_site_hostname]
       }
 
       probe = {
