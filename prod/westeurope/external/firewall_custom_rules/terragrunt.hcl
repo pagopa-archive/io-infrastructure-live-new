@@ -33,7 +33,25 @@ inputs = {
       negation_condition = false
       transforms         = []
     }]
+  },
+  {
+    name = "block-specific-uri"
+    priority = 1
+    rule_type = "MatchRule"
+    action = "Block"
 
+    match_conditions = [
+      {
+        operator = "Equal"
+        match_values = ["/api/v1/token/support"]
+        match_variables = [{
+          variable_name = "RequestUri"
+          selector = null
+        }]
+        negation_condition = false
+        transform = []
+      }
+    ]
   }]
 
   policy_settings = {
