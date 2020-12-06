@@ -39,9 +39,6 @@ dependency "subnet_appbackend" {
   config_path = "../../../appbackend/subnet"
 }
 
-dependency "subnet_appbackend_new" {
-  config_path = "../../../internal/appbackend_new/subnet"
-}
 
 # Common
 dependency "virtual_network" {
@@ -178,7 +175,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
-    dependency.subnet_appbackend_new.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

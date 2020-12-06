@@ -7,10 +7,6 @@ dependency "subnet_appbackend" {
   config_path = "../../../internal/appbackend/subnet"
 }
 
-dependency "subnet_appbackend_new" {
-  config_path = "../../../internal/appbackend_new/subnet"
-}
-
 # Pagopa
 dependency "subnet_agpagopagateway" {
   config_path = "../../../pagopa/network/subnet_agpagopagateway"
@@ -88,7 +84,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_agpagopagateway.outputs.id,
-    dependency.subnet_appbackend_new.outputs.id,
   ]
 
   virtual_network_info = {

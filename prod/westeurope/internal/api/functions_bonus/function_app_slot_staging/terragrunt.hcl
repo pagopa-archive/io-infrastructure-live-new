@@ -23,10 +23,6 @@ dependency "subnet_appbackend" {
   config_path = "../../../appbackend/subnet"
 }
 
-dependency "subnet_appbackend_new" {
-  config_path = "../../../internal/appbackend_new/subnet"
-}
-
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -138,7 +134,6 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
-    dependency.subnet_appbackend_new.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
