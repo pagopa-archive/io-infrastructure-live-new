@@ -1,3 +1,7 @@
+dependency "app_service" {
+  config_path = "../app_service"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -87,31 +91,19 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.18"
-
-  after_hook "check_slots" {
-    commands     = ["apply"]
-    execute      = ["echo", "Remember to do check also the app_service slots!"]
-    run_on_error = true
-  }
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.17"
 }
 
 inputs = {
-  name                = "appbackendl2"
+  name                = "staging"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  app_service_plan_info = {
-    kind             = "Linux"
-    sku_tier         = "PremiumV2"
-    sku_size         = "P3v2"
-    reserved         = true
-    per_site_scaling = true
-  }
+  app_service_name    = dependency.app_service.outputs.name
+  app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
 
   app_enabled         = true
   client_cert_enabled = false
   https_only          = false
-  
+
   linux_fx_version = "NODE|10-lts"
   app_command_line = "node /home/site/wwwroot/src/server.js"
 
