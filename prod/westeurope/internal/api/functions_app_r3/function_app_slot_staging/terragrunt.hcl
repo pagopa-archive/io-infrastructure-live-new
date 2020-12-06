@@ -40,6 +40,11 @@ dependency "resource_group" {
 }
 
 # Linux
+
+dependency "subnet_appbackend" {
+  config_path = "../../../../linux/appbackendlinux/subnet"
+}
+
 dependency "subnet_appbackend_l1" {
   config_path = "../../../../linux/appbackendl1/subnet"
 }
@@ -162,7 +167,7 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet.outputs.id,
+    dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
