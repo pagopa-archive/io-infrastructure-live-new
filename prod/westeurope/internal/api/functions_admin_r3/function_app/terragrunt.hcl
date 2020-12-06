@@ -61,7 +61,7 @@ dependency "storage_container_user-data-backup" {
 }
 
 dependency "app_service_appbackend" {
-  config_path = "../../../appbackend/app_service"
+  config_path = "../../../../linux/appbackendlinux/app_service"
 }
 
 dependency "storage_table_subscriptionsfeedbyday" {
