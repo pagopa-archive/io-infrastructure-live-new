@@ -87,7 +87,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.16"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.17"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -110,6 +110,9 @@ inputs = {
   app_enabled         = true
   client_cert_enabled = false
   https_only          = false
+  
+  linux_fx_version = "NODE|10-lts"
+  app_command_line = "node /home/site/wwwroot/src/server.js"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
