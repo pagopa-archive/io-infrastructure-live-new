@@ -105,7 +105,7 @@ inputs = {
     sku_tier         = "PremiumV2"
     sku_size         = "P3v2"
     reserved         = true
-    per_site_scaling = true
+    per_site_scaling = false
   }
 
   app_enabled         = true
@@ -113,7 +113,7 @@ inputs = {
   https_only          = false
 
   linux_fx_version = "NODE|10-lts"
-  app_command_line = "pm2 start /home/site/wwwroot/src/server.js -i max --no-daemon"
+  app_command_line = "node /home/site/wwwroot/src/server.js"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -201,6 +201,11 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 604800
+
+    # Pago Pa
+    ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
+    # BDP
+    ALLOW_BPD_IP_SOURCE_RANGE : "0.0.0.0/0"
   }
 
   app_settings_secrets = {
@@ -217,9 +222,6 @@ inputs = {
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
-      // PAGOPA
-      ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
-
       // TEST LOGIN
       TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
 
@@ -227,7 +229,6 @@ inputs = {
       ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
 
       // BPD
-      ALLOW_BPD_IP_SOURCE_RANGE : "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
       JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
