@@ -148,6 +148,9 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    IS_CASHBACK_ENABLED = true
+
+
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
     #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"

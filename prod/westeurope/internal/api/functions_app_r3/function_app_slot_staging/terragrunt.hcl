@@ -149,6 +149,8 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
+    IS_CASHBACK_ENABLED = true
+
     # Disabled functions on slot - trigger, queue and timer
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
