@@ -110,7 +110,7 @@ inputs = {
   app_enabled         = true
   client_cert_enabled = false
   https_only          = false
-  
+
   linux_fx_version = "NODE|10-lts"
   app_command_line = "node /home/site/wwwroot/src/server.js"
 
