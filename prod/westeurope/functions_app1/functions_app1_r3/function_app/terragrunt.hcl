@@ -149,8 +149,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    WEBSITE_VNET_ROUTE_ALL = 1
-
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
     #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
@@ -197,7 +195,6 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
-    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
 
