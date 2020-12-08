@@ -149,7 +149,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    WEBSITE_VNET_ROUTE_ALL = 1
 
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
