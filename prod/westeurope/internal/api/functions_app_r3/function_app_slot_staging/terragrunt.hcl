@@ -112,6 +112,7 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
