@@ -166,7 +166,7 @@ inputs = {
     PAGOPA_API_URL_PROD       = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     PAGOPA_API_URL_TEST       = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH          = "/pagopa/api/v1"
-    ENABLE_NOTICE_EMAIL_CACHE = false
+    ENABLE_NOTICE_EMAIL_CACHE = "False"
 
     // MYPORTAL
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
