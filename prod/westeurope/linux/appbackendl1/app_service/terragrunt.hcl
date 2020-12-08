@@ -8,8 +8,8 @@ dependency "resource_group" {
 }
 
 # App Backend Api
-dependency "functions_app_r3" {
-  config_path = "../../../internal/api/functions_app_r3/function_app"
+dependency "functions_app1_r3" {
+  config_path = "../../../functions_app1/functions_app1_r3/function_app"
 }
 
 # Bonus Api
@@ -130,7 +130,7 @@ inputs = {
     // FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL should not exceed 120000 (app service socket timeout)
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL = "110000"
     // (FETCH_KEEPALIVE_MAX_SOCKETS * number_of_node_processes) should not exceed 160 (max sockets per VM)
-    FETCH_KEEPALIVE_MAX_SOCKETS         = "80"
+    FETCH_KEEPALIVE_MAX_SOCKETS         = "128"
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
@@ -152,7 +152,7 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
@@ -171,9 +171,10 @@ inputs = {
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
-    PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
-    PAGOPA_BASE_PATH    = "/pagopa/api/v1"
+    PAGOPA_API_URL_PROD       = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST       = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
+    PAGOPA_BASE_PATH          = "/pagopa/api/v1"
+    ENABLE_NOTICE_EMAIL_CACHE = false
 
     // MYPORTAL
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
