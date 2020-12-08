@@ -111,6 +111,7 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -147,6 +148,10 @@ inputs = {
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    
+    # Disabled functions on slot - trigger, queue and timer
+    "AzureWebJobs.HandleNHNotificationCall.Disabled"                = "1"
+    "AzureWebJobs.StoreSpidLogs.Disabled"                           = "1"
 
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
