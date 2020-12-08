@@ -32,6 +32,10 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+dependency "redis" {
+  config_path = "../../../common/redis/redis_cache"
+}
+
 dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
 }
@@ -66,6 +70,11 @@ inputs = {
     WEBSITE_NODE_DEFAULT_VERSION = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
+
+    // REDIS
+    REDIS_URL      = dependency.redis.outputs.hostname
+    REDIS_PORT     = dependency.redis.outputs.ssl_port
+    REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     COSMOSDB_API_URI  = dependency.cosmosdb_api_account.outputs.endpoint
     COSMOSDB_API_KEY  = dependency.cosmosdb_api_account.outputs.primary_master_key
