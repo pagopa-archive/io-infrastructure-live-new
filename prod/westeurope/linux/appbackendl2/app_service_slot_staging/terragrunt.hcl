@@ -122,7 +122,7 @@ inputs = {
     // FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL should not exceed 120000 (app service socket timeout)
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL = "110000"
     // (FETCH_KEEPALIVE_MAX_SOCKETS * number_of_node_processes) should not exceed 160 (max sockets per VM)
-    FETCH_KEEPALIVE_MAX_SOCKETS         = "80"
+    FETCH_KEEPALIVE_MAX_SOCKETS         = "128"
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
