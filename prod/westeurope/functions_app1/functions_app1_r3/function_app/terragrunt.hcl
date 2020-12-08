@@ -196,7 +196,6 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
-    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
 
