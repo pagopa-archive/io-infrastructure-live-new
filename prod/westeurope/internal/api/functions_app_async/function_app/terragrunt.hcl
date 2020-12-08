@@ -171,6 +171,8 @@ inputs = {
     #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
     #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
     #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "0"
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "0"
 
     # Cashback
     IS_CASHBACK_ENABLED = "true"
