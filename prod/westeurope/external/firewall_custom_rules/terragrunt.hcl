@@ -16,44 +16,6 @@ inputs = {
   name                = "appgateway-policy"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
-  custom_rules = [{
-    name      = "block-ips"
-    priority  = 1
-    rule_type = "MatchRule"
-    action    = "Block"
-
-    match_conditions = [{
-      operator = "IPMatch"
-      # ip from canada
-      match_values = ["192.175.96.0/19"]
-      match_variables = [{
-        variable_name = "RemoteAddr"
-        selector      = null
-      }]
-      negation_condition = false
-      transforms         = []
-    }]
-  },
-  {
-    name = "block-specific-uri"
-    priority = 2
-    rule_type = "MatchRule"
-    action = "Block"
-
-    match_conditions = [
-      {
-        operator = "Equal"
-        match_values = ["/api/v1/token/support"]
-        match_variables = [{
-          variable_name = "RequestUri"
-          selector = null
-        }]
-        negation_condition = false
-        transform = []
-      }
-    ]
-  }]
-
   policy_settings = {
     enabled                     = true
     mode                        = "Prevention"
