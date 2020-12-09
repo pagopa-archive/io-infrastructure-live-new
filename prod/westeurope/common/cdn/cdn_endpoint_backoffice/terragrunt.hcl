@@ -40,7 +40,11 @@ inputs = {
       value  = "max-age=31536000"
     }
 
-  }
+    modify_response_header_action = {
+      action = "Overwrite"
+      name   = "Content-Security-Policy"
+      value  = "default-src 'self'; frame-ancestors 'self'; connect-src 'self' https://api.io.italia.it; script-src 'self' 'unsafe-eval'"
+    }
 
   global_delivery_rule_cache_expiration_action = {
     behavior = "Override"
