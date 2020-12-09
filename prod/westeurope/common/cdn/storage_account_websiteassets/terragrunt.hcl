@@ -8,11 +8,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account_static_website?ref=v2.1.15"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account_static_website?ref=v2.1.18"
 }
 
 inputs = {
-  name                     = "cdnresources"
+  name                     = "cdnwebsiteassets"
   resource_group_name      = dependency.resource_group.outputs.resource_name
   account_tier             = "Standard"
   account_replication_type = "GRS"

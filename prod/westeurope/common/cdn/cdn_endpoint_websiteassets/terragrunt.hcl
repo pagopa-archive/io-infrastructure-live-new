@@ -2,8 +2,8 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "storage_account_static_assets_iopay" {
-  config_path = "../storage_account_resources"
+dependency "storage_account_website_assets" {
+  config_path = "../storage_account_websiteassets"
 }
 
 # Common
@@ -17,12 +17,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.15"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.18"
 }
 
 inputs = {
-  name                = "resources"
+  name                = "websiteassets"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
-  origin_host_name    = dependency.storage_account_static_assets_iopay.outputs.primary_web_host
+  origin_host_name    = dependency.storage_account_website_assets.outputs.primary_web_host
 }
