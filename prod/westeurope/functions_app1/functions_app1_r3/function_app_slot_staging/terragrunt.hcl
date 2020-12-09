@@ -1,3 +1,7 @@
+dependency "resource_group" {
+  config_path = "../../resource_group"
+}
+
 dependency "function_app" {
   config_path = "../function_app"
 }
@@ -6,84 +10,84 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+# Internal
+
 dependency "cosmosdb_account" {
-  config_path = "../../cosmosdb/account"
+  config_path = "../../../internal/api/cosmosdb/account"
 }
 
 dependency "cosmosdb_database" {
-  config_path = "../../cosmosdb/database"
+  config_path = "../../../internal/api/cosmosdb/database"
 }
 
 dependency "storage_account" {
-  config_path = "../../storage/account"
-}
-
-dependency "storage_account_assets" {
-  config_path = "../../../../common/cdn/storage_account_assets"
-}
-
-dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs/account"
+  config_path = "../../../internal/api/storage/account"
 }
 
 dependency "storage_container_message-content" {
-  config_path = "../../storage/container_message-content"
+  config_path = "../../../internal/api/storage/container_message-content"
 }
 
 dependency "storage_table_subscriptionsfeedbyday" {
-  config_path = "../../storage/table_subscriptionsfeedbyday"
+  config_path = "../../../internal/api/storage/table_subscriptionsfeedbyday"
 }
 
-# Internal
-dependency "resource_group" {
-  config_path = "../../../resource_group"
+dependency "notification_queue" {
+  config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
+}
+
+dependency "notification_storage_account" {
+  config_path = "../../../internal/api/storage_notifications/account"
+}
+
+# common
+
+dependency "storage_account_assets" {
+  config_path = "../../../common/cdn/storage_account_assets"
+}
+
+# operation
+dependency "storage_account_logs" {
+  config_path = "../../../operations/storage_account_logs/account"
 }
 
 # Linux
 
 dependency "subnet_appbackend" {
-  config_path = "../../../../linux/appbackendlinux/subnet"
+  config_path = "../../../linux/appbackendlinux/subnet"
 }
 
 dependency "subnet_appbackend_l1" {
-  config_path = "../../../../linux/appbackendl1/subnet"
+  config_path = "../../../linux/appbackendl1/subnet"
 }
 
 dependency "subnet_appbackend_l2" {
-  config_path = "../../../../linux/appbackendl2/subnet"
+  config_path = "../../../linux/appbackendl2/subnet"
 }
 
 dependency "subnet_appbackend_li" {
-  config_path = "../../../../linux/appbackendli/subnet"
+  config_path = "../../../linux/appbackendli/subnet"
 }
 
 # Common
 dependency "virtual_network" {
-  config_path = "../../../../common/virtual_network"
+  config_path = "../../../common/virtual_network"
 }
 
 dependency "application_insights" {
-  config_path = "../../../../common/application_insights"
+  config_path = "../../../common/application_insights"
 }
 
 dependency "key_vault" {
-  config_path = "../../../../common/key_vault"
+  config_path = "../../../common/key_vault"
 }
 
 dependency "notification_hub" {
-  config_path = "../../../../common/notification_hub"
-}
-
-dependency "notification_queue" {
-  config_path = "../../storage_notifications/queue_push-notifications"
-}
-
-dependency "notification_storage_account" {
-  config_path = "../../storage_notifications/account"
+  config_path = "../../../common/notification_hub"
 }
 
 dependency "subnet_azure_devops" {
-  config_path = "../../../../common/subnet_azure_devops"
+  config_path = "../../../common/subnet_azure_devops"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -112,7 +116,6 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
-    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -153,6 +156,9 @@ inputs = {
     # Disabled functions on slot - trigger, queue and timer
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
+
+    # Cashback
+    IS_CASHBACK_ENABLED = "true"
   }
 
   app_settings_secrets = {
@@ -170,7 +176,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
-    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]

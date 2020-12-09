@@ -1,3 +1,7 @@
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -78,30 +82,27 @@ dependency "notification_storage_account" {
   config_path = "../../storage_notifications/account"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.18"
 }
 
 inputs = {
-  name                = "app"
-  resource_group_name = dependency.resource_group.outputs.resource_name
-
-  resources_prefix = {
-    function_app     = "fn3"
-    app_service_plan = "fn3"
-    storage_account  = "fn3"
-  }
-
-  app_service_plan_info = {
-    kind     = "elastic"
-    sku_tier = "ElasticPremium"
-    sku_size = "EP1"
-  }
+  name                       = "staging"
+  resource_group_name        = dependency.resource_group.outputs.resource_name
+  function_app_name          = dependency.function_app.outputs.name
+  function_app_resource_name = dependency.function_app.outputs.resource_name
+  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name       = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   runtime_version = "~3"
 
@@ -111,7 +112,6 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
-    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -147,35 +147,14 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-    
-    # Disabled functions on slot - trigger, queue and timer
-    "AzureWebJobs.HandleNHNotificationCall.Disabled"                = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"                           = "1"
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    // Disable functions
-    #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
-    #"AzureWebJobs.EmailValidationProcessOrchestrator.Disabled"     = "1"
-    #"AzureWebJobs.GetMessage.Disabled"                             = "1"
-    #"AzureWebJobs.GetMessages.Disabled"                            = "1"
-    #"AzureWebJobs.GetProfile.Disabled"                             = "1"
-    #"AzureWebJobs.GetService.Disabled"                             = "1"
-    #"AzureWebJobs.GetUserDataProcessing.Disabled"                  = "1"
-    #"AzureWebJobs.GetVisibleServices.Disabled"                     = "1"
-    #"AzureWebJobs.HandleNHNotificationCall.Disabled"               = "1"
-    #"AzureWebJobs.HandleNHNotificationCallActivity.Disabled"       = "1"
-    #"AzureWebJobs.HandleNHNotificationCallOrchestrator.Disabled"   = "1"
-    #"AzureWebJobs.SendUserDataProcessingEmailActivity.Disabled"    = "1"
-    #"AzureWebJobs.SendValidationEmailActivity.Disabled"            = "1"
-    #"AzureWebJobs.SendWelcomeMessagesActivity.Disabled"            = "1"
-    #"AzureWebJobs.StartEmailValidationProcess.Disabled"            = "1"
-    #"AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateSubscriptionsFeedActivity.Disabled"        = "1"
-    #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
-    #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
-    #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
+    # Disabled functions on slot - trigger, queue and timer
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
+
+    # Cashback
+    IS_CASHBACK_ENABLED = "true"
   }
 
   app_settings_secrets = {
@@ -191,12 +170,13 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }

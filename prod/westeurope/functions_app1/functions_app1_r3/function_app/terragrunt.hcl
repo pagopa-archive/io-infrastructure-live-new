@@ -1,81 +1,82 @@
+dependency "resource_group" {
+  config_path = "../../resource_group"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "cosmosdb_account" {
-  config_path = "../../cosmosdb/account"
-}
-
-dependency "cosmosdb_database" {
-  config_path = "../../cosmosdb/database"
-}
-
-dependency "storage_account" {
-  config_path = "../../storage/account"
-}
-
+# common
 dependency "storage_account_assets" {
-  config_path = "../../../../common/cdn/storage_account_assets"
+  config_path = "../../../common/cdn/storage_account_assets"
 }
 
-dependency "storage_account_logs" {
-  config_path = "../../../../operations/storage_account_logs/account"
+dependency "notification_hub" {
+  config_path = "../../../common/notification_hub"
 }
 
-dependency "storage_container_message-content" {
-  config_path = "../../storage/container_message-content"
+dependency "virtual_network" {
+  config_path = "../../../common/virtual_network"
 }
 
-dependency "storage_table_subscriptionsfeedbyday" {
-  config_path = "../../storage/table_subscriptionsfeedbyday"
+dependency "application_insights" {
+  config_path = "../../../common/application_insights"
 }
 
 # Internal
-dependency "resource_group" {
-  config_path = "../../../resource_group"
+dependency "cosmosdb_account" {
+  config_path = "../../../internal/api/cosmosdb/account"
+}
+
+dependency "cosmosdb_database" {
+  config_path = "../../../internal/api/cosmosdb/database"
+}
+
+dependency "storage_account" {
+  config_path = "../../../internal/api/storage/account"
+}
+
+dependency "notification_queue" {
+  config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
+}
+
+dependency "notification_storage_account" {
+  config_path = "../../../internal/api/storage_notifications/account"
+}
+
+dependency "storage_container_message-content" {
+  config_path = "../../../internal/api/storage/container_message-content"
+}
+
+dependency "storage_table_subscriptionsfeedbyday" {
+  config_path = "../../../internal/api/storage/table_subscriptionsfeedbyday"
+}
+
+# operation
+dependency "storage_account_logs" {
+  config_path = "../../../operations/storage_account_logs/account"
 }
 
 # Linux
 
 dependency "subnet_appbackend" {
-  config_path = "../../../../linux/appbackendlinux/subnet"
+  config_path = "../../../linux/appbackendlinux/subnet"
 }
 
 dependency "subnet_appbackend_l1" {
-  config_path = "../../../../linux/appbackendl1/subnet"
+  config_path = "../../../linux/appbackendl1/subnet"
 }
 
 dependency "subnet_appbackend_l2" {
-  config_path = "../../../../linux/appbackendl2/subnet"
+  config_path = "../../../linux/appbackendl2/subnet"
 }
 
 dependency "subnet_appbackend_li" {
-  config_path = "../../../../linux/appbackendli/subnet"
-}
-
-# Common
-dependency "virtual_network" {
-  config_path = "../../../../common/virtual_network"
-}
-
-dependency "application_insights" {
-  config_path = "../../../../common/application_insights"
+  config_path = "../../../linux/appbackendli/subnet"
 }
 
 dependency "key_vault" {
-  config_path = "../../../../common/key_vault"
-}
-
-dependency "notification_hub" {
-  config_path = "../../../../common/notification_hub"
-}
-
-dependency "notification_queue" {
-  config_path = "../../storage_notifications/queue_push-notifications"
-}
-
-dependency "notification_storage_account" {
-  config_path = "../../storage_notifications/account"
+  config_path = "../../../common/key_vault"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -84,11 +85,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.18"
 }
 
 inputs = {
-  name                = "app"
+  name                = "app1"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
@@ -111,7 +112,6 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
-    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -148,10 +148,6 @@ inputs = {
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
-    
-    # Disabled functions on slot - trigger, queue and timer
-    "AzureWebJobs.HandleNHNotificationCall.Disabled"                = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"                           = "1"
 
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
@@ -176,6 +172,11 @@ inputs = {
     #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
     #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
     #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
+
+    # Cashback
+    IS_CASHBACK_ENABLED = "true"
   }
 
   app_settings_secrets = {
@@ -194,7 +195,6 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
-    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
 
