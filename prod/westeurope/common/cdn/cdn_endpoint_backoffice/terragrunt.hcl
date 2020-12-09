@@ -42,7 +42,7 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy"
-        value  = "default-src 'self'; frame-ancestors 'self'; connect-src 'self' https://api.io.italia.it; script-src 'self' 'unsafe-eval'"
+        value  = "default-src 'self'; frame-ancestors 'self'; connect-src 'self' https://api.io.italia.it https://iobackoffice.b2clogin.com; script-src 'self' 'unsafe-eval'"
     }]
 
   }
