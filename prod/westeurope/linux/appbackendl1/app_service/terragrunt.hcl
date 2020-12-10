@@ -171,9 +171,9 @@ inputs = {
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
-    PAGOPA_API_URL_PROD       = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    PAGOPA_API_URL_TEST       = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
-    PAGOPA_BASE_PATH          = "/pagopa/api/v1"
+    PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
+    PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
     // MYPORTAL
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
