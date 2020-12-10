@@ -49,7 +49,7 @@ inputs = {
         name   = "X-Frame-Options"
         value  = "SAMEORIGIN"
       }
-      ]
+    ]
 
   }
 
