@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.13"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.19"
 }
 
 inputs = {
@@ -30,15 +30,26 @@ inputs = {
 
   global_delivery_rule = {
 
-    cache_expiration_action       = null
-    cache_key_query_string_action = null
-    modify_request_header_action  = null
+    cache_expiration_action       = []
+    cache_key_query_string_action = []
+    modify_request_header_action  = []
 
-    modify_response_header_action = {
+    modify_response_header_action = [{
       action = "Overwrite"
       name   = "Strict-Transport-Security"
       value  = "max-age=31536000"
-    }
+      },
+      {
+        action = "Overwrite"
+        name   = "Content-Security-Policy"
+        value  = "default-src 'self'; connect-src https://api.io.italia.it https://iobackoffice.b2clogin.com; script-src 'self' 'unsafe-eval'"
+      },
+      {
+        action = "Overwrite"
+        name   = "X-Frame-Options"
+        value  = "SAMEORIGIN"
+      }
+    ]
 
   }
 
