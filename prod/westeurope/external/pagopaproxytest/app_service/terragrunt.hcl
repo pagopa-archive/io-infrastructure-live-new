@@ -2,11 +2,6 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# Internal
-dependency "subnet_appbackend" {
-  config_path = "../../../internal/appbackend/subnet"
-}
-
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -83,9 +78,7 @@ inputs = {
     key_vault_secret = "pagopaproxytest-ALLOWED-IPS"
   }
 
-  allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id
-  ]
+  allowed_subnets = []
 
   virtual_network_info = {
     name                  = dependency.virtual_network.outputs.resource_name

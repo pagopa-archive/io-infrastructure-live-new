@@ -52,7 +52,6 @@ dependency "storage_account_logs" {
 }
 
 # Linux
-
 dependency "subnet_appbackend" {
   config_path = "../../../linux/appbackendlinux/subnet"
 }
