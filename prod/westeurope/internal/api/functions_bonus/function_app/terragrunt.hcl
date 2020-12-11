@@ -15,10 +15,6 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_appbackend" {
-  config_path = "../../../appbackend/subnet"
-}
-
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -116,7 +112,6 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
   ]
 
   subnet_id = dependency.subnet.outputs.id
