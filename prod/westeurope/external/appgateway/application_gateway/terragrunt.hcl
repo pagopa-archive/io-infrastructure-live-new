@@ -16,9 +16,13 @@ dependency "user_assigned_identity_kvreader" {
   config_path = "../../../identities/kvreader/user_assigned_identity"
 }
 
-# Internal
-dependency "app_service_appbackend" {
-  config_path = "../../../internal/appbackend/app_service"
+# Linux
+dependency "app_service_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/app_service"
+}
+
+dependency "app_service_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/app_service"
 }
 
 # Common
@@ -44,7 +48,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.14"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.18"
 }
 
 inputs = {
@@ -87,16 +91,20 @@ inputs = {
 
       backend_address_pool = {
         ip_addresses = null
-        fqdns        = [dependency.app_service_appbackend.outputs.default_site_hostname]
+        fqdns = [
+          dependency.app_service_appbackendl1.outputs.default_site_hostname,
+          dependency.app_service_appbackendl2.outputs.default_site_hostname
+        ]
       }
 
       probe = {
-        host                = dependency.app_service_appbackend.outputs.default_site_hostname
-        protocol            = "Http"
-        path                = "/info"
-        interval            = 30
-        timeout             = 120
-        unhealthy_threshold = 8
+        host                                      = dependency.app_service_appbackend.outputs.default_site_hostname
+        protocol                                  = "Http"
+        path                                      = "/info"
+        interval                                  = 30
+        timeout                                   = 120
+        unhealthy_threshold                       = 8
+        pick_host_name_from_backend_http_settings = true
       }
 
       backend_http_settings = {
@@ -109,6 +117,9 @@ inputs = {
       }
 
       rewrite_rule_set_name = "HttpHeader"
+
+      connection_draining = null
+
     }
   ]
 
@@ -138,7 +149,7 @@ inputs = {
   }]
 
   autoscale_configuration = {
-    min_capacity = 10
-    max_capacity = 20
+    min_capacity = 50
+    max_capacity = 30
   }
 }
