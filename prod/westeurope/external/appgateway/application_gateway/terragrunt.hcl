@@ -52,6 +52,7 @@ locals {
   http_listener_name         = format("%s-%s", "httplistener", local.backend_name)
   backend_pool_name          = format("%s-%s", "backendaddresspool", local.backend_name)
   backend_http_settings_name = format("%s-%s", "backendhttpsettings", local.backend_name)
+  probe_name                 = local.probe_name
 }
 
 terraform {
@@ -88,7 +89,7 @@ inputs = {
     name                                = local.backend_http_settings_name
     path                                = "/"
     port                                = 80
-    probe_name                          = format("%s-%s", "probe", local.backend_name)
+    probe_name                          = local.probe_name
     protocol                            = "HTTP"
     request_timeout                     = 10
     host_name                           = null
