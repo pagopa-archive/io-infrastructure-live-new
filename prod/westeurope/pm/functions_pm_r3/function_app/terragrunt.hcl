@@ -70,6 +70,8 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
+    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
+    
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
     REDIS_PORT     = dependency.redis.outputs.ssl_port
