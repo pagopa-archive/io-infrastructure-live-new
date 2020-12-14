@@ -159,10 +159,6 @@ inputs = {
 
     # Cashback
     IS_CASHBACK_ENABLED = "true"
-
-    # Disabled function
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
   }
 
   app_settings_secrets = {

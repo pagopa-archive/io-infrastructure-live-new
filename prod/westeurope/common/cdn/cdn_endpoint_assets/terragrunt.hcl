@@ -20,7 +20,7 @@ include {
 #  Use instead: cdn_endpoint_fnassets
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.19"
 }
 
 inputs = {
@@ -28,6 +28,21 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
   origin_host_name    = dependency.storage_account_assets.outputs.primary_web_host
+
+  is_http_allowed = true
+
+  global_delivery_rule = {
+
+    cache_expiration_action       = []
+    cache_key_query_string_action = []
+    modify_request_header_action  = []
+
+    modify_response_header_action = [{
+      action = "Overwrite"
+      name   = "Strict-Transport-Security"
+      value  = "max-age=31536000"
+      }]
+  }
 
   global_delivery_rule_cache_expiration_action = {
     behavior = "Override"
@@ -62,5 +77,23 @@ inputs = {
       duration     = "00:05:00"
     }
   ]
+
+  delivery_rule_request_scheme_condition = [{
+
+    name         = "EnforceHTTPS"
+    order        = 1
+    operator     = "Equal"
+    match_values = ["HTTP"]
+
+    url_redirect_action = {
+      redirect_type = "Found"
+      protocol      = "Https"
+      hostname      = null
+      path          = null
+      fragment      = null
+      query_string  = null
+    }
+
+  }]
 
 }

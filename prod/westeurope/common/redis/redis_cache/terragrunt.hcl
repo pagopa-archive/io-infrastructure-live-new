@@ -22,7 +22,7 @@ terraform {
 inputs = {
   name                  = "common"
   resource_group_name   = dependency.resource_group.outputs.resource_name
-  capacity              = 1
+  capacity              = 2
   shard_count           = 2
   enable_non_ssl_port   = false
   subnet_id             = dependency.subnet.outputs.id
