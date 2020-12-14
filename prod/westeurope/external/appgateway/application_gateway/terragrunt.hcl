@@ -48,7 +48,10 @@ include {
 }
 
 locals {
-  backend_name = "appbackend"
+  backend_name               = "appbackend"
+  http_listener_name         = format("%s-%s", "httplistener", local.backend_name)
+  backend_pool_name          = format("%s-%s", "backendaddresspool", local.backend_name)
+  backend_http_settings_name = format("%s-%s", "backendhttpsettings", local.backend_name)
 }
 
 terraform {
@@ -70,7 +73,7 @@ inputs = {
 
   backend_address_pools = [
     {
-      name = format("%s-%s", "backendaddresspool", local.backend_name)
+      name = local.backend_pool_name
       fqdns = [
         dependency.app_service_appbackendl1.outputs.default_site_hostname,
         dependency.app_service_appbackendl2.outputs.default_site_hostname
@@ -82,7 +85,7 @@ inputs = {
   backend_http_settings = [{
     cookie_based_affinity               = "Disabled"
     affinity_cookie_name                = null
-    name                                = format("%s-%s", "backendhttpsettings", local.backend_name)
+    name                                = local.backend_http_settings_name
     path                                = "/"
     port                                = 80
     probe_name                          = format("%s-%s", "probe", local.backend_name)
@@ -123,7 +126,7 @@ inputs = {
   }]
 
   http_listeners = [{
-    name                           = "httplistener-appbackend"
+    name                           = local.http_listener_name
     frontend_ip_configuration_name = "frontendipconfiguration"
     frontend_port_name             = "frontendport"
     protocol                       = "Https"
@@ -141,11 +144,11 @@ inputs = {
   }
 
   request_routing_rules = [{
-    name                        = "requestroutingrule-appbackend"
+    name                        = format("%s-%s", "requestroutingrule", local.backend_name)
     rule_type                   = "Basic"
-    http_listener_name          = "httplistener-appbackend"
-    backend_address_pool_name   = "backendaddresspool-appbackend"
-    backend_http_settings_name  = "backendhttpsettings-appbackend"
+    http_listener_name          = local.http_listener_name
+    backend_address_pool_name   = local.backend_pool_name
+    backend_http_settings_name  = local.backend_http_settings_name
     redirect_configuration_name = null
     rewrite_rule_set_name       = "HttpHeader"
     url_path_map_name           = null
