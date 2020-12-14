@@ -16,9 +16,13 @@ dependency "user_assigned_identity_kvreader" {
   config_path = "../../../identities/kvreader/user_assigned_identity"
 }
 
-# Internal
-dependency "app_service_appbackend" {
-  config_path = "../../../internal/appbackend/app_service"
+# Linux
+dependency "app_service_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/app_service"
+}
+
+dependency "app_service_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/app_service"
 }
 
 # Common
@@ -43,8 +47,13 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  backend_name = "appbackend"
+}
+
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.14"
+
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.19"
 }
 
 inputs = {
@@ -57,14 +66,72 @@ inputs = {
     capacity = null
   }
 
-  public_ip_info = {
-    id = dependency.public_ip.outputs.id
-    ip = dependency.public_ip.outputs.ip_address
-  }
-
   subnet_id = dependency.subnet.outputs.id
 
-  frontend_port = 443
+  backend_address_pools = [
+    {
+      name = format("%s-%s", "backendaddresspool", local.backend_name)
+      fqdns = [
+        dependency.app_service_appbackendl1.outputs.default_site_hostname,
+        dependency.app_service_appbackendl2.outputs.default_site_hostname
+      ]
+      ip_addresses = []
+    },
+  ]
+
+  backend_http_settings = [{
+    cookie_based_affinity               = "Disabled"
+    affinity_cookie_name                = null
+    name                                = format("%s-%s", "backendhttpsettings", local.backend_name)
+    path                                = "/"
+    port                                = 80
+    probe_name                          = format("%s-%s", "probe", local.backend_name)
+    protocol                            = "HTTP"
+    request_timeout                     = 10
+    host_name                           = null
+    pick_host_name_from_backend_address = true
+    trusted_root_certificate_names      = null
+    connection_draining                 = null
+
+  }, ]
+
+  probes = [{
+    name                                      = format("%s-%s", "probe", local.backend_name)
+    host                                      = null
+    protocol                                  = "Http"
+    path                                      = "/info"
+    interval                                  = 30
+    timeout                                   = 120
+    unhealthy_threshold                       = 8
+    pick_host_name_from_backend_http_settings = true
+    }
+  ]
+
+  frontend_ip_configurations = [{
+    name                          = "frontendipconfiguration"
+    subnet_id                     = null
+    private_ip_address            = null
+    public_ip_address_id          = dependency.public_ip.outputs.id
+    public_ip_address             = dependency.public_ip.outputs.ip_address
+    private_ip_address_allocation = null
+    a_record_name                 = "app-backend"
+  }, ]
+
+  gateway_ip_configurations = [{
+    name      = "gatewayipconfiguration"
+    subnet_id = dependency.subnet.outputs.id
+  }]
+
+  http_listeners = [{
+    name                           = "httplistener-appbackend"
+    frontend_ip_configuration_name = "frontendipconfiguration"
+    frontend_port_name             = "frontendport"
+    protocol                       = "Https"
+    host_name                      = "app-backend.io.italia.it"
+    # Note the certificate name can not contain dot.
+    ssl_certificate_name = "app-backend-io-italia-it"
+    require_sni          = true
+  }]
 
   custom_domain = {
     zone_name                = "io.italia.it"
@@ -73,44 +140,16 @@ inputs = {
     keyvault_id              = dependency.key_vault.outputs.id
   }
 
-  services = [
-    {
-      name          = "appbackend"
-      a_record_name = "app-backend"
-
-      http_listener = {
-        protocol  = "Https"
-        host_name = "app-backend.io.italia.it"
-        # Note the certificate name can not contain dot.
-        ssl_certificate_name = "app-backend-io-italia-it"
-      }
-
-      backend_address_pool = {
-        ip_addresses = null
-        fqdns        = [dependency.app_service_appbackend.outputs.default_site_hostname]
-      }
-
-      probe = {
-        host                = dependency.app_service_appbackend.outputs.default_site_hostname
-        protocol            = "Http"
-        path                = "/info"
-        interval            = 30
-        timeout             = 120
-        unhealthy_threshold = 8
-      }
-
-      backend_http_settings = {
-        protocol              = "Http"
-        port                  = 80
-        path                  = "/"
-        cookie_based_affinity = "Disabled"
-        request_timeout       = 180
-        host_name             = dependency.app_service_appbackend.outputs.default_site_hostname
-      }
-
-      rewrite_rule_set_name = "HttpHeader"
-    }
-  ]
+  request_routing_rules = [{
+    name                        = "requestroutingrule-appbackend"
+    rule_type                   = "Basic"
+    http_listener_name          = "httplistener-appbackend"
+    backend_address_pool_name   = "backendaddresspool-appbackend"
+    backend_http_settings_name  = "backendhttpsettings-appbackend"
+    redirect_configuration_name = null
+    rewrite_rule_set_name       = "HttpHeader"
+    url_path_map_name           = null
+  }]
 
   firewall_policy_id = dependency.firewall_custom_rules.outputs.id
 
@@ -138,7 +177,7 @@ inputs = {
   }]
 
   autoscale_configuration = {
-    min_capacity = 10
-    max_capacity = 20
+    min_capacity = 30
+    max_capacity = 50
   }
 }
