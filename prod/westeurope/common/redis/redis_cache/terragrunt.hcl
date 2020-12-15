@@ -16,7 +16,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.20"
 }
 
 inputs = {
@@ -35,4 +35,10 @@ inputs = {
     max_snapshot_count        = 1
     storage_connection_string = dependency.storage_account.outputs.primary_blob_connection_string
   }
+
+  patch_schedules = [{
+    day_of_week    = "Sunday"
+    start_hour_utc = 23
+  }, ]
+
 }
