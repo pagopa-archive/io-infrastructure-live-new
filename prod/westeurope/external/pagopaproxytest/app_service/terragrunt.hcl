@@ -7,6 +7,15 @@ dependency "subnet_appbackend" {
   config_path = "../../../internal/appbackend/subnet"
 }
 
+# Linux
+dependency "subnet_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/subnet/"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/subnet/"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -30,7 +39,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.1"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.18"
 }
 
 inputs = {
@@ -38,9 +47,11 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
-    kind     = "Windows"
-    sku_tier = "Standard"
-    sku_size = "S1"
+    kind             = "Windows"
+    sku_tier         = "Standard"
+    sku_size         = "S1"
+    per_site_scaling = false
+    reserved         = false
   }
 
   app_enabled = true
@@ -84,7 +95,9 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id,
   ]
 
   virtual_network_info = {
