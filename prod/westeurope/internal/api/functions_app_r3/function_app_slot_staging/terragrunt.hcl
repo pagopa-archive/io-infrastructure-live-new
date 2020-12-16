@@ -40,11 +40,6 @@ dependency "resource_group" {
 }
 
 # Linux
-
-dependency "subnet_appbackend" {
-  config_path = "../../../../linux/appbackendlinux/subnet"
-}
-
 dependency "subnet_appbackend_l1" {
   config_path = "../../../../linux/appbackendl1/subnet"
 }
@@ -150,6 +145,9 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
+    IS_CASHBACK_ENABLED    = true
+    WEBSITE_VNET_ROUTE_ALL = 0
+
     # Disabled functions on slot - trigger, queue and timer
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
@@ -168,7 +166,6 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,

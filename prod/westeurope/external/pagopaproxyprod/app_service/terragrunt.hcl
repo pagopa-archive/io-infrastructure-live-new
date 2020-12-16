@@ -2,15 +2,7 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# Internal
-dependency "subnet_appbackend" {
-  config_path = "../../../internal/appbackend/subnet"
-}
-
 # Linux
-dependency "subnet_appbackendlinux" {
-  config_path = "../../../linux/appbackendlinux/subnet/"
-}
 
 dependency "subnet_appbackendl1" {
   config_path = "../../../linux/appbackendl1/subnet/"
@@ -97,9 +89,7 @@ inputs = {
   allowed_ips = []
 
   allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id,
     dependency.subnet_agpagopagateway.outputs.id,
-    dependency.subnet_appbackendlinux.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
   ]
