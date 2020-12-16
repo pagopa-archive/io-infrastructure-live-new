@@ -193,11 +193,6 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 604800
-
-    # Pago Pa
-    ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    # BDP
-    ALLOW_BPD_IP_SOURCE_RANGE : "0.0.0.0/0"
   }
 
   app_settings_secrets = {
@@ -214,6 +209,9 @@ inputs = {
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
+      // PAGOPA
+      ALLOW_PAGOPA_IP_SOURCE_RANGE : "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
+
       // TEST LOGIN
       TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
 
@@ -221,6 +219,7 @@ inputs = {
       ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
 
       // BPD
+      ALLOW_BPD_IP_SOURCE_RANGE : "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
       JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
