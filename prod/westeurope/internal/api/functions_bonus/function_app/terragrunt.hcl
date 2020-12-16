@@ -36,6 +36,19 @@ dependency "storage_table_bonusleasebindings" {
   config_path = "../../storage_bonus/table_bonusleasebindings"
 }
 
+# linux
+dependency "subnet_appbackend_l1" {
+  config_path = "../../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackend_l2" {
+  config_path = "../../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackend_li" {
+  config_path = "../../../../linux/appbackendli/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -55,7 +68,9 @@ inputs = {
     sku_size = "EP3"
   }
 
-  runtime_version = "~3"
+  runtime_version = "3.0.13901.0"
+
+  pre_warmed_instance_count = 5
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -91,6 +106,7 @@ inputs = {
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
 
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_REQUEST_TIMEOUT_MS = 5000
 
   }
 
@@ -112,6 +128,9 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
+    dependency.subnet_appbackend_li.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

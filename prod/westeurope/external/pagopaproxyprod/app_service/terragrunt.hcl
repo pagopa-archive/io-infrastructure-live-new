@@ -3,9 +3,6 @@ dependency "resource_group" {
 }
 
 # Linux
-dependency "subnet_appbackendlinux" {
-  config_path = "../../../linux/appbackendlinux/subnet/"
-}
 
 dependency "subnet_appbackendl1" {
   config_path = "../../../linux/appbackendl1/subnet/"
@@ -93,7 +90,6 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet_agpagopagateway.outputs.id,
-    dependency.subnet_appbackendlinux.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
   ]
