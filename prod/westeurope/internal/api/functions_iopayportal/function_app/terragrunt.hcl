@@ -2,18 +2,6 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "cosmosdb_bonus_account" {
-  config_path = "../../cosmosdb_bonus/account"
-}
-
-dependency "cosmosdb_bonus_database" {
-  config_path = "../../cosmosdb_bonus/database"
-}
-
-dependency "storage_account_bonus" {
-  config_path = "../../storage_bonus/account"
-}
-
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -46,14 +34,8 @@ terraform {
 }
 
 inputs = {
-  name                = "bonusapi"
+  name                = "iopayportalapi"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
-  resources_prefix = {
-    function_app     = "fn3"
-    app_service_plan = "fn3"
-    storage_account  = "fn3"
-  }
 
   app_service_plan_info = {
     kind     = "elastic"
@@ -79,12 +61,7 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
-    STORAGE_BONUS_CONNECTION_STRING  = dependency.storage_account_bonus.outputs.primary_connection_string
     REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
-
-    COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
-    COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
-    COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
@@ -99,13 +76,6 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
-  }
-
-  app_settings_secrets = {
-    key_vault_id = dependency.key_vault.outputs.id
-    map = {
-      SERVICES_API_KEY = "apim-BONUSVACANZE-SERVICE-KEY"
-    }
   }
 
   allowed_subnets = [

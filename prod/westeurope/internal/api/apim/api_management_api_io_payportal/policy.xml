@@ -1,9 +1,9 @@
 <policies>
   <inbound>
     <base />
-    <set-backend-service base-url="{{io-fn-pay-portal-key-url}}/api/v1" />
+    <set-backend-service base-url="{{io-fn-pay-portal-url}}/api/v1" />
     <set-header name="x-functions-key" exists-action="override">
-      <value>{{io-fn-pay-portal-key-key}}</value>
+      <value>{{io-fn-pay-portal-key}}</value>
     </set-header>
     <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
     <cors>
@@ -17,8 +17,6 @@
       </allowed-methods>
       <allowed-headers>
         <header>contentType</header>
-        <header>Authorization</header>
-        <header>X-Citizen-Id</header>
       </allowed-headers>
     </cors>
   </inbound>
