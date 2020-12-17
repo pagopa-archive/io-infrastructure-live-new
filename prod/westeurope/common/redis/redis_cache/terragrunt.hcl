@@ -16,14 +16,14 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.20"
 }
 
 inputs = {
   name                  = "common"
   resource_group_name   = dependency.resource_group.outputs.resource_name
-  capacity              = 1
-  shard_count           = 1
+  capacity              = 2
+  shard_count           = 3
   enable_non_ssl_port   = false
   subnet_id             = dependency.subnet.outputs.id
   family                = "P"
@@ -35,4 +35,10 @@ inputs = {
     max_snapshot_count        = 1
     storage_connection_string = dependency.storage_account.outputs.primary_blob_connection_string
   }
+
+  patch_schedules = [{
+    day_of_week    = "Sunday"
+    start_hour_utc = 23
+  }, ]
+
 }

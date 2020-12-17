@@ -39,8 +39,17 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_appbackend" {
-  config_path = "../../../appbackend/subnet"
+# Linux
+dependency "subnet_appbackend_l1" {
+  config_path = "../../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackend_l2" {
+  config_path = "../../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackend_li" {
+  config_path = "../../../../linux/appbackendli/subnet"
 }
 
 # Common
@@ -68,13 +77,17 @@ dependency "notification_storage_account" {
   config_path = "../../storage_notifications/account"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.38"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -88,14 +101,13 @@ inputs = {
 
   runtime_version = "~3"
 
-  auto_swap_slot_name = "production"
-
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -133,6 +145,9 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
+    IS_CASHBACK_ENABLED    = true
+    WEBSITE_VNET_ROUTE_ALL = 0
+
     # Disabled functions on slot - trigger, queue and timer
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
@@ -151,8 +166,10 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
+    dependency.subnet_appbackend_li.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

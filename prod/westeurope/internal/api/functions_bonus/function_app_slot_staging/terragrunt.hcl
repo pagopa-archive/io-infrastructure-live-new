@@ -19,10 +19,6 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_appbackend" {
-  config_path = "../../../appbackend/subnet"
-}
-
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -44,6 +40,23 @@ dependency "storage_table_bonusleasebindings" {
   config_path = "../../storage_bonus/table_bonusleasebindings"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
+# Linux
+dependency "subnet_appbackend_l1" {
+  config_path = "../../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackend_l2" {
+  config_path = "../../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackend_li" {
+  config_path = "../../../../linux/appbackendli/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -51,7 +64,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -65,9 +78,8 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 5
-
-  auto_swap_slot_name = "production"
+  pre_warmed_instance_count = 1
+  auto_swap_slot_name       = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -77,6 +89,8 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
+
+    SERVICES_REQUEST_TIMEOUT_MS = 5000
 
     # DNS configuration to use private dns zones
     // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
@@ -107,6 +121,7 @@ inputs = {
 
     # Disabled functions on slot
     #"AzureWebJobs.FunctionName.Disabled" = "1"
+    "AzureWebJobs.CheckBonusActiveActivity.Disabled" = "1"
   }
 
   app_settings_secrets = {
@@ -127,7 +142,10 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
+    dependency.subnet_appbackend_li.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

@@ -31,7 +31,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.1"
 }
 
 inputs = {
@@ -68,6 +68,7 @@ inputs = {
     REPLY_URL                    = "https://developer.io.italia.it"
     ADMIN_API_URL                = "http://api-internal.io.italia.it"
     TENANT_NAME                  = "agidweb"
+    LOGO_URL                     = "https://assets.cdn.io.italia.it/logos"
   }
 
   app_settings_secrets = {
