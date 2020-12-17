@@ -87,7 +87,6 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
   }
 
   allowed_subnets = [
