@@ -39,7 +39,7 @@ terraform {
 }
 
 inputs = {
-  name                = "iopayportalapi"
+  name                = "iopayportal"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
