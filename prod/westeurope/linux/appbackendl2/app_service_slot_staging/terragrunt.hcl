@@ -91,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.17"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.21"
 }
 
 inputs = {
@@ -99,6 +99,7 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
   app_service_name    = dependency.app_service.outputs.name
   app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
+  app_service_id      = dependency.app_service.outputs.id
 
   app_enabled         = true
   client_cert_enabled = false
@@ -193,11 +194,6 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 604800
-
-    # Pago Pa
-    ALLOW_PAGOPA_IP_SOURCE_RANGE : "0.0.0.0/0"
-    # BDP
-    ALLOW_BPD_IP_SOURCE_RANGE : "0.0.0.0/0"
   }
 
   app_settings_secrets = {
@@ -214,14 +210,18 @@ inputs = {
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
 
+      // PAGOPA
+      ALLOW_PAGOPA_IP_SOURCE_RANGE = "appbackend-ALLOW-PAGOPA-IP-SOURCE-RANGE"
+
       // TEST LOGIN
       TEST_LOGIN_PASSWORD = "appbackend-TEST-LOGIN-PASSWORD"
 
       // MYPORTAL
-      ALLOW_MYPORTAL_IP_SOURCE_RANGE : "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
+      ALLOW_MYPORTAL_IP_SOURCE_RANGE = "appbackend-ALLOW-MYPORTAL-IP-SOURCE-RANGE"
 
       // BPD
-      JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY : "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
+      ALLOW_BPD_IP_SOURCE_RANGE         = "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
+      JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY = "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
     }
   }
 
