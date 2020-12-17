@@ -91,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.17"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.21"
 }
 
 inputs = {
@@ -99,6 +99,7 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
   app_service_name    = dependency.app_service.outputs.name
   app_service_plan_id = dependency.app_service.outputs.app_service_plan_id
+  app_service_id      = dependency.app_service.outputs.id
 
   app_enabled         = true
   client_cert_enabled = false
