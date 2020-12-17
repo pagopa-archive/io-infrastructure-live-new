@@ -19,10 +19,6 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_appbackend" {
-  config_path = "../../../appbackend/subnet"
-}
-
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -46,6 +42,19 @@ dependency "storage_table_bonusleasebindings" {
 
 dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
+}
+
+# Linux
+dependency "subnet_appbackend_l1" {
+  config_path = "../../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackend_l2" {
+  config_path = "../../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackend_li" {
+  config_path = "../../../../linux/appbackendli/subnet"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -112,6 +121,7 @@ inputs = {
 
     # Disabled functions on slot
     #"AzureWebJobs.FunctionName.Disabled" = "1"
+    "AzureWebJobs.CheckBonusActiveActivity.Disabled" = "1"
   }
 
   app_settings_secrets = {
@@ -132,7 +142,9 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id,
+    dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
+    dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]
 

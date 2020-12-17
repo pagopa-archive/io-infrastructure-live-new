@@ -2,11 +2,6 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# Internal
-dependency "subnet_appbackend" {
-  config_path = "../../../internal/appbackend/subnet"
-}
-
 # Linux
 dependency "subnet_appbackendl1" {
   config_path = "../../../linux/appbackendl1/subnet/"
@@ -94,12 +89,11 @@ inputs = {
     key_vault_secret = "pagopaproxytest-ALLOWED-IPS"
   }
 
+
   allowed_subnets = [
-    dependency.subnet_appbackend.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
   ]
-
   virtual_network_info = {
     name                  = dependency.virtual_network.outputs.resource_name
     resource_group_name   = dependency.virtual_network.outputs.resource_group_name
