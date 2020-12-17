@@ -85,7 +85,7 @@ inputs = {
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     # Disabled functions on slot - slot settings only
-    "AzureWebJobs.RedeemedBonusesQueueTrigger.Disabled" = "1"
+    
   }
 
   allowed_subnets = [
