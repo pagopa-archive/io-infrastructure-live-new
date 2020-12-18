@@ -56,7 +56,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.19.1"
+    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -71,7 +71,6 @@ inputs = {
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     // PAGOPA : endpoints use to call pagopa-proxy service : getPaymentInfo, activatePayment, getActivationStatus
-    IO_PAGOPA_PROXY_API_TOKEN : ""
     IO_PAGOPA_PROXY_PROD_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     IO_PAGOPA_PROXY_TEST_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH              = "/pagopa/api/v1"
