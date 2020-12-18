@@ -7,6 +7,10 @@ dependency "app_service_pagopaproxyprod" {
   config_path = "../../../../external/pagopaproxyprod/app_service"
 }
 
+dependency "app_service_pagopaproxytest" {
+  config_path = "../../../../external/pagopaproxytest/app_service"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -66,15 +70,12 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
-
-
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     // PAGOPA : endpoints use to call pagopa-proxy service : getPaymentInfo, activatePayment, getActivationStatus
     IO_PAGOPA_PROXY_PROD_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    IO_PAGOPA_PROXY_TEST_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
+    IO_PAGOPA_PROXY_TEST_BASE_URL = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH              = "/pagopa/api/v1"
-
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
