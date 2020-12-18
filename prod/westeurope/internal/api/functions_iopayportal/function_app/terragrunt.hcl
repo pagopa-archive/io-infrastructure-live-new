@@ -71,7 +71,6 @@ inputs = {
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     // PAGOPA : endpoints use to call pagopa-proxy service : getPaymentInfo, activatePayment, getActivationStatus
-    IO_PAGOPA_PROXY_API_TOKEN : ""
     IO_PAGOPA_PROXY_PROD_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
     IO_PAGOPA_PROXY_TEST_BASE_URL = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
@@ -87,6 +86,12 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+  }
+
+  // now empty if we'll need some secrets, we'll set here, ex. IO_PAGOPA_PROXY_API_TOKEN 
+  app_settings_secrets = {
+    key_vault_id = "dummy"
+    map          = {}
   }
 
   allowed_subnets = [

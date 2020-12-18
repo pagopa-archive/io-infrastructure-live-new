@@ -70,8 +70,6 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
-    REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
-
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
     // Keepalive fields are all optionals
