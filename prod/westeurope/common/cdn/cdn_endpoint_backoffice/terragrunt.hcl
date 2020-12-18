@@ -42,12 +42,12 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy"
-        value  = "default-src 'self'; connect-src https://api.io.italia.it https://iobackoffice.b2clogin.com; script-src 'self' 'unsafe-eval'"
+        value  = "default-src 'self'; connect-src https://api.io.italia.it https://iobackoffice.b2clogin.com; script-src 'self' 'unsafe-eval'; "
       },
       {
-        action = "Overwrite"
-        name   = "X-Frame-Options"
-        value  = "SAMEORIGIN"
+        action = "Append"
+        name   = "Content-Security-Policy"
+        value  = "frame-ancestors: 'self';"
       }
     ]
 
