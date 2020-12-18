@@ -38,7 +38,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.21"
 }
 
 inputs = {
@@ -83,9 +83,12 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+  }
 
-    # Disabled functions on slot - slot settings only
-    
+  app_settings_secrets = {
+    key_vault_id = dependency.key_vault.outputs.id
+    map = {
+    }
   }
 
   allowed_subnets = [
