@@ -1,6 +1,6 @@
 # Io infrastructure live
 
-This repository contains the full set of [terragunt](https://terragrunt.gruntwork.io/) modules useful to build the cloud infrastructure which hosts the backend applications of the [mobile app IO](https://io.italia.it/).
+This repository contains the full set of [terragunt](https://terragrunt.gruntwork.io/) modules useful to build the **cloud infrastructure** which hosts the backend applications of the [mobile app IO](https://io.italia.it/).
 In this case the public cloud provider is [Azure](https://azure.microsoft.com/).
 
 The terragrunt code works in close relationship with terraform modules stored in this separate repository: [io-infrastructure-modules-new](https://github.com/pagopa/io-infrastructure-modules-new)
@@ -23,13 +23,13 @@ $ cd io-infrastructure-live-new/
 $ cat .terraform-version
 0.13.3
 
+$ # Install terraform
+$ tfenv install 0.13.3
+
 $ cat .terragrunt-version
 0.25.1
 
-$ tfenv install 0.13.3
-
-$ tgenv install
-
+$ # Install terragrunt
 $ tgenv install 0.25.1
 ```
 
@@ -39,7 +39,7 @@ Do not work with a terraform version other than the one set in the file __.terra
 
 ## Start building the infrastructure
 
-It's possible to start building the infrastricture with __terragrunt plan-all__ and __terragrunt apply-all__ commands, but it's better to create one resource at a time starting with the simplest resources that do not have dependendencies like the Resource Group.
+It's possible to start building the infrastructure with __terragrunt plan-all__ and __terragrunt apply-all__ commands, but it's better to create one resource at a time starting with the simplest resources that do not have dependencies like the Resource Group.
 
 ### Initialize
 
