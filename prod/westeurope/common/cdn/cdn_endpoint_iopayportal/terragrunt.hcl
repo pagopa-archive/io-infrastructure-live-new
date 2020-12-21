@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.15"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cdn_endpoint?ref=v2.1.22"
 }
 
 inputs = {
@@ -40,12 +40,12 @@ inputs = {
       action = "Overwrite"
       name   = "Strict-Transport-Security"
       value  = "max-age=31536000"
-    },
-    # Content-Security-Policy (in Report mode)
-    {
-      action = "Overwrite"
-      name   = "Content-Security-Policy-Report-Only"
-      value  = "default-src 'self'; frame-ancestors 'self'; script-src 'self'; style-src 'self'"
+      },
+      # Content-Security-Policy (in Report mode)
+      {
+        action = "Overwrite"
+        name   = "Content-Security-Policy-Report-Only"
+        value  = "default-src 'self'; frame-ancestors 'self'; script-src 'self'; style-src 'self'"
     }]
 
   }
