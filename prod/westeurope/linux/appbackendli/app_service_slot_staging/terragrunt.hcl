@@ -91,7 +91,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.0.41"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.22"
 }
 
 inputs = {
@@ -106,7 +106,7 @@ inputs = {
   https_only          = false
 
   linux_fx_version = "NODE|10-lts"
-  app_command_line = "node /home/site/wwwroot/src/server.js"
+  app_command_line = "pm2 start /home/site/wwwroot/src/server.js -i max --no-daemon"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
