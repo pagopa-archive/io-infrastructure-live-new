@@ -18,6 +18,10 @@ dependency "functions_bonusapi" {
   config_path = "../../functions_bonusapi_r3/function_app"
 }
 
+dependency "functions_iopayportal" {
+  config_path = "../../functions_iopayportal/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -71,6 +75,7 @@ inputs = {
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
     io-functions-bonusapi-url = "http://${dependency.functions_bonusapi.outputs.default_hostname}"
     io-fn3-backoffice-url     = "http://${dependency.functions_backoffice.outputs.default_hostname}"
+    io-fn-pay-portal-url      = "http://${dependency.functions_iopayportal.outputs.default_hostname}"
   }
 
   named_values_secrets = {
@@ -83,6 +88,7 @@ inputs = {
       io-fn3-services-key                           = "fn3services-KEY-APIM"
       io-functions-bonusapi-key                     = "funcbonusapi-KEY-APIM"
       io-fn3-backoffice-key                         = "fn3backoffice-KEY-APIM"
+      io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
     }
   }
 

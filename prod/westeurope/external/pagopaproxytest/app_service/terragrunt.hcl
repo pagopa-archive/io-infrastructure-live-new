@@ -11,6 +11,11 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet/"
 }
 
+# iopayportal
+dependency "subnet_fniopayportal" {
+  config_path = "../../../internal/api/functions_iopayportal/subnet"
+}
+
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -93,6 +98,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
+    dependency.subnet_fniopayportal.outputs.id,
   ]
   virtual_network_info = {
     name                  = dependency.virtual_network.outputs.resource_name
