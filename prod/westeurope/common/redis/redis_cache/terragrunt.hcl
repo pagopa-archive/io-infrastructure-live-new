@@ -39,6 +39,23 @@ inputs = {
   patch_schedules = [{
     day_of_week    = "Sunday"
     start_hour_utc = 23
-  }, ]
+    },
+    {
+      day_of_week    = "Monday"
+      start_hour_utc = 23
+    },
+    {
+      day_of_week    = "Tuesday"
+      start_hour_utc = 23
+    },
+    {
+      day_of_week    = "Wednesday"
+      start_hour_utc = 23
+    },
+    {
+      day_of_week    = "Thursday"
+      start_hour_utc = 23
+    },
+  ]
 
 }
