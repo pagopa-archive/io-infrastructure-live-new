@@ -12,7 +12,7 @@ In order to mange the suitable version of terraform and terragrunt it is strongl
 * [tfenv](https://github.com/tfutils/tfenv): **Terraform** version manager inspired by rbenv.
 * [tgenv](https://github.com/cunymatthieu/tgenv): **Terragrunt** version manager inspired by tfenv.
 
-Once these tools have been installed install the terraform version and terragrunt version shown in:
+Once these tools have been installed, install the terraform version and terragrunt version shown in:
  * .terraform-version
  * .terragrunt-version
 
@@ -101,4 +101,4 @@ Do you want to perform these actions?
   Enter a value:
 ```
 
-To go deeper in terraform **workflow** please refer to the [offical documentation](https://www.terraform.io/guides/core-workflow.html).
+To go deeper in terraform **workflow** please refer to the [official documentation](https://www.terraform.io/guides/core-workflow.html).
