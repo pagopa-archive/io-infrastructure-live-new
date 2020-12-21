@@ -48,13 +48,17 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
 }
 
 inputs = {
@@ -67,9 +71,6 @@ inputs = {
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   runtime_version = "~3"
-
-  # this is not supported yet in azure terraform provider. So far add the slot name from the portal.
-  auto_swap_slot_name = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -88,7 +89,10 @@ inputs = {
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
-    MAIL_FROM_DEFAULT        = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    // we keep this while we wait for new app version to be deployed
+    MAIL_FROM_DEFAULT = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -99,6 +103,9 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
+
+    IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
   }
 
   app_settings_secrets = {
@@ -109,12 +116,14 @@ inputs = {
       WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
       SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
+      IO_FUNCTIONS_ADMIN_API_TOKEN         = "apim-IO-SERVICE-KEY"
     }
   }
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_apimapi.outputs.id
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

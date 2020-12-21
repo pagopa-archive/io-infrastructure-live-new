@@ -13,7 +13,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.0"
 }
 
 
@@ -73,7 +73,7 @@ inputs = {
         }
       }
       # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+    /*
       {
         name = "ScaleOutHttpQueueLength"
         metric_trigger = {

@@ -35,8 +35,17 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_appbackend" {
-  config_path = "../../../appbackend/subnet"
+# Linux
+dependency "subnet_appbackend_l1" {
+  config_path = "../../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackend_l2" {
+  config_path = "../../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackend_li" {
+  config_path = "../../../../linux/appbackendli/subnet"
 }
 
 # Common
@@ -70,7 +79,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -97,6 +106,7 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    WEBSITE_VNET_ROUTE_ALL         = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
@@ -134,6 +144,10 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    # Disabled functions on slot - trigger, queue and timer
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
+
     // Disable functions
     #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
     #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
@@ -157,6 +171,8 @@ inputs = {
     #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
     #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
     #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
+
+    IS_CASHBACK_ENABLED = true
   }
 
   app_settings_secrets = {
@@ -173,7 +189,9 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
-    dependency.subnet_appbackend.outputs.id
+    dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
+    dependency.subnet_appbackend_li.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

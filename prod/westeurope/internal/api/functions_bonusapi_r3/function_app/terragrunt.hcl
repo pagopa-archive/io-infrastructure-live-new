@@ -42,7 +42,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.0.37"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
 }
 
 inputs = {
@@ -63,7 +63,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 1
+  pre_warmed_instance_count = 2
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 

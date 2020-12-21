@@ -18,6 +18,10 @@ dependency "functions_bonusapi" {
   config_path = "../../functions_bonusapi_r3/function_app"
 }
 
+dependency "functions_iopayportal" {
+  config_path = "../../functions_iopayportal/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -36,13 +40,18 @@ dependency "application_insights" {
   config_path = "../../../../common/application_insights"
 }
 
+# support
+dependency "functions_backoffice" {
+  config_path = "../../../../support/functions_backoffice/function_app"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v2.0.40"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management?ref=v2.1.0"
 }
 
 inputs = {
@@ -65,6 +74,8 @@ inputs = {
     io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
     io-functions-bonusapi-url = "http://${dependency.functions_bonusapi.outputs.default_hostname}"
+    io-fn3-backoffice-url     = "http://${dependency.functions_backoffice.outputs.default_hostname}"
+    io-fn-pay-portal-url      = "http://${dependency.functions_iopayportal.outputs.default_hostname}"
   }
 
   named_values_secrets = {
@@ -76,6 +87,8 @@ inputs = {
       io-functions-test-key                         = "functest-KEY-APIM"
       io-fn3-services-key                           = "fn3services-KEY-APIM"
       io-functions-bonusapi-key                     = "funcbonusapi-KEY-APIM"
+      io-fn3-backoffice-key                         = "fn3backoffice-KEY-APIM"
+      io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
     }
   }
 
