@@ -2,8 +2,8 @@ dependency "cdn_profile" {
   config_path = "../cdn_profile"
 }
 
-dependency "storage_account_iopay" {
-  config_path = "../storage_account_iopay"
+dependency "storage_account_iopayportal" {
+  config_path = "../storage_account_iopayportal"
 }
 
 # Common
@@ -24,7 +24,7 @@ inputs = {
   name                = "iopayportal"
   resource_group_name = dependency.resource_group.outputs.resource_name
   profile_name        = dependency.cdn_profile.outputs.resource_name
-  origin_host_name    = dependency.storage_account_iopay.outputs.primary_web_host
+  origin_host_name    = dependency.storage_account_iopayportal.outputs.primary_web_host
 
   # allow HTTP, HSTS will make future connections over HTTPS
   is_http_allowed = true
