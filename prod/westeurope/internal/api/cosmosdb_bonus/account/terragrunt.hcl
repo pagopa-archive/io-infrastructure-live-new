@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v2.1.24"
 }
 
 inputs = {
@@ -49,4 +49,10 @@ inputs = {
     dependency.subnet_funcbonus.outputs.id,
     dependency.subnet_fn3bonusapi.outputs.id
   ]
+
+   lock = {
+    name       = "cosmos-bonus"
+    lock_level = "CanNotDelete"
+    notes      = null
+  }
 }
