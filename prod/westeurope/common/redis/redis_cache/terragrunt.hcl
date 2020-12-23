@@ -16,7 +16,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.20"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_redis_cache?ref=v2.1.24"
 }
 
 inputs = {
@@ -57,5 +57,11 @@ inputs = {
       start_hour_utc = 23
     },
   ]
+
+  lock = {
+    name       = "redis-common"
+    lock_level = "CanNotDelete"
+    notes      = null
+  }
 
 }
