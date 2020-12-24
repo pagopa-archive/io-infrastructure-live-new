@@ -8,7 +8,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account_static_website?ref=v2.1.9"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_account_static_website?ref=v2.1.23"
 }
 
 inputs = {
@@ -19,4 +19,10 @@ inputs = {
   access_tier              = "Hot"
   index_document           = "index.html"
   enable_versioning        = true
+
+  lock = {
+    name       = "storage-assets"
+    lock_level = "CanNotDelete"
+    notes      = null
+  }
 }
