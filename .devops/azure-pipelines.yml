@@ -28,17 +28,18 @@ jobs:
             TERRAFORM_VERSION="$(cat .terraform-version)"
             wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
             unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-            mv terraform /usr/local/bin/
+            sudo mv terraform /usr/local/bin/
             terraform -v
             rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
       - task: AzureCLI@2
         displayName: Install terrgrunt
         inputs:
           azureSubscription: "${{ parameters.SUBSCRIPTION }}"
+          scriptType: "bash"
           scriptLocation: "inlineScript"
           failOnStandardError: false
           inlineScript: |
             TERRAGRUNT_VERSION="$(cat .terragrunt-version)"
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
-            mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+            sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
             terragrunt -v
