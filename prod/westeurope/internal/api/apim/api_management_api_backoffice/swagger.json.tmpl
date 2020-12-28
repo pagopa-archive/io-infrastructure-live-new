@@ -187,6 +187,53 @@
           }
         }
       }
+    },
+    "/bpd/awards": {
+      "get": {
+        "operationId": "GetBPDAwards",
+        "summary": "Get BPD awards list",
+        "description": "Get BPD awards list related to a fiscal code",
+        "parameters": [
+          {
+            "$ref": "#/parameters/CitizenID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/AwardsList"
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
     }
   },
   "consumes": [
@@ -217,6 +264,27 @@
         },
         "hpan": {
           "type": "string"
+        },
+        "channel": {
+          "type": "string"
+        },
+        "channel_descr": {
+          "type": "string",
+          "enum": [
+            "BancaSella",
+            "BancaSella_Other",
+            "Poste",
+            "SatisPay",
+            "EnelX",
+            "BancomatPay",
+            "Flowe",
+            "Nexi_YAP",
+            "Nexi_Issuing_diretto",
+            "Nexi_Other",
+            "Hype",
+            "AppIO",
+            "Other"
+          ]
         },
         "enabled": {
           "type": "boolean"
@@ -316,6 +384,22 @@
         "enabled": {
           "type": "boolean"
         },
+        "checkiban_fiscal_code": {
+          "type": "string"
+        },
+        "checkiban_name": {
+          "type": "string"
+        },
+        "checkiban_surname": {
+          "type": "string"
+        },
+        "checkiban_status": {
+          "type": "string"
+        },
+        "cancellation": {
+          "type": "string",
+          "format": "dateTime"
+        },
         "payment_methods": {
           "type": "array",
           "items": {
@@ -351,6 +435,9 @@
         },
         "payment_instrument_update_user": {
           "type": "string"
+        },
+        "payment_instrument_enabled": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -416,7 +503,7 @@
             "Nexi_UBI",
             "Nexi_ICCREA",
             "AmericanExpress",
-            "Satispay",
+            "SatisPay",
             "ICCREA",
             "Diners",
             "Axepta_BNP",
@@ -502,6 +589,9 @@
         "enabled": {
           "type": "boolean"
         },
+        "elab_ranking": {
+          "type": "boolean"
+        },
         "insert_date": {
           "type": "string",
           "format": "dateTime"
@@ -522,6 +612,185 @@
         "id_trx_acquirer",
         "trx_timestamp",
         "hpan"
+      ]
+    },
+    "AwardPeriod": {
+      "type": "object",
+      "properties": {
+        "aw_winn_award_period_id": {
+          "type": "number"
+        },
+        "payoff_instr": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "aw_winn_aw_period_start": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_winn_aw_period_end": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "jackpot": {
+          "type": "number"
+        },
+        "aw_winn_cashback": {
+          "type": "number"
+        },
+        "typology": {
+          "type": "string"
+        },
+        "account_holder_cf": {
+          "type": "string"
+        },
+        "account_holder_name": {
+          "type": "string"
+        },
+        "account_holder_surname": {
+          "type": "string"
+        },
+        "check_instr_status": {
+          "type": "string"
+        },
+        "account_holder": {
+          "type": "string"
+        },
+        "aw_winn_insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_winn_insert_user": {
+          "type": "string"
+        },
+        "aw_winn_update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_winn_update_user": {
+          "type": "string"
+        },
+        "aw_winn_enabled": {
+          "type": "boolean"
+        },
+        "cit_rank_award_period_id": {
+          "type": "number"
+        },
+        "cit_rank_cashback": {
+          "type": "number"
+        },
+        "transaction": {
+          "type": "number"
+        },
+        "ranking": {
+          "type": "number"
+        },
+        "ranking_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "cit_rank_insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "cit_rank_insert_user": {
+          "type": "string"
+        },
+        "cit_rank_update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "cit_rank_update_user": {
+          "type": "string"
+        },
+        "cit_rank_enabled": {
+          "type": "boolean"
+        },
+        "award_period_id": {
+          "type": "number"
+        },
+        "aw_per_aw_period_start": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_per_aw_period_end": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_grace_period": {
+          "type": "number"
+        },
+        "amount_max": {
+          "type": "number"
+        },
+        "trx_volume_min": {
+          "type": "number"
+        },
+        "trx_eval_max": {
+          "type": "number"
+        },
+        "ranking_min": {
+          "type": "number"
+        },
+        "trx_cashback_max": {
+          "type": "number"
+        },
+        "period_cashback_max": {
+          "type": "number"
+        },
+        "cashback_perc": {
+          "type": "number"
+        },
+        "aw_per_insert_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_per_insert_user": {
+          "type": "string"
+        },
+        "aw_per_update_date": {
+          "type": "string",
+          "format": "dateTime"
+        },
+        "aw_per_update_user": {
+          "type": "string"
+        },
+        "aw_per_enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "award_period_id",
+        "aw_per_aw_period_start",
+        "aw_per_aw_period_end",
+        "aw_grace_period",
+        "amount_max",
+        "trx_volume_min",
+        "trx_eval_max",
+        "ranking_min",
+        "trx_cashback_max",
+        "period_cashback_max",
+        "cashback_perc"
+      ]
+    },
+    "AwardsList": {
+      "type": "object",
+      "properties": {
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "awards": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AwardPeriod"
+          }
+        }
+      },
+      "required": [
+        "fiscal_code",
+        "awards"
       ]
     }
   },
