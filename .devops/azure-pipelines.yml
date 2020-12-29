@@ -61,9 +61,7 @@ jobs:
           inlineScript: |
             export ARM_CLIENT_ID=$CLIENT_ID
             export ARM_CLIENT_SECRET=$CLIENT_SECRET
-            export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
-            echo "ARM_SUBSCRIPTION_ID ${ARM_SUBSCRIPTION_ID}"
-            export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
-            echo "ARM_TENANT_ID ${ARM_TENANT_ID}"
+            export ARM_SUBSCRIPTION_ID=$SUBSCRIPTION_ID
+            export ARM_TENANT_ID=$TENANT_ID
             cd prod/westeurope/common
             terragrunt plan-all --terragrunt-non-interactive
