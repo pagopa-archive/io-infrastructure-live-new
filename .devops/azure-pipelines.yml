@@ -16,7 +16,7 @@ pool:
 jobs:
   - job: install_and_run_terraform
     steps:
-      # 1 Install terraform
+      # 1. Install terraform
       - task: AzureCLI@2
         displayName: Install terraform
         inputs:
@@ -31,6 +31,7 @@ jobs:
             sudo mv terraform /usr/local/bin/
             terraform -v
             rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
+      # 2. Install terragrunt
       - task: AzureCLI@2
         displayName: Install terrgrunt
         inputs:
@@ -44,6 +45,12 @@ jobs:
             chmod +x terragrunt_linux_amd64
             sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
             terragrunt -v
+        # 3. Install SSH key
+      - task: InstallSSHKey@0
+        inputs:
+          knownHostsEntry: "github.com"
+          sshKeySecureFile: "id_rsa"
+      # 4. Run terragrunt plan
       - task: AzureCLI@2
         displayName: Run terragrunt plan-all common
         inputs:
