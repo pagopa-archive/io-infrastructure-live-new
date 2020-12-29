@@ -140,7 +140,7 @@ inputs = {
     SAML_LOGOUT_CALLBACK_URL               = "https://app-backend.io.italia.it/slo"
     SAML_ISSUER                            = "https://app-backend.io.italia.it"
     SAML_ATTRIBUTE_CONSUMING_SERVICE_INDEX = "0"
-    SAML_ACCEPTED_CLOCK_SKEW_MS            = "2001"
+    SAML_ACCEPTED_CLOCK_SKEW_MS            = "2000"
     IDP_METADATA_URL                       = "https://registry.SPID.gov.it/metadata/idp/spid-entities-idps.xml"
     IDP_METADATA_REFRESH_INTERVAL_SECONDS  = "864000" # 10 days
 
@@ -192,7 +192,7 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED            = 1
+    FF_BONUS_ENABLED         = 1
     BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
