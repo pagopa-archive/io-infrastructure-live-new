@@ -192,7 +192,8 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED = 1
+    FF_BONUS_ENABLED         = 1
+    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
