@@ -41,6 +41,16 @@ jobs:
           inlineScript: |
             TERRAGRUNT_VERSION="$(cat .terragrunt-version)"
             wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
-            mv terragrunt_linux_amd64 terragrunt
-            sudo mv terragrunt /usr/local/bin/
+            chmod +x terragrunt_linux_amd64
+            sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
             terragrunt -v
+      - task: AzureCLI@2
+        displayName: Run terragrunt plan-all common
+        inputs:
+          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          failOnStandardError: false
+          inlineScript: |
+            cd prod/westeurope/common
+            terragrunt plan-all --terragrunt-non-interactive
