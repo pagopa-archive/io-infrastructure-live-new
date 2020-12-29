@@ -168,6 +168,9 @@ inputs = {
     PAGOPA_API_URL_TEST = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
     PAGOPA_BASE_PATH    = "/pagopa/api/v1"
 
+    // BONUS VACANZE
+    BONUS_REQUEST_LIMIT_DATE =  "2020-12-31T22:59:59Z"
+
     // MYPORTAL
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
