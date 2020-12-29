@@ -49,7 +49,7 @@ jobs:
       - task: InstallSSHKey@0
         inputs:
           knownHostsEntry: "github.com"
-          sshKeySecureFile: "id_rsa"
+          sshKeySecureFile: "id_ed25519"
       # 4. Run terragrunt plan
       - task: AzureCLI@2
         displayName: Run terragrunt plan-all common
