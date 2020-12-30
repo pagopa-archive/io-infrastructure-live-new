@@ -3,8 +3,8 @@
 trigger: none
 
 parameters:
-  - name: "SUBSCRIPTION"
-    displayName: "Azure subscription hosting the infrastructure built with terraform"
+  - name: 'SUBSCRIPTION'
+    displayName: 'Azure subscription hosting the infrastructure built with terraform'
     type: string
     default: PROD-IO-SERVICE-CONN
     values:
@@ -21,9 +21,9 @@ jobs:
       - task: AzureCLI@2
         displayName: Install terraform
         inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
+          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
           failOnStandardError: false
           inlineScript: |
             TERRAFORM_VERSION="$(cat .terraform-version)"
@@ -36,9 +36,9 @@ jobs:
       - task: AzureCLI@2
         displayName: Install terrgrunt
         inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
+          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
           failOnStandardError: false
           inlineScript: |
             TERRAGRUNT_VERSION="$(cat .terragrunt-version)"
@@ -49,15 +49,15 @@ jobs:
         # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
-          knownHostsEntry: "github.com"
-          sshKeySecureFile: "id_ed25519"
+          knownHostsEntry: 'github.com'
+          sshKeySecureFile: 'id_ed25519'
       # 4. Run terragrunt plan
       - task: AzureCLI@2
         displayName: Run terragrunt plans
         inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
+          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
           failOnStandardError: false
           inlineScript: |
             export ARM_CLIENT_ID=$(CLIENT_ID)
@@ -70,6 +70,9 @@ jobs:
             # Get new files or changed in the current branch
             file_changed=$(git diff --diff-filter=AM --name-only origin/master | grep terragrunt.hcl)
 
+            # task output status code
+            output_status_code=0
+
             for item in ${file_changed}
             do
               cd ${base_dir}
@@ -78,6 +81,14 @@ jobs:
               echo "terragrunt file: ${item}"
               cd ${wdir}
               terragrunt plan
+              
+              # if plan fails and output_status_code is 0
+              # set output_status_code to 1 (error)
+              if [[ $? -ne 0 ]] then
+                if [[ $output_status_code -eq 0 ]] then
+                  output_status_code=1
+                fi
+              fi
             done
 
             # get file deleted in the current branch.
@@ -87,3 +98,5 @@ jobs:
               echo "Deleted file: ${item}."
               echo "TODO: Run terragrung destroy"
             done
+
+            exit $output_status_code
