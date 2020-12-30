@@ -8,5 +8,6 @@ terraform {
 }
 
 inputs = {
+  # added comment to test plan
   name = "pm"
 }
