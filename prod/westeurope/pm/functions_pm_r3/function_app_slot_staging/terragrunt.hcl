@@ -36,7 +36,7 @@ dependency "redis" {
   config_path = "../../../common/redis/redis_cache"
 }
 
-dependency "subnet_azure_devops_error" {
+dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
 }
 
