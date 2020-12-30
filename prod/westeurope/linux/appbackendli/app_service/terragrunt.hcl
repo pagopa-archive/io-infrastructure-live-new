@@ -113,7 +113,7 @@ inputs = {
   https_only          = false
 
   linux_fx_version = "NODE|10-lts"
-  app_command_line = "pm2 start /home/site/wwwroot/src/server.js -i max --no-daemon"
+  app_command_line = "node /home/site/wwwroot/src/server.js"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -165,10 +165,12 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
+    #ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = "0.0.0.0/0"
 
     // LOCK / UNLOCK SESSION ENDPOINTS
-    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
+    # ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = "0.0.0.0/0"
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
