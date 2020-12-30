@@ -52,7 +52,7 @@ jobs:
           sshKeySecureFile: "id_ed25519"
       # 4. Run terragrunt plan
       - task: AzureCLI@2
-        displayName: Run terragrunt plan-all common
+        displayName: Run terragrunt plans
         inputs:
           azureSubscription: "${{ parameters.SUBSCRIPTION }}"
           scriptType: "bash"
