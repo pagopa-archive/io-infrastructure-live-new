@@ -3,8 +3,8 @@ dependency "key_vault_common" {
 }
 
 dependency "adgroup_common" {
-  # config_path = "../adgroup"
-  config_path = "../adgroups/common"
+  config_path = "../adgroup"
+  # config_path = "../adgroups/common"
 }
 
 # Include all settings from the root terragrunt.hcl file
