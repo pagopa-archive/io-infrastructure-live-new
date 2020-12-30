@@ -60,6 +60,9 @@ jobs:
           scriptLocation: 'inlineScript'
           failOnStandardError: false
           inlineScript: |
+            RED='\033[0;31m'
+            NC='\033[0m' # No Color
+
             export ARM_CLIENT_ID=$(CLIENT_ID)
             export ARM_CLIENT_SECRET=$(CLIENT_SECRET)
             export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
@@ -85,7 +88,8 @@ jobs:
               # if plan fails and output_status_code is 0
               # set output_status_code to 1 (error)
               if [[ $? -ne 0 ]]; then
-                if [[ $output_status_code -eq 0 ]]; then
+                echo -e "${RED}${wdir} plan fail${NC}"
+                if [[ ${output_status_code} -eq 0 ]]; then
                   output_status_code=1
                 fi
               fi
@@ -99,4 +103,4 @@ jobs:
               echo "TODO: Run terragrung destroy"
             done
 
-            exit $output_status_code
+            exit ${output_status_code}
