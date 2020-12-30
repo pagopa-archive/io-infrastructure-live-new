@@ -84,8 +84,8 @@ jobs:
               
               # if plan fails and output_status_code is 0
               # set output_status_code to 1 (error)
-              if [[ $? -ne 0 ]] then
-                if [[ $output_status_code -eq 0 ]] then
+              if [[ $? -ne 0 ]]; then
+                if [[ $output_status_code -eq 0 ]]; then
                   output_status_code=1
                 fi
               fi
