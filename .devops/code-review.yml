@@ -55,6 +55,8 @@ jobs:
               cd ${base_dir}
               wdir=$(dirname $item)
 
+              echo "Processing ${item}"
+
               cd ${wdir}
               terragrunt plan
 
