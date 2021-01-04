@@ -4,6 +4,7 @@ trigger:
   branches:
     exclude:
       - master
+
 parameters:
   - name: 'SUBSCRIPTION'
     displayName: 'Azure subscription hosting the infrastructure built with terraform'
@@ -51,7 +52,7 @@ jobs:
             echo "Current branch ${current_branch}"
 
             # Get new files or changed in the current branch
-            file_changed=$(git diff --diff-filter=AM --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
+            file_changed=$(git diff --diff-filter=AM --name-only origin/master | grep terragrunt.hcl)
 
             # task output status code
             output_status_code=0
