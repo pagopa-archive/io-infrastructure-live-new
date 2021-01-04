@@ -1,10 +1,12 @@
 # Automatically triggered on PR
 # Only triggers on branches
+pr:
+  autoCancel: true
+
 trigger:
   branches:
     exclude:
       - master
-
 parameters:
   - name: 'SUBSCRIPTION'
     displayName: 'Azure subscription hosting the infrastructure built with terraform'
