@@ -80,11 +80,25 @@ jobs:
             done
 
             # get file deleted in the current branch.
-            file_deleted=$(git diff --diff-filter=D --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
+            file_deleted=$(git diff --diff-filter=D --name-only origin/master | grep terragrunt.hcl)
+
+            if [ -z ${file_deleted} ]; then
+              git fetch
+              git checkout master
+            fi
+
             for item in ${file_deleted}
             do
               echo "Deleted file: ${item}."
-              echo "TODO: Run terragrung destroy"
+              terragrunt plan -destroy
+
+              if [[ $? -ne 0 ]]; then
+                echo -e "${RED}${wdir} plan failed${NC}"
+                if [[ ${output_status_code} -eq 0 ]]; then
+                  output_status_code=1
+                fi
+              fi
+
             done
 
             exit ${output_status_code}
