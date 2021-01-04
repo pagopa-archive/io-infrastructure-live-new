@@ -43,8 +43,9 @@ jobs:
             export ARM_TENANT_ID=$(TENANT_ID)
 
             base_dir=$(pwd)
-            last_commit=$(git rev-parse HEAD)
-            current_branch=$(git branch --contains ${last_commit})
+            last_commit=${{ Build.SourceVersion }}
+            # current_branch=$(git branch --contains ${last_commit})
+            current_branch=${{ Build.SourceBranch }}
 
             # Get new files or changed in the current branch
             file_changed=$(git diff --diff-filter=AM --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
@@ -52,6 +53,7 @@ jobs:
             # task output status code
             output_status_code=0
 
+            echo "Last commit ${last_commit}"
             echo "Current branch ${current_branch}"
             echo "File changed ${file_changed}"
 
