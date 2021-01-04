@@ -17,35 +17,9 @@ pool:
 jobs:
   - job: install_and_run_terraform
     steps:
-      # 1. Install terraform
-      - task: AzureCLI@2
-        displayName: Install terraform
-        inputs:
-          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          failOnStandardError: false
-          inlineScript: |
-            TERRAFORM_VERSION="$(cat .terraform-version)"
-            wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-            unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-            sudo mv terraform /usr/local/bin/
-            terraform -v
-            rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-      # 2. Install terragrunt
-      - task: AzureCLI@2
-        displayName: Install terrgrunt
-        inputs:
-          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
-          scriptType: 'bash'
-          scriptLocation: 'inlineScript'
-          failOnStandardError: false
-          inlineScript: |
-            TERRAGRUNT_VERSION="$(cat .terragrunt-version)"
-            wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
-            chmod +x terragrunt_linux_amd64
-            sudo mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
-            terragrunt -v
+      - template: .devops/template.yaml
+        parameters:
+          subscription: '${{ parameters.SUBSCRIPTION }}'
         # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
@@ -81,10 +55,9 @@ jobs:
               cd ${base_dir}
               wdir=$(dirname $item)
 
-              echo "terragrunt file: ${item}"
               cd ${wdir}
               terragrunt plan
-              
+
               # if plan fails and output_status_code is 0
               # set output_status_code to 1 (error)
               if [[ $? -ne 0 ]]; then
