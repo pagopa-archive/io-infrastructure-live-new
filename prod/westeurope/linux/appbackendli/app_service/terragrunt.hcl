@@ -165,12 +165,10 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    #ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = "0.0.0.0/0"
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
 
     // LOCK / UNLOCK SESSION ENDPOINTS
-    # ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
-    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = "0.0.0.0/0"
+    ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
 
     // PAGOPA
     PAGOPA_API_URL_PROD = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
