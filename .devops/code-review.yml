@@ -46,10 +46,13 @@ jobs:
             current_branch=$(git rev-parse --abbrev-ref HEAD)
 
             # Get new files or changed in the current branch
-            file_changed=$(git diff --diff-filter=AM --name-only ${current_banch}..origin/master | grep terragrunt.hcl)
+            file_changed=$(git diff --diff-filter=AM --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
 
             # task output status code
             output_status_code=0
+
+            echo "Current branch ${current_branch}"
+            echo "File changed ${file_changed}"
 
             for item in ${file_changed}
             do
@@ -72,7 +75,7 @@ jobs:
             done
 
             # get file deleted in the current branch.
-            file_deleted=$(git diff --diff-filter=D --name-only ${current_banch}..origin/master | grep terragrunt.hcl)
+            file_deleted=$(git diff --diff-filter=D --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
             for item in ${file_deleted}
             do
               echo "Deleted file: ${item}."
