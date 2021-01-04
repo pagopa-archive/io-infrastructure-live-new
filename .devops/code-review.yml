@@ -27,6 +27,9 @@ jobs:
           sshKeySecureFile: 'id_ed25519'
       # 4. Run terragrunt plan
       - task: AzureCLI@2
+        env:
+          GIT_COMMIT: $(Build.SourceVersion)
+          GIT_BRANCHE: $(Build.SourceBranch)
         displayName: Run terragrunt plans
         inputs:
           azureSubscription: '${{ parameters.SUBSCRIPTION }}'
@@ -43,9 +46,9 @@ jobs:
             export ARM_TENANT_ID=$(TENANT_ID)
 
             base_dir=$(pwd)
-            last_commit=${{ Build.SourceVersion }}
+            last_commit=${GIT_COMMIT}
             # current_branch=$(git branch --contains ${last_commit})
-            current_branch=${{ Build.SourceBranch }}
+            current_branch=${GIT_BRANCHE}
 
             # Get new files or changed in the current branch
             file_changed=$(git diff --diff-filter=AM --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
