@@ -2,6 +2,9 @@
 # Only triggers on branches
 pr:
   autoCancel: true
+  branches:
+    exclude:
+     - '*'
 
 trigger:
   branches:
@@ -87,7 +90,7 @@ jobs:
             # get file deleted in the current branch.
             file_deleted=$(git diff --diff-filter=D --name-only origin/master | grep terragrunt.hcl)
 
-            if [ ${#file_deleted} eq 0 ]; then
+            if [ ${#file_deleted} -gt 0 ]; then
               git fetch
               git checkout master
             fi
