@@ -1,9 +1,12 @@
 # Automatically triggered on PR
-# https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=azure-devops&tabs=schema%2Cparameter-schema#pr-trigger
+# Only triggers on branches
 trigger:
   branches:
     exclude:
       - master
+  path:
+    include:
+      - ./*.hcl
 
 parameters:
   - name: 'SUBSCRIPTION'
@@ -31,7 +34,6 @@ jobs:
       # 4. Run terragrunt plan
       - task: AzureCLI@2
         env:
-          GIT_COMMIT: $(Build.SourceVersion)
           GIT_BRANCH: $(Build.SourceBranchName)
         displayName: Run terragrunt plans
         inputs:
@@ -49,19 +51,14 @@ jobs:
             export ARM_TENANT_ID=$(TENANT_ID)
 
             base_dir=$(pwd)
-            last_commit=${GIT_COMMIT}
-            # current_branch=$(git branch --contains ${last_commit})
             current_branch=${GIT_BRANCH}
+            echo "Current branch ${current_branch}"
 
             # Get new files or changed in the current branch
             file_changed=$(git diff --diff-filter=AM --name-only ${current_branch}..origin/master | grep terragrunt.hcl)
 
             # task output status code
             output_status_code=0
-
-            echo "Last commit ${last_commit}"
-            echo "Current branch ${current_branch}"
-            echo "File changed ${file_changed}"
 
             for item in ${file_changed}
             do
