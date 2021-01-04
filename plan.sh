@@ -9,7 +9,8 @@ export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
 export ARM_TENANT_ID=$(TENANT_ID)
 
 base_dir=$(pwd)
-current_branch=$(git rev-parse --abbrev-ref HEAD)
+last_commit=$(git rev-parse HEAD)
+current_branch=$(git branch --contains ${last_commit})
 
 # Get new files or changed in the current branch
 file_changed=$(git diff --diff-filter=AM --name-only ${current_banch}..origin/master | grep terragrunt.hcl)
