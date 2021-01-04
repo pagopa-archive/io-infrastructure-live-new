@@ -1,20 +1,13 @@
 # Install in a linux VM a specified version of terraform and terragrunt.
-
-parameters:
-- name: 'subscription'
-  type: string
-
 steps:
 
 # 1. Install terraform
-- task: AzureCLI@2
+- task: Bash@3
   displayName: Install terraform
   inputs:
-    azureSubscription: '${{ parameters.subscription }}'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    failOnStandardError: false
-    inlineScript: |
+    targetType: 'inline'
+    failOnStderr: false
+    script: |
       TERRAFORM_VERSION="$(cat .terraform-version)"
       wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
       unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
@@ -22,14 +15,12 @@ steps:
       terraform -v
       rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
 # 2. Install terragrunt
-- task: AzureCLI@2
+- task: Bash@3
   displayName: Install terrgrunt
   inputs:
-    azureSubscription: '${{ parameters.subscription }}'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    failOnStandardError: false
-    inlineScript: |
+    targetType: 'inline'
+    failOnStderr: false
+    script: |
       TERRAGRUNT_VERSION="$(cat .terragrunt-version)"
       wget https://github.com/gruntwork-io/terragrunt/releases/download/v${TERRAGRUNT_VERSION}/terragrunt_linux_amd64
       chmod +x terragrunt_linux_amd64

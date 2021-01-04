@@ -25,9 +25,7 @@ pool:
 jobs:
   - job: install_and_run_terraform
     steps:
-      - template: template.yaml
-        parameters:
-          subscription: '${{ parameters.SUBSCRIPTION }}'
+      - template: template-install-terraform.yaml
         # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
