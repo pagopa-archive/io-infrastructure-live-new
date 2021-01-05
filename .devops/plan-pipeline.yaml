@@ -22,16 +22,26 @@ parameters:
 pool:
   vmImage: 'ubuntu-latest'
 
+
+resources:
+  repositories:
+    - repository: terraform
+      type: github
+      name: pagopa/azure-pipeline-templates
+      ref: refs/tags/v5
+      endpoint: 'pagopa'
+
 jobs:
   - job: install_and_run_terraform
     steps:
-      - template: template-install-terraform.yaml
-        # 3. Install SSH key
+      # 1. Install terraform and terragrunt
+      - template: templates/terraform-setup/template.yaml@terraform
+      # 2. Install SSH key
       - task: InstallSSHKey@0
         inputs:
           knownHostsEntry: 'github.com'
           sshKeySecureFile: 'id_ed25519'
-      # 4. Run terragrunt plan
+      # 3. Run terragrunt plan
       - task: AzureCLI@2
         env:
           GIT_BRANCH: $(Build.SourceBranchName)
