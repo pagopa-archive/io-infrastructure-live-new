@@ -12,7 +12,7 @@ trigger:
       - master
   paths:
     include:
-      - '*.hcl'
+      - 'prod/*'
 
 parameters:
   - name: 'SUBSCRIPTION'
