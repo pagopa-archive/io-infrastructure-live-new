@@ -10,7 +10,7 @@ trigger:
   branches:
     exclude:
       - master
-  path:
+  paths:
     include:
       - '**/*.hcl'
 
