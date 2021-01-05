@@ -10,6 +10,10 @@ trigger:
   branches:
     exclude:
       - master
+  path:
+    include:
+      - '**/*.hcl'
+
 parameters:
   - name: 'SUBSCRIPTION'
     displayName: 'Azure subscription hosting the infrastructure built with terraform'
