@@ -11,6 +11,11 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+// Infra
+dependency "dns_zone" {
+  config_path = "../../../infra/public_dns_zone"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -26,8 +31,8 @@ inputs = {
 
   custom_domain = {
     name                     = "pagopaproxytest"
-    zone_name                = "io.italia.it"
-    zone_resource_group_name = "io-infra-rg"
+    zone_name                = dependency.dns_zone.outputs.name
+    zone_resource_group_name = dependency.dns_zone.outputs.resource_group_name
     certificate_thumbprint   = dependency.app_service_certificate.outputs.thumbprint
   }
 

@@ -11,8 +11,9 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Infra
 dependency "dns_zone" {
-  config_path = "../../dns_zone"
+  config_path = "../../../infra/public_dns_zone"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -28,8 +29,8 @@ inputs = {
   name                = "assets.cdn"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
-    name                = "io.italia.it"
-    resource_group_name = "io-infra-rg"
+    name                = dependency.dns_zone.outputs.name
+    resource_group_name = dependency.dns_zone.outputs.resource_group_name
   }
   profile_name = dependency.cdn_profile.outputs.resource_name
   endpoint = {
