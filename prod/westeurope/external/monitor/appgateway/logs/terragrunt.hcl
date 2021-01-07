@@ -2,10 +2,6 @@ dependency "appgateway" {
   config_path = "../../../appgateway/application_gateway"
 }
 
-dependency "resource_group_siem" {
-  config_path = "../../../../siem/resource_group"
-}
-
 dependency "storage_account_logs" {
   config_path = "../../../../operations/storage_account_logs/account"
 }
