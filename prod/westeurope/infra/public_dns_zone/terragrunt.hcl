@@ -1,10 +1,6 @@
 dependency "resource_group" {
   config_path = "../resource_group"
 
-  mock_outputs = {
-    resource_name = "mock_resource_name"
-  }
-
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -19,4 +15,5 @@ terraform {
 inputs = {
   name                = "io.italia.it"
   resource_group_name = dependency.resource_group.outputs.resource_name
+  environment         = "infra"
 }
