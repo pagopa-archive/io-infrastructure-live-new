@@ -34,9 +34,11 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+# Infra
 dependency "dns_zone" {
-  config_path = "../../../common/dns_zone"
+  config_path = "../../../infra/public_dns_zone"
 }
+
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -67,8 +69,8 @@ inputs = {
   frontend_port = 443
 
   custom_domain = {
-    zone_name                = "io.italia.it"
-    zone_resource_group_name = "io-infra-rg"
+    zone_name                = dependency.dns_zone.outputs.name
+    zone_resource_group_name = dependency.dns_zone.outputs.resource_group_name
     identity_id              = dependency.user_assigned_identity_kvreader.outputs.id
     keyvault_id              = dependency.key_vault.outputs.id
   }
