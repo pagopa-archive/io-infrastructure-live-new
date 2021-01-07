@@ -4,10 +4,9 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_resource_group?ref=v2.1.22"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_resource_group?ref=v2.1.25"
 }
 
 inputs = {
-  name = "infra"
-  environment_short = ""
+  resource_group_name = "io-infra-rg"
 }

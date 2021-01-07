@@ -1,5 +1,10 @@
 dependency "resource_group" {
   config_path = "../resource_group"
+
+  mock_outputs = {
+    resource_name = "mock_resource_name"
+  }
+
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -8,7 +13,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_dns_zone?ref=v2.1.22"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_dns_zone?ref=v2.1.25"
 }
 
 inputs = {
