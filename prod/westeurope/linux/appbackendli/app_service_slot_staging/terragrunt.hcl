@@ -147,10 +147,12 @@ inputs = {
     // FUNCTIONS
     API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
+    CGN_API_URL   = "http://io-functions-cgn/api/v1"
 
     // EXPOSED API
     API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
+    CGN_API_BASE_PATH   = "/api/v1"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -207,6 +209,7 @@ inputs = {
       // FUNCTIONS
       API_KEY       = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
+      CGN_API_KEY   = "funccgn-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
