@@ -52,7 +52,7 @@ inputs = {
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP3"
+    sku_size = "EP1"
   }
 
   runtime_version = "~3"
@@ -83,15 +83,13 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
-
-    SERVICES_API_URL            = "http://api-internal.io.italia.it/"
-    SERVICES_REQUEST_TIMEOUT_MS = 5000
 
   }
 

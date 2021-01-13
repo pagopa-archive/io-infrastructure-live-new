@@ -89,21 +89,20 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    # Deployment slot settings: set this flag manually on the portal.
+    SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
-    SERVICES_API_URL            = "http://api-internal.io.italia.it/"
-    SERVICES_REQUEST_TIMEOUT_MS = 5000
-
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      # TODO
       #SERVICES_API_KEY      = "apim-CGN-SERVICE-KEY"
     }
   }
@@ -112,5 +111,6 @@ inputs = {
     dependency.subnet.outputs.id,
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
