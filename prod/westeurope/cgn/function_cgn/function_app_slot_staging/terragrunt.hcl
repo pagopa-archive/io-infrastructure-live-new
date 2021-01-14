@@ -72,8 +72,7 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    # DNS configuration to use private dns zones
-    // TODO: Use private dns zone https://www.pivotaltracker.com/story/show/173102678
+    # DNS configuration to use private endpoints.
     WEBSITE_DNS_SERVER     = "168.63.129.16"
     WEBSITE_VNET_ROUTE_ALL = 1
 
@@ -102,8 +101,6 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      # TODO
-      #SERVICES_API_KEY      = "apim-CGN-SERVICE-KEY"
     }
   }
 
