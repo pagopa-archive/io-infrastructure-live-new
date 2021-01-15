@@ -82,7 +82,7 @@ jobs:
             echo "Current branch ${current_branch}"
 
             # Get new files or changed in the current branch
-            file_changed=$(git diff --diff-filter=AM --name-only origin/master | grep terragrunt.hcl)
+            file_changed=$(git diff --diff-filter=AM --name-only origin/master | grep '.hcl\|.xml\|.tmpl')
 
             for item in ${file_changed}
             do
