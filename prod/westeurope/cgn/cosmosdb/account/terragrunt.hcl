@@ -1,7 +1,12 @@
-# Internal
+# cgn
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
+
+dependency "subnet_fn3cgn" {
+  config_path = "../../function_cgn/subnet"
+}
+
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -36,8 +41,10 @@ inputs = {
   is_virtual_network_filter_enabled = true
 
   ip_range = ""
-  # TODO: add hee function cgn subnet.
-  allowed_virtual_network_subnet_ids = []
+
+  allowed_virtual_network_subnet_ids = [
+    dependency.subnet_fn3cgn.outputs.id,
+  ]
 
   lock = {
     name       = "cosmos-cgn"
