@@ -89,7 +89,7 @@ inputs = {
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = "https://api-internal.io.italia.it/"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"

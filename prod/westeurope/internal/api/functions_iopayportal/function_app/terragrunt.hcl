@@ -70,7 +70,7 @@ inputs = {
     //WEBSITE_DNS_SERVER     = "168.63.129.16"
     //WEBSITE_VNET_ROUTE_ALL = 1
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = "https://api-internal.io.italia.it/"
 
     // PAGOPA : endpoints use to call pagopa-proxy service : getPaymentInfo, activatePayment, getActivationStatus
     IO_PAGOPA_PROXY_PROD_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"

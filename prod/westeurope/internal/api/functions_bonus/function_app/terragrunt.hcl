@@ -105,7 +105,7 @@ inputs = {
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = "https://api-internal.io.italia.it/"
     SERVICES_REQUEST_TIMEOUT_MS = 5000
 
   }

@@ -104,7 +104,7 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    IO_FUNCTIONS_ADMIN_BASE_URL       = "https://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
   }
 

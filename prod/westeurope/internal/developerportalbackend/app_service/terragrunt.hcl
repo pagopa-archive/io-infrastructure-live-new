@@ -66,7 +66,7 @@ inputs = {
     POST_LOGIN_URL               = "https://developer.io.italia.it"
     POST_LOGOUT_URL              = "https://developer.io.italia.it"
     REPLY_URL                    = "https://developer.io.italia.it"
-    ADMIN_API_URL                = "http://api-internal.io.italia.it"
+    ADMIN_API_URL                = "https://api-internal.io.italia.it"
     TENANT_NAME                  = "agidweb"
     LOGO_URL                     = "https://assets.cdn.io.italia.it/logos"
   }

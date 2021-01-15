@@ -25,7 +25,7 @@ inputs = {
   description           = "BACKOFFICE API for IO platform."
   host                  = "api.io.italia.it"
   path                  = "backoffice"
-  protocols             = ["http"]
+  protocols             = ["http","https"]
   swagger_json_template = file("swagger.json.tmpl")
   policy_xml            = file("policy.xml")
 

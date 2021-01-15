@@ -118,7 +118,7 @@ inputs = {
     UserDataArchiveStorageConnection = dependency.storage_account_user-data-download.outputs.primary_connection_string
     USER_DATA_CONTAINER_NAME         = dependency.storage_container_user-data-download.outputs.name
 
-    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
+    PUBLIC_API_URL           = "https://api-internal.io.italia.it/"
     PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_blob_host}/${dependency.storage_container_user-data-download.outputs.name}"
 
     SESSION_API_URL                 = "https://${dependency.app_service_appbackend.outputs.default_site_hostname}"
