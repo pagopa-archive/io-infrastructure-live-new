@@ -16,7 +16,7 @@
         <method>GET</method>
       </allowed-methods>
       <allowed-headers>
-        <header>contentType</header>
+        <header>Content-Type</header>
       </allowed-headers>
     </cors>
   </inbound>
