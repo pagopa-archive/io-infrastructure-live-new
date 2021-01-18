@@ -58,7 +58,7 @@ locals {
 
 terraform {
 
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.19"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.28"
 }
 
 inputs = {
