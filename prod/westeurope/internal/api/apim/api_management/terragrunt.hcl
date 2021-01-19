@@ -75,7 +75,7 @@ inputs = {
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
     io-functions-bonusapi-url = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
     io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
-    io-fn-pay-portal-url      = "http://${dependency.functions_iopayportal.outputs.default_hostname}"
+    io-fn-pay-portal-url      = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
   }
 
   named_values_secrets = {
