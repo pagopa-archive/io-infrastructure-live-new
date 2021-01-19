@@ -73,7 +73,7 @@ inputs = {
     io-fn3-public-url         = "http://${dependency.functions_public_r3.outputs.default_hostname}"
     io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
     io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
-    io-functions-bonusapi-url = "http://${dependency.functions_bonusapi.outputs.default_hostname}"
+    io-functions-bonusapi-url = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
     io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
     io-fn-pay-portal-url      = "http://${dependency.functions_iopayportal.outputs.default_hostname}"
   }
