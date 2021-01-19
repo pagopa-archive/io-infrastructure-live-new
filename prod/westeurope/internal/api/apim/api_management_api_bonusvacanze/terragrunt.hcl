@@ -29,7 +29,7 @@ inputs = {
   description           = "BONUS VACANZE API for IO platform."
   host                  = "api.io.italia.it"
   path                  = "api/bonus-vacanze/v1"
-  protocols             = ["http","https"]
+  protocols             = ["http", "https"]
   swagger_json_template = file("swagger.json.tmpl")
   policy_xml            = file("policy.xml")
 
