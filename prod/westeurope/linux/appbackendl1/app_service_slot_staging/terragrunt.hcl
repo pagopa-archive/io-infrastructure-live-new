@@ -145,8 +145,8 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
-    BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
+    API_URL       = "https://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
+    BONUS_API_URL = "https://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH       = "/api/v1"
