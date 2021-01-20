@@ -24,7 +24,7 @@ terraform {
 
 
 inputs = {
-  name = "autoscaling-appbackend"
+  name = "autoscaling-appbackendl2"
 
   resource_group_name = dependency.resource_group.outputs.resource_name
   target_resource_id  = dependency.app_service.outputs.app_service_plan_id
@@ -55,7 +55,7 @@ inputs = {
         scale_action = {
           direction = "Increase"
           type      = "ChangeCount"
-          value     = "1"
+          value     = "2"
           cooldown  = "PT5M"
         }
       },
