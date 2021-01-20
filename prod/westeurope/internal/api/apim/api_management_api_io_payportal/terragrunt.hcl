@@ -25,7 +25,7 @@ inputs = {
   description           = "PAYPORTAL API for pagoPA platform."
   host                  = "api.io.italia.it"
   path                  = "api/payportal/v1"
-  protocols             = ["http","https"]
+  protocols             = ["http", "https"]
   swagger_json_template = file("swagger.json.tmpl")
   policy_xml            = file("policy.xml")
 
