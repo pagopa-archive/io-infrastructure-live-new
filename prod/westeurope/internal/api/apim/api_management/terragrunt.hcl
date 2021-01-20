@@ -69,13 +69,13 @@ inputs = {
   }
 
   named_values_map = {
-    io-fn3-admin-url          = "http://${dependency.functions_admin_r3.outputs.default_hostname}"
-    io-fn3-public-url         = "http://${dependency.functions_public_r3.outputs.default_hostname}"
-    io-functions-test-url     = "http://${dependency.functions_test.outputs.default_hostname}"
-    io-fn3-services-url       = "http://${dependency.functions_services_r3.outputs.default_hostname}"
-    io-functions-bonusapi-url = "http://${dependency.functions_bonusapi.outputs.default_hostname}"
-    io-fn3-backoffice-url     = "http://${dependency.functions_backoffice.outputs.default_hostname}"
-    io-fn-pay-portal-url      = "http://${dependency.functions_iopayportal.outputs.default_hostname}"
+    io-fn3-admin-url          = "https://${dependency.functions_admin_r3.outputs.default_hostname}"
+    io-fn3-public-url         = "https://${dependency.functions_public_r3.outputs.default_hostname}"
+    io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
+    io-fn3-services-url       = "https://${dependency.functions_services_r3.outputs.default_hostname}"
+    io-functions-bonusapi-url = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
+    io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
+    io-fn-pay-portal-url      = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
   }
 
   named_values_secrets = {
