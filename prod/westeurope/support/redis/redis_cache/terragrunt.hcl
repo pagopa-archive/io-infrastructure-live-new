@@ -26,8 +26,8 @@ inputs = {
   shard_count           = 1
   enable_non_ssl_port   = false
   subnet_id             = dependency.subnet.outputs.id
-  family                = "P"
-  sku_name              = "Premium"
+  family                = "C"
+  sku_name              = "Standard"
   enable_authentication = true
 
   backup_configuration = {
