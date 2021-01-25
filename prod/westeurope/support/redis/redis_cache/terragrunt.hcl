@@ -23,7 +23,6 @@ inputs = {
   name                  = "backoffice"
   resource_group_name   = dependency.resource_group.outputs.resource_name
   capacity              = 1
-  shard_count           = 1
   enable_non_ssl_port   = false
   subnet_id             = dependency.subnet.outputs.id
   family                = "C"
