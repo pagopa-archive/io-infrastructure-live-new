@@ -15,5 +15,5 @@ inputs = {
   name                 = "redisbackoffice"
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
-  address_prefix       = "10.0.7.0/24"
+  address_prefix       = "10.230.1.128/26"
 }
