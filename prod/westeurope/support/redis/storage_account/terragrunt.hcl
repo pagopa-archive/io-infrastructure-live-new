@@ -12,7 +12,7 @@ terraform {
 }
 
 inputs = {
-  name                     = "redis-backoffice"
+  name                     = "redisbackoffice"
   resource_group_name      = dependency.resource_group.outputs.resource_name
   account_tier             = "Premium"
   account_replication_type = "LRS"
