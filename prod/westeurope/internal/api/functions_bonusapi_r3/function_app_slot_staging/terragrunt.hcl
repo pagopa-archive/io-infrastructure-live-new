@@ -66,8 +66,6 @@ inputs = {
 
   pre_warmed_instance_count = 1
 
-  auto_swap_slot_name = "production"
-
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
