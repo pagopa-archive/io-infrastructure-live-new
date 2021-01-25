@@ -5,10 +5,9 @@
         <set-header name="x-functions-key" exists-action="override">
             <value>{{io-fn3-backoffice-key}}</value>
         </set-header>
-        <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
         <choose>
             <!-- set rate limit if x-citizen-id is a fiscal code -->
-            <when condition="@(Regex.Match(context.Request.Headers.GetValueOrDefault("x-citizen-id",""),@"^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$").Success)">
+            <when condition="@(Regex.Match(context.Request.Headers.GetValueOrDefault("x-citizen-id",""), @"^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$").Success && !Regex.Match(context.Request.Url.Path, @"/api/v1/bpd/payment-instruments/[0-9a-f]{64}").Success)">
                 <rate-limit-by-key calls="8" renewal-period="60" counter-key="@(context.Request.Headers.GetValueOrDefault("Authorization","").AsJwt()?.Subject)" />
             </when>
         </choose>
