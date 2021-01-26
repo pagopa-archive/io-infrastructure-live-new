@@ -65,8 +65,9 @@ inputs = {
     }
   ]
 
-  is_virtual_network_filter_enabled = true
+  is_virtual_network_filter_enabled = false
 
+  /**
   ip_range = format("%s,%s,%s,%s",
     local.fn3_slackbot_outbound_ips,
     local.other_azure_ips,
@@ -76,12 +77,12 @@ inputs = {
 
   allowed_virtual_network_subnet_ids = [
     dependency.subnet_fn_admin.outputs.id,
-    dependency.subnet_fn_app.outputs.id,
     dependency.subnet_fn_assets.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_service.outputs.id,
   ]
 
+  */
   lock = {
     name       = "cosmos-api"
     lock_level = "CanNotDelete"
