@@ -7,10 +7,6 @@ dependency "subnet_fn_admin" {
   config_path = "../../functions_admin_r3/subnet"
 }
 
-dependency "subnet_fn_app" {
-  config_path = "../../functions_app_r3/subnet"
-}
-
 dependency "subnet_fn_assets" {
   config_path = "../../functions_assets_r3/subnet"
 }
