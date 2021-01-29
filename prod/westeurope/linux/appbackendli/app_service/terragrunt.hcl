@@ -7,6 +7,11 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# App Backend Api
+dependency "functions_app_r3" {
+  config_path = "../../../internal/api/functions_app_r3/function_app"
+}
+
 # Bonus Api
 dependency "functions_bonus" {
   config_path = "../../../internal/api/functions_bonus/function_app"
@@ -147,7 +152,7 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "NONE"
+    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
