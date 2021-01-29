@@ -171,6 +171,8 @@ inputs = {
 
     # Cashback
     IS_CASHBACK_ENABLED = "true"
+    # Only national service
+    FF_ONLY_NATIONAL_SERVICES = "true"
   }
 
   app_settings_secrets = {
