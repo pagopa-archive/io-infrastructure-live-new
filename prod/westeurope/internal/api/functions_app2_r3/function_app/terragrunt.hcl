@@ -170,7 +170,7 @@ inputs = {
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
     # Cashback
-    IS_CASHBACK_ENABLED = "true"
+    IS_CASHBACK_ENABLED       = "true"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
   }
