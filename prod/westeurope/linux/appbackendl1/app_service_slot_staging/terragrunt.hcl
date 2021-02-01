@@ -6,6 +6,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -186,7 +190,6 @@ inputs = {
 
     // Feature flags
     FF_BONUS_ENABLED         = 1
-    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
@@ -233,6 +236,7 @@ inputs = {
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

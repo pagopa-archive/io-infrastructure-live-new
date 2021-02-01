@@ -12,6 +12,11 @@ dependency "functions_bonus" {
   config_path = "../../../internal/api/functions_bonus/function_app"
 }
 
+# App Backend Api
+dependency "functions_app1_r3" {
+  config_path = "../../../functions_app1/functions_app1_r3/function_app"
+}
+
 # Push notifications origin
 dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
@@ -159,7 +164,8 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "NONE"
+    // this function shouldn't be called anymore by the appbackendli.
+    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
@@ -199,8 +205,7 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED         = 1
-    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
+    FF_BONUS_ENABLED = 1
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
