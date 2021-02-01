@@ -81,6 +81,18 @@ include {
   path = find_in_parent_folders()
 }
 
+
+locals {
+  application_insights_ip_address = [
+    "51.144.56.96/28",
+    "51.144.56.112/28",
+    "51.144.56.128/28",
+    "51.144.56.144/28",
+    "51.144.56.160/28",
+    "51.144.56.176/28",
+  ]
+}
+
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.18"
 
@@ -229,7 +241,7 @@ inputs = {
   }
 
   // TODO: Add ip restriction
-  allowed_ips = []
+  allowed_ips = application_insights_ip_address
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,

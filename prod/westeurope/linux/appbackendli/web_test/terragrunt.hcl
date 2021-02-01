@@ -3,9 +3,8 @@ dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
 
-# linux
 dependency "resource_group" {
-  config_path = "../../resource_group"
+  config_path = "../../../common/resource_group"
 }
 
 dependency "app_service" {
@@ -27,7 +26,7 @@ inputs = {
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
-  enabled                 = true
+  enabled                 = false
 
   url = format("https://%s/info", dependency.app_service.outputs.default_site_hostname)
 }
