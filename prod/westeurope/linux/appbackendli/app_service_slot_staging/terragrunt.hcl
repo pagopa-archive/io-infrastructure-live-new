@@ -98,18 +98,6 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.22"
 }
 
-locals {
-  # allow application insight web test to call the function.
-  application_insights_ip_address = [
-    "51.144.56.96/28",
-    "51.144.56.112/28",
-    "51.144.56.128/28",
-    "51.144.56.144/28",
-    "51.144.56.160/28",
-    "51.144.56.176/28",
-  ]
-}
-
 inputs = {
   name                = "staging"
   resource_group_name = dependency.resource_group.outputs.resource_name
@@ -242,7 +230,7 @@ inputs = {
     }
   }
 
-  allowed_ips = concat([], local.application_insights_ip_address)
+  allowed_ips = []
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,

@@ -86,9 +86,9 @@ include {
   path = find_in_parent_folders()
 }
 
-
 locals {
-  application_insights_ip_address = [
+  # allow application insight web test to call the function.
+  app_insights_ip_west_europe = [
     "51.144.56.96/28",
     "51.144.56.112/28",
     "51.144.56.128/28",
@@ -99,7 +99,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.18"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.30"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -245,8 +245,7 @@ inputs = {
     }
   }
 
-  // TODO: Add ip restriction
-  allowed_ips = application_insights_ip_address
+  allowed_ips = concat([], local.app_insights_ip_west_europe)
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,

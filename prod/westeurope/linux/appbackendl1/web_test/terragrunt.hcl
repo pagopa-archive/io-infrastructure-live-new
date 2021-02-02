@@ -18,11 +18,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_insights_web_test?ref=v2.1.29"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_insights_web_test?ref=v2.1.30"
 }
 
 inputs = {
-  name = "appbackendli"
+  name = "appbackendl1"
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
