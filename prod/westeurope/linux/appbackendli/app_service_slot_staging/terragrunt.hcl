@@ -230,7 +230,6 @@ inputs = {
     }
   }
 
-  // TODO: Add ip restriction
   allowed_ips = []
 
   allowed_subnets = [

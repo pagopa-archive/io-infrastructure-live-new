@@ -87,16 +87,21 @@ jobs:
             for item in ${file_changed}
             do
               cd ${base_dir}
+              # get working dir ... where to run the apply.
               wdir=$(dirname $item)
 
               echo "Processing ${item}"
 
-              cd ${wdir}
-              terragrunt plan
+              # do not check config files.
+              if ! [[ ${item} =~ "vars.hcl" ]]; then
+                cd ${wdir}
+                terragrunt plan
 
-              # if plan fails and output_status_code is 0
-              # set output_status_code to 1 (error)
-              checkerror $? ${item}
+                # if plan fails and output_status_code is 0
+                # set output_status_code to 1 (error)
+                checkerror $? ${item}
+              fi
+
             done
 
             # get file deleted in the current branch.
