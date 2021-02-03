@@ -91,7 +91,8 @@ jobs:
 
               echo "Processing ${item}"
 
-              if grep "vars.hcl" ${item}; then
+              # do not check config files.
+              if ! grep -q "vars.hcl" ${item}; then
                 cd ${wdir}
                 terragrunt plan
 
