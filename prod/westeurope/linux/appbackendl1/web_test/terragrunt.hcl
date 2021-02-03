@@ -26,7 +26,7 @@ inputs = {
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
-  enabled                 = false
+  enabled                 = true
   geo_locations           = ["emea-nl-ams-azr"]
 
   url = format("https://%s/info", dependency.app_service.outputs.default_site_hostname)
