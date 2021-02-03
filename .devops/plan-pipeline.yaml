@@ -13,6 +13,8 @@ trigger:
   paths:
     include:
       - 'prod/*'
+    exclude:
+      - 'prod/*vars.hcl'
 
 parameters:
   - name: 'SUBSCRIPTION'
