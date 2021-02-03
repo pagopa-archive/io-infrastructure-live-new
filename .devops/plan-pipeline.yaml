@@ -13,8 +13,6 @@ trigger:
   paths:
     include:
       - 'prod/*'
-    exclude:
-      - 'prod/*vars.hcl'
 
 parameters:
   - name: 'SUBSCRIPTION'
@@ -93,12 +91,15 @@ jobs:
 
               echo "Processing ${item}"
 
-              cd ${wdir}
-              terragrunt plan
+              if grep "vars.hcl" ${item}; then
+                cd ${wdir}
+                terragrunt plan
 
-              # if plan fails and output_status_code is 0
-              # set output_status_code to 1 (error)
-              checkerror $? ${item}
+                # if plan fails and output_status_code is 0
+                # set output_status_code to 1 (error)
+                checkerror $? ${item}
+              fi
+
             done
 
             # get file deleted in the current branch.
