@@ -1,4 +1,4 @@
-dependency "resource_group_common" {
+dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
@@ -13,5 +13,5 @@ terraform {
 
 inputs = {
   name                = "azuredevops"
-  resource_group_name = dependency.resource_group_common.outputs.resource_name
+  resource_group_name = dependency.resource_group.outputs.resource_name
 }
