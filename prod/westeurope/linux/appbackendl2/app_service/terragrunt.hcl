@@ -88,14 +88,8 @@ include {
 
 locals {
   # allow application insight web test to call the function.
-  app_insights_ip_west_europe = [
-    "51.144.56.96/28",
-    "51.144.56.112/28",
-    "51.144.56.128/28",
-    "51.144.56.144/28",
-    "51.144.56.160/28",
-    "51.144.56.176/28",
-  ]
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 terraform {
@@ -244,7 +238,7 @@ inputs = {
     }
   }
 
-  allowed_ips = concat([], local.app_insights_ip_west_europe)
+  allowed_ips = concat([], local.app_insights_ips_west_europe)
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
