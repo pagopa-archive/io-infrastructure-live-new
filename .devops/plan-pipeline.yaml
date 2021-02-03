@@ -87,12 +87,13 @@ jobs:
             for item in ${file_changed}
             do
               cd ${base_dir}
+              # get working dir ... where to run the apply.
               wdir=$(dirname $item)
 
               echo "Processing ${item}"
 
               # do not check config files.
-              if ! grep -q "vars.hcl" ${item}; then
+              if ! [[ ${item} =~ "vars.hcl" ]]; then
                 cd ${wdir}
                 terragrunt plan
 
