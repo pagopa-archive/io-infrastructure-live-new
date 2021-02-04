@@ -33,8 +33,8 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 5
-      minimum = 5
+      default = 10
+      minimum = 10
       maximum = 20
     }
 
