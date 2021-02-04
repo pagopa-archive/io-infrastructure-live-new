@@ -7,7 +7,7 @@ dependency "subnet" {
 }
 
 dependency "subnet_azure_devops" {
-  config_path = "../common/subnet_azure_devops"
+  config_path = "../../../common/subnet_azure_devops"
 }
 
 # cgn
