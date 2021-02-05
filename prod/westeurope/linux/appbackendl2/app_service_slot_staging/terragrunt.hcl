@@ -25,6 +25,11 @@ dependency "functions_bonus" {
   config_path = "../../../internal/api/functions_bonus/function_app"
 }
 
+# Cgn Api
+dependency "functions_cgn" {
+  config_path = "../../../cgn/functions_cgn/function_app"
+}
+
 # Push notifications origin
 dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
@@ -151,7 +156,7 @@ inputs = {
     // FUNCTIONS
     API_URL       = "http://${dependency.functions_app2_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
-    CGN_API_URL   = "http://io-functions-cgn/api/v1"
+    CGN_API_URL   = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH       = "/api/v1"

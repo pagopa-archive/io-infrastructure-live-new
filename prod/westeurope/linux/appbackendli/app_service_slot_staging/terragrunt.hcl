@@ -25,6 +25,11 @@ dependency "functions_app1_r3" {
   config_path = "../../../functions_app1/functions_app1_r3/function_app"
 }
 
+# Cgn Api
+dependency "functions_cgn" {
+  config_path = "../../../cgn/functions_cgn/function_app"
+}
+
 # Push notifications origin
 dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
@@ -152,7 +157,7 @@ inputs = {
     // this function shouldn't be called anymore by the appbackendli.
     API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
-    CGN_API_URL   = "http://io-functions-cgn/api/v1"
+    CGN_API_URL   = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH       = "/api/v1"
