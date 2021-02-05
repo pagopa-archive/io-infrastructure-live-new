@@ -4,7 +4,7 @@ dependency "resource_group" {
 }
 
 dependency "subnet_fn3cgn" {
-  config_path = "../../function_cgn/subnet"
+  config_path = "../../functions_cgn/subnet"
 }
 
 
