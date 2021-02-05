@@ -44,6 +44,19 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+# linux
+dependency "subnet_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackendli" {
+  config_path = "../../../linux/appbackendli/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -111,6 +124,9 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id,
+    dependency.subnet.appbackendli.outputs.id,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
