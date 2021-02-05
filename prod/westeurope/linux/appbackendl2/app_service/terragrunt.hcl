@@ -86,8 +86,14 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  # allow application insight web test to call the function.
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+}
+
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.18"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.30"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -194,8 +200,7 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED            = 1
-    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
+    FF_BONUS_ENABLED = 1
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
@@ -203,7 +208,7 @@ inputs = {
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
-    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
+    JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
   }
 
   app_settings_secrets = {
@@ -236,8 +241,7 @@ inputs = {
     }
   }
 
-  // TODO: Add ip restriction
-  allowed_ips = []
+  allowed_ips = concat([], local.app_insights_ips_west_europe)
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,

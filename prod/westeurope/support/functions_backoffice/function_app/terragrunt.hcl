@@ -12,6 +12,10 @@ dependency "storage_account" {
   config_path = "../../storage_backoffice/account"
 }
 
+dependency "redis" {
+  config_path = "../../redis/redis_cache"
+}
+
 dependency "storage_table_backoffice" {
   config_path = "../../storage_backoffice/table_dashboardlog"
 }
@@ -86,6 +90,11 @@ inputs = {
     WEBSITE_DNS_SERVER     = "168.63.129.16"
     WEBSITE_VNET_ROUTE_ALL = "1"
 
+    // REDIS
+    REDIS_URL      = dependency.redis.outputs.hostname
+    REDIS_PORT     = dependency.redis.outputs.ssl_port
+    REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
+
   }
 
   app_settings_secrets = {
@@ -108,7 +117,6 @@ inputs = {
 
       ADB2C_CLIENT_KEY = "bo-CLIENT-KEY"
       ADB2C_TENANT_ID  = "bo-TENANT-ID"
-
     }
   }
 

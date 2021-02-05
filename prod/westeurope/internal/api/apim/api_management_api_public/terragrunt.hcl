@@ -29,7 +29,7 @@ inputs = {
   description           = "PUBLIC API for IO platform."
   host                  = "api.io.italia.it"
   path                  = "public"
-  protocols             = ["http"]
+  protocols             = ["http", "https"]
   swagger_json_template = file("swagger.json.tmpl")
   policy_xml            = file("policy.xml")
 

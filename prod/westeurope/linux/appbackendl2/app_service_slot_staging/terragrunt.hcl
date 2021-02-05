@@ -6,6 +6,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -187,8 +191,7 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED            = 1
-    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
+    FF_BONUS_ENABLED         = 1
 
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
@@ -196,7 +199,7 @@ inputs = {
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
-    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
+    JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
   }
 
   app_settings_secrets = {
@@ -236,6 +239,7 @@ inputs = {
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id
