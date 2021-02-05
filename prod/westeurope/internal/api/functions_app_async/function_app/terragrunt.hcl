@@ -173,6 +173,7 @@ inputs = {
     IS_CASHBACK_ENABLED       = "true"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
+    FF_LOCAL_SERVICES_LIMIT   = "0"
   }
 
   app_settings_secrets = {
