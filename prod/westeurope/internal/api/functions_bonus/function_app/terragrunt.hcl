@@ -65,12 +65,12 @@ inputs = {
   app_service_plan_info = {
     kind     = "elastic"
     sku_tier = "ElasticPremium"
-    sku_size = "EP3"
+    sku_size = "EP1"
   }
 
-  runtime_version = "3.0.13901.0"
+  runtime_version = "~3"
 
-  pre_warmed_instance_count = 5
+  pre_warmed_instance_count = 3
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 

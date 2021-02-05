@@ -6,19 +6,23 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# App Backend Api
-dependency "functions_app_r3" {
-  config_path = "../../../internal/api/functions_app_r3/function_app"
-}
-
 # Bonus Api
 dependency "functions_bonus" {
   config_path = "../../../internal/api/functions_bonus/function_app"
+}
+
+# App Backend Api
+dependency "functions_app1_r3" {
+  config_path = "../../../functions_app1/functions_app1_r3/function_app"
 }
 
 # Push notifications origin
@@ -145,7 +149,8 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "http://${dependency.functions_app_r3.outputs.default_hostname}/api/v1"
+    // this function shouldn't be called anymore by the appbackendli.
+    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
@@ -185,17 +190,15 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED         = 1
-    FF_CGN_ENABLED           = 0
-    BONUS_REQUEST_LIMIT_DATE = "2020-12-31T22:59:59Z"
-
+    FF_BONUS_ENABLED = 1
+    FF_CGN_ENABLED   = 0
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
-    JWT_SUPPORT_TOKEN_EXPIRATION = 604800
+    JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
   }
 
   app_settings_secrets = {
@@ -227,13 +230,13 @@ inputs = {
     }
   }
 
-  // TODO: Add ip restriction
   allowed_ips = []
 
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   subnet_id = dependency.subnet.outputs.id

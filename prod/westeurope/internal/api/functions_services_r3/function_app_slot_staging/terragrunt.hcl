@@ -111,12 +111,13 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      MAILUP_USERNAME                      = "common-MAILUP-USERNAME"
-      MAILUP_SECRET                        = "common-MAILUP-SECRET"
-      WEBHOOK_CHANNEL_URL                  = "appbackend-WEBHOOK-CHANNEL-URL"
-      SANDBOX_FISCAL_CODE                  = "io-SANDBOX-FISCAL-CODE"
-      EMAIL_NOTIFICATION_SERVICE_BLACKLIST = "io-ADE-SERVICE-ID"
-      IO_FUNCTIONS_ADMIN_API_TOKEN         = "apim-IO-SERVICE-KEY"
+      MAILUP_USERNAME                        = "common-MAILUP-USERNAME"
+      MAILUP_SECRET                          = "common-MAILUP-SECRET"
+      WEBHOOK_CHANNEL_URL                    = "appbackend-WEBHOOK-CHANNEL-URL"
+      SANDBOX_FISCAL_CODE                    = "io-SANDBOX-FISCAL-CODE"
+      EMAIL_NOTIFICATION_SERVICE_BLACKLIST   = "io-EMAIL-SERVICE-BLACKLIST-ID"
+      WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
+      IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
     }
   }
 
