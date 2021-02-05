@@ -38,15 +38,15 @@ dependency "key_vault" {
 
 # linux
 dependency "subnet_appbackendl1" {
-  config_path = "./../../linux/appbackendl1/subnet"
+  config_path = "../../../linux/appbackendl1/subnet"
 }
 
 dependency "subnet_appbackendl2" {
-  config_path = "./../../linux/appbackendl2/subnet"
+  config_path = "../../../linux/appbackendl2/subnet"
 }
 
 dependency "subnet_appbackendli" {
-  config_path = "./../../linux/appbackendli/subnet"
+  config_path = "../../../linux/appbackendli/subnet"
 }
 
 # Include all settings from the root terragrunt.hcl file
