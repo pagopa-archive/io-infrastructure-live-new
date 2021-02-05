@@ -27,7 +27,7 @@ dependency "functions_bonus" {
 
 # Cgn Api
 dependency "functions_cgn" {
-  config_path = "../../../cgn/function_cgn/function_app"
+  config_path = "../../../cgn/functions_cgn/function_app"
 }
 
 # Push notifications origin
