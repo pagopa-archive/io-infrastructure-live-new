@@ -58,6 +58,11 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.33"
 }
 
+locals {
+  commonvars      = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url = local.commonvars.locals.service_api_url
+}
+
 inputs = {
   name                = "cgn"
   resource_group_name = dependency.resource_group.outputs.resource_name
@@ -98,11 +103,12 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
+    SERVICES_API_URL = local.service_api_url
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
@@ -112,6 +118,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
     }
   }
 

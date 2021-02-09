@@ -62,6 +62,11 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  commonvars      = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url = local.commonvars.locals.service_api_url
+}
+
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.31"
 }
@@ -107,20 +112,21 @@ inputs = {
     # Deployment slot settings: set this flag manually on the portal.
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
+    SERVICES_API_URL = local.service_api_url
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
-
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
     }
   }
 
