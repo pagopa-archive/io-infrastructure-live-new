@@ -39,7 +39,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.11"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
 }
 
 inputs = {
@@ -121,6 +121,7 @@ inputs = {
   }
 
   allowed_subnets = []
-
   subnet_id = dependency.subnet.outputs.id
+
+  export_keys = true
 }
