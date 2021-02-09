@@ -108,16 +108,19 @@ inputs = {
     # Deployment slot settings: set this flag manually on the portal.
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
+
+    SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICES_API_KEY      = "apim-CGN-SERVICE-KEY"
     }
   }
 
