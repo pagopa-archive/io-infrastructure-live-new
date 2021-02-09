@@ -63,7 +63,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.24"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.31"
 }
 
 inputs = {
@@ -78,13 +78,12 @@ inputs = {
   runtime_version = "~3"
 
   pre_warmed_instance_count = 1
-  auto_swap_slot_name       = "production"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.19.1"
+    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -112,6 +111,10 @@ inputs = {
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
+
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "staging-content"
 
   }
 
