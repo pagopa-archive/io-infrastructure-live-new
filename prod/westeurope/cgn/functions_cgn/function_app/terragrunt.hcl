@@ -55,7 +55,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.24"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.33"
+}
+
+locals {
+  commonvars      = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -74,7 +79,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.19.1"
+    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -103,14 +108,17 @@ inputs = {
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = local.service_api_url
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
 
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      SERVICES_API_KEY      = "apim-CGN-SERVICE-KEY"
+      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
     }
   }
 
