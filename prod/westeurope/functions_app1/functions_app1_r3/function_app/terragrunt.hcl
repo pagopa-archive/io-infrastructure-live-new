@@ -80,7 +80,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.18"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url              = local.commonvars.locals.service_api_url
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 inputs = {
@@ -171,11 +177,14 @@ inputs = {
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
     # Cashback
-    IS_CASHBACK_ENABLED       = "true"
+    IS_CASHBACK_ENABLED = "true"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
-    FF_LOCAL_SERVICES_LIMIT   = "0"
+    FF_LOCAL_SERVICES_LIMIT = "0"
+
+    WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
+
   }
 
   app_settings_secrets = {
@@ -195,6 +204,8 @@ inputs = {
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
