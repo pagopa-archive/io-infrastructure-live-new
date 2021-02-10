@@ -42,7 +42,12 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 inputs = {
@@ -80,6 +85,10 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    # at the time we applied these chages the value is the following.
+    WEBSITE_CONTENTSHARE = "staging-content"
+
   }
 
   app_settings_secrets = {
@@ -92,6 +101,8 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
