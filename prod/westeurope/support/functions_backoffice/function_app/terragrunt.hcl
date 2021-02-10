@@ -123,5 +123,4 @@ inputs = {
   allowed_subnets = []
   subnet_id = dependency.subnet.outputs.id
 
-  export_keys = true
 }

@@ -26,10 +26,9 @@ inputs = {
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
-  enabled                 = true
+  # so far this test is disabled since the info page is not anonymous. A key it's needed.
+  enabled                 = false
   geo_locations           = ["emea-nl-ams-azr"]
 
-  url = format("https://%s/api/v1/info?code=%s",
-    dependency.function_app.outputs.default_hostname,
-    dependency.function_app.outputs.master_key)
+  url = format("https://%s/api/v1/info", dependency.function_app.outputs.default_hostname)
 }
