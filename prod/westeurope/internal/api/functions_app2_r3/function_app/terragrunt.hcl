@@ -131,7 +131,7 @@ inputs = {
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     DPO_EMAIL_ADDRESS        = "dpo@pagopa.it"
-    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
+    PUBLIC_API_URL           = local.service_api_url
     FUNCTIONS_PUBLIC_URL     = "https://api.io.italia.it/public"
 
     // Keepalive fields are all optionals
