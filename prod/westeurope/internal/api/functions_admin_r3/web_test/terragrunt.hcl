@@ -27,7 +27,7 @@ inputs = {
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
   # test disabled: so far the info page requires the authorization key we don't want to put in web tests.
-  enabled       = false
+  enabled       = true
   geo_locations = ["emea-nl-ams-azr"]
 
   url = format("https://%s/info", dependency.function_app.outputs.default_hostname)
