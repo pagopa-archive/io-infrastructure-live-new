@@ -55,7 +55,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -105,9 +111,10 @@ inputs = {
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL            = local.service_api_url
     SERVICES_REQUEST_TIMEOUT_MS = 5000
 
+    WEBSITE_CONTENTSHARE = "io-p-func-bonus-content"
   }
 
   app_settings_secrets = {
@@ -132,6 +139,8 @@ inputs = {
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
