@@ -63,8 +63,9 @@ include {
 }
 
 locals {
-  commonvars      = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  service_api_url = local.commonvars.locals.service_api_url
+  commonvars        = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  cet_time_zone_win = local.commonvars.locals.cet_time_zone_win
+  service_api_url   = local.commonvars.locals.service_api_url
 }
 
 terraform {
@@ -121,6 +122,8 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
+
+    WEBSITE_TIME_ZONE = local.cet_time_zone_win
   }
 
   app_settings_secrets = {
