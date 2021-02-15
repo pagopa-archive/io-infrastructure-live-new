@@ -60,8 +60,9 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  service_api_url              = local.commonvars.locals.service_api_url
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  cet_time_zone_win            = local.commonvars.locals.cet_time_zone_win
+  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -114,6 +115,7 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
 
+    WEBSITE_TIME_ZONE = local.cet_time_zone_win
   }
 
   app_settings_secrets = {
