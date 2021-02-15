@@ -74,7 +74,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url              = local.commonvars.locals.service_api_url
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 inputs = {
@@ -118,7 +124,7 @@ inputs = {
     UserDataArchiveStorageConnection = dependency.storage_account_user-data-download.outputs.primary_connection_string
     USER_DATA_CONTAINER_NAME         = dependency.storage_container_user-data-download.outputs.name
 
-    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
+    PUBLIC_API_URL           = local.service_api_url
     PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_blob_host}/${dependency.storage_container_user-data-download.outputs.name}"
 
     SESSION_API_URL                 = "https://${dependency.app_service_appbackend.outputs.default_site_hostname}"
@@ -133,6 +139,10 @@ inputs = {
 
     SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
+
+    # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    # at the time we applied these chages the value is the following.
+    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {
@@ -142,9 +152,9 @@ inputs = {
 
       AZURE_SUBSCRIPTION_ID = "common-AZURE-SUBSCRIPTION-ID"
 
-      ADB2C_TENANT_ID  = "adb2c-TENANT-NAME"
-      ADB2C_CLIENT_ID  = "devportal-CLIENT-ID"
-      ADB2C_CLIENT_KEY = "devportal-CLIENT-SECRET"
+      ADB2C_TENANT_ID            = "adb2c-TENANT-NAME"
+      ADB2C_CLIENT_ID            = "devportal-CLIENT-ID"
+      ADB2C_CLIENT_KEY           = "devportal-CLIENT-SECRET"
       ADB2C_TOKEN_ATTRIBUTE_NAME = "adb2c-TOKEN-ATTRIBUTE-NAME"
 
       SERVICE_PRINCIPAL_CLIENT_ID = "ad-APPCLIENT-APIM-ID"
@@ -165,6 +175,8 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
