@@ -36,13 +36,33 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+# linux
+dependency "subnet_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackendli" {
+  config_path = "../../../linux/appbackendli/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.24"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  cet_time_zone_win            = local.commonvars.locals.cet_time_zone_win
+  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -61,7 +81,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.19.1"
+    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -85,22 +105,34 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    CGN_LEASE_BINDINGS_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
+    SERVICES_API_URL = local.service_api_url
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
+
+    WEBSITE_TIME_ZONE = local.cet_time_zone_win
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
     }
   }
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id,
+    dependency.subnet_appbackendli.outputs.id,
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
