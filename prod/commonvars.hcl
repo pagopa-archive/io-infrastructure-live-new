@@ -8,4 +8,10 @@ locals {
     "51.144.56.160/28",
     "51.144.56.176/28",
   ]
+
+  # windows standatd. It can be different in linux service plan.
+  cet_time_zone_win = "Central Europe Standard Time"
+
+  service_api_url = "http://api-internal.io.italia.it/"
+
 }

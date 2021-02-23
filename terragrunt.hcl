@@ -3,7 +3,7 @@ generate "provider" {
   if_exists = "overwrite_terragrunt"
   contents = <<EOF
 provider "azurerm" {
-  version = "=2.41.0"
+  version = "=2.46.1"
   features {}
 }
 EOF

@@ -42,7 +42,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  service_api_url              = local.commonvars.locals.service_api_url
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 inputs = {
@@ -86,7 +92,7 @@ inputs = {
     COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = local.service_api_url
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -99,6 +105,8 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
+
+    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {
@@ -112,6 +120,8 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
