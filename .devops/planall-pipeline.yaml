@@ -56,8 +56,8 @@ jobs:
             export ARM_TENANT_ID=$(TENANT_ID)
 
             # download terraform providers and modules once.
-            TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache/
-            TERRAGRUNT_DOWNLOAD=~/.terragrunt-cache/
+            export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache/
+            export TERRAGRUNT_DOWNLOAD=~/.terragrunt-cache/
 
 
             output_status_code=0
