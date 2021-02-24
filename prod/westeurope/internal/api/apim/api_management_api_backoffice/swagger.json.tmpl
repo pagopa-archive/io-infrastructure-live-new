@@ -14,9 +14,7 @@
   },
   "host": "${host}",
   "basePath": "/api/v1",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "security": [
     {
       "Bearer": []
@@ -84,6 +82,9 @@
               "$ref": "#/definitions/ProblemJson"
             }
           },
+          "429": {
+            "description": "Rate Limit exceeded"
+          },
           "500": {
             "description": "Internal server Error",
             "schema": {
@@ -124,6 +125,9 @@
             "schema": {
               "$ref": "#/definitions/ProblemJson"
             }
+          },
+          "429": {
+            "description": "Rate Limit exceeded"
           },
           "500": {
             "description": "Internal server Error",
@@ -226,6 +230,59 @@
               "$ref": "#/definitions/ProblemJson"
             }
           },
+          "429": {
+            "description": "Rate Limit exceeded"
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/pm/wallet": {
+      "get": {
+        "operationId": "GetPMWalletV2",
+        "summary": "Get PM wallet",
+        "description": "Get PM wallet for an user",
+        "parameters": [
+          {
+            "$ref": "#/parameters/CitizenID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/Wallet"
+            }
+          },
+          "400": {
+            "description": "Invalid request.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "429": {
+            "description": "Rate Limit exceeded"
+          },
           "500": {
             "description": "Internal server Error",
             "schema": {
@@ -236,13 +293,100 @@
       }
     }
   },
-  "consumes": [
-    "application/json"
-  ],
-  "produces": [
-    "application/json"
-  ],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
   "definitions": {
+    "Wallet": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PublicWalletItem"
+          }
+        }
+      },
+      "required": ["data"]
+    },
+    "PublicCreditCard": {
+      "type": "object",
+      "properties": {
+        "hpan": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Bancomat", "Card"]
+        },
+        "masked_pan": {
+          "type": "string"
+        },
+        "holder": {
+          "type": "string"
+        },
+        "expireMonth": {
+          "type": "string"
+        },
+        "expireYear": {
+          "type": "string"
+        },
+        "brand": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "hpan",
+        "type",
+        "masked_pan",
+        "holder",
+        "expireMonth",
+        "expireYear",
+        "brand"
+      ]
+    },
+    "PublicBPay": {
+      "type": "object",
+      "properties": {
+        "hpan": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["BPay"]
+        },
+        "bank_name": {
+          "type": "string"
+        }
+      },
+      "required": ["hpan", "type", "bank_name"]
+    },
+    "PublicSatispay": {
+      "type": "object",
+      "properties": {
+        "hpan": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["Satispay"]
+        }
+      },
+      "required": ["hpan", "type"]
+    },
+    "PublicWalletItem": {
+      "x-one-of": true,
+      "allOf": [
+        {
+          "$ref": "#/definitions/PublicBPay"
+        },
+        {
+          "$ref": "#/definitions/PublicCreditCard"
+        },
+        {
+          "$ref": "#/definitions/PublicSatispay"
+        }
+      ]
+    },
     "FiscalCode": {
       "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/FiscalCode"
     },
@@ -251,10 +395,7 @@
     },
     "PaymentMethodStatus": {
       "type": "string",
-      "enum": [
-        "ACTIVE",
-        "INACTIVE"
-      ]
+      "enum": ["ACTIVE", "INACTIVE"]
     },
     "PaymentMethodDetails": {
       "type": "object",
@@ -310,12 +451,7 @@
           }
         }
       },
-      "required": [
-        "fiscal_code",
-        "hpan",
-        "activation_periods",
-        "enabled"
-      ]
+      "required": ["fiscal_code", "hpan", "activation_periods", "enabled"]
     },
     "ActivationPeriods": {
       "type": "object",
@@ -346,10 +482,7 @@
           "$ref": "#/definitions/PaymentMethodStatus"
         }
       },
-      "required": [
-        "enrollment",
-        "status"
-      ]
+      "required": ["enrollment", "status"]
     },
     "BPDCitizen": {
       "type": "object",
@@ -407,11 +540,7 @@
           }
         }
       },
-      "required": [
-        "fiscal_code",
-        "timestamp_tc",
-        "payment_methods"
-      ]
+      "required": ["fiscal_code", "timestamp_tc", "payment_methods"]
     },
     "PaymentMethod": {
       "type": "object",
@@ -440,10 +569,7 @@
           "type": "boolean"
         }
       },
-      "required": [
-        "payment_instrument_hpan",
-        "payment_instrument_status"
-      ]
+      "required": ["payment_instrument_hpan", "payment_instrument_status"]
     },
     "SupportToken": {
       "type": "string",
@@ -472,9 +598,7 @@
           }
         }
       },
-      "required": [
-        "transactions"
-      ]
+      "required": ["transactions"]
     },
     "BPDTransaction": {
       "type": "object",
@@ -531,13 +655,7 @@
         },
         "operation_type_descr": {
           "type": "string",
-          "enum": [
-            "Payment",
-            "Transfer",
-            "ApplePay",
-            "GooglePay",
-            "Other"
-          ]
+          "enum": ["Payment", "Transfer", "ApplePay", "GooglePay", "Other"]
         },
         "circuit_type": {
           "type": "string"
@@ -607,172 +725,167 @@
           "type": "string"
         }
       },
-      "required": [
-        "acquirer",
-        "id_trx_acquirer",
-        "trx_timestamp",
-        "hpan"
-      ]
+      "required": ["acquirer", "id_trx_acquirer", "trx_timestamp", "hpan"]
     },
     "AwardPeriod": {
       "type": "object",
       "properties": {
-        "aw_winn_award_period_id": {
+        "award_winner_id": {
           "type": "number"
         },
-        "payoff_instr": {
+        "award_winner_period_id": {
+          "type": "number"
+        },
+        "award_winner_payoff_instr": {
           "type": "string"
         },
-        "amount": {
+        "award_winner_amount": {
           "type": "number"
         },
-        "aw_winn_aw_period_start": {
+        "award_winner_period_start": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_winn_aw_period_end": {
+        "award_winner_period_end": {
           "type": "string",
           "format": "dateTime"
         },
-        "jackpot": {
+        "award_winner_jackpot": {
           "type": "number"
         },
-        "aw_winn_cashback": {
+        "award_winner_cashback": {
           "type": "number"
         },
-        "typology": {
+        "award_winner_typology": {
           "type": "string"
         },
-        "account_holder_cf": {
+        "award_winner_account_holder_cf": {
           "type": "string"
         },
-        "account_holder_name": {
+        "award_winner_account_holder_name": {
           "type": "string"
         },
-        "account_holder_surname": {
+        "award_winner_account_holder_surname": {
           "type": "string"
         },
-        "check_instr_status": {
+        "award_winner_check_instr_status": {
           "type": "string"
         },
-        "account_holder": {
-          "type": "string"
-        },
-        "aw_winn_insert_date": {
+        "award_winner_insert_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_winn_insert_user": {
+        "award_winner_insert_user": {
           "type": "string"
         },
-        "aw_winn_update_date": {
+        "award_winner_update_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_winn_update_user": {
+        "award_winner_update_user": {
           "type": "string"
         },
-        "aw_winn_enabled": {
+        "award_winner_enabled": {
           "type": "boolean"
         },
-        "cit_rank_award_period_id": {
+        "citizen_ranking_period_id": {
           "type": "number"
         },
-        "cit_rank_cashback": {
+        "citizen_ranking_cashback": {
           "type": "number"
         },
-        "transaction": {
+        "citizen_ranking_transaction": {
           "type": "number"
         },
-        "ranking": {
+        "citizen_ranking_ranking": {
           "type": "number"
         },
-        "ranking_date": {
+        "citizen_ranking_ranking_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "cit_rank_insert_date": {
+        "citizen_ranking_insert_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "cit_rank_insert_user": {
+        "citizen_ranking_insert_user": {
           "type": "string"
         },
-        "cit_rank_update_date": {
+        "citizen_ranking_update_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "cit_rank_update_user": {
+        "citizen_ranking_update_user": {
           "type": "string"
         },
-        "cit_rank_enabled": {
+        "citizen_ranking_enabled": {
           "type": "boolean"
         },
         "award_period_id": {
           "type": "number"
         },
-        "aw_per_aw_period_start": {
+        "award_period_start": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_per_aw_period_end": {
+        "award_period_end": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_grace_period": {
+        "award_period_grace_period": {
           "type": "number"
         },
-        "amount_max": {
+        "award_period_amount_max": {
           "type": "number"
         },
-        "trx_volume_min": {
+        "award_period_trx_volume_min": {
           "type": "number"
         },
-        "trx_eval_max": {
+        "award_period_trx_eval_max": {
           "type": "number"
         },
-        "ranking_min": {
+        "award_period_ranking_min": {
           "type": "number"
         },
-        "trx_cashback_max": {
+        "award_period_trx_cashback_max": {
           "type": "number"
         },
-        "period_cashback_max": {
+        "award_period_cashback_max": {
           "type": "number"
         },
-        "cashback_perc": {
+        "award_period_cashback_perc": {
           "type": "number"
         },
-        "aw_per_insert_date": {
+        "award_period_insert_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_per_insert_user": {
+        "award_period_insert_user": {
           "type": "string"
         },
-        "aw_per_update_date": {
+        "award_period_update_date": {
           "type": "string",
           "format": "dateTime"
         },
-        "aw_per_update_user": {
+        "award_period_update_user": {
           "type": "string"
         },
-        "aw_per_enabled": {
+        "award_period_enabled": {
           "type": "boolean"
         }
       },
       "required": [
         "award_period_id",
-        "aw_per_aw_period_start",
-        "aw_per_aw_period_end",
-        "aw_grace_period",
-        "amount_max",
-        "trx_volume_min",
-        "trx_eval_max",
-        "ranking_min",
-        "trx_cashback_max",
-        "period_cashback_max",
-        "cashback_perc"
+        "award_period_start",
+        "award_period_end",
+        "award_period_grace_period",
+        "award_period_amount_max",
+        "award_period_trx_volume_min",
+        "award_period_trx_eval_max",
+        "award_period_ranking_min",
+        "award_period_trx_cashback_max",
+        "award_period_cashback_max",
+        "award_period_cashback_perc"
       ]
     },
     "AwardsList": {
@@ -788,10 +901,7 @@
           }
         }
       },
-      "required": [
-        "fiscal_code",
-        "awards"
-      ]
+      "required": ["fiscal_code", "awards"]
     }
   },
   "parameters": {
