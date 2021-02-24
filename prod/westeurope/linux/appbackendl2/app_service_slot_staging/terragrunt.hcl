@@ -197,7 +197,7 @@ inputs = {
 
     // Feature flags
     FF_BONUS_ENABLED         = 1
-
+    FF_CGN_ENABLED           = 0
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
     # No downtime on slots swap
