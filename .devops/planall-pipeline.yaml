@@ -29,7 +29,7 @@ resources:
       endpoint: 'pagopa'
 
 jobs:
-  - job: install_and_run_terraform
+  - job: planall
     steps:
       # 1. Install terraform and terragrunt
       - template: templates/terraform-setup/template.yaml@terraform
@@ -50,6 +50,11 @@ jobs:
           failOnStandardError: false
           inlineScript: |
 
+            export ARM_CLIENT_ID=$(CLIENT_ID)
+            export ARM_CLIENT_SECRET=$(CLIENT_SECRET)
+            export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
+            export ARM_TENANT_ID=$(TENANT_ID)
+
             output_status_code=0
 
             checkerror() {
@@ -65,5 +70,3 @@ jobs:
             terragrunt plan-all --terragrunt-non-interactive
 
             checkerror $?
-
-            exit ${output_status_code}
