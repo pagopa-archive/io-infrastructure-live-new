@@ -116,12 +116,15 @@ inputs = {
     WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
 
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
+    EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
+      EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
+      EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
     }
   }
 
