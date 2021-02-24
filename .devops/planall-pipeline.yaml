@@ -75,3 +75,5 @@ jobs:
             terragrunt plan-all --terragrunt-non-interactive 2> >(grep -v "\[terragrunt]" >&2)
 
             checkerror $?
+
+            exit ${output_status_code}
