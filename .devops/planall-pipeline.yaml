@@ -8,6 +8,7 @@ schedules:
     - master
   always: true
 
+
 parameters:
   - name: 'SUBSCRIPTION'
     displayName: 'Azure subscription hosting the infrastructure built with terraform'
