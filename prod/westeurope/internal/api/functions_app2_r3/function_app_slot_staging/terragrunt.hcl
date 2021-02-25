@@ -87,7 +87,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.34"
+}
+
+locals {
+  outbound_ips                 = ["13.69.68.23/32","13.94.236.45/32","13.80.30.234/32","13.80.27.167/32","13.94.238.17/32","13.93.8.230/32","13.80.25.191/32","13.69.30.55/32","40.115.26.112/32","13.69.29.185/32"]
 }
 
 inputs = {
@@ -174,6 +178,8 @@ inputs = {
     dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]
+
+  allowed_ips = local.outbound_ips
 
   subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id

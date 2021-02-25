@@ -86,6 +86,7 @@ locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   service_api_url              = local.commonvars.locals.service_api_url
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  outbound_ips                 = ["13.69.68.23","13.94.236.45","13.80.30.234","13.80.27.167", "13.94.238.17","13.93.8.230","13.80.25.191","13.69.30.55","40.115.26.112","13.69.29.185"]
 }
 
 inputs = {
@@ -206,7 +207,7 @@ inputs = {
     dependency.subnet_appbackend_li.outputs.id,
   ]
 
-  allowed_ips = local.app_insights_ips_west_europe
+  allowed_ips = concat(local.app_insights_ips_west_europe, local.outbound_ips)
 
   subnet_id = dependency.subnet.outputs.id
 }
