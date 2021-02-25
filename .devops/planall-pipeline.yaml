@@ -1,0 +1,81 @@
+trigger: none
+
+schedules:
+- cron: "0 21 * * *"
+  displayName: Every day at 9 pm.
+  branches:
+    include:
+    - master
+  always: true
+
+
+parameters:
+  - name: 'SUBSCRIPTION'
+    displayName: 'Azure subscription hosting the infrastructure built with terraform'
+    type: string
+    default: PROD-IO-SERVICE-CONN
+    values:
+      - PROD-IO-SERVICE-CONN
+      - DEV-IO-SERVICE-CONN
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+resources:
+  repositories:
+    - repository: terraform
+      type: github
+      name: pagopa/azure-pipeline-templates
+      ref: refs/tags/v5
+      endpoint: 'pagopa'
+
+jobs:
+  - job: planall
+    steps:
+      # 1. Install terraform and terragrunt
+      - template: templates/terraform-setup/template.yaml@terraform
+      # 2. Install SSH key
+      - task: InstallSSHKey@0
+        inputs:
+          knownHostsEntry: 'github.com'
+          sshKeySecureFile: 'id_ed25519'
+      # 3. Run terragrunt plan
+      - task: AzureCLI@2
+        env:
+          GIT_BRANCH: $(Build.SourceBranchName)
+        displayName: Run terragrunt plans
+        inputs:
+          azureSubscription: '${{ parameters.SUBSCRIPTION }}'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          failOnStandardError: false
+          inlineScript: |
+
+            export ARM_CLIENT_ID=$(CLIENT_ID)
+            export ARM_CLIENT_SECRET=$(CLIENT_SECRET)
+            export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
+            export ARM_TENANT_ID=$(TENANT_ID)
+
+            # download terraform providers and modules once.
+            export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache/
+            export TERRAGRUNT_DOWNLOAD=~/.terragrunt-cache/
+
+
+            output_status_code=0
+
+            checkerror() {
+              # parameters:
+              # $1: status code of the last command.
+              if [[ $1 -ne 0 ]]; then
+                echo -e "${RED} plan failed${NC}"
+                output_status_code=1
+              fi
+            }
+
+            cd prod
+            terragrunt plan-all --terragrunt-non-interactive 2> >(grep -v "\[terragrunt]" >&2)
+
+            checkerror $?
+
+            exit ${output_status_code}
