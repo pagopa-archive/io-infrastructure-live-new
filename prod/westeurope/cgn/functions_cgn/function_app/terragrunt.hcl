@@ -109,7 +109,7 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME  = dependency.storage_table_cardexpiration.outputs.name
     EYCA_EXPIRATION_TABLE_NAME = dependency.storage_table_eycacardexpiration.outputs.name
 
     # Storage account connection string:
@@ -127,7 +127,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
+      SERVICES_API_KEY  = "apim-CGN-SERVICE-KEY"
       EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
       EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
     }
