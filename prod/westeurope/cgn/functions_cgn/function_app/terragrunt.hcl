@@ -23,6 +23,10 @@ dependency "storage_table_cardexpiration" {
   config_path = "../../storage_cgn/table_cardexpiration"
 }
 
+dependency "storage_table_eycacardexpiration" {
+  config_path = "../../storage_cgn/table_eycacardexpiration"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
@@ -105,7 +109,8 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
-    CGN_EXPIRATION_TABLE_NAME = dependency.storage_table_cardexpiration.outputs.name
+    CGN_EXPIRATION_TABLE_NAME  = dependency.storage_table_cardexpiration.outputs.name
+    EYCA_EXPIRATION_TABLE_NAME = dependency.storage_table_eycacardexpiration.outputs.name
 
     # Storage account connection string:
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
@@ -122,7 +127,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      SERVICES_API_KEY = "apim-CGN-SERVICE-KEY"
+      SERVICES_API_KEY  = "apim-CGN-SERVICE-KEY"
       EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
       EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
     }
