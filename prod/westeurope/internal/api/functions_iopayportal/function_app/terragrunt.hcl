@@ -96,6 +96,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      RECAPTCHA_SECRET = "newsletter-GOOGLE-RECAPTCHA-SECRET"
     }
   }
 
