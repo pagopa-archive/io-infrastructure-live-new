@@ -106,7 +106,7 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = "100"
 
-    WEBSITE_CONTENTSHARE = "staging-content"
+    WEBSITE_CONTENTSHARE = "io-p-fn3-bonusapi-content"
   }
 
   app_settings_secrets = {
