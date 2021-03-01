@@ -83,7 +83,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//_slot?ref=v2.1.34"
 }
 
 inputs = {
@@ -145,6 +145,10 @@ inputs = {
 
     SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
+
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {

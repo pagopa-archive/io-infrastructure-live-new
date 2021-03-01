@@ -46,7 +46,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
 }
 
 inputs = {
@@ -96,6 +96,9 @@ inputs = {
     STATIC_WEB_ASSETS_ENDPOINT  = dependency.storage_account_assets.outputs.primary_web_host
     STATIC_BLOB_ASSETS_ENDPOINT = dependency.storage_account_assets.outputs.primary_blob_host
 
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "io-p-fn3-assets-content"
   }
 
   app_settings_secrets = {
