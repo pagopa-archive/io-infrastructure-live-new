@@ -26,5 +26,5 @@ inputs = {
   private_dns_zone_name = dependency.private_dns_zone.outputs.name
   resource_group_name   = dependency.resource_group.outputs.resource_name
   virtual_network_id    = dependency.virtual_network.outputs.id
-  registration_enabled  = true
+  registration_enabled  = false
 }
