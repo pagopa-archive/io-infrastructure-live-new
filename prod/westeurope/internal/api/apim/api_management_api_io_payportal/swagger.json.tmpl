@@ -184,6 +184,46 @@
           }
         }
       }
+    },
+    "/newsletters/groups/{id}/recipients": {
+      "post": {
+        "operationId": "PostNewslettersEmails",
+        "description": "Add an email to newsletter",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "newsletter id",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecipientRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipient added",
+            "schema": {
+              "$ref": "#/definitions/RecipientResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "not authenticated"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -228,6 +268,40 @@
     },
     "SpezzoniCausaleVersamentoItem": {
       "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/SpezzoniCausaleVersamentoItem"
+    },
+    "RecipientRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "recaptchaToken"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "recaptchaToken": {
+          "type": "string"
+        }
+      }
+    },
+    "RecipientResponse": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
     }
   }
 }
