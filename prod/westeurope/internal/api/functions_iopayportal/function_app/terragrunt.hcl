@@ -91,6 +91,8 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
 
+    DUMMY = "for test"
+
   }
 
   app_settings_secrets = {
