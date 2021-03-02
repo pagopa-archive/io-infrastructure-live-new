@@ -142,7 +142,7 @@ inputs = {
 
     # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     # at the time we applied these chages the value is the following.
-    WEBSITE_CONTENTSHARE = "staging-content"
+    WEBSITE_CONTENTSHARE = "io-p-fn3-admin-content"
   }
 
   app_settings_secrets = {

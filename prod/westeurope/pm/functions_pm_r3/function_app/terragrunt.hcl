@@ -38,7 +38,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
 }
 
 inputs = {
@@ -82,6 +82,10 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     WEBSITE_VNET_ROUTE_ALL = 1
+
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "io-p-fn3-pm-content"
   }
 
   app_settings_secrets = {
