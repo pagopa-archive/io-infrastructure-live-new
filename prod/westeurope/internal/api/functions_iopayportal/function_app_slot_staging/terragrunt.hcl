@@ -102,6 +102,12 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      RECAPTCHA_SECRET = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      # Mailup account:
+      MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
+      MAILUP_SECRET    = "newsletter-MAILUP-SECRET"
+      MAILUP_USERNAME  = "newsletter-MAILUP-USERNAME"
+      MAILUP_PASSWORD  = "newsletter-MAILUP-PASSWORD"
     }
   }
 
