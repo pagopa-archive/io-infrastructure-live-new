@@ -58,7 +58,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.34"
 }
 
 inputs = {
@@ -106,6 +106,10 @@ inputs = {
 
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
+
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {

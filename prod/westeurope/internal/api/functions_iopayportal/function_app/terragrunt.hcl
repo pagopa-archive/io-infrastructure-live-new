@@ -39,7 +39,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.10"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
 }
 
 inputs = {
@@ -87,11 +87,21 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
+
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      RECAPTCHA_SECRET = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      # Mailup account:
+      MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
+      MAILUP_SECRET    = "newsletter-MAILUP-SECRET"
+      MAILUP_USERNAME  = "newsletter-MAILUP-USERNAME"
+      MAILUP_PASSWORD  = "newsletter-MAILUP-PASSWORD"
     }
   }
 

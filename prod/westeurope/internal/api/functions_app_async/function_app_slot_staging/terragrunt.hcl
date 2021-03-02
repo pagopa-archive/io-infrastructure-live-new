@@ -87,7 +87,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.18"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.34"
 }
 
 inputs = {
@@ -149,11 +149,15 @@ inputs = {
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
     # Cashback
-    IS_CASHBACK_ENABLED       = "true"
+    IS_CASHBACK_ENABLED = "true"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
-    FF_LOCAL_SERVICES_LIMIT   = "0"
+    FF_LOCAL_SERVICES_LIMIT = "0"
+
+    # this app settings is required to solve the issue:
+    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
+    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {
