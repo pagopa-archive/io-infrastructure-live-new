@@ -139,6 +139,8 @@ inputs = {
     REDIS_URL      = dependency.redis.outputs.hostname
     REDIS_PORT     = dependency.redis.outputs.ssl_port
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
+
+    OTP_TTL_IN_SECONDS = 600
   }
 
   app_settings_secrets = {
