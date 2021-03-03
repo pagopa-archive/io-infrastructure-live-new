@@ -124,12 +124,8 @@ jobs:
               # do not check config files.
               if ! [[ ${item} =~ "vars.hcl" ]]; then
                 cd ${wdir}
+                terragrunt init
                 terragrunt plan
-
-                ## TODO Debug:
-                cd ~/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/
-                tree
-                cd -
 
                 # if plan fails and output_status_code is 0
                 # set output_status_code to 1 (error)
