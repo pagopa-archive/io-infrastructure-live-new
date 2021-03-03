@@ -8,7 +8,7 @@
         <choose>
             <!-- set rate limit if x-citizen-id is a fiscal code -->
             <when condition="@(Regex.Match(context.Request.Headers.GetValueOrDefault("x-citizen-id",""), @"^[A-Z]{6}[0-9LMNPQRSTUV]{2}[ABCDEHLMPRST][0-9LMNPQRSTUV]{2}[A-Z][0-9LMNPQRSTUV]{3}[A-Z]$").Success && !Regex.Match(context.Request.Url.Path, @"^/api/v1/bpd/payment-instruments/[0-9a-f]{64}$").Success)">
-                <rate-limit-by-key calls="6" renewal-period="60" counter-key="@(context.Request.Headers.GetValueOrDefault("Authorization","").AsJwt()?.Subject)" />
+                <rate-limit-by-key calls="8" renewal-period="60" counter-key="@(context.Request.Headers.GetValueOrDefault("Authorization","").AsJwt()?.Subject)" />
             </when>
         </choose>
         <cors>
@@ -21,7 +21,7 @@
                 <method>GET</method>
             </allowed-methods>
             <allowed-headers>
-                <header>contentType</header>
+                <header>Content-Type</header>
                 <header>Authorization</header>
                 <header>X-Citizen-Id</header>
             </allowed-headers>
