@@ -1,5 +1,7 @@
 dependency "public_ip" {
+
   config_path = "../public_ip"
+
 }
 
 dependency "subnet" {
@@ -7,11 +9,13 @@ dependency "subnet" {
 }
 
 # External
+
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
 # Identities
+
 dependency "user_assigned_identity_kvreader" {
   config_path = "../../../identities/kvreader/user_assigned_identity"
 }
@@ -39,34 +43,149 @@ dependency "dns_zone" {
   config_path = "../../../infra/public_dns_zone"
 }
 
-
 # Include all settings from the root terragrunt.hcl file
+
 include {
   path = find_in_parent_folders()
 }
 
+locals {
+
+  backend_name               = "appbackend"
+  http_listener_name         = format("%s-%s", "httplistener", local.backend_name)
+  backend_pool_name          = format("%s-%s", "backendaddresspool", local.backend_name)
+  backend_http_settings_name = format("%s-%s", "backendhttpsettings", local.backend_name)
+  probe_name                 = format("%s-%s", "probe", local.backend_name)
+}
+
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.4"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_application_gateway?ref=v2.1.35"
 }
 
 inputs = {
-  name                = "apigateway"
+
+  name = "apigateway"
+
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   sku = {
-    name     = "WAF_v2"
-    tier     = "WAF_v2"
-    capacity = 0
-  }
 
-  public_ip_info = {
-    id = dependency.public_ip.outputs.id
-    ip = dependency.public_ip.outputs.ip_address
+    name = "WAF_v2"
+
+    tier = "WAF_v2"
+
+    capacity = 0
+
   }
 
   subnet_id = dependency.subnet.outputs.id
 
-  frontend_port = 443
+  backend_address_pools = [
+    {
+      name         = "backendaddresspool-apim"
+      fqdns        = ["api-internal.io.italia.it"]
+      ip_addresses = []
+    },
+    {
+      name         = "backendaddresspool-developerportalbackend"
+      fqdns        = ["io-p-app-developerportalbackend.azurewebsites.net"]
+      ip_addresses = []
+    }
+  ]
+
+  backend_http_settings = [{
+    cookie_based_affinity               = "Disabled"
+    affinity_cookie_name                = null
+    name                                = "backendhttpsettings-apim"
+    path                                = "/"
+    port                                = 80
+    probe_name                          = "probe-apim"
+    protocol                            = "HTTP"
+    request_timeout                     = 180
+    host_name                           = "api-internal.io.italia.it"
+    pick_host_name_from_backend_address = false
+    trusted_root_certificate_names      = null
+    connection_draining                 = null
+    },
+
+    {
+      cookie_based_affinity               = "Disabled"
+      affinity_cookie_name                = null
+      name                                = "backendhttpsettings-developerportalbackend"
+      path                                = "/"
+      pick_host_name_from_backend_address = false
+      port                                = 80
+      probe_name                          = "probe-developerportalbackend"
+      protocol                            = "Http"
+      request_timeout                     = 180
+      host_name                           = "io-p-app-developerportalbackend.azurewebsites.net"
+      trusted_root_certificate_names      = null
+      connection_draining                 = null
+  }]
+
+  probes = [{
+    name                                      = format("%s-%s", "probe", "apim")
+    host                                      = "api-internal.io.italia.it"
+    protocol                                  = "Http"
+    path                                      = "/status-0123456789abcdef"
+    interval                                  = 30
+    timeout                                   = 120
+    unhealthy_threshold                       = 8
+    pick_host_name_from_backend_http_settings = false
+    },
+    {
+      name                                      = format("%s-%s", "probe", "developerportalbackend")
+      host                                      = "io-p-app-developerportalbackend.azurewebsites.net"
+      protocol                                  = "Http"
+      path                                      = "/info"
+      interval                                  = 30
+      timeout                                   = 120
+      unhealthy_threshold                       = 8
+      pick_host_name_from_backend_http_settings = false
+    },
+  ]
+
+  frontend_ip_configurations = [{
+    name                          = "frontendipconfiguration"
+    subnet_id                     = null
+    private_ip_address            = null
+    public_ip_address_id          = dependency.public_ip.outputs.id
+    public_ip_address             = dependency.public_ip.outputs.ip_address
+    private_ip_address_allocation = null
+    a_record_name                 = "api"
+    },
+  ]
+
+  optional_dns_a_records = [{
+    name              = "developerportalbackend"
+    public_ip_address = dependency.public_ip.outputs.ip_address
+    a_record_name     = "developerportal-backend"
+    },
+  ]
+
+  gateway_ip_configurations = [{
+    name      = "gatewayipconfiguration"
+    subnet_id = dependency.subnet.outputs.id
+  }]
+
+  http_listeners = [{
+    name                           = "httplistener-apim"
+    frontend_ip_configuration_name = "frontendipconfiguration"
+    frontend_port_name             = "frontendport"
+    protocol                       = "Https"
+    host_name                      = "api.io.italia.it"
+    ssl_certificate_name           = "api-io-italia-it"
+    require_sni                    = true
+    },
+    {
+      name                           = "httplistener-developerportalbackend"
+      frontend_ip_configuration_name = "frontendipconfiguration"
+      frontend_port_name             = "frontendport"
+      protocol                       = "Https"
+      host_name                      = "developerportal-backend.io.italia.it"
+      ssl_certificate_name           = "developerportal-backend-io-italia-it"
+      require_sni                    = true
+  }]
 
   custom_domain = {
     zone_name                = dependency.dns_zone.outputs.name
@@ -75,83 +194,29 @@ inputs = {
     keyvault_id              = dependency.key_vault.outputs.id
   }
 
-  services = [
-    {
-      name          = "apim"
-      a_record_name = "api"
-
-      http_listener = {
-        protocol             = "Https"
-        host_name            = "api.io.italia.it"
-        ssl_certificate_name = "api-io-italia-it"
-      }
-
-      backend_address_pool = {
-        ip_addresses = null
-        fqdns        = ["api-internal.io.italia.it"]
-      }
-
-      probe = {
-        host                = "api-internal.io.italia.it"
-        protocol            = "Http"
-        path                = "/status-0123456789abcdef"
-        interval            = 30
-        timeout             = 120
-        unhealthy_threshold = 8
-      }
-
-      backend_http_settings = {
-        protocol              = "Http"
-        port                  = 80
-        path                  = "/"
-        cookie_based_affinity = "Disabled"
-        request_timeout       = 180
-        host_name             = "api-internal.io.italia.it"
-      }
-
-      rewrite_rule_set_name = "HttpHeader"
-
+  request_routing_rules = [{
+    name                        = format("%s-%s", "requestroutingrule", "apim")
+    rule_type                   = "Basic"
+    http_listener_name          = "httplistener-apim"
+    backend_address_pool_name   = "backendaddresspool-apim"
+    backend_http_settings_name  = "backendhttpsettings-apim"
+    redirect_configuration_name = null
+    rewrite_rule_set_name       = "HttpHeader"
+    url_path_map_name           = null
     },
     {
-      name          = "developerportalbackend"
-      a_record_name = "developerportal-backend"
-
-      http_listener = {
-        protocol             = "Https"
-        host_name            = "developerportal-backend.io.italia.it"
-        ssl_certificate_name = "developerportal-backend-io-italia-it"
-      }
-
-      backend_address_pool = {
-        ip_addresses = null
-        fqdns        = [dependency.app_service_developerportalbackend.outputs.default_site_hostname]
-      }
-
-      probe = {
-        host                = dependency.app_service_developerportalbackend.outputs.default_site_hostname
-        protocol            = "Http"
-        path                = "/info"
-        interval            = 30
-        timeout             = 120
-        unhealthy_threshold = 8
-      }
-
-      backend_http_settings = {
-        protocol              = "Http"
-        port                  = 80
-        path                  = "/"
-        cookie_based_affinity = "Disabled"
-        request_timeout       = 180
-        host_name             = dependency.app_service_developerportalbackend.outputs.default_site_hostname
-      }
-
-      rewrite_rule_set_name = "HttpHeader"
-    }
-  ]
+      name                        = format("%s-%s", "requestroutingrule", "developerportalbackend")
+      rule_type                   = "Basic"
+      http_listener_name          = "httplistener-developerportalbackend"
+      backend_address_pool_name   = "backendaddresspool-developerportalbackend"
+      backend_http_settings_name  = "backendhttpsettings-developerportalbackend"
+      redirect_configuration_name = null
+      rewrite_rule_set_name       = "HttpHeader"
+      url_path_map_name           = null
+  }]
 
   rewrite_rule_sets = [{
     name = "HttpHeader"
-
     rewrite_rules = [{
       name          = "CleanUpHeaders"
       rule_sequence = 100
@@ -178,13 +243,11 @@ inputs = {
     request_body_check       = true
     file_upload_limit_mb     = 100
     max_request_body_size_kb = 128
-
-    disabled_rule_groups = []
+    disabled_rule_groups     = []
   }
 
   autoscale_configuration = {
     min_capacity = 2
     max_capacity = 10
   }
-
 }
