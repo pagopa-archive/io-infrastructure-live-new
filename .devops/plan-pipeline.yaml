@@ -62,10 +62,6 @@ jobs:
             chmod +x terraform-provider-azurerm
             mv terraform-provider-azurerm ~/${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
 
-            cd ~/${TERRAFORM_CACHE_DIR}
-            pwd
-            ls -lrt
-
       # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
@@ -125,6 +121,7 @@ jobs:
               # do not check config files.
               if ! [[ ${item} =~ "vars.hcl" ]]; then
                 cd ${wdir}
+                # TODO init command is not required when you use standard providers.
                 terragrunt init
                 terragrunt plan
 
@@ -150,6 +147,8 @@ jobs:
               echo "Processing ${item}"
 
               cd ${wdir}
+              # TODO init command is not required when you use standard providers.
+              terragrunt init
               terragrunt plan -destroy
               checkerror $? ${item}
             done
