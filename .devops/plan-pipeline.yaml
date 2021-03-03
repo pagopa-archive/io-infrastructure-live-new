@@ -62,7 +62,8 @@ jobs:
             mv terraform-provider-azurerm ${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
 
             cd ${TERRAFORM_CACHE_DIR}
-            ll
+            pwd
+            ls -lrt
 
       # 3. Install SSH key
       - task: InstallSSHKey@0
