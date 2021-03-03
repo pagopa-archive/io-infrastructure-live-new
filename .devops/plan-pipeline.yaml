@@ -56,12 +56,12 @@ jobs:
           targetType: 'inline'
           failOnStderr: false
           script: |
-            export TERRAFORM_CACHE_DIR='${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
+            export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
             mkdir -p ${TERRAFORM_CACHE_DIR}
             wget https://github.com/uolter/terraform-provider-azurerm/releases/download/${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}/terraform-provider-azurerm
-            mv terraform-provider-azurerm ${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
+            mv terraform-provider-azurerm ~/${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
 
-            cd ${TERRAFORM_CACHE_DIR}
+            cd ~/${TERRAFORM_CACHE_DIR}
             pwd
             ls -lrt
 
@@ -84,16 +84,14 @@ jobs:
             RED='\033[0;31m'
             NC='\033[0m' # No Color
 
-            echo "HOME directory ${HOME}"
-
             export ARM_CLIENT_ID=$(CLIENT_ID)
             export ARM_CLIENT_SECRET=$(CLIENT_SECRET)
             export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
             export ARM_TENANT_ID=$(TENANT_ID)
 
             # download terraform providers and modules once.
-            export TF_PLUGIN_CACHE_DIR=${HOME}/.terraform.d/plugin-cache/
-            export TERRAGRUNT_DOWNLOAD=${HOME}/.terragrunt-cache/
+            export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache/
+            export TERRAGRUNT_DOWNLOAD=~/.terragrunt-cache/
 
             # task output status code
             output_status_code=0
