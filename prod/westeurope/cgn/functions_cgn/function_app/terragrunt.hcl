@@ -19,6 +19,10 @@ dependency "storage_account_cgn" {
   config_path = "../../storage_cgn/account"
 }
 
+dependency "redis" {
+  config_path = "../../redis/redis_cache"
+}
+
 dependency "storage_table_cardexpiration" {
   config_path = "../../storage_cgn/table_cardexpiration"
 }
@@ -122,6 +126,13 @@ inputs = {
 
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
     EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"
+
+    // REDIS
+    REDIS_URL      = dependency.redis.outputs.hostname
+    REDIS_PORT     = dependency.redis.outputs.ssl_port
+    REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
+
+    OTP_TTL_IN_SECONDS = 600
   }
 
   app_settings_secrets = {

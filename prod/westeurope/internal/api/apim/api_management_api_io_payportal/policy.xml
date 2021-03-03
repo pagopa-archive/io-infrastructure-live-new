@@ -9,6 +9,7 @@
     <cors>
       <allowed-origins>
         <origin>https://io-p-cdnendpoint-iopayportal.azureedge.net/</origin> <!-- CDN frontend io-payportal -->
+        <origin>https://io.italia.it/</origin>
       </allowed-origins>
       <allowed-methods>
         <method>POST</method>
