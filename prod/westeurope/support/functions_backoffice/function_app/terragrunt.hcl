@@ -95,6 +95,9 @@ inputs = {
     REDIS_PORT     = dependency.redis.outputs.ssl_port
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
+    // CSTAR
+    CSTAR_API_URL = "https://prod.cstar.pagopa.it"
+    CSTAR_API_BASE_PATH = "backoffice"
   }
 
   app_settings_secrets = {
@@ -117,6 +120,8 @@ inputs = {
 
       ADB2C_CLIENT_KEY = "bo-CLIENT-KEY"
       ADB2C_TENANT_ID  = "bo-TENANT-ID"
+
+      CSTAR_SUBSCRIPTION_KEY = "bo-CSTAR-SUBSCRIPTION-KEY"
     }
   }
 

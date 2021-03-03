@@ -35,5 +35,17 @@ inputs = {
       address_prefix         = "10.70.67.0/24"
       next_hop_type          = "VirtualAppliance"
       next_hop_in_ip_address = "10.70.249.10"
+    },
+    {
+      name                   = "to-apim-centro-stella-uat-subnet"
+      address_prefix         = "10.70.66.0/24"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.70.249.10"
+    },
+    {
+      name                   = "to-apim-centro-stella-prod-subnet"
+      address_prefix         = "10.70.133.0/24"
+      next_hop_type          = "VirtualAppliance"
+      next_hop_in_ip_address = "10.70.249.10"
   }]
 }
