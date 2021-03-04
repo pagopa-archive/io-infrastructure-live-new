@@ -12,8 +12,14 @@ dependency "storage_account_assets" {
 }
 
 dependency "notification_hub" {
-  config_path = "../../../common/notification_hub"
+  config_path = "../../../common/notification_hub/notification_hub_common"
 }
+
+/* new notification hub.
+dependency "notification_hub01" {
+  config_path = "../../../common/notification_hub/notification_hub_common01"
+}
+*/
 
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"

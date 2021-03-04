@@ -62,10 +62,6 @@ dependency "redis" {
   config_path = "../../../common/redis/redis_cache"
 }
 
-dependency "notification_hub" {
-  config_path = "../../../common/notification_hub"
-}
-
 dependency "storage_account_logs" {
   config_path = "../../../operations/storage_account_logs/account"
 }

@@ -62,10 +62,6 @@ dependency "redis" {
   config_path = "../../../common/redis/redis_cache"
 }
 
-dependency "notification_hub" {
-  config_path = "../../../common/notification_hub"
-}
-
 dependency "storage_account_logs" {
   config_path = "../../../operations/storage_account_logs/account"
 }
@@ -205,8 +201,8 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED = 1
-    FF_CGN_ENABLED   = 0
+    FF_BONUS_ENABLED        = 1
+    FF_CGN_ENABLED          = 0
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
     # No downtime on slots swap

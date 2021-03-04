@@ -78,7 +78,7 @@ dependency "key_vault" {
 }
 
 dependency "notification_hub" {
-  config_path = "../../../common/notification_hub"
+  config_path = "../../../common/notification_hub/notification_hub_common"
 }
 
 dependency "subnet_azure_devops" {
