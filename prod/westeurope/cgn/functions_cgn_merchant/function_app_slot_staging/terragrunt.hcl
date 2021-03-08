@@ -36,17 +36,21 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.35"
 }
 
 inputs = {
-  name                = "cgn-merchant"
+  name                = "staging"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
