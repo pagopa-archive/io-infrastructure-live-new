@@ -2,7 +2,6 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
-
 # Support
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -40,6 +39,11 @@ include {
 
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+}
+
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
 inputs = {
@@ -125,7 +129,12 @@ inputs = {
     }
   }
 
-  allowed_subnets = []
+  allowed_subnets = [
+    dependency.subnet.outputs.id,
+  ]
+
+  allowed_ips = local.app_insights_ips_west_europe
+
   subnet_id = dependency.subnet.outputs.id
 
 }
