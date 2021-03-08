@@ -93,6 +93,7 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
+    TEST = "dummy"
 
     # DNS configuration to use private endpoint
     WEBSITE_DNS_SERVER     = "168.63.129.16"
