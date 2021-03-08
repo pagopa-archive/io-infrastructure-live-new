@@ -55,7 +55,7 @@ jobs:
         condition: ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', '')
         inputs:
           targetType: 'inline'
-          failOnStderr: false
+          failOnStderr: true
           script: |
             export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
             mkdir -p ~/${TERRAFORM_CACHE_DIR}
