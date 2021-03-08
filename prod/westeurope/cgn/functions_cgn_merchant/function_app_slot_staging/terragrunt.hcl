@@ -1,3 +1,7 @@
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -46,12 +50,18 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.35"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.35"
 }
 
 inputs = {
-  name                = "staging"
-  resource_group_name = dependency.resource_group.outputs.resource_name
+  name                       = "staging"
+  resource_group_name        = dependency.resource_group.outputs.resource_name
+  function_app_name          = dependency.function_app.outputs.name
+  function_app_resource_name = dependency.function_app.outputs.resource_name
+  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name       = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+
 
   app_service_plan_info = {
     kind     = "elastic"
@@ -113,5 +123,6 @@ inputs = {
     dependency.subnet_azure_devops.outputs.id,
   ]
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
