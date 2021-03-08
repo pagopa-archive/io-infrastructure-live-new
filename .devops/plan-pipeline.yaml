@@ -23,11 +23,11 @@ parameters:
       - PROD-IO-SERVICE-CONN
       - DEV-IO-SERVICE-CONN
   - name: 'AZURERM_PROVIDER_CUSTOM_VERSION'
-    displayName: 'Azure provider version to download a custom provider'
+    displayName: 'Azure provider version to download a custom provider. Use "none" to skip custom provider.'
     type: string
     default: 2.46.1
   - name: 'AZURERM_PROVIDER_CUSTOM_RELEASE'
-    displayName: 'Azure provider version to download a custom provider'
+    displayName: 'Azure provider release to download a custom provider. Use "none" to skip custom provider.'
     type: string
     default: v2.46-beta.1
 
@@ -52,12 +52,11 @@ jobs:
       #    TODO: remove this task as soon as the provider will be fixed
       - task: Bash@3
         displayName: Install custom provider
-        condition: ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', 'none')
+        condition: and(ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', 'none'), ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}', 'none'))
         inputs:
           targetType: 'inline'
           failOnStderr: true
           script: |
-            echo "AZURERM_PROVIDER_CUSTOM_VERSION ${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}"
             export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
             mkdir -p ~/${TERRAFORM_CACHE_DIR}
             wget https://github.com/uolter/terraform-provider-azurerm/releases/download/${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}/terraform-provider-azurerm
