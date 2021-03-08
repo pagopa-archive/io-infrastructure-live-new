@@ -42,17 +42,16 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.35"
 }
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
-  cet_time_zone_win            = local.commonvars.locals.cet_time_zone_win
 }
 
 inputs = {
-  name                = "cgn-merchant"
+  name                = "cgnmerchant"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
@@ -96,9 +95,7 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-func-cgn-merchant-content"
-
-    WEBSITE_TIME_ZONE = local.cet_time_zone_win
+    WEBSITE_CONTENTSHARE = "io-p-func-cgnmerchant-content"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
