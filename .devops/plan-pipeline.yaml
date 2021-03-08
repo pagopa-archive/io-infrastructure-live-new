@@ -52,7 +52,7 @@ jobs:
       #    TODO: remove this task as soon as the provider will be fixed
       - task: Bash@3
         displayName: Install custom provider
-        condition: ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', '')
+        condition: ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', 'none')
         inputs:
           targetType: 'inline'
           failOnStderr: true
