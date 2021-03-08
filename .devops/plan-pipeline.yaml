@@ -57,6 +57,7 @@ jobs:
           targetType: 'inline'
           failOnStderr: true
           script: |
+            echo "AZURERM_PROVIDER_CUSTOM_VERSION ${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}"
             export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
             mkdir -p ~/${TERRAFORM_CACHE_DIR}
             wget https://github.com/uolter/terraform-provider-azurerm/releases/download/${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}/terraform-provider-azurerm
