@@ -22,6 +22,14 @@ parameters:
     values:
       - PROD-IO-SERVICE-CONN
       - DEV-IO-SERVICE-CONN
+  - name: 'AZURERM_PROVIDER_CUSTOM_VERSION'
+    displayName: 'Azure provider version to download a custom provider. Use "none" to skip custom provider.'
+    type: string
+    default: 2.46.1
+  - name: 'AZURERM_PROVIDER_CUSTOM_RELEASE'
+    displayName: 'Azure provider release to download a custom provider. Use "none" to skip custom provider.'
+    type: string
+    default: v2.46-beta.1
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -36,16 +44,31 @@ resources:
       endpoint: 'pagopa'
 
 jobs:
-  - job: install_and_run_terraform
+  - job: terraform_plan
     steps:
       # 1. Install terraform and terragrunt
       - template: templates/terraform-setup/template.yaml@terraform
-      # 2. Install SSH key
+      # 2. Install custom provider (tmp)
+      #    TODO: remove this task as soon as the provider will be fixed
+      - task: Bash@3
+        displayName: Install custom provider
+        condition: and(ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', 'none'), ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}', 'none'))
+        inputs:
+          targetType: 'inline'
+          failOnStderr: false
+          script: |
+            export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
+            mkdir -p ~/${TERRAFORM_CACHE_DIR}
+            wget https://github.com/uolter/terraform-provider-azurerm/releases/download/${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}/terraform-provider-azurerm
+            chmod +x terraform-provider-azurerm
+            mv terraform-provider-azurerm ~/${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
+
+      # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
           knownHostsEntry: 'github.com'
           sshKeySecureFile: 'id_ed25519'
-      # 3. Run terragrunt plan
+      # 4. Run terragrunt plan
       - task: AzureCLI@2
         env:
           GIT_BRANCH: $(Build.SourceBranchName)
@@ -63,6 +86,10 @@ jobs:
             export ARM_CLIENT_SECRET=$(CLIENT_SECRET)
             export ARM_SUBSCRIPTION_ID=$(SUBSCRIPTION_ID)
             export ARM_TENANT_ID=$(TENANT_ID)
+
+            # download terraform providers and modules once.
+            export TF_PLUGIN_CACHE_DIR=~/.terraform.d/plugin-cache/
+            export TERRAGRUNT_DOWNLOAD=~/.terragrunt-cache/
 
             # task output status code
             output_status_code=0
@@ -95,6 +122,8 @@ jobs:
               # do not check config files.
               if ! [[ ${item} =~ "vars.hcl" ]]; then
                 cd ${wdir}
+                # TODO init command is not required when you use standard providers.
+                terragrunt init
                 terragrunt plan
 
                 # if plan fails and output_status_code is 0
@@ -119,6 +148,8 @@ jobs:
               echo "Processing ${item}"
 
               cd ${wdir}
+              # TODO init command is not required when you use standard providers.
+              terragrunt init
               terragrunt plan -destroy
               checkerror $? ${item}
             done

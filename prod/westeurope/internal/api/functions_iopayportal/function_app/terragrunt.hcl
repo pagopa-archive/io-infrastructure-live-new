@@ -90,7 +90,6 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
-
   }
 
   app_settings_secrets = {
