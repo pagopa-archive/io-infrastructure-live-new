@@ -22,7 +22,7 @@ inputs = {
 
   logs = [{
     category = "ApplicationGatewayAccessLog"
-    enabled  = true
+    enabled  = false
     retention_policy = {
       days    = null
       enabled = false
