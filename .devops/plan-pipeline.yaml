@@ -49,7 +49,10 @@ jobs:
       # 1. Install terraform and terragrunt
       - template: templates/terraform-setup/template.yaml@terraform
       # 2. Install custom provider
-      - template: templates/terraform-custom-azurerm/template.yaml@terraform
+      - template: templates/terraform-custom-azurerm/template.yaml@
+        parameters:
+          AZURERM_PROVIDER_CUSTOM_VERSION: '${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}'
+          AZURERM_PROVIDER_CUSTOM_RELEASE: '${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}'
       # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
