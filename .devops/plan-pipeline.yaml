@@ -29,7 +29,7 @@ parameters:
   - name: 'AZURERM_PROVIDER_CUSTOM_RELEASE'
     displayName: 'Azure provider release to download a custom provider. Use "none" to skip custom provider.'
     type: string
-    default: v2.46-beta.1
+    default: 2.46-beta.1
 
 pool:
   vmImage: 'ubuntu-latest'
