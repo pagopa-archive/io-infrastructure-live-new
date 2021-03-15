@@ -134,8 +134,6 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     OTP_TTL_IN_SECONDS = 600
-
-    TEST = "dummy"
   }
 
   app_settings_secrets = {
