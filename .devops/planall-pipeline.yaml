@@ -35,8 +35,7 @@ resources:
     - repository: terraform
       type: github
       name: pagopa/azure-pipeline-templates
-      # ref: refs/tags/v5
-      ref: IO-28-install-custom-privider
+      ref: refs/tags/v5
       endpoint: 'pagopa'
 
 jobs:
