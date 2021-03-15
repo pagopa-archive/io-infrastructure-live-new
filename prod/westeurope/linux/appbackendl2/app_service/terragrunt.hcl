@@ -98,7 +98,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.30"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.0"
 
   after_hook "check_slots" {
     commands     = ["apply"]
