@@ -29,7 +29,7 @@ parameters:
   - name: 'AZURERM_PROVIDER_CUSTOM_RELEASE'
     displayName: 'Azure provider release to download a custom provider. Use "none" to skip custom provider.'
     type: string
-    default: v2.46-beta.1
+    default: 2.46-beta.1
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -40,7 +40,7 @@ resources:
     - repository: terraform
       type: github
       name: pagopa/azure-pipeline-templates
-      ref: refs/tags/v5
+      ref: refs/tags/v14
       endpoint: 'pagopa'
 
 jobs:
@@ -48,21 +48,11 @@ jobs:
     steps:
       # 1. Install terraform and terragrunt
       - template: templates/terraform-setup/template.yaml@terraform
-      # 2. Install custom provider (tmp)
-      #    TODO: remove this task as soon as the provider will be fixed
-      - task: Bash@3
-        displayName: Install custom provider
-        condition: and(ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}', 'none'), ne('${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}', 'none'))
-        inputs:
-          targetType: 'inline'
-          failOnStderr: false
-          script: |
-            export TERRAFORM_CACHE_DIR='.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}/linux_amd64'
-            mkdir -p ~/${TERRAFORM_CACHE_DIR}
-            wget https://github.com/uolter/terraform-provider-azurerm/releases/download/${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}/terraform-provider-azurerm
-            chmod +x terraform-provider-azurerm
-            mv terraform-provider-azurerm ~/${TERRAFORM_CACHE_DIR}/terraform-provider-azurerm_v${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}
-
+      # 2. Install custom provider
+      - template: templates/terraform-custom-azurerm/template.yaml@terraform
+        parameters:
+          AZURERM_PROVIDER_CUSTOM_VERSION: '${{ parameters.AZURERM_PROVIDER_CUSTOM_VERSION }}'
+          AZURERM_PROVIDER_CUSTOM_RELEASE: '${{ parameters.AZURERM_PROVIDER_CUSTOM_RELEASE }}'
       # 3. Install SSH key
       - task: InstallSSHKey@0
         inputs:
