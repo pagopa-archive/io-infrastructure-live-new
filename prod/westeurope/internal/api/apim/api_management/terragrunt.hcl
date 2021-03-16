@@ -45,6 +45,11 @@ dependency "functions_backoffice" {
   config_path = "../../../../support/functions_backoffice/function_app"
 }
 
+# CGN
+dependency "functions_cgnmerchant" {
+  config_path = "../../../../cgn/functions_cgn_merchant//function_app"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -76,6 +81,7 @@ inputs = {
     io-functions-bonusapi-url = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
     io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
     io-fn-pay-portal-url      = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
+    io-fn-cgnmerchant-url     = "https://${dependency.functions_cgnmerchant.outputs.default_hostname}"
   }
 
   named_values_secrets = {
@@ -89,6 +95,7 @@ inputs = {
       io-functions-bonusapi-key                     = "funcbonusapi-KEY-APIM"
       io-fn3-backoffice-key                         = "fn3backoffice-KEY-APIM"
       io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
+      io-fn-cgnmerchant-key                         = "io-fn-cgnmerchant-KEY-APIM"
     }
   }
 
