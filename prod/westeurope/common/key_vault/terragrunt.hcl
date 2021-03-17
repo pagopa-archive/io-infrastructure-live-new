@@ -14,4 +14,5 @@ terraform {
 inputs = {
   name                = "common"
   resource_group_name = dependency.resource_group_common.outputs.resource_name
+  soft_delete_enabled = true
 }
