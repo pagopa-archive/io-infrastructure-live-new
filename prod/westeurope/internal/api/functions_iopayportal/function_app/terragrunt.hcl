@@ -85,6 +85,10 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    // Mailup groups and lists
+    MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
+    MAILUP_ALLOWED_LISTS  = "2,4" 
+    
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     # this app settings is required to solve the issue:
