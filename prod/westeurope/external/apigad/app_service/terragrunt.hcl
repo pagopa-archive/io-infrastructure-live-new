@@ -35,9 +35,11 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
-    kind     = "Windows"
-    sku_tier = "PremiumV2"
-    sku_size = "P3v2"
+    kind             = "Windows"
+    sku_tier         = "PremiumV2"
+    sku_size         = "P3v2"
+    reserved         = false
+    per_site_scaling = false
   }
 
   app_enabled         = true
