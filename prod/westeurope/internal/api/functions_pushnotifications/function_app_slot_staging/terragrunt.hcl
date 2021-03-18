@@ -111,7 +111,7 @@ inputs = {
     dependency.subnet.outputs.id,
   ]
 
-  allowed_ips = local.app_insights_ips_west_europe
+  allowed_ips = []
 
   subnet_id = dependency.subnet.outputs.id
 }
