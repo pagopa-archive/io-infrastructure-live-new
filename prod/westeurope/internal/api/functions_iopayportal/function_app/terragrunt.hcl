@@ -86,8 +86,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     // Mailup groups and lists
-    MAILUP_ALLOWED_GROUPS=30,31,32,21,29
-    MAILUP_ALLOWED_LISTS=2,4 
+    MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
+    MAILUP_ALLOWED_LISTS  = "2,4" 
     
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
@@ -99,7 +99,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      RECAPTCHA_SECRET_IO = "newsletter-GOOGLE-RECAPTCHA-SECRET-IO"
+      RECAPTCHA_SECRET_IO     = "newsletter-GOOGLE-RECAPTCHA-SECRET-IO"
       RECAPTCHA_SECRET_PAGOPA = "newsletter-GOOGLE-RECAPTCHA-SECRET-PAGOPA"
       # Mailup account:
       MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
