@@ -32,6 +32,10 @@ dependency "notification_storage_account" {
   config_path = "../../storage_notifications/account"
 }
 
+dependency "subnet_azure_devops" {
+  config_path = "../../../../common/subnet_azure_devops"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -108,6 +112,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
   ]
 
   allowed_ips = []
