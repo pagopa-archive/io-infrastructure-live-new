@@ -235,6 +235,84 @@
           }
         }
       }
+    },
+    "/browsers/current/info": {
+      "get": {
+        "operationId": "GetBrowsersInfo",
+        "description": "Get info of the current browser used by the user",
+        "responses": {
+          "200": {
+            "description": "Browser info retrieved",
+            "schema": {
+              "$ref": "#/definitions/BrowserInfoResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/method": {
+      "post": {
+        "operationId": "PostTransactionsMethod3ds2",
+        "description": "API to support 3ds2 method step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/challenge": {
+      "post": {
+        "operationId": "PostTransactionsChallenge3ds2",
+        "description": "API to support 3ds2 challenge step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -317,6 +395,25 @@
         "email": {
           "type": "string",
           "format": "email"
+        }
+      }
+    },
+    "BrowserInfoResponse": {
+      "type": "object",
+      "required": [
+        "ip",
+        "useragent",
+        "accept"
+      ],
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "useragent": {
+          "type": "string"
+        },
+        "accept": {
+          "type": "string"
         }
       }
     }
