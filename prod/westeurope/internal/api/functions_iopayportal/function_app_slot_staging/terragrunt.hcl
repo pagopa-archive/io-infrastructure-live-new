@@ -41,6 +41,10 @@ dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
 }
 
+dependency "storage_account_iopayportal" {
+  config_path = "../../../../common/cdn/storage_account_iopayportal"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -101,6 +105,8 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
+
+    IO_PAY_CHALLENGE_RESUME_URL = "https://${dependency.storage_account_iopayportal.outputs.primary_web_host}/response.html?id=idTransaction"
   }
 
   app_settings_secrets = {
