@@ -21,7 +21,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v2.1.1"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.0"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -35,9 +35,11 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
-    kind     = "Windows"
-    sku_tier = "PremiumV2"
-    sku_size = "P3v2"
+    kind             = "Windows"
+    sku_tier         = "PremiumV2"
+    sku_size         = "P3v2"
+    reserved         = false
+    per_site_scaling = false
   }
 
   app_enabled         = true
