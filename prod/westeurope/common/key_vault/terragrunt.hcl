@@ -8,10 +8,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_key_vault?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_key_vault?ref=v3.0.0"
 }
 
 inputs = {
   name                = "common"
   resource_group_name = dependency.resource_group_common.outputs.resource_name
+  soft_delete_enabled = true
 }

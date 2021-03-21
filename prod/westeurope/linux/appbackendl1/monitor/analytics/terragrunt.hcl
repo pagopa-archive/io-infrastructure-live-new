@@ -1,5 +1,5 @@
-dependency "apigateway" {
-  config_path = "../../../apigateway/application_gateway"
+dependency "app_service" {
+  config_path = "../../app_service"
 }
 
 dependency "log_analytics_workspace" {
@@ -16,22 +16,20 @@ terraform {
 }
 
 inputs = {
-  name                       = "apigateway-firewall"
-  target_resource_id         = dependency.apigateway.outputs.id
+  name                       = "appbackendl1-analytics"
+  target_resource_id         = dependency.app_service.outputs.id
   log_analytics_workspace_id = dependency.log_analytics_workspace.outputs.id
 
-  # Note: the retention policy is only applied to sorage accounts
-
   logs = [{
-    category = "ApplicationGatewayAccessLog"
-    enabled  = false
+    category = "AppServiceHTTPLogs"
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
     }
     },
     {
-      category = "ApplicationGatewayPerformanceLog"
+      category = "AppServiceConsoleLogs"
       enabled  = false
       retention_policy = {
         days    = null
@@ -39,8 +37,24 @@ inputs = {
       }
     },
     {
-      category = "ApplicationGatewayFirewallLog"
+      category = "AppServiceAppLogs"
       enabled  = true
+      retention_policy = {
+        days    = null
+        enabled = false
+      }
+    },
+    {
+      category = "AppServiceFileAuditLogs"
+      enabled  = false
+      retention_policy = {
+        days    = null
+        enabled = false
+      }
+    },
+    {
+      category = "AppServiceAuditLogs"
+      enabled  = false
       retention_policy = {
         days    = null
         enabled = false
@@ -49,7 +63,7 @@ inputs = {
 
   metrics = [{
     category = "AllMetrics"
-    enabled  = false
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
