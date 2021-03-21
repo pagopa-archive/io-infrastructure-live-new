@@ -5,3 +5,4 @@
 
 # Terragrunt
 .terragrunt-cache
+*.lock.hcl
