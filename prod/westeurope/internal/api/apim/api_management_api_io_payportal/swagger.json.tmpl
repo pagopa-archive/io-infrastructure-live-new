@@ -185,17 +185,28 @@
         }
       }
     },
-    "/newsletters/groups/{id}/recipients": {
+    "/newsletters/{idClient}/lists/{idList}/recipients": {
       "post": {
         "operationId": "PostNewslettersEmails",
         "description": "Add an email to newsletter",
         "parameters": [
           {
-            "name": "id",
+            "name": "idList",
             "in": "path",
             "required": true,
-            "description": "newsletter id",
+            "description": "list id",
             "type": "string"
+          },
+          {
+            "name": "idClient",
+            "in": "path",
+            "required": true,
+            "description": "client id",
+            "type": "string",
+            "enum": [
+              "io",
+              "pagopa"
+            ]
           },
           {
             "name": "body",
@@ -216,8 +227,8 @@
           "400": {
             "description": "Bad request"
           },
-          "401": {
-            "description": "not authenticated"
+          "403": {
+            "description": "forbidden"
           },
           "500": {
             "description": "generic error"
@@ -285,6 +296,12 @@
         },
         "recaptchaToken": {
           "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
