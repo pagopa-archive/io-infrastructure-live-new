@@ -137,6 +137,9 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     OTP_TTL_IN_SECONDS = 600
+
+    CGN_UPPER_BOUND_AGE  = 61
+    EYCA_UPPER_BOUND_AGE = 51
   }
 
   app_settings_secrets = {
