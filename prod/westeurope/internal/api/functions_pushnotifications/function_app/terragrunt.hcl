@@ -38,7 +38,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.2"
 }
 
 locals {
@@ -82,8 +82,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     // Endpoint for the legacy notification hub namespace
-    AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
-    
+    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
+
     // We do not want to handle production traffic for the moment, but still we want to be able to trigger the function for testing purpose
     // Hence, we use a wrong queue name. To enable production traffic, just uncomment the original value
     NOTIFICATIONS_QUEUE_NAME                = "wrong-notifications-queue-name" // dependency.notification_queue.outputs.name
@@ -102,7 +102,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      AZURE_NH_ENDPOINT            = "common-AZURE-NH-ENDPOINT"
+      AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
     }
   }
 
