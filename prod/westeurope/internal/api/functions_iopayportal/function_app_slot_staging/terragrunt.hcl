@@ -51,7 +51,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.2"
 }
 
 inputs = {
@@ -98,7 +98,7 @@ inputs = {
 
     // Mailup groups and lists
     MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
-    MAILUP_ALLOWED_LISTS  = "2,4" 
+    MAILUP_ALLOWED_LISTS  = "2,4"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
