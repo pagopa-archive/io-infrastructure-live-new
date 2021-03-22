@@ -47,7 +47,7 @@ locals {
 }
 
 inputs = {
-  name                = "pushnotifications"
+  name                = "pushnotif"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   resources_prefix = {
@@ -96,7 +96,7 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-pushnotifications-content"
+    WEBSITE_CONTENTSHARE = "io-p-fn3-pushnotif-content"
   }
 
   app_settings_secrets = {

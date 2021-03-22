@@ -22,7 +22,7 @@ terraform {
 }
 
 inputs = {
-  name = "func-pushnotifications"
+  name = "func-pushnotif"
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
