@@ -41,13 +41,17 @@ dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
 }
 
+dependency "storage_account_iopay" {
+  config_path = "../../../../common/cdn/storage_account_iopay"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.2"
 }
 
 inputs = {
@@ -94,13 +98,15 @@ inputs = {
 
     // Mailup groups and lists
     MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
-    MAILUP_ALLOWED_LISTS  = "2,4" 
+    MAILUP_ALLOWED_LISTS  = "2,4"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
+
+    IO_PAY_CHALLENGE_RESUME_URL = "https://${dependency.storage_account_iopay.outputs.primary_web_host}/response.html?id=idTransaction"
   }
 
   app_settings_secrets = {
