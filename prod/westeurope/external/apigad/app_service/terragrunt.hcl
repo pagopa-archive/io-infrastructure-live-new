@@ -21,7 +21,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.3"
 
   after_hook "check_slots" {
     commands     = ["apply"]
