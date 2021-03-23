@@ -1,3 +1,7 @@
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 dependency "subnet" {
   config_path = "../subnet"
 }
@@ -42,29 +46,17 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.2"
-}
-
-locals {
-  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
 
 inputs = {
-  name                = "staging"
-  resource_group_name = dependency.resource_group.outputs.resource_name
-
-  resources_prefix = {
-    function_app     = "fn3"
-    app_service_plan = "fn3"
-    storage_account  = "fn3"
-  }
-
-  app_service_plan_info = {
-    kind     = "elastic"
-    sku_tier = "ElasticPremium"
-    sku_size = "EP1"
-  }
+  name                       = "staging"
+  resource_group_name        = dependency.resource_group.outputs.resource_name
+  function_app_name          = dependency.function_app.outputs.name
+  function_app_resource_name = dependency.function_app.outputs.resource_name
+  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name       = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   runtime_version = "~3"
 
