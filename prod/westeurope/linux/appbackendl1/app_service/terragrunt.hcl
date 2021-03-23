@@ -243,6 +243,9 @@ inputs = {
       // BPD
       ALLOW_BPD_IP_SOURCE_RANGE         = "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
       JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY = "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
+
+      // CGN BETA
+      TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
     }
   }
 
