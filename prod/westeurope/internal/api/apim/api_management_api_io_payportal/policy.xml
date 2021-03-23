@@ -9,6 +9,7 @@
     <cors>
       <allowed-origins>
         <origin>https://io-p-cdnendpoint-iopayportal.azureedge.net/</origin> <!-- CDN frontend io-payportal -->
+        <origin>https://io-p-cdnendpoint-iopay.azureedge.net/</origin>
         <origin>https://io.italia.it/</origin>
         <origin>https://www.pagopa.gov.it/</origin>
       </allowed-origins>

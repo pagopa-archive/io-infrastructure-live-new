@@ -20,7 +20,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v3.0.0"
 }
 
 # Important !!
