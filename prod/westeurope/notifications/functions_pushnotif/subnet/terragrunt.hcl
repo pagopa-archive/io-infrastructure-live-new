@@ -1,6 +1,6 @@
 # Common
 dependency "virtual_network" {
-  config_path = "../../../../common/virtual_network"
+  config_path = "../../../common/virtual_network"
 }
 
 # Include all settings from the root terragrunt.hcl file

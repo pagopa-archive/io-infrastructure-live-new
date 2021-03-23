@@ -1,16 +1,15 @@
 # Common
 dependency "application_insights" {
-  config_path = "../../../../common/application_insights"
+  config_path = "../../../common/application_insights"
 }
 
 dependency "resource_group" {
-  config_path = "../../../../common/resource_group"
+  config_path = "../../../common/resource_group"
 }
 
 dependency "function_app" {
   config_path = "../function_app"
 }
-
 
 # Include all settings from the root terragrunt.hcl file
 include {
