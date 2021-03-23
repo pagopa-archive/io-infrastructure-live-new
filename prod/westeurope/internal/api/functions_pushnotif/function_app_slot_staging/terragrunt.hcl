@@ -110,4 +110,5 @@ inputs = {
   allowed_ips = []
 
   subnet_id = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
