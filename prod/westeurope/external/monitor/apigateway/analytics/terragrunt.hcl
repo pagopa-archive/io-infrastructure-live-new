@@ -48,7 +48,7 @@ inputs = {
 
   metrics = [{
     category = "AllMetrics"
-    enabled  = true
+    enabled  = false
     retention_policy = {
       days    = null
       enabled = false
