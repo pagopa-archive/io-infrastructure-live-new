@@ -106,8 +106,8 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
 
-    IO_PAY_CHALLENGE_RESUME_URL = "https://${dependency.storage_account_iopay.outputs.primary_web_host}/response.html?id=idTransaction"
-    IO_PAY_ORIGIN = "https://${dependency.storage_account_iopay.outputs.primary_web_host}"
+    IO_PAY_CHALLENGE_RESUME_URL = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=idTransaction"
+    IO_PAY_ORIGIN = "https://io-p-cdnendpoint-iopay.azureedge.net/"
   }
 
   app_settings_secrets = {
