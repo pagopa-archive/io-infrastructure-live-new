@@ -107,6 +107,7 @@ inputs = {
     WEBSITE_CONTENTSHARE = "staging-content"
 
     IO_PAY_CHALLENGE_RESUME_URL = "https://${dependency.storage_account_iopay.outputs.primary_web_host}/response.html?id=idTransaction"
+    IO_PAY_ORIGIN = "https://${dependency.storage_account_iopay.outputs.primary_web_host}"
   }
 
   app_settings_secrets = {
