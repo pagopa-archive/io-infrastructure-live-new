@@ -23,7 +23,7 @@ inputs = {
 
   logs = [{
     category = "AuditEvent"
-    enabled  = false
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
@@ -32,7 +32,7 @@ inputs = {
 
   metrics = [{
     category = "AllMetrics"
-    enabled  = true
+    enabled  = false
     retention_policy = {
       days    = null
       enabled = false
