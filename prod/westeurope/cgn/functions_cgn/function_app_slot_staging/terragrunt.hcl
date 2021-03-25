@@ -140,6 +140,9 @@ inputs = {
 
     CGN_UPPER_BOUND_AGE  = 61
     EYCA_UPPER_BOUND_AGE = 51
+
+    # Disabled functions on slot - slot settings only
+    "AzureWebJobs.ContinueEycaActivation.Disabled" = "1"
   }
 
   app_settings_secrets = {
