@@ -1,5 +1,5 @@
 dependency "storage_account" {
-  config_path = "../account"
+  config_path = "../account-sandbox"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -14,3 +14,4 @@ terraform {
 inputs = {
   name                  = "push-notifications"
   storage_account_name  = dependency.storage_account.outputs.resource_name
+}
