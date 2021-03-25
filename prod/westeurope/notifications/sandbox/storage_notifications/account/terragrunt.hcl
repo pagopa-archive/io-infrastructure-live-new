@@ -20,5 +20,5 @@ inputs = {
   account_replication_type = "GRS"
   access_tier              = "Hot"
 
-  enable_versioning = true
+  enable_versioning = false
 }
