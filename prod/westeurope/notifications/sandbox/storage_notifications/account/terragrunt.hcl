@@ -17,7 +17,7 @@ inputs = {
   resource_group_name      = dependency.resource_group.outputs.resource_name
   account_kind             = "StorageV2"
   account_tier             = "Standard"
-  account_replication_type = "GRS"
+  account_replication_type = "LRS"
   access_tier              = "Hot"
 
   enable_versioning = false
