@@ -92,7 +92,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      AZURE_NH_ENDPOINT = "notifications-AZURE-SANDBOX-ENDPOINT"
+      AZURE_NH_ENDPOINT = "notifications-AZURE-NHSANDBOX-ENDPOINT"
     }
   }
 
