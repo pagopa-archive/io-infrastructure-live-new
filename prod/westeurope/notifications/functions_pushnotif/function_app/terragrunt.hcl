@@ -19,7 +19,7 @@ dependency "storage_notifications" {
 
 dependency "storage_notifications_queue_push-notifications" {
   # config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
-  config_path = ".../../sandbox/storage_notifications/queue_push-notifications"
+  config_path = "../../sandbox/storage_notifications/queue_push-notifications"
 }
 
 # Common
