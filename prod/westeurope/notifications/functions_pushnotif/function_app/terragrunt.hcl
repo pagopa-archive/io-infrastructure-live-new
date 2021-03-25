@@ -6,13 +6,13 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "notification_hub" {
-  config_path = "../../notification_hub"
+dependency "notification_hub_sandbox" {
+  config_path = "../../notification_hub/sandbox"
 }
 
 # Internal
-dependency "storage_notifications" {
-  config_path = "../../../internal/api/storage_notifications/account"
+dependency "notification_hub_sandbox" {
+  config_path = "../../../internal/api/storage_notifications/account-sandbox"
 }
 
 dependency "storage_notifications_queue_push-notifications" {
@@ -78,12 +78,12 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     // Endpoint for the test notification hub namespace
-    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
+    AZURE_NH_HUB_NAME = dependency.notification_hub_sandbox.outputs.name
 
     // We do not want to handle production traffic for the moment, but still we want to be able to trigger the function for testing purpose
     // Hence, we use a wrong queue name. To enable production traffic, just uncomment the original value
-    NOTIFICATIONS_QUEUE_NAME                = "wrong-notifications-queue-name" // dependency.storage_notifications_queue_push-notifications.outputs.name
-    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
+    NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
+    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications_sandbox.outputs.primary_connection_string
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
