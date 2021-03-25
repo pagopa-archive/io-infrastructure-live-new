@@ -1,5 +1,5 @@
 dependency "resource_group" {
-  config_path = "../../resource_group"
+  config_path = "../resource_group"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -8,7 +8,7 @@ include {
 }
 
 dependency "key_vault" {
-  config_path = "../../../common/key_vault"
+  config_path = "../../common/key_vault"
 }
 
 
@@ -17,12 +17,10 @@ terraform {
 }
 
 inputs = {
-  name                                 = "sandbox"
+  name                                 = "partition01"
   resource_group_name                  = dependency.resource_group.outputs.resource_name
   key_vault_id                         = dependency.key_vault.outputs.id
   ntfns_namespace_type                 = "NotificationHub"
   ntfns_sku_name                       = "Standard"
   ntf_apns_credential_application_mode = "Production"
 }
-
-
