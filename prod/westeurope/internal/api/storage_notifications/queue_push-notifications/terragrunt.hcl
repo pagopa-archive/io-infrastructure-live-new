@@ -1,5 +1,5 @@
 dependency "storage_account" {
-  config_path = "../account-sandbox"
+  config_path = "../account"
 }
 
 # Include all settings from the root terragrunt.hcl file
