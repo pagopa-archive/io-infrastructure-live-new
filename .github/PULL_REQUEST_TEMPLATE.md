@@ -26,6 +26,8 @@
 
 <!-- Any other information that is important to this PR such as screenshots of how the component looks before and after the change. -->
 
+---
+
 #### Who will help you to apply PR (reserved to mantainers)
 
 <!--- Who will help you to apply this PR -->
@@ -41,3 +43,7 @@
 - [ ] Not applied
 - [ ] Partially applied
 - [ ] Applied
+
+**if partially applied, why?**
+
+<!--- Describe the blocking cause -->
