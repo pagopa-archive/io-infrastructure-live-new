@@ -32,8 +32,8 @@
 
 <!--- Who will help you to apply this PR -->
 
-- [ ] user1
-- [ ] user2
+- [ ] uolter
+- [ ] pasqualedevita
 - [ ] myself
 
 ### PR apply status (reserved to mantainers)
