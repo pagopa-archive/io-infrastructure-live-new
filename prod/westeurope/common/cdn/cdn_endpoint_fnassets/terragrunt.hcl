@@ -70,6 +70,14 @@ inputs = {
       match_values = ["/status"]
       behavior     = "Override"
       duration     = "00:05:00"
+    },
+    {
+      name         = "spididpscache"
+      order        = 4
+      operator     = "BeginsWith"
+      match_values = ["/spid/idps"]
+      behavior     = "Override"
+      duration     = "24:00:00"
     }
   ]
 
