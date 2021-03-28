@@ -29,18 +29,18 @@ inputs = {
 
   global_delivery_rule = {
 
-    cache_expiration_action = {
+    cache_expiration_action = [{
       behavior = "Override"
       duration = "08:00:00"
-    }
+    }]
 
     cache_key_query_string_action = null
-    modify_request_header_action = {
+    modify_request_header_action = [{
       action = "Append"
       name   = "x-functions-key"
       value  = dependency.function_app.outputs.default_key
-    }
-    modify_response_header_action = null
+    }]
+    modify_response_header_action = []
 
   }
 
