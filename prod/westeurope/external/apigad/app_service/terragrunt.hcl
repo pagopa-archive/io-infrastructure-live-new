@@ -37,7 +37,7 @@ inputs = {
   app_service_plan_info = {
     kind             = "Windows"
     sku_tier         = "PremiumV2"
-    sku_size         = "P3v2"
+    sku_size         = "P2v2"
     reserved         = false
     per_site_scaling = false
   }
