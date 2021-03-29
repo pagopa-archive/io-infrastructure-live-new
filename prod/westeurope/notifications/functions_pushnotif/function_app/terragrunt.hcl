@@ -7,16 +7,16 @@ dependency "subnet" {
 }
 
 dependency "notification_hub" {
-  config_path = "../../common/notification_hub"
+  config_path = "../../../common/notification_hub"
 }
 
 # Internal
 dependency "storage_notifications" {
-  config_path = "../../internal/api/storage_notifications/account"
+  config_path = "../../../internal/api/storage_notifications/account"
 }
 
 dependency "storage_notifications_queue_push-notifications" {
-  config_path = "../../internal/api/storage_notifications/queue_push-notifications"
+  config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
 }
 
 # Common
