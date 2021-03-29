@@ -22,28 +22,17 @@
 - [ ] Yes, users may be impacted applying this change
 - [ ] No
 
+### Does this introduce an unwanted change on infrastructure? Check terraform plan execution result
+
+- [ ] Yes
+- [ ] No
+
 ### Other information
 
 <!-- Any other information that is important to this PR such as screenshots of how the component looks before and after the change. -->
 
 ---
 
-### Who will help you to apply PR (reserved to mantainers)
-
-<!--- Who will help you to apply this PR -->
-
-- [ ] uolter
-- [ ] pasqualedevita
-- [ ] myself
-
-### PR apply status (reserved to mantainers)
-
-<!--- PR apply status -->
-
-- [ ] Not applied
-- [ ] Partially applied
-- [ ] Applied
-
-#### if partially applied, why?
+### If PR is partially applied, why? (reserved to mantainers)
 
 <!--- Describe the blocking cause -->
