@@ -86,7 +86,7 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     // Disable functions
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1" // we keep it disabled until we route production traffic here
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "0"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
