@@ -65,18 +65,6 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
-dependency "notification_hub" {
-  config_path = "../../../../common/notification_hub"
-}
-
-dependency "notification_queue" {
-  config_path = "../../storage_notifications/queue_push-notifications"
-}
-
-dependency "notification_storage_account" {
-  config_path = "../../storage_notifications/account"
-}
-
 dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
 }
@@ -137,11 +125,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    // Push notifications
-    AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
-    NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
-    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
-
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     # Disabled functions on slot - trigger, queue and timer
@@ -168,7 +151,6 @@ inputs = {
       MAILUP_SECRET                = "common-MAILUP2-SECRET"
       PUBLIC_API_KEY               = "apim-IO-SERVICE-KEY"
       SPID_LOGS_PUBLIC_KEY         = "funcapp-KEY-SPIDLOGS-PUB"
-      AZURE_NH_ENDPOINT            = "common-AZURE-NH-ENDPOINT"
     }
   }
 
