@@ -11,6 +11,7 @@
         <origin>https://io-p-cdnendpoint-iopayportal.azureedge.net/</origin> <!-- CDN frontend io-payportal -->
         <origin>https://io.italia.it/</origin>
         <origin>https://www.pagopa.gov.it/</origin>
+        <origin>http://localhost:8081/</origin>
       </allowed-origins>
       <allowed-methods>
         <method>POST</method>
