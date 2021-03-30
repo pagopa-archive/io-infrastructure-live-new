@@ -14,4 +14,5 @@ terraform {
 inputs = {
   name                = "azuredevops"
   resource_group_name = dependency.resource_group.outputs.resource_name
+  soft_delete_enabled = true
 }
