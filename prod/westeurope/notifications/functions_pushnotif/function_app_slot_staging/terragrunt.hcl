@@ -11,19 +11,16 @@ dependency "function_app" {
 }
 
 dependency "notification_hub" {
-  # config_path = "../../notification_hub"
-  config_path = "../../sandbox/notification_hub"
+  config_path = "../../../common/notification_hub"
 }
 
 # Internal
 dependency "storage_notifications" {
-  # config_path = "../../../internal/api/storage_notifications/account"
-  config_path = "../../sandbox/storage_notifications/account"
+  config_path = "../../../internal/api/storage_notifications/account"
 }
 
 dependency "storage_notifications_queue_push-notifications" {
-  # config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
-  config_path = "../../sandbox/storage_notifications/queue_push-notifications"
+  config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
 }
 
 # Common
@@ -95,7 +92,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      AZURE_NH_ENDPOINT = "notifications-AZURE-NHSANDBOX-ENDPOINT"
+      AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
     }
   }
 
