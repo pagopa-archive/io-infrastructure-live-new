@@ -85,6 +85,9 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
+    // activity default retry attempts
+    RETRY_ATTEMPT_NUMBER = 10
+
     // Disable functions
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "0"
 
