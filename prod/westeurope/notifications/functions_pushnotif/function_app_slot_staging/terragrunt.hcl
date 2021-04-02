@@ -82,7 +82,7 @@ inputs = {
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     // activity default retry attempts
-    RETRY_ATTEMPT_NUMBER = 3
+    RETRY_ATTEMPT_NUMBER = 10
 
     // Disable functions
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
