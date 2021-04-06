@@ -22,7 +22,7 @@ inputs = {
 
   logs = [{
     category = "AppServiceHTTPLogs"
-    enabled  = false
+    enabled  = true
     retention_policy = {
       days    = null
       enabled = false
@@ -38,7 +38,7 @@ inputs = {
     },
     {
       category = "AppServiceAppLogs"
-      enabled  = false
+      enabled  = true
       retention_policy = {
         days    = null
         enabled = false
