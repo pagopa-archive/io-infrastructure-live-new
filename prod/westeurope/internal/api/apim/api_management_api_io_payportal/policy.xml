@@ -8,11 +8,17 @@
     <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
     <cors>
       <allowed-origins>
-        <origin>https://io-p-cdnendpoint-iopayportal.azureedge.net/</origin> <!-- CDN frontend io-payportal -->
-        <origin>https://io-p-cdnendpoint-iopay.azureedge.net/</origin>
-        <origin>https://io.italia.it/</origin>
-        <origin>https://www.pagopa.gov.it/</origin>
-        <origin>http://localhost:8081/</origin>
+        <choose>
+          <when condition="@(context.Request.Url.Path.EndsWith("method") || context.Request.Url.Path.EndsWith("challenge"))">
+            <origin>*</origin>
+          </when>
+          <otherwise>
+            <origin>https://io-p-cdnendpoint-iopayportal.azureedge.net/</origin> <!-- CDN frontend io-payportal -->
+            <origin>https://io-p-cdnendpoint-iopay.azureedge.net/</origin>
+            <origin>https://io.italia.it/</origin>
+            <origin>https://www.pagopa.gov.it/</origin>
+          </otherwise>
+        </choose>
       </allowed-origins>
       <allowed-methods>
         <method>POST</method>
