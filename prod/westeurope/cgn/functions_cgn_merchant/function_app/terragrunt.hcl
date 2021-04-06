@@ -29,7 +29,7 @@ dependency "virtual_network" {
 }
 
 dependency "application_insights" {
-  config_path = "../../../common/application_insights"
+  config_path = "../../application_insights"
 }
 
 dependency "key_vault" {
