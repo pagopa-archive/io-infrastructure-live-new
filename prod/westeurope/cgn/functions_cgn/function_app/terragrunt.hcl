@@ -31,6 +31,10 @@ dependency "storage_table_eycacardexpiration" {
   config_path = "../../storage_cgn/table_eycacardexpiration"
 }
 
+dependency "subnet_appgateway" {
+  config_path = "../../appgateway/subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
@@ -148,6 +152,7 @@ inputs = {
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
     dependency.subnet_appbackendli.outputs.id,
+    dependency.subnet_appgateway.outputs.id,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe

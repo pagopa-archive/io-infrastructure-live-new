@@ -13,6 +13,6 @@ terraform {
 }
 
 inputs = {
-  name                     = "eycaactivations"
-  storage_account_name     = dependency.storage_account.outputs.resource_name
+  name                 = "eycaactivations"
+  storage_account_name = dependency.storage_account.outputs.resource_name
 }
