@@ -135,6 +135,8 @@ inputs = {
 
     // Disabled functions - Slot settings only.
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
