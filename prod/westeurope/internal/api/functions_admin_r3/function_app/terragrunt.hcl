@@ -133,7 +133,7 @@ inputs = {
     USER_DATA_DELETE_DELAY_DAYS     = 6
     FF_ENABLE_USER_DATA_DELETE      = 1
 
-    // Disabled functions - Slot settings only.
+    // Disabled functions.
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
     "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
     "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
