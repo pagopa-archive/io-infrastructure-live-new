@@ -133,6 +133,11 @@ inputs = {
     USER_DATA_DELETE_DELAY_DAYS     = 6
     FF_ENABLE_USER_DATA_DELETE      = 1
 
+    // Disabled functions.
+    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
+
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
