@@ -13,7 +13,7 @@ terraform {
 }
 
 inputs = {
-  name                     = "testusers"
+  name                     = "betatestusers"
   resource_group_name      = dependency.resource_group.outputs.resource_name
   account_kind             = "StorageV2"
   account_tier             = "Standard"
