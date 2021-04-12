@@ -1,0 +1,31 @@
+<policies>
+    <inbound>
+        <set-backend-service base-url="{{io-fn-pay-portal-url}}/api/v1" />
+        <set-header name="x-functions-key" exists-action="override">
+            <value>{{io-fn-pay-portal-key}}</value>
+        </set-header>
+        <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
+        <cors>
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>POST</method>
+                <method>GET</method>
+                <method>OPTIONS</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>Content-Type</header>
+            </allowed-headers>
+        </cors>
+    </inbound>
+    <outbound>
+        <base />
+    </outbound>
+    <backend>
+        <base />
+    </backend>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
