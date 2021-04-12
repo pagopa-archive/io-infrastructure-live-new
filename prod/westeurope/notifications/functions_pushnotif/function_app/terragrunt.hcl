@@ -19,13 +19,13 @@ dependency "storage_notifications_queue_push-notifications" {
   config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
 }
 
-# Test users storage
+# Beta test users storage
 dependency "storage_beta_test_users" {
   config_path = "../../../internal/api/storage_beta_test_users/account"
 }
 
-dependency "storage_beta_test_users_table_nh-test-users" {
-  config_path = "../../../internal/api/storage_beta_test_users/table_nh-test-users"
+dependency "storage_beta_test_users_notification_hub_table" {
+  config_path = "../../../internal/api/storage_beta_test_users/table_notification_hub"
 }
 
 # Common
@@ -105,7 +105,7 @@ inputs = {
     # Possible values : "none" | "all" | "beta" | "canary"
     NH_PARTITION_FEATURE_FLAG             = "none"
     BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_beta_test_users.outputs.primary_connection_string
-    BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_table_nh-test-users.outputs.name
+    BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_notification_hub_table.outputs.name
     
     # Matches a 64-characters hex string ending with "0" or with "n1" (where n is a character from 0 to 7 )
     CANARY_USERS_REGEX                    = "^([(0-9)|(a-f)|(A-F)]{63}0)|([(0-9)|(a-f)|(A-F)]{62}[(0-7)]{1}1)$"
