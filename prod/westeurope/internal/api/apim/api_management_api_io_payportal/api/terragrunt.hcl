@@ -1,10 +1,10 @@
 dependency "api_management" {
-  config_path = "../api_management"
+  config_path = "../../api_management"
 }
 
 # Internal
 dependency "resource_group" {
-  config_path = "../../../resource_group"
+  config_path = "../../../../resource_group"
 }
 
 # Include all settings from the root terragrunt.hcl file
