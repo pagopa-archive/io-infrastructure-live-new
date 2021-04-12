@@ -1,0 +1,421 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "IO pay portal API",
+    "contact": {
+      "name": "IO team",
+      "url": "https://forum.italia.it/c/progetto-io"
+    },
+    "description": "Documentation of the IO Pay Portal Function API here.\n"
+  },
+  "host": "${host}",
+  "basePath": "/api/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/payment-requests/{rptId}": {
+      "parameters": [
+        {
+          "name": "rptId",
+          "in": "path",
+          "required": true,
+          "description": "Unique identifier for payments.",
+          "type": "string"
+        },
+        {
+          "name": "test",
+          "in": "query",
+          "description": "Use test environment of PagoPAClient",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "get": {
+        "operationId": "getPaymentInfo",
+        "summary": "Get Payment Info",
+        "description": "Retrieve information about a payment",
+        "responses": {
+          "200": {
+            "description": "Payment information retrieved",
+            "schema": {
+              "$ref": "#/definitions/PaymentRequestsGetResponse"
+            },
+            "examples": {
+              "application/json": {
+                "importoSingoloVersamento": "200,",
+                "codiceContestoPagamento": "ABC123"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Bearer token null or expired."
+          },
+          "500": {
+            "description": "PagoPA services are not available or request is rejected",
+            "schema": {
+              "$ref": "#/definitions/PaymentProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/payment-activations": {
+      "parameters": [
+        {
+          "name": "test",
+          "in": "query",
+          "description": "Use test environment of PagoPAClient",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "post": {
+        "operationId": "activatePayment",
+        "summary": "Activate Payment",
+        "description": "Require a lock (activation) for a payment",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/PaymentActivationsPostRequest"
+            },
+            "required": true,
+            "x-examples": {
+              "application/json": {
+                "rptId": "12345678901012123456789012345",
+                "importoSingoloVersamento": 200,
+                "codiceContestoPagamento": "ABC123"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Payment activation process started",
+            "schema": {
+              "$ref": "#/definitions/PaymentActivationsPostResponse"
+            },
+            "examples": {
+              "application/json": {
+                "importoSingoloVersamento": 200
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Bearer token null or expired."
+          },
+          "500": {
+            "description": "PagoPA services are not available or request is rejected",
+            "schema": {
+              "$ref": "#/definitions/PaymentProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/payment-activations/{codiceContestoPagamento}": {
+      "parameters": [
+        {
+          "name": "codiceContestoPagamento",
+          "in": "path",
+          "required": true,
+          "description": "Transaction Id used to identify the communication flow.",
+          "type": "string"
+        },
+        {
+          "name": "test",
+          "in": "query",
+          "description": "Use test environment of PagoPAClient",
+          "type": "boolean",
+          "required": false
+        }
+      ],
+      "get": {
+        "operationId": "getActivationStatus",
+        "summary": "Get Activation status",
+        "description": "Check the activation status to retrieve the paymentId",
+        "responses": {
+          "200": {
+            "description": "Payment information",
+            "schema": {
+              "$ref": "#/definitions/PaymentActivationsGetResponse"
+            },
+            "examples": {
+              "application/json": {
+                "idPagamento": "123455"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "401": {
+            "description": "Bearer token null or expired."
+          },
+          "404": {
+            "description": "Activation status not found",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "500": {
+            "description": "Unavailable service",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    },
+    "/newsletters/{idClient}/lists/{idList}/recipients": {
+      "post": {
+        "operationId": "PostNewslettersEmails",
+        "description": "Add an email to newsletter",
+        "parameters": [
+          {
+            "name": "idList",
+            "in": "path",
+            "required": true,
+            "description": "list id",
+            "type": "string"
+          },
+          {
+            "name": "idClient",
+            "in": "path",
+            "required": true,
+            "description": "client id",
+            "type": "string",
+            "enum": [
+              "io",
+              "pagopa"
+            ]
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RecipientRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipient added",
+            "schema": {
+              "$ref": "#/definitions/RecipientResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "403": {
+            "description": "forbidden"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/browsers/current/info": {
+      "get": {
+        "operationId": "GetBrowsersInfo",
+        "description": "Get info of the current browser used by the user",
+        "responses": {
+          "200": {
+            "description": "Browser info retrieved",
+            "schema": {
+              "$ref": "#/definitions/BrowserInfoResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/method": {
+      "post": {
+        "operationId": "PostTransactionsMethod3ds2",
+        "description": "API to support 3ds2 method step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/challenge": {
+      "post": {
+        "operationId": "PostTransactionsChallenge3ds2",
+        "description": "API to support 3ds2 challenge step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProblemJson": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v10.7.0/openapi/definitions.yaml#/ProblemJson"
+    },
+    "PaymentProblemJson": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/PaymentProblemJson"
+    },
+    "CodiceContestoPagamento": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/CodiceContestoPagamento"
+    },
+    "EnteBeneficiario": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/EnteBeneficiario"
+    },
+    "Iban": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/Iban"
+    },
+    "ImportoEuroCents": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/ImportoEuroCents"
+    },
+    "PaymentActivationsGetResponse": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/PaymentActivationsGetResponse"
+    },
+    "PaymentActivationsPostRequest": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/PaymentActivationsPostRequest"
+    },
+    "PaymentActivationsPostResponse": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/PaymentActivationsPostResponse"
+    },
+    "PaymentRequestsGetResponse": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/PaymentRequestsGetResponse"
+    },
+    "RptId": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/RptId"
+    },
+    "SpezzoneStrutturatoCausaleVersamento": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/SpezzoneStrutturatoCausaleVersamento"
+    },
+    "SpezzoniCausaleVersamento": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/SpezzoniCausaleVersamento"
+    },
+    "SpezzoniCausaleVersamentoItem": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-pagopa-proxy/v0.8.6/api_pagopa.yaml#/definitions/SpezzoniCausaleVersamentoItem"
+    },
+    "RecipientRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "recaptchaToken"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "recaptchaToken": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "RecipientResponse": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "BrowserInfoResponse": {
+      "type": "object",
+      "required": [
+        "ip",
+        "useragent",
+        "accept"
+      ],
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "useragent": {
+          "type": "string"
+        },
+        "accept": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
