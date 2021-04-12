@@ -23,6 +23,15 @@ dependency "storage_notifications_queue_push-notifications" {
   config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
 }
 
+# Test users storage
+dependency "storage_test-users" {
+  config_path = "../../../internal/api/storage_test-users/account"
+}
+
+dependency "storage_test-users_table_nh-test-users" {
+  config_path = "../../../internal/api/storage_test-users/table_nh-test-users"
+}
+
 # Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -85,6 +94,16 @@ inputs = {
     RETRY_ATTEMPT_NUMBER = 10
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
+
+    # ------------------------------------
+    # Variable used during transition to new NH management
+
+    # Possible values : "none" | "all" | "beta" | "canary"
+    NH_PARTITION_FEATURE_FLAG             = "none"
+    BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_test-users.outputs.primary_connection_string
+    BETA_USERS_TABLE_NAME                 = dependency.storage_test-users_table_nh-test-users.outputs.name
+    CANARY_USERS_REGEX                    = "^([(0-9)|(a-f)|(A-F)]{63}0)|([(0-9)|(a-f)|(A-F)]{62}[(0-7)]{1}1)$"
+    # ------------------------------------
 
     // Disable functions
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
