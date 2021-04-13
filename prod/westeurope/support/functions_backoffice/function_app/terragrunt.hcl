@@ -105,7 +105,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // CSTAR
-    CSTAR_API_URL = "https://prod.cstar.pagopa.it"
+    CSTAR_API_URL       = "https://prod.cstar.pagopa.it"
     CSTAR_API_BASE_PATH = "backoffice"
   }
 
