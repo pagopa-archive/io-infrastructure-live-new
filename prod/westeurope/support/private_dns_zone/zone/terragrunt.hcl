@@ -27,5 +27,11 @@ inputs = {
       ttl                = 3600
       records            = ["10.70.132.7"]
       target_resource_id = null
+    },
+    {
+      name               = "u87psqlp01-rep2"
+      ttl                = 3600
+      records            = ["10.70.132.9"]
+      target_resource_id = null
   }, ]
 }
