@@ -26,7 +26,7 @@ terraform {
 }
 
 inputs = {
-  name                = "paga"
+  name                = "checkout"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
     name                = dependency.dns_zone.outputs.name
