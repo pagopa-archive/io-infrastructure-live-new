@@ -313,6 +313,64 @@
           }
         }
       }
+    },
+    "/transactions/xpay/{id}": {
+      "get": {
+        "operationId": "GetTransactionsXpay",
+        "description": "API to support xpay flow",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/xpay/verification/{id}": {
+      "get": {
+        "operationId": "GetTransactionsXpayVerification",
+        "description": "API to support xpay verification flow",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
     }
   },
   "definitions": {
