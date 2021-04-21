@@ -103,7 +103,7 @@ inputs = {
     # Variable used during transition to new NH management
 
     # Possible values : "none" | "all" | "beta" | "canary"
-    NH_PARTITION_FEATURE_FLAG             = "beta"
+    NH_PARTITION_FEATURE_FLAG             = "canary"
     BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_beta_test_users.outputs.primary_connection_string
     BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_table_notificationhub.outputs.name
     
