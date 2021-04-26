@@ -11,6 +11,11 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Infra
+dependency "dns_zone" {
+  config_path = "../../../infra/pagopa_dns_zone"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -24,8 +29,8 @@ inputs = {
   name                = "checkout"
   resource_group_name = dependency.resource_group.outputs.resource_name
   dns_zone = {
-    name                = "pagopa.gov.it"
-    resource_group_name = dependency.resource_group.outputs.resource_name
+    name                = dependency.dns_zone.outputs.name
+    resource_group_name = dependency.dns_zone.outputs.resource_group_name
   }
   profile_name = dependency.cdn_profile.outputs.resource_name
   endpoint = {
