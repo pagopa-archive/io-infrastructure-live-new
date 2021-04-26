@@ -82,10 +82,8 @@ inputs = {
 
     AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
 
-    // Disabled functions
+    // Disabled functions on slot function
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
-    "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
-    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
