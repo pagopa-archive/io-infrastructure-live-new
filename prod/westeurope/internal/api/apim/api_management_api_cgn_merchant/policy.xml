@@ -1,7 +1,7 @@
 <policies>
     <inbound>
         <base />
-        <set-backend-service base-url="{{io-fn-cgnmerchant-url}}" />
+        <set-backend-service base-url="{{io-fn-cgnmerchant-url}}/api/v1/merchant/cgn" />
         <set-header name="x-functions-key" exists-action="override">
             <value>{{io-fn-cgnmerchant-key}}</value>
         </set-header>
