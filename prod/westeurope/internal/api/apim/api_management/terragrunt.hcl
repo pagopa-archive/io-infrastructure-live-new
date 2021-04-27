@@ -47,7 +47,7 @@ dependency "functions_backoffice" {
 
 # CGN
 dependency "functions_cgnmerchant" {
-  config_path = "../../../../cgn/functions_cgn_merchant//function_app"
+  config_path = "../../../../cgn/functions_cgn_merchant/function_app"
 }
 
 # Include all settings from the root terragrunt.hcl file

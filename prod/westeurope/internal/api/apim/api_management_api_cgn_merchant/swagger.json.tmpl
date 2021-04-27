@@ -19,7 +19,7 @@
   ],
   "security": [
     {
-      "ApiKey": []
+      "SubscriptionKey": []
     }
   ],
   "paths": {
@@ -71,9 +71,9 @@
     "application/json"
   ],
   "securityDefinitions": {
-    "ApiKey": {
+    "SubscriptionKey": {
       "type": "apiKey",
-      "name": "X-Functions-Key",
+      "name": "Ocp-Apim-Subscription-Key",
       "in": "header",
       "description": "The API key to access this function app."
     }
