@@ -36,6 +36,12 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+# Internal
+
+dependency "subnet_apim" {
+  config_path = "../../../internal/api/apim/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -106,7 +112,8 @@ inputs = {
   }
 
   allowed_subnets = [
-    dependency.subnet.outputs.id
+    dependency.subnet_apim.outputs.id,
+    dependency.subnet.outputs.id,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
