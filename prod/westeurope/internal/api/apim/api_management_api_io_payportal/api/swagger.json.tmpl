@@ -185,17 +185,28 @@
         }
       }
     },
-    "/newsletters/groups/{id}/recipients": {
+    "/newsletters/{idClient}/lists/{idList}/recipients": {
       "post": {
         "operationId": "PostNewslettersEmails",
         "description": "Add an email to newsletter",
         "parameters": [
           {
-            "name": "id",
+            "name": "idList",
             "in": "path",
             "required": true,
-            "description": "newsletter id",
+            "description": "list id",
             "type": "string"
+          },
+          {
+            "name": "idClient",
+            "in": "path",
+            "required": true,
+            "description": "client id",
+            "type": "string",
+            "enum": [
+              "io",
+              "pagopa"
+            ]
           },
           {
             "name": "body",
@@ -216,8 +227,144 @@
           "400": {
             "description": "Bad request"
           },
-          "401": {
-            "description": "not authenticated"
+          "403": {
+            "description": "forbidden"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/browsers/current/info": {
+      "get": {
+        "operationId": "GetBrowsersInfo",
+        "description": "Get info of the current browser used by the user",
+        "responses": {
+          "200": {
+            "description": "Browser info retrieved",
+            "schema": {
+              "$ref": "#/definitions/BrowserInfoResponse"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/method": {
+      "post": {
+        "operationId": "PostTransactionsMethod3ds2",
+        "description": "API to support 3ds2 method step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/{id}/challenge": {
+      "post": {
+        "operationId": "PostTransactionsChallenge3ds2",
+        "description": "API to support 3ds2 challenge step",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/xpay/{id}": {
+      "get": {
+        "operationId": "GetTransactionsXpay",
+        "description": "API to support xpay flow",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "generic error"
+          }
+        }
+      }
+    },
+    "/transactions/xpay/verification/{id}": {
+      "get": {
+        "operationId": "GetTransactionsXpayVerification",
+        "description": "API to support xpay verification flow",
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "transaction id",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "html with redirect io-pay"
+          },
+          "400": {
+            "description": "Bad request"
           },
           "500": {
             "description": "generic error"
@@ -285,6 +432,12 @@
         },
         "recaptchaToken": {
           "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -300,6 +453,25 @@
         "email": {
           "type": "string",
           "format": "email"
+        }
+      }
+    },
+    "BrowserInfoResponse": {
+      "type": "object",
+      "required": [
+        "ip",
+        "useragent",
+        "accept"
+      ],
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "useragent": {
+          "type": "string"
+        },
+        "accept": {
+          "type": "string"
         }
       }
     }

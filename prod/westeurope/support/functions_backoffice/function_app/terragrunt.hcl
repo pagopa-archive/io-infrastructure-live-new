@@ -43,7 +43,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
 }
 
 locals {
@@ -105,7 +105,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // CSTAR
-    CSTAR_API_URL = "https://prod.cstar.pagopa.it"
+    CSTAR_API_URL       = "https://prod.cstar.pagopa.it"
     CSTAR_API_BASE_PATH = "backoffice"
   }
 

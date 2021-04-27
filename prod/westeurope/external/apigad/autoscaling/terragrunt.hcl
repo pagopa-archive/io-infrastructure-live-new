@@ -7,13 +7,19 @@ dependency "app_service" {
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
+
+# common
+dependency "key_vault" {
+  config_path = "../../../common/key_vault"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v2.1.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v3.0.3"
 }
 
 
@@ -73,7 +79,7 @@ inputs = {
         }
       }
       # TODO: the following rules need to be activated before the golive expected the 15th June
-      /*
+    /*
       {
         # Http Queue length
         name = "ScaleOutHttpQueueLength"
@@ -126,7 +132,9 @@ inputs = {
     email = {
       send_to_subscription_administrator    = false
       send_to_subscription_co_administrator = false
-      custom_emails                         = ["io-operations@pagopa.it"]
+      custom_emails                         = ["appbackend-AUTOSCALING-NOTIFICATION-EMAILS"]
     }
+    key_vault_id = dependency.key_vault.outputs.id
   }
+
 }

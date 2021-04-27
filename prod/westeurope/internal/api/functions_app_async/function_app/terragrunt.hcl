@@ -79,7 +79,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
 }
 
 locals {
@@ -172,7 +172,7 @@ inputs = {
     #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
     #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
     #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "0"
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1" // Messages are handled by io-p-fn3-pushnotif
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "0"
 
     # Cashback

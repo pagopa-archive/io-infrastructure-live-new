@@ -74,7 +74,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
 }
 
 locals {
@@ -132,6 +132,11 @@ inputs = {
     USER_DATA_BACKUP_CONTAINER_NAME = dependency.storage_container_user-data-backup.outputs.name
     USER_DATA_DELETE_DELAY_DAYS     = 6
     FF_ENABLE_USER_DATA_DELETE      = 1
+
+    // Disabled functions.
+    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 

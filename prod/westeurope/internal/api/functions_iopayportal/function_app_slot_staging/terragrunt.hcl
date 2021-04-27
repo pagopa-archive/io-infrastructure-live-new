@@ -41,13 +41,17 @@ dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
 }
 
+dependency "storage_account_iopay" {
+  config_path = "../../../../common/cdn/storage_account_iopay"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v2.1.34"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
 
 inputs = {
@@ -92,17 +96,27 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    // Mailup groups and lists
+    MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
+    MAILUP_ALLOWED_LISTS  = "2,4"
+
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
+
+    IO_PAY_CHALLENGE_RESUME_URL = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=idTransaction"
+    IO_PAY_ORIGIN               = "https://io-p-cdnendpoint-iopay.azureedge.net"
+    IO_PAY_XPAY_REDIRECT        = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      RECAPTCHA_SECRET = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      RECAPTCHA_SECRET            = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      PAY_PORTAL_RECAPTCHA_SECRET = "payportal-GOOGLE-RECAPTCHA-SECRET"
+      
       # Mailup account:
       MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
       MAILUP_SECRET    = "newsletter-MAILUP-SECRET"

@@ -100,7 +100,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v2.1.21"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v3.0.3"
 }
 
 inputs = {
@@ -197,7 +197,7 @@ inputs = {
 
     // Feature flags
     FF_BONUS_ENABLED         = 1
-    FF_CGN_ENABLED           = 0
+    FF_CGN_ENABLED           = 1
     TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
 
     # No downtime on slots swap
@@ -234,6 +234,9 @@ inputs = {
       // BPD
       ALLOW_BPD_IP_SOURCE_RANGE         = "appbackend-ALLOW-BPD-IP-SOURCE-RANGE"
       JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY = "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
+
+      // CGN BETA
+      TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
     }
   }
 
