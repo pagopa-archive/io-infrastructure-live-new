@@ -1,0 +1,122 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1.0",
+    "title": "IO Functions CGN Merchant",
+    "contact": {
+      "name": "IO team",
+      "url": "https://forum.italia.it/c/progetto-io"
+    },
+    "x-logo": {
+      "url": "https://io.italia.it/assets/img/io-logo-blue.svg"
+    },
+    "description": "This Specs are intended for all CGN operators that must integrate their e-commerce portal through CGN API discounts system.\n"
+  },
+  "host": "${host}",
+  "basePath": "/api/v1/cgn/merchant",
+  "schemes": [
+    "https"
+  ],
+  "security": [
+    {
+      "SubscriptionKey": []
+    }
+  ],
+  "paths": {
+    "/otp/validate": {
+      "post": {
+        "operationId": "validateOtp",
+        "summary": "Validate a CGN OTP\n",
+        "description": "Validate an OTP related to a CGN (Carta Giovani Nazionale).\nThis endpoint could be called for 2 different use cases:\n- When an operator wants just to verify an OTP\n- When an operator wants to verify an OTP and invalidate it at the same time (i.e: checkout completed)\n",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "$ref": "#/definitions/ValidateOtpPayload"
+            },
+            "description": "The request wrapper of a user data processing choice."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OTP validation success.",
+            "schema": {
+              "$ref": "#/definitions/OtpValidationResponse"
+            }
+          },
+          "401": {
+            "description": "Wrong or missing API key."
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "OTP Not Found/Invalid"
+          },
+          "500": {
+            "description": "Service unavailable.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "SubscriptionKey": {
+      "type": "apiKey",
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header",
+      "description": "The API key to access this function app."
+    }
+  },
+  "definitions": {
+    "Timestamp": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v17.3.0/openapi/definitions.yaml#/Timestamp"
+    },
+    "ProblemJson": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-commons/v17.3.0/openapi/definitions.yaml#/ProblemJson"
+    },
+    "OtpCode": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-cgn/v0.2.1/openapi/index.yaml#/definitions/OtpCode"
+    },
+    "Otp": {
+      "$ref": "https://raw.githubusercontent.com/pagopa/io-functions-cgn/v0.2.1/openapi/index.yaml#/definitions/Otp"
+    },
+    "OtpValidationResponse": {
+      "type": "object",
+      "properties": {
+        "expires_at": {
+          "$ref": "#/definitions/Timestamp"
+        }
+      },
+      "required": [
+        "expires_at"
+      ]
+    },
+    "ValidateOtpPayload": {
+      "type": "object",
+      "properties": {
+        "otp_code": {
+          "$ref": "#/definitions/OtpCode"
+        },
+        "invalidate_otp": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "otp_code",
+        "invalidate_otp"
+      ]
+    }
+  }
+}
