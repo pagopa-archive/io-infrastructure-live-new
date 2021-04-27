@@ -13,7 +13,7 @@
     "description": "This Specs are intended for all CGN operators that must integrate their e-commerce portal through CGN API discounts system.\n"
   },
   "host": "${host}",
-  "basePath": "/api/v1",
+  "basePath": "/api/v1/cgn/merchant",
   "schemes": [
     "https"
   ],
@@ -23,7 +23,7 @@
     }
   ],
   "paths": {
-    "/merchant/cgn/otp/validate": {
+    "/otp/validate": {
       "post": {
         "operationId": "validateOtp",
         "summary": "Validate a CGN OTP\n",
