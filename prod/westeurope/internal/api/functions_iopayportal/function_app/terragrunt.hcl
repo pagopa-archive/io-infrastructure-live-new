@@ -100,7 +100,8 @@ inputs = {
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
 
     IO_PAY_CHALLENGE_RESUME_URL = "https://io-p-cdnendpoint-iopay.azureedge.net/response.html?id=idTransaction"
-    IO_PAY_ORIGIN = "https://io-p-cdnendpoint-iopay.azureedge.net"
+    IO_PAY_ORIGIN               = "https://io-p-cdnendpoint-iopay.azureedge.net"
+    IO_PAY_XPAY_REDIRECT        = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {
