@@ -152,10 +152,10 @@ inputs = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
-      NH1_ENDPOINT      = "${dependency.notification_hub_partition_1.outputs.name}-AZURE-NH-ENDPOINT"
-      NH2_ENDPOINT      = "${dependency.notification_hub_partition_2.outputs.name}-AZURE-NH-ENDPOINT"
-      NH3_ENDPOINT      = "${dependency.notification_hub_partition_3.outputs.name}-AZURE-NH-ENDPOINT"
-      NH4_ENDPOINT      = "${dependency.notification_hub_partition_4.outputs.name}-AZURE-NH-ENDPOINT"
+      NH1_ENDPOINT      = "common-partition-1-AZURE-NH-ENDPOINT"
+      NH2_ENDPOINT      = "common-partition-2-AZURE-NH-ENDPOINT"
+      NH3_ENDPOINT      = "common-partition-3-AZURE-NH-ENDPOINT"
+      NH4_ENDPOINT      = "common-partition-4-AZURE-NH-ENDPOINT"
     }     
   }
 
