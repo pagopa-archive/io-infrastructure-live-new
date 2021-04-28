@@ -121,17 +121,14 @@ inputs = {
     AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
 
     # Endpoint for the test notification hub namespace
-    NH1_PARTITION_REGEX=^[0-3]
-    NH1_NAME=dependency.notification_hub_partition_1.name
-
-    NH2_PARTITION_REGEX=^[4-7]
-    NH2_NAME=dependency.notification_hub_partition_2.name
-
-    NH3_PARTITION_REGEX=^[8-b]
-    NH3_NAME=dependency.notification_hub_partition_3.name
-
-    NH4_PARTITION_REGEX=^[c-f]
-    NH4_NAME=dependency.notification_hub_partition_4.name
+    NH1_PARTITION_REGEX = "^[0-3]"
+    NH1_NAME            = dependency.notification_hub_partition_1.name
+    NH2_PARTITION_REGEX = "^[4-7]"
+    NH2_NAME            = dependency.notification_hub_partition_2.name
+    NH3_PARTITION_REGEX = "^[8-b]"
+    NH3_NAME            = dependency.notification_hub_partition_3.name
+    NH4_PARTITION_REGEX = "^[c-f]"
+    NH4_NAME            = dependency.notification_hub_partition_4.name
     # ------------------------------------------------------------------------------
 
 
@@ -159,10 +156,10 @@ inputs = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
-      NH1_ENDPOINT = "${dependency.notification_hub_partition_1.name}-AZURE-NH-ENDPOINT"
-      NH2_ENDPOINT = "${dependency.notification_hub_partition_2.name}-AZURE-NH-ENDPOINT"
-      NH3_ENDPOINT = "${dependency.notification_hub_partition_3.name}-AZURE-NH-ENDPOINT"
-      NH4_ENDPOINT = "${dependency.notification_hub_partition_4.name}-AZURE-NH-ENDPOINT"
+      NH1_ENDPOINT      = "${dependency.notification_hub_partition_1.name}-AZURE-NH-ENDPOINT"
+      NH2_ENDPOINT      = "${dependency.notification_hub_partition_2.name}-AZURE-NH-ENDPOINT"
+      NH3_ENDPOINT      = "${dependency.notification_hub_partition_3.name}-AZURE-NH-ENDPOINT"
+      NH4_ENDPOINT      = "${dependency.notification_hub_partition_4.name}-AZURE-NH-ENDPOINT"
     }
   }
 
