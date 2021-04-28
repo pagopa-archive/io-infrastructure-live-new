@@ -10,8 +10,25 @@ dependency "function_app" {
   config_path = "../function_app"
 }
 
+# Notification Hubs
 dependency "notification_hub" {
   config_path = "../../../common/notification_hub"
+}
+
+dependency "notification_hub_partition_1" {
+  config_path = "../../../common/notification_hub_partition_1"
+}
+
+dependency "notification_hub_partition_2" {
+  config_path = "../../../common/notification_hub_partition_2"
+}
+
+dependency "notification_hub_partition_3" {
+  config_path = "../../../common/notification_hub_partition_3"
+}
+
+dependency "notification_hub_partition_4" {
+  config_path = "../../../common/notification_hub_partition_4"
 }
 
 # Internal
@@ -82,8 +99,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    // Endpoint for the test notification hub namespace
-    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
@@ -94,6 +109,27 @@ inputs = {
     RETRY_ATTEMPT_NUMBER = 10
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
+
+    # ------------------------------------------------------------------------------
+    # Notification Hubs variables
+
+    # Endpoint for the test notification hub namespace
+    AZURE_NH_HUB_NAME = dependency.notification_hub.outputs.name
+
+    # Endpoint for the test notification hub namespace
+    NH1_PARTITION_REGEX=^[0-3]
+    NH1_NAME=dependency.notification_hub_partition_1.name
+
+    NH2_PARTITION_REGEX=^[4-7]
+    NH2_NAME=dependency.notification_hub_partition_2.name
+
+    NH3_PARTITION_REGEX=^[8-b]
+    NH3_NAME=dependency.notification_hub_partition_3.name
+
+    NH4_PARTITION_REGEX=^[c-f]
+    NH4_NAME=dependency.notification_hub_partition_4.name
+    # ------------------------------------------------------------------------------
+
 
     # ------------------------------------------------------------------------------
     # Variable used during transition to new NH management
@@ -119,6 +155,10 @@ inputs = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       AZURE_NH_ENDPOINT = "common-AZURE-NH-ENDPOINT"
+      NH1_ENDPOINT = "${dependency.notification_hub_partition_1.name}-AZURE-NH-ENDPOINT"
+      NH2_ENDPOINT = "${dependency.notification_hub_partition_2.name}-AZURE-NH-ENDPOINT"
+      NH3_ENDPOINT = "${dependency.notification_hub_partition_3.name}-AZURE-NH-ENDPOINT"
+      NH4_ENDPOINT = "${dependency.notification_hub_partition_4.name}-AZURE-NH-ENDPOINT"
     }
   }
 
