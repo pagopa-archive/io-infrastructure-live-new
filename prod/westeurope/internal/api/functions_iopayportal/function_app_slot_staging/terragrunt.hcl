@@ -106,14 +106,17 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
 
-    IO_PAY_CHALLENGE_RESUME_URL = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=idTransaction"
-    IO_PAY_ORIGIN = "https://io-p-cdnendpoint-iopay.azureedge.net"
+    IO_PAY_CHALLENGE_RESUME_URL = "https://checkout.pagopa.gov.it/response.html?id=idTransaction"
+    IO_PAY_ORIGIN               = "https://checkout.pagopa.gov.it"
+    IO_PAY_XPAY_REDIRECT        = "https://checkout.pagopa.gov.it/response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      RECAPTCHA_SECRET = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      RECAPTCHA_SECRET            = "newsletter-GOOGLE-RECAPTCHA-SECRET"
+      PAY_PORTAL_RECAPTCHA_SECRET = "payportal-GOOGLE-RECAPTCHA-SECRET"
+      
       # Mailup account:
       MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
       MAILUP_SECRET    = "newsletter-MAILUP-SECRET"
