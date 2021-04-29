@@ -30,5 +30,5 @@ inputs = {
   enabled       = true
   geo_locations = ["emea-nl-ams-azr"]
 
-  url = format("https://%s/info", dependency.function_app.outputs.default_hostname)
+  url = format("https://%s/api/v1/info", dependency.function_app.outputs.default_hostname)
 }
