@@ -7,10 +7,6 @@ dependency "resource_group" {
   config_path = "../../../common/resource_group"
 }
 
-dependency "cdn_endpoint_iopay_custom_domain" {
-  config_path = "../cdn_endpoint_iopay_custom_domain"
-}
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -28,5 +24,5 @@ inputs = {
   enabled                 = true
   geo_locations           = ["emea-nl-ams-azr"]
 
-  url = format("https://%s/index.html", dependency.cdn_endpoint_iopay_custom_domain.outputs.fqdn)
+  url = "https://checkout.pagopa.gov.it/index.html"
 }
