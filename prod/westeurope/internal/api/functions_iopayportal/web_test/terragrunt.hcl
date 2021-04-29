@@ -22,12 +22,12 @@ terraform {
 }
 
 inputs = {
-  name = "func-services-cache"
+  name = "func-iopayportal"
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
   enabled                 = true
   geo_locations           = ["emea-nl-ams-azr"]
 
-  url = format("https://%s/api/v1/info", dependency.function_app.outputs.default_hostname)
+  url = format("https://%s/info", dependency.function_app.outputs.default_hostname)
 }
