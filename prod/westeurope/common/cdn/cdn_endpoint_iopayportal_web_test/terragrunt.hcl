@@ -1,16 +1,11 @@
 # Common
 dependency "application_insights" {
-  config_path = "../../../../common/application_insights"
+  config_path = "../../../common/application_insights"
 }
 
 dependency "resource_group" {
-  config_path = "../../../../common/resource_group"
+  config_path = "../../../common/resource_group"
 }
-
-dependency "function_app" {
-  config_path = "../function_app"
-}
-
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -22,12 +17,12 @@ terraform {
 }
 
 inputs = {
-  name = "func-services-cache"
+  name = "io-payportal"
 
   resource_group_name     = dependency.resource_group.outputs.resource_name
   application_insights_id = dependency.application_insights.outputs.id
   enabled                 = true
   geo_locations           = ["emea-nl-ams-azr"]
-
-  url = format("https://%s/api/v1/info", dependency.function_app.outputs.default_hostname)
+  
+  url = "https://paga.io.italia.it/index.html"
 }
