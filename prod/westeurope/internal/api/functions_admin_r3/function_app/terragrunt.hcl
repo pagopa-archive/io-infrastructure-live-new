@@ -145,6 +145,10 @@ inputs = {
     SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
+    // table for saving failed user data processing requests
+    FailedUserDataProcessingStorageConnection = dependency.storage_account.outputs.primary_connection_string
+    FAILED_USER_DATA_PROCESSING_TABLE         = FailedUserDataProcessing
+
     # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     # at the time we applied these chages the value is the following.
     WEBSITE_CONTENTSHARE = "io-p-fn3-admin-content"
