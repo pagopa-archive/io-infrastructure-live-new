@@ -150,8 +150,8 @@ inputs = {
 
     // table for saving failed user data processing requests
     FailedUserDataProcessingStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    FAILED_USER_DATA_PROCESSING_TABLE         = FailedUserDataProcessing
-    
+    FAILED_USER_DATA_PROCESSING_TABLE         = "FailedUserDataProcessing"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
