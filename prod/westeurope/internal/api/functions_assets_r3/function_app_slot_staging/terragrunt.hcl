@@ -77,6 +77,8 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
+    APPINSIGHTS_SAMPLING_PERCENTAGE = "5"
+
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
