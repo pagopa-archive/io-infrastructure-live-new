@@ -45,7 +45,7 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "default-src 'self'; script-src 'report-sample' 'self'; style-src 'report-sample' 'self'; object-src 'none'; base-uri 'self'; connect-src 'self' https://api.io.italia.it; font-src 'self'; frame-src 'self'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; worker-src 'none'"
+        value  = "default-src 'self';connect-src 'self' https://api.io.italia.it;frame-ancestors 'none';object-src 'none'"
     }]
 
   }
