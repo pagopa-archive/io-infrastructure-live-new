@@ -68,6 +68,10 @@ dependency "storage_table_subscriptionsfeedbyday" {
   config_path = "../../storage/table_subscriptionsfeedbyday"
 }
 
+dependency "storage_table_faileduserdataprocessing" {
+  config_path = "../../storage/table_faileduserdataprocessing"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -144,6 +148,10 @@ inputs = {
 
     SUBSCRIPTIONS_FEED_TABLE          = dependency.storage_table_subscriptionsfeedbyday.outputs.name
     SubscriptionFeedStorageConnection = dependency.storage_account.outputs.primary_connection_string
+
+    // table for saving failed user data processing requests
+    FAILED_USER_DATA_PROCESSING_TABLE         = dependency.storage_table_faileduserdataprocessing.outputs.name
+    FailedUserDataProcessingStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     # at the time we applied these chages the value is the following.
