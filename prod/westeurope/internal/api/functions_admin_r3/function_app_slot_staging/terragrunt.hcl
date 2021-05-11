@@ -154,7 +154,7 @@ inputs = {
 
     // table for saving failed user data processing requests
     FAILED_USER_DATA_PROCESSING_TABLE         = dependency.storage_table_faileduserdataprocessing.outputs.name
-    FailedUserDataProcessingStorageConnection = dependency.storage_table_faileduserdataprocessing.outputs.primary_connection_string
+    FailedUserDataProcessingStorageConnection = dependency.storage_account.outputs.primary_connection_string
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
