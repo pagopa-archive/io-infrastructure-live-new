@@ -45,17 +45,17 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "default-src 'self'; script-src 'report-sample' 'self'; style-src 'report-sample' 'self';"
+        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com;"
       },
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "object-src 'none'; base-uri 'self'; connect-src 'self' https://api.io.italia.it;"
+        value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self' https://www.google.com; img-src 'self' data:;"
       },
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "font-src 'self'; frame-src 'self'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; worker-src 'none';"
+        value  = "script-src 'self' https://www.google.com https://www.gstatic.com"
       }
     ]
   }

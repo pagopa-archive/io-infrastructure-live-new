@@ -45,18 +45,18 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "default-src 'self'; script-src 'report-sample' 'self'; style-src 'report-sample' 'self';"
+        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com https://wisp2.pagopa.gov.it;"
       },
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "object-src 'none'; base-uri 'self'; connect-src 'self' https://api.io.italia.it https://wisp2.pagopa.gov.it;"
+        value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self';"
       },
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "font-src 'self'; frame-src 'self'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; worker-src 'none';"
-      }
+        value  = "img-src 'self' data:; script-src 'self'"
+      } 
     ]
   }
   
