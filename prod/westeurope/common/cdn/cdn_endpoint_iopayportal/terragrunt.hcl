@@ -45,9 +45,19 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "default-src 'self';connect-src 'self' https://api.io.italia.it;frame-ancestors 'none';object-src 'none'"
-    }]
-
+        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com;"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy-Report-Only"
+        value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self' https://www.google.com; img-src 'self' data:;"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy-Report-Only"
+        value  = "script-src 'self' https://www.google.com https://www.gstatic.com"
+      }
+    ]
   }
 
   # rewrite HTTP to HTTPS

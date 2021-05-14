@@ -45,9 +45,19 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "default-src 'self';connect-src 'self' https://wisp2.pagopa.gov.it;frame-ancestors 'none';object-src 'none'"
-    }]
-
+        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com https://wisp2.pagopa.gov.it;"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy-Report-Only"
+        value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self';"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy-Report-Only"
+        value  = "img-src 'self' data:; script-src 'self'"
+      } 
+    ]
   }
   
   # rewrite HTTP to HTTPS
