@@ -50,12 +50,12 @@ inputs = {
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self';"
+        value  = "frame-ancestors 'none'; object-src 'none'; frame-src *;"
       },
       {
         action = "Append"
         name   = "Content-Security-Policy-Report-Only"
-        value  = "img-src 'self' data:; script-src 'self'"
+        value  = "img-src 'self' https://wisp2.pagopa.gov.it data:; script-src 'self'; style-src 'self'  'unsafe-inline'; worker-src 'none';"
       } 
     ]
   }
