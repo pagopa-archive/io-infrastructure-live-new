@@ -22,7 +22,7 @@ inputs = {
   key_vault_id                         = dependency.key_vault.outputs.id
   ntfns_namespace_type                 = "NotificationHub"
   ntfns_sku_name                       = "Standard"
-  ntf_apns_credential_application_mode = "Production"
+  ntf_apns_credential_application_mode = "Sandbox"
 }
 
 

@@ -46,6 +46,11 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
 }
 
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+}
+
 inputs = {
   name                = "iopayportal"
   resource_group_name = dependency.resource_group.outputs.resource_name
@@ -58,7 +63,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  pre_warmed_instance_count = 2
+  pre_warmed_instance_count = 1
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
@@ -99,9 +104,9 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
 
-    IO_PAY_CHALLENGE_RESUME_URL = "https://io-p-cdnendpoint-iopay.azureedge.net/response.html?id=idTransaction"
-    IO_PAY_ORIGIN               = "https://io-p-cdnendpoint-iopay.azureedge.net"
-    IO_PAY_XPAY_REDIRECT        = "https://io-p-cdnendpoint-iopay.azureedge.net//response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
+    IO_PAY_CHALLENGE_RESUME_URL = "https://checkout.pagopa.gov.it/response.html?id=idTransaction"
+    IO_PAY_ORIGIN               = "https://checkout.pagopa.gov.it"
+    IO_PAY_XPAY_REDIRECT        = "https://checkout.pagopa.gov.it/response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {
@@ -122,6 +127,8 @@ inputs = {
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
