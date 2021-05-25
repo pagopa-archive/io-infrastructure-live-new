@@ -2,6 +2,10 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+dependency "function_app" {
+  config_path = "../function_app"
+}
+
 # Subnet
 dependency "subnet" {
   config_path = "../subnet"
@@ -51,6 +55,8 @@ inputs = {
   function_app_name          = dependency.function_app.outputs.name
   function_app_resource_name = dependency.function_app.outputs.resource_name
   app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name       = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
 
   pre_warmed_instance_count = 1
 
@@ -105,7 +111,7 @@ inputs = {
 
   allowed_ips = local.app_insights_ips_west_europe
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
 }
 
