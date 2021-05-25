@@ -2,9 +2,19 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
+
+dependency "subnet_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/subnet"
+}
+
 
 # Common
 dependency "application_insights" {
@@ -28,6 +38,7 @@ terraform {
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -54,6 +65,7 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
     // Keepalive fields are all optionals
@@ -69,6 +81,10 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-eucovidcert-content"
+
+    # ----
+
+    SERVICES_API_URL = local.service_api_url
   }
 
   app_settings_secrets = {
@@ -79,6 +95,8 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe

@@ -2,9 +2,23 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
+
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
+dependency "subnet_appbackendl1" {
+  config_path = "../../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../../linux/appbackendl2/subnet"
+}
+
 
 # Common
 dependency "application_insights" {
@@ -22,28 +36,28 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
-  name                = "staging"
-  resource_group_name = dependency.resource_group.outputs.resource_name
+  name                       = "staging"
+  resource_group_name        = dependency.resource_group.outputs.resource_name
+  function_app_name          = dependency.function_app.outputs.name
+  function_app_resource_name = dependency.function_app.outputs.resource_name
+  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
+
+  pre_warmed_instance_count = 1
 
   resources_prefix = {
     function_app     = "fn3"
     app_service_plan = "fn3"
     storage_account  = "fn3"
-  }
-
-  app_service_plan_info = {
-    kind     = "elastic"
-    sku_tier = "ElasticPremium"
-    sku_size = "EP1"
   }
 
   runtime_version = "~3"
@@ -54,6 +68,7 @@ inputs = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
+    FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
     // Keepalive fields are all optionals
@@ -69,6 +84,10 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
+
+    # ----
+
+    SERVICES_API_URL = local.service_api_url
   }
 
   app_settings_secrets = {
@@ -79,10 +98,14 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_azure_devops.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
+  function_app_id = dependency.function_app.outputs.id
 }
 
