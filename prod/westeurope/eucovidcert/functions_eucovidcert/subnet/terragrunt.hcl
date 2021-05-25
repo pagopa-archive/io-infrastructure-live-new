@@ -17,7 +17,7 @@ inputs = {
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
-  address_prefix       = "10.0.124.0/24"
+  address_prefix       = "10.0.126.0/24"
 
   delegation = {
     name = "default"
