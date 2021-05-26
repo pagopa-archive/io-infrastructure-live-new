@@ -14,7 +14,9 @@
   },
   "host": "${host}",
   "basePath": "/api/v1",
-  "schemes": ["https"],
+  "schemes": [
+    "https"
+  ],
   "security": [
     {
       "SubscriptionKey": []
@@ -640,7 +642,9 @@
           "$ref": "#/definitions/FiscalCode"
         }
       },
-      "required": ["fiscal_code"]
+      "required": [
+        "fiscal_code"
+      ]
     },
     "SubscriptionsFeed": {
       "type": "object",
@@ -655,7 +659,11 @@
           "$ref": "#/definitions/SubscriptionsList"
         }
       },
-      "required": ["dateUTC", "subscriptions", "unsubscriptions"]
+      "required": [
+        "dateUTC",
+        "subscriptions",
+        "unsubscriptions"
+      ]
     },
     "SubscriptionsList": {
       "type": "array",
@@ -717,7 +725,12 @@
     "NotificationChannelStatusValue": {
       "type": "string",
       "description": "The status of a notification (one for each channel).\n\"SENT\": the notification was succesfully sent to the channel (ie. email or push notification)\n\"THROTTLED\": a temporary failure caused a retry during the notification processing;\n  the notification associated with this channel will be delayed for a maximum of 7 days or until the message expires\n\"EXPIRED\": the message expired before the notification could be sent;\n  this means that the maximum message time to live was reached; no notification will be sent to this channel\n\"FAILED\": a permanent failure caused the process to exit with an error, no notification will be sent to this channel",
-      "x-extensible-enum": ["SENT", "THROTTLED", "EXPIRED", "FAILED"],
+      "x-extensible-enum": [
+        "SENT",
+        "THROTTLED",
+        "EXPIRED",
+        "FAILED"
+      ],
       "example": "SENT"
     },
     "MessageResponseWithContent": {
@@ -777,7 +790,9 @@
           "example": "ACCEPTED"
         }
       },
-      "required": ["message"]
+      "required": [
+        "message"
+      ]
     },
     "FiscalCode": {
       "type": "string",
@@ -798,13 +813,21 @@
           "type": "array",
           "items": {
             "type": "string",
-            "x-extensible-enum": ["it_IT", "en_GB", "es_ES", "de_DE", "fr_FR"],
+            "x-extensible-enum": [
+              "it_IT",
+              "en_GB",
+              "es_ES",
+              "de_DE",
+              "fr_FR"
+            ],
             "example": "it_IT"
           },
           "description": "Indicates the User's preferred written or spoken languages in order\nof preference. Generally used for selecting a localized User interface. Valid\nvalues are concatenation of the ISO 639-1 two letter language code, an underscore,\nand the ISO 3166-1 2 letter country code; e.g., 'en_US' specifies the language\nEnglish and country US."
         }
       },
-      "required": ["sender_allowed"]
+      "required": [
+        "sender_allowed"
+      ]
     },
     "Timestamp": {
       "type": "string",
@@ -858,7 +881,10 @@
               "default": false
             }
           },
-          "required": ["amount", "notice_number"]
+          "required": [
+            "amount",
+            "notice_number"
+          ]
         },
         "prescription_data": {
           "type": "object",
@@ -892,7 +918,10 @@
           "$ref": "#/definitions/Timestamp"
         }
       },
-      "required": ["subject", "markdown"]
+      "required": [
+        "subject",
+        "markdown"
+      ]
     },
     "NewMessage": {
       "type": "object",
@@ -918,7 +947,9 @@
           "$ref": "#/definitions/FiscalCode"
         }
       },
-      "required": ["content"]
+      "required": [
+        "content"
+      ]
     },
     "CIDR": {
       "type": "string",
@@ -1210,8 +1241,12 @@
       "x-import": "italia-ts-commons/lib/strings"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "securityDefinitions": {
     "SubscriptionKey": {
       "type": "apiKey",
