@@ -7,6 +7,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet/"
+}
+
 dependency "subnet_appbackendl1" {
   config_path = "../../../linux/appbackendl1/subnet"
 }
@@ -95,6 +99,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
   ]
