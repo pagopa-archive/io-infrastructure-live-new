@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.15.0",
     "title": "IO SERVICES API",
     "contact": {
       "name": "Digital Transformation Team",
@@ -14,7 +14,9 @@
   },
   "host": "${host}",
   "basePath": "/api/v1",
-  "schemes": ["https"],
+  "schemes": [
+    "https"
+  ],
   "security": [
     {
       "SubscriptionKey": []
@@ -77,6 +79,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
           },
           "429": {
             "description": "Too many requests"
@@ -150,6 +155,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden."
+          },
           "429": {
             "description": "Too many requests"
           },
@@ -206,6 +214,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden."
+          },
           "404": {
             "description": "No message found for the provided ID.",
             "schema": {
@@ -238,6 +249,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
           },
           "404": {
             "description": "No user found for the provided fiscal code.",
@@ -281,6 +295,9 @@
           "401": {
             "description": "Unauthorized"
           },
+          "403": {
+            "description": "Forbidden."
+          },
           "404": {
             "description": "No user found for the provided fiscal code.",
             "schema": {
@@ -321,6 +338,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
           },
           "404": {
             "description": "Subscriptions feed not available yet.",
@@ -369,6 +389,9 @@
           },
           "401": {
             "description": "Unauthorized."
+          },
+          "403": {
+            "description": "Forbidden."
           },
           "429": {
             "description": "Too many requests."
@@ -640,7 +663,9 @@
           "$ref": "#/definitions/FiscalCode"
         }
       },
-      "required": ["fiscal_code"]
+      "required": [
+        "fiscal_code"
+      ]
     },
     "SubscriptionsFeed": {
       "type": "object",
@@ -655,7 +680,11 @@
           "$ref": "#/definitions/SubscriptionsList"
         }
       },
-      "required": ["dateUTC", "subscriptions", "unsubscriptions"]
+      "required": [
+        "dateUTC",
+        "subscriptions",
+        "unsubscriptions"
+      ]
     },
     "SubscriptionsList": {
       "type": "array",
@@ -717,7 +746,12 @@
     "NotificationChannelStatusValue": {
       "type": "string",
       "description": "The status of a notification (one for each channel).\n\"SENT\": the notification was succesfully sent to the channel (ie. email or push notification)\n\"THROTTLED\": a temporary failure caused a retry during the notification processing;\n  the notification associated with this channel will be delayed for a maximum of 7 days or until the message expires\n\"EXPIRED\": the message expired before the notification could be sent;\n  this means that the maximum message time to live was reached; no notification will be sent to this channel\n\"FAILED\": a permanent failure caused the process to exit with an error, no notification will be sent to this channel",
-      "x-extensible-enum": ["SENT", "THROTTLED", "EXPIRED", "FAILED"],
+      "x-extensible-enum": [
+        "SENT",
+        "THROTTLED",
+        "EXPIRED",
+        "FAILED"
+      ],
       "example": "SENT"
     },
     "MessageResponseWithContent": {
@@ -742,7 +776,7 @@
               "$ref": "#/definitions/MessageContent"
             },
             "sender_service_id": {
-              "type": "string"
+              "$ref": "#/definitions/ServiceId"
             }
           },
           "required": [
@@ -777,13 +811,15 @@
           "example": "ACCEPTED"
         }
       },
-      "required": ["message"]
+      "required": [
+        "message"
+      ]
     },
     "FiscalCode": {
       "type": "string",
       "description": "User's fiscal code.",
       "format": "FiscalCode",
-      "x-import": "italia-ts-commons/lib/strings",
+      "x-import": "@pagopa/ts-commons/lib/strings",
       "example": "SPNDNL80R13C555X"
     },
     "LimitedProfile": {
@@ -798,19 +834,27 @@
           "type": "array",
           "items": {
             "type": "string",
-            "x-extensible-enum": ["it_IT", "en_GB", "es_ES", "de_DE", "fr_FR"],
+            "x-extensible-enum": [
+              "it_IT",
+              "en_GB",
+              "es_ES",
+              "de_DE",
+              "fr_FR"
+            ],
             "example": "it_IT"
           },
           "description": "Indicates the User's preferred written or spoken languages in order\nof preference. Generally used for selecting a localized User interface. Valid\nvalues are concatenation of the ISO 639-1 two letter language code, an underscore,\nand the ISO 3166-1 2 letter country code; e.g., 'en_US' specifies the language\nEnglish and country US."
         }
       },
-      "required": ["sender_allowed"]
+      "required": [
+        "sender_allowed"
+      ]
     },
     "Timestamp": {
       "type": "string",
       "format": "UTCISODateFromString",
       "description": "A date-time field in ISO-8601 format and UTC timezone.",
-      "x-import": "italia-ts-commons/lib/dates",
+      "x-import": "@pagopa/ts-commons/lib/dates",
       "example": "2018-10-13T00:00:00.000Z"
     },
     "TimeToLiveSeconds": {
@@ -858,7 +902,10 @@
               "default": false
             }
           },
-          "required": ["amount", "notice_number"]
+          "required": [
+            "amount",
+            "notice_number"
+          ]
         },
         "prescription_data": {
           "type": "object",
@@ -880,7 +927,7 @@
               "type": "string",
               "description": "Fiscal code of the Doctor that made the prescription.",
               "format": "FiscalCode",
-              "x-import": "italia-ts-commons/lib/strings",
+              "x-import": "@pagopa/ts-commons/lib/strings",
               "example": "TCNZRO80R13C555Y"
             }
           },
@@ -892,7 +939,10 @@
           "$ref": "#/definitions/Timestamp"
         }
       },
-      "required": ["subject", "markdown"]
+      "required": [
+        "subject",
+        "markdown"
+      ]
     },
     "NewMessage": {
       "type": "object",
@@ -918,7 +968,9 @@
           "$ref": "#/definitions/FiscalCode"
         }
       },
-      "required": ["content"]
+      "required": [
+        "content"
+      ]
     },
     "CIDR": {
       "type": "string",
@@ -927,6 +979,69 @@
     },
     "ServicePayload": {
       "description": "A payload used to create/update a service for a user.",
+      "x-one-of": true,
+      "allOf": [
+        {
+          "$ref": "#/definitions/VisibleServicePayload"
+        },
+        {
+          "$ref": "#/definitions/HiddenServicePayload"
+        }
+      ]
+    },
+    "HiddenServicePayload": {
+      "description": "A payload used to create/update a service that is hidden.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "is_visible": {
+              "type": "boolean",
+              "default": false,
+              "enum": [
+                false
+              ],
+              "description": "It indicates that service is hidden"
+            },
+            "service_metadata": {
+              "$ref": "#/definitions/ServiceMetadata"
+            }
+          }
+        }
+      ]
+    },
+    "VisibleServicePayload": {
+      "description": "A payload used to create/update a service that appears in the service list.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "is_visible": {
+              "type": "boolean",
+              "enum": [
+                true
+              ],
+              "description": "It indicates that service appears in the service list"
+            },
+            "service_metadata": {
+              "$ref": "#/definitions/ServiceMetadata"
+            }
+          },
+          "required": [
+            "is_visible",
+            "service_metadata"
+          ]
+        }
+      ]
+    },
+    "CommonServicePayload": {
+      "description": "Common properties for a ServicePayload",
       "type": "object",
       "properties": {
         "service_name": {
@@ -942,7 +1057,7 @@
           "type": "string",
           "description": "Organization fiscal code.",
           "format": "OrganizationFiscalCode",
-          "x-import": "italia-ts-commons/lib/strings",
+          "x-import": "@pagopa/ts-commons/lib/strings",
           "example": "12345678901"
         },
         "authorized_cidrs": {
@@ -959,14 +1074,6 @@
           "type": "boolean",
           "default": false,
           "description": "When true, messages won't trigger email notifications (only push)."
-        },
-        "is_visible": {
-          "type": "boolean",
-          "default": false,
-          "description": "When true the service appears in the service list, otherwise is hidden."
-        },
-        "service_metadata": {
-          "$ref": "#/definitions/ServiceMetadata"
         }
       },
       "required": [
@@ -1210,8 +1317,12 @@
       "x-import": "italia-ts-commons/lib/strings"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "securityDefinitions": {
     "SubscriptionKey": {
       "type": "apiKey",
