@@ -11,6 +11,10 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet/"
+}
+
 dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
 }
@@ -104,6 +108,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id
