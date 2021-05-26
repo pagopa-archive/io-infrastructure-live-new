@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.15.0",
     "title": "IO SERVICES API",
     "contact": {
       "name": "Digital Transformation Team",
@@ -755,7 +755,7 @@
               "$ref": "#/definitions/MessageContent"
             },
             "sender_service_id": {
-              "type": "string"
+              "$ref": "#/definitions/ServiceId"
             }
           },
           "required": [
@@ -798,7 +798,7 @@
       "type": "string",
       "description": "User's fiscal code.",
       "format": "FiscalCode",
-      "x-import": "italia-ts-commons/lib/strings",
+      "x-import": "@pagopa/ts-commons/lib/strings",
       "example": "SPNDNL80R13C555X"
     },
     "LimitedProfile": {
@@ -833,7 +833,7 @@
       "type": "string",
       "format": "UTCISODateFromString",
       "description": "A date-time field in ISO-8601 format and UTC timezone.",
-      "x-import": "italia-ts-commons/lib/dates",
+      "x-import": "@pagopa/ts-commons/lib/dates",
       "example": "2018-10-13T00:00:00.000Z"
     },
     "TimeToLiveSeconds": {
@@ -906,7 +906,7 @@
               "type": "string",
               "description": "Fiscal code of the Doctor that made the prescription.",
               "format": "FiscalCode",
-              "x-import": "italia-ts-commons/lib/strings",
+              "x-import": "@pagopa/ts-commons/lib/strings",
               "example": "TCNZRO80R13C555Y"
             }
           },
@@ -958,6 +958,69 @@
     },
     "ServicePayload": {
       "description": "A payload used to create/update a service for a user.",
+      "x-one-of": true,
+      "allOf": [
+        {
+          "$ref": "#/definitions/VisibleServicePayload"
+        },
+        {
+          "$ref": "#/definitions/HiddenServicePayload"
+        }
+      ]
+    },
+    "HiddenServicePayload": {
+      "description": "A payload used to create/update a service that is hidden.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "is_visible": {
+              "type": "boolean",
+              "default": false,
+              "enum": [
+                false
+              ],
+              "description": "It indicates that service is hidden"
+            },
+            "service_metadata": {
+              "$ref": "#/definitions/ServiceMetadata"
+            }
+          }
+        }
+      ]
+    },
+    "VisibleServicePayload": {
+      "description": "A payload used to create/update a service that appears in the service list.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "is_visible": {
+              "type": "boolean",
+              "enum": [
+                true
+              ],
+              "description": "It indicates that service appears in the service list"
+            },
+            "service_metadata": {
+              "$ref": "#/definitions/ServiceMetadata"
+            }
+          },
+          "required": [
+            "is_visible",
+            "service_metadata"
+          ]
+        }
+      ]
+    },
+    "CommonServicePayload": {
+      "description": "Common properties for a ServicePayload",
       "type": "object",
       "properties": {
         "service_name": {
@@ -973,7 +1036,7 @@
           "type": "string",
           "description": "Organization fiscal code.",
           "format": "OrganizationFiscalCode",
-          "x-import": "italia-ts-commons/lib/strings",
+          "x-import": "@pagopa/ts-commons/lib/strings",
           "example": "12345678901"
         },
         "authorized_cidrs": {
@@ -990,14 +1053,6 @@
           "type": "boolean",
           "default": false,
           "description": "When true, messages won't trigger email notifications (only push)."
-        },
-        "is_visible": {
-          "type": "boolean",
-          "default": false,
-          "description": "When true the service appears in the service list, otherwise is hidden."
-        },
-        "service_metadata": {
-          "$ref": "#/definitions/ServiceMetadata"
         }
       },
       "required": [
