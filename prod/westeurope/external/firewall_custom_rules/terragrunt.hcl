@@ -33,7 +33,7 @@ inputs = {
 
     match_conditions = [{
       operator = "IPMatch"
-      # ip from canada
+      # ip from italy
       match_values = ["5.170.228.15/32"]
       match_variables = [{
         variable_name = "RemoteAddr"
