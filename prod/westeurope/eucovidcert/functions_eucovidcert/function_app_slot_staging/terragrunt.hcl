@@ -103,6 +103,10 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+        DGC_PROD_CLIENT_CERT = "eucovidcert-DGC-PROD-CLIENT-CERT"
+        DGC_PROD_CLIENT_KEY  = "eucovidcert-DGC-PROD-CLIENT-KEY"
+        DGC_UAT_CLIENT_CERT  = "eucovidcert-DGC-UAT-CLIENT-CERT"
+        DGC_UAT_CLIENT_KEY   = "eucovidcert-DGC-UAT-CLIENT-KEY"
     }
   }
 
