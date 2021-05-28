@@ -94,6 +94,7 @@ include {
 locals {
   # allow application insight web test to call the function.
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
@@ -206,9 +207,9 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED = 1
-    FF_CGN_ENABLED   = 1
-    TEST_LOGIN_FISCAL_CODES = "AAAAAA00A00A000B"
+    FF_BONUS_ENABLED        = 1
+    FF_CGN_ENABLED          = 1
+    TEST_LOGIN_FISCAL_CODES = testusersvars.test_users
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
