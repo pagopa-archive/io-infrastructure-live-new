@@ -11,11 +11,12 @@ locals {
   
   # All previous sets, ensembled
   test_users = join(",",
-    flatten(
-      locals.test_users_internal,
-      locals.test_users_internal_load,
-      locals.test_users_store_review,
-      locals.test_users_eu_covid_cert,
+    flatten([
+      local.test_users_internal,
+      local.test_users_internal_load,
+      local.test_users_store_review,
+      local.test_users_eu_covid_cert,
+    ]
     )
   )
 

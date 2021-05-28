@@ -208,7 +208,7 @@ inputs = {
     // Feature flags
     FF_BONUS_ENABLED        = 1
     FF_CGN_ENABLED          = 1
-    TEST_LOGIN_FISCAL_CODES = testusersvars.test_users
+    TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
@@ -246,7 +246,7 @@ inputs = {
       JWT_SUPPORT_TOKEN_PRIVATE_RSA_KEY = "appbackend-JWT-SUPPORT-TOKEN-PRIVATE-RSA-KEY"
 
       // CGN BETA
-      TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
+      TEST_CGN_FISCAL_CODES = "appbackend-TEST-CGN-FISCAL-CODES"
     }
   }
 
