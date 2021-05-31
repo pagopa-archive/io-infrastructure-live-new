@@ -80,6 +80,8 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
     # this app settings is required to solve the issue:
