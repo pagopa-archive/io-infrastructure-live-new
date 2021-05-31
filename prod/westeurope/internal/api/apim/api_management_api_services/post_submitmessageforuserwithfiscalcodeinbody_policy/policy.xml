@@ -3,7 +3,7 @@
         <base />
         <choose>
             <when condition="@(context.User.Groups.Any(g => g.Name == "ApiMessageWriteEUCovidCert"))">
-                <set-backend-service base-url="{{io-fn3-eucovidcert-url}}/test" />
+                <set-backend-service base-url="{{io-fn3-eucovidcert-url}}/api/v1" />
                 <set-header name="x-functions-key-eucovid" exists-action="override">
                     <value>{{io-fn3-eucovidcert-key}}</value>
                 </set-header>
