@@ -2,8 +2,8 @@ dependency "api_management" {
   config_path = "../../api_management"
 }
 
-dependency "api_management_product_io-test-api" {
-  config_path = "../../api_management_product_io-test-api"
+dependency "api_management_product_io-services-api" {
+  config_path = "../../api_management_product_io-services-api"
 }
 
 # Internal
