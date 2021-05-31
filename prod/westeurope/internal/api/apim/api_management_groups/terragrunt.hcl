@@ -120,6 +120,10 @@ inputs = {
     {
       display_name = "ApiNoRateLimit"
       name         = "apinoratelimit"
+    },
+    {
+      display_name = "ApiMessageWriteEUCovidCert"
+      name         = "apimessagewriteeucovidcert"
     }
   ]
 }
