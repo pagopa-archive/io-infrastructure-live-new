@@ -41,6 +41,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
   service_api_url              = local.commonvars.locals.service_api_url
 }
@@ -79,6 +80,9 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
+
+    DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert
+    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
