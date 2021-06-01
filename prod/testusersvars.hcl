@@ -37,6 +37,10 @@ locals {
     flatten([local.test_users_internal_load])
   )
 
+  test_users_store_review_flat = join(",",
+    flatten([local.test_users_store_review])
+  )
+
   test_users_eu_covid_cert_flat = join(",",
     flatten([local.test_users_eu_covid_cert])
   )
