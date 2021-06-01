@@ -93,6 +93,10 @@ inputs = {
     DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
     LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
 
+    DGC_UAT_URL       = "TBD"
+    DGC_LOAD_TEST_URL = "TBD"
+    DGC_PROD_URL      = "TBD"
+
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
