@@ -80,9 +80,9 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
-
-    DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert
-    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load
+    # local.testusersvars.locals.test_users
+    DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
+    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 

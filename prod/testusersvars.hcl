@@ -29,4 +29,16 @@ locals {
     )
   )
 
+  test_users_internal_flat = join(",",
+    flatten([local.test_users_internal])
+  )
+
+  test_users_internal_load_flat = join(",",
+    flatten([local.test_users_internal_load])
+  )
+
+  test_users_eu_covid_cert_flat = join(",",
+    flatten([local.test_users_eu_covid_cert])
+  )
+
 }
