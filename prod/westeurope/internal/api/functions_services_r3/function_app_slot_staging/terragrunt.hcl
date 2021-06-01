@@ -35,6 +35,10 @@ dependency "subnet_apimapi" {
   config_path = "../../../api/apim/subnet"
 }
 
+dependency "subnet_fn3eucovidcert" {
+  config_path = "../../../../eucovidcert/functions_eucovidcert/subnet"
+}
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
@@ -128,6 +132,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_fn3eucovidcert.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]
 
