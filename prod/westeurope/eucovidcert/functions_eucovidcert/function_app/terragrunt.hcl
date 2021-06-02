@@ -19,9 +19,6 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
-dependency "subnet_fnservices" {
-  config_path = "../../../internal/api/functions_services_r3/subnet"
-}
 
 dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
@@ -124,12 +121,10 @@ inputs = {
     dependency.subnet_apimapi.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
-    dependency.subnet_fnservices.outputs.id,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
-
 
