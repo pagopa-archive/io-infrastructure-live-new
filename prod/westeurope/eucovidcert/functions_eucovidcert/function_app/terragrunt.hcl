@@ -19,6 +19,13 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
+dependency "subnet_fnservices" {
+  config_path = "../../../internal/api/functions_services_r3/subnet"
+}
+
+dependency "functions_services" {
+  config_path = "../../../internal/api/functions_services_r3/function_app"
+}
 
 # Common
 dependency "application_insights" {
@@ -98,7 +105,7 @@ inputs = {
 
     # ----
 
-    SERVICES_API_URL = local.service_api_url
+    FNSERVICES_API_URL = "http://${dependency.functions_services.outputs.default_hostname}/api/v1"
   }
 
   app_settings_secrets = {
@@ -108,7 +115,7 @@ inputs = {
         DGC_PROD_CLIENT_KEY         = "eucovidcert-DGC-PROD-CLIENT-KEY"
         DGC_UAT_CLIENT_CERT         = "eucovidcert-DGC-UAT-CLIENT-CERT"
         DGC_UAT_CLIENT_KEY          = "eucovidcert-DGC-UAT-CLIENT-KEY"
-        fn3services-KEY-EUCOVIDCERT = "fn3services-KEY-EUCOVIDCERT"
+        FNSERVICES_API_KEY          = "fn3services-KEY-EUCOVIDCERT"
     }
   }
 
@@ -117,6 +124,7 @@ inputs = {
     dependency.subnet_apimapi.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
+    dependency.subnet_fnservices.outputs.id,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
