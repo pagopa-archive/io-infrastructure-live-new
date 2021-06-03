@@ -102,7 +102,7 @@ inputs = {
 
     # ----
 
-    FNSERVICES_API_URL = "http://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
   }
 
   app_settings_secrets = {
