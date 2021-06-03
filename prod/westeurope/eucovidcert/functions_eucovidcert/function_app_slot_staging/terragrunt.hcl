@@ -59,7 +59,6 @@ locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
-  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
