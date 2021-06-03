@@ -69,7 +69,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      APP_CONFIGURATION = "eucovidcert-DGC-MOCK-APP-CONFIGURATION"
+      ConfigConnectionString   = "eucovidcert-DGC-MOCK-APP-CONFIGURATION"
       DGC_LOAD_TEST_CLIENT_KEY = "eucovidcert-DGC-LOAD-TEST-SIGNER-CA"
     }
   }
