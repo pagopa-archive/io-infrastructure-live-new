@@ -158,6 +158,8 @@ inputs = {
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
     FF_LOCAL_SERVICES_LIMIT = "0"
+    # Queue new users to notify to EUCOVIDCERT DGC
+    FF_NEW_USERS_EUCOVIDCERT_ENABLED = "false"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
