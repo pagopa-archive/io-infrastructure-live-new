@@ -44,17 +44,17 @@ inputs = {
       # Content-Security-Policy (in Report mode)
       {
         action = "Overwrite"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com;"
       },
       {
         action = "Append"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "frame-ancestors 'none'; object-src 'none'; frame-src 'self' https://www.google.com; img-src 'self' data:;"
       },
       {
         action = "Append"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "script-src 'self' https://www.google.com https://www.gstatic.com"
       }
     ]
