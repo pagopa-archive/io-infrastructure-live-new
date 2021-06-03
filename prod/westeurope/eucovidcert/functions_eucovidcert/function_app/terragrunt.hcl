@@ -19,7 +19,6 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
-
 dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
 }

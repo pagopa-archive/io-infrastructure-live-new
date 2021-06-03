@@ -32,9 +32,8 @@ dependency "subnet_fnservices" {
 }
 
 dependency "functions_services" {
-  config_path = "../../../internal/api/functions_services_r3/function_app_slot_staging"
+  config_path = "../../../internal/api/functions_services_r3/function_app"
 }
-
 
 # Common
 dependency "application_insights" {
