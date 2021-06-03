@@ -45,11 +45,11 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
+    FUNCTIONS_WORKER_RUNTIME       = "dotnet"
+    # WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
-    NODE_ENV                       = "production"
+    # NODE_ENV                       = "production"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -70,6 +70,7 @@ inputs = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
       APP_CONFIGURATION = "eucovidcert-DGC-MOCK-APP-CONFIGURATION"
+      DGC_LOAD_TEST_CLIENT_KEY = "eucovidcert-DGC-LOAD-TEST-SIGNER-CA"
     }
   }
 }
