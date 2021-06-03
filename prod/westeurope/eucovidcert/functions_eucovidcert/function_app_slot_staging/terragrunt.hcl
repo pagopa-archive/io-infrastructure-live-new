@@ -102,7 +102,7 @@ inputs = {
     LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
 
     DGC_UAT_URL       = "TBD"
-    DGC_LOAD_TEST_URL = "TBD"
+    DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
     DGC_PROD_URL      = "TBD"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
@@ -121,11 +121,13 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-        DGC_PROD_CLIENT_CERT        = "eucovidcert-DGC-PROD-CLIENT-CERT"
-        DGC_PROD_CLIENT_KEY         = "eucovidcert-DGC-PROD-CLIENT-KEY"
-        DGC_UAT_CLIENT_CERT         = "eucovidcert-DGC-UAT-CLIENT-CERT"
-        DGC_UAT_CLIENT_KEY          = "eucovidcert-DGC-UAT-CLIENT-KEY"
-        FNSERVICES_API_KEY          = "fn3services-KEY-EUCOVIDCERT"
+        DGC_PROD_CLIENT_CERT      = "eucovidcert-DGC-PROD-CLIENT-CERT"
+        DGC_PROD_CLIENT_KEY       = "eucovidcert-DGC-PROD-CLIENT-KEY"
+        DGC_UAT_CLIENT_CERT       = "eucovidcert-DGC-UAT-CLIENT-CERT"
+        DGC_UAT_CLIENT_KEY        = "eucovidcert-DGC-UAT-CLIENT-KEY"
+        DGC_LOAD_TEST_CLIENT_KEY  = "eucovidcert-DGC-LOAD-TEST-CLIENT-KEY"
+        DGC_LOAD_TEST_CLIENT_CERT = "eucovidcert-DGC-LOAD-TEST-CLIENT-CERT"
+        FNSERVICES_API_KEY        = "fn3services-KEY-EUCOVIDCERT"
     }
   }
 
