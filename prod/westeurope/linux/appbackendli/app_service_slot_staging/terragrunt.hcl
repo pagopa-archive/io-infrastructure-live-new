@@ -163,10 +163,16 @@ inputs = {
     BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
     CGN_API_URL   = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
 
+    // THIRD PARTY APIS
+    HERE_AUTOCOMPLETE_API_URL = "https://autocomplete.search.hereapi.com"
+    HERE_GEOCODE_API_URL      = "https://geocode.search.hereapi.com"
+    HERE_LOOKUP_API_URL       = "https://lookup.search.hereapi.com"
+
     // EXPOSED API
     API_BASE_PATH       = "/api/v1"
     BONUS_API_BASE_PATH = "/api/v1"
     CGN_API_BASE_PATH   = "/api/v1"
+    GEO_API_BASE_PATH   = "/api/v1"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -242,6 +248,9 @@ inputs = {
 
       // CGN BETA
       TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
+
+      // HERE APIS
+      HERE_API_KEY          = "appbackend-HERE-API-KEY"
     }
   }
 
