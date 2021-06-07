@@ -102,9 +102,9 @@ inputs = {
     DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
     LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
 
-    DGC_UAT_URL       = "TBD"
+    DGC_UAT_URL       = "https://servizi-pnval.dgc.gov.it"
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
-    DGC_PROD_URL      = "TBD"
+    DGC_PROD_URL      = "https://servizi-pn.dgc.gov.it"
     
     // Events configs
     EventsQueueStorageConnection              = dependency.storage_account_apievents.outputs.primary_connection_string
