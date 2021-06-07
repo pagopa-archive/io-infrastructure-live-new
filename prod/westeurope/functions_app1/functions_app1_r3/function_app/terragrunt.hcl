@@ -52,6 +52,14 @@ dependency "storage_table_subscriptionsfeedbyday" {
   config_path = "../../../internal/api/storage/table_subscriptionsfeedbyday"
 }
 
+dependency "storage_account_apievents" {
+  config_path = "../../../internal/api/storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
+}
+
 # operation
 dependency "storage_account_logs" {
   config_path = "../../../operations/storage_account_logs/account"
@@ -148,6 +156,9 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
+    // Events configs
+    EventsQueueStorageConnection = dependency.storage_apievents.outputs.primary_connection_string
+
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     // Disable functions
@@ -182,9 +193,9 @@ inputs = {
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
     FF_LOCAL_SERVICES_LIMIT = "0"
-    # Queue new users to notify to EUCOVIDCERT DGC
+    # eucovidcert configs
     FF_NEW_USERS_EUCOVIDCERT_ENABLED = "false"
-    EUCOVIDCERT_NOTIFY_QUEUE_NAME    = ""
+    EUCOVIDCERT_NOTIFY_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
 

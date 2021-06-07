@@ -39,6 +39,14 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
+dependency "storage_account_apievents" {
+  config_path = "../../storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../storage_apievents/queue_eucovidcert-profile-created"
+}
+
 # Linux
 dependency "subnet_appbackend_l1" {
   config_path = "../../../../linux/appbackendl1/subnet"
@@ -142,6 +150,9 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
+    // Events configs
+    EventsQueueStorageConnection = dependency.storage_apievents.outputs.primary_connection_string
+
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     # Disabled functions on slot - trigger, queue and timer
@@ -154,6 +165,9 @@ inputs = {
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
     FF_LOCAL_SERVICES_LIMIT = "0"
+    # eucovidcert configs
+    FF_NEW_USERS_EUCOVIDCERT_ENABLED = "false"
+    EUCOVIDCERT_NOTIFY_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
