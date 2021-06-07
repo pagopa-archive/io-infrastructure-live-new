@@ -2,11 +2,19 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "storage_account_eucovidcert" {
+  config_path = "../../storage_eucovidcert/account"
+}
+
+dependency "storage_account_eucovidcert_queue_notify-new-profile" {
+  config_path = "../../storage_eucovidcert/queue_notify-new-profile"
+}
+
+# Internal
 dependency "subnet_apimapi" {
   config_path = "../../../internal/api/apim/subnet/"
 }
@@ -21,6 +29,14 @@ dependency "subnet_appbackendl2" {
 
 dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
+}
+
+dependency "storage_account_apievents" {
+  config_path = "../../../internal/api/storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
 }
 
 # Common
@@ -90,6 +106,12 @@ inputs = {
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
     DGC_PROD_URL      = "TBD"
     
+    // Events configs
+    EventsQueueStorageConnection              = dependency.storage_account_apievents.outputs.primary_connection_string
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    QueueStorageConnection                    = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
+
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5

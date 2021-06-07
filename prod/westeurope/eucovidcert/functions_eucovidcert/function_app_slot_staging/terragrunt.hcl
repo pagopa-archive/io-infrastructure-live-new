@@ -6,17 +6,21 @@ dependency "function_app" {
   config_path = "../function_app"
 }
 
-# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "subnet_apimapi" {
-  config_path = "../../../internal/api/apim/subnet/"
+dependency "storage_account_eucovidcert" {
+  config_path = "../../storage_account_eucovidcert/account"
 }
 
-dependency "subnet_azure_devops" {
-  config_path = "../../../common/subnet_azure_devops"
+dependency "storage_account_eucovidcert_queue_notify-new-profile" {
+  config_path = "../../storage_account_eucovidcert/queue_notify-new-profile"
+}
+
+# Internal
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet/"
 }
 
 dependency "subnet_appbackendl1" {
@@ -35,6 +39,14 @@ dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
 }
 
+dependency "storage_account_apievents" {
+  config_path = "../../../internal/api/storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
+}
+
 # Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -42,6 +54,10 @@ dependency "application_insights" {
 
 dependency "key_vault" {
   config_path = "../../../common/key_vault"
+}
+
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
 }
 
 
@@ -102,6 +118,12 @@ inputs = {
     DGC_UAT_URL       = "TBD"
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
     DGC_PROD_URL      = "TBD"
+
+    // Events configs
+    EventsQueueStorageConnection              = dependency.storage_account_apievents.outputs.primary_connection_string
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    QueueStorageConnection                    = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 

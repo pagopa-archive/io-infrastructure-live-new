@@ -194,8 +194,8 @@ inputs = {
     # Limit the number of local services
     FF_LOCAL_SERVICES_LIMIT = "0"
     # eucovidcert configs
-    FF_NEW_USERS_EUCOVIDCERT_ENABLED = "false"
-    EUCOVIDCERT_NOTIFY_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "false"
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
 
