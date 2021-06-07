@@ -44,17 +44,17 @@ inputs = {
       # Content-Security-Policy (in Report mode)
       {
         action = "Overwrite"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com https://wisp2.pagopa.gov.it;"
       },
       {
         action = "Append"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "frame-ancestors 'none'; object-src 'none'; frame-src *;"
       },
       {
         action = "Append"
-        name   = "Content-Security-Policy-Report-Only"
+        name   = "Content-Security-Policy"
         value  = "img-src 'self' https://wisp2.pagopa.gov.it data:; script-src 'self'; style-src 'self'  'unsafe-inline'; worker-src 'none';"
       } 
     ]

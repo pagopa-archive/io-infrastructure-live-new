@@ -1,0 +1,21 @@
+<policies>
+    <inbound>
+        <base />
+        <choose>
+            <when condition="@(context.User.Groups.Any(g => g.Name == "ApiMessageWriteEUCovidCert"))">
+                <return-response>
+                    <set-status code="403" reason="Unauthorized, please use submitMessageforUserWithFiscalCodeInBody Api" />
+                </return-response>
+            </when>
+        </choose>
+    </inbound>
+    <outbound>
+        <base />
+    </outbound>
+    <backend>
+        <base />
+    </backend>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

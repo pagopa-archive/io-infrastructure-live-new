@@ -27,6 +27,14 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
+dependency "subnet_fnservices" {
+  config_path = "../../../internal/api/functions_services_r3/subnet"
+}
+
+dependency "functions_services" {
+  config_path = "../../../internal/api/functions_services_r3/function_app_slot_staging"
+}
+
 
 # Common
 dependency "application_insights" {
@@ -49,8 +57,8 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
-  service_api_url              = local.commonvars.locals.service_api_url
 }
 
 inputs = {
@@ -89,6 +97,13 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
+    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
+
+    DGC_UAT_URL       = "TBD"
+    DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
+    DGC_PROD_URL      = "TBD"
+
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
@@ -99,12 +114,19 @@ inputs = {
 
     # ----
 
-    SERVICES_API_URL = local.service_api_url
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+        DGC_PROD_CLIENT_CERT      = "eucovidcert-DGC-PROD-CLIENT-CERT"
+        DGC_PROD_CLIENT_KEY       = "eucovidcert-DGC-PROD-CLIENT-KEY"
+        DGC_UAT_CLIENT_CERT       = "eucovidcert-DGC-UAT-CLIENT-CERT"
+        DGC_UAT_CLIENT_KEY        = "eucovidcert-DGC-UAT-CLIENT-KEY"
+        DGC_LOAD_TEST_CLIENT_KEY  = "eucovidcert-DGC-LOAD-TEST-CLIENT-KEY"
+        DGC_LOAD_TEST_CLIENT_CERT = "eucovidcert-DGC-LOAD-TEST-CLIENT-CERT"
+        FNSERVICES_API_KEY        = "fn3services-KEY-EUCOVIDCERT"
     }
   }
 

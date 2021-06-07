@@ -22,6 +22,10 @@ dependency "functions_iopayportal" {
   config_path = "../../functions_iopayportal/function_app"
 }
 
+dependency "functions_eucovidcert" {
+  config_path = "../../../../eucovidcert/functions_eucovidcert/function_app"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -82,6 +86,7 @@ inputs = {
     io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
     io-fn-pay-portal-url      = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
     io-fn-cgnmerchant-url     = "https://${dependency.functions_cgnmerchant.outputs.default_hostname}"
+    io-fn3-eucovidcert-url    = "https://${dependency.functions_eucovidcert.outputs.default_hostname}"
   }
 
   named_values_secrets = {
@@ -96,6 +101,7 @@ inputs = {
       io-fn3-backoffice-key                         = "fn3backoffice-KEY-APIM"
       io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
       io-fn-cgnmerchant-key                         = "io-fn-cgnmerchant-KEY-APIM"
+      io-fn3-eucovidcert-key                        = "io-fn3-eucovidcert-KEY-APIM"
     }
   }
 

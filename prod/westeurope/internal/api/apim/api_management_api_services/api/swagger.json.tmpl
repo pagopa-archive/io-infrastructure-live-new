@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.15.0",
+    "version": "1.16.0",
     "title": "IO SERVICES API",
     "contact": {
       "name": "Digital Transformation Team",
@@ -933,6 +933,18 @@
           },
           "required": [
             "nre"
+          ]
+        },
+        "eu_covid_cert": {
+          "type": "object",
+          "description": "Paylod with access token to retrieve a EU Covid Certificate",
+          "properties": {
+            "auth_code": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "auth_code"
           ]
         },
         "due_date": {
