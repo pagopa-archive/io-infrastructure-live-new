@@ -93,9 +93,11 @@ inputs = {
           rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
           disabled_rules = [
             "942100",
+            "942120",
             "942190",
             "942200",
             "942210",
+            "942240",
             "942250",
             "942260",
             "942330",
