@@ -30,6 +30,11 @@ dependency "functions_cgn" {
   config_path = "../../../cgn/functions_cgn/function_app"
 }
 
+# EUCovidCert Api
+dependency "functions_eucovidcert" {
+  config_path = "../../../eucovidcert/functions_eucovidcert/function_app"
+}
+
 # Push notifications origin
 dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
@@ -158,14 +163,16 @@ inputs = {
     TOKEN_DURATION_IN_SECONDS = "2592000"
 
     // FUNCTIONS
-    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
-    BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
-    CGN_API_URL   = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    API_URL             = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
+    BONUS_API_URL       = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
+    CGN_API_URL         = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    EUCOVIDCERT_API_URL = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH       = "/api/v1"
-    BONUS_API_BASE_PATH = "/api/v1"
-    CGN_API_BASE_PATH   = "/api/v1"
+    API_BASE_PATH             = "/api/v1"
+    BONUS_API_BASE_PATH       = "/api/v1"
+    CGN_API_BASE_PATH         = "/api/v1"
+    EUCOVIDCERT_API_BASE_PATH = "/api/v1"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -219,9 +226,10 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY       = "funcapp-KEY-APPBACKEND"
-      BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
-      CGN_API_KEY   = "funccgn-KEY-APPBACKEND"
+      API_KEY             = "funcapp-KEY-APPBACKEND"
+      BONUS_API_KEY       = "funcbonus-KEY-APPBACKEND"
+      CGN_API_KEY         = "funccgn-KEY-APPBACKEND"
+      EUCOVIDCERT_API_KEY = "funceucovidcert-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
