@@ -25,24 +25,31 @@ inputs = {
   }
 
   custom_rules = [
-  {
-    name      = "block-ips"
-    priority  = 1
-    rule_type = "MatchRule"
-    action    = "Block"
+    {
+      name      = "block-ips"
+      priority  = 1
+      rule_type = "MatchRule"
+      action    = "Block"
 
-    match_conditions = [{
-      operator = "IPMatch"
-      # ip from italy
-      match_values = ["5.170.228.15/32"]
-      match_variables = [{
-        variable_name = "RemoteAddr"
-        selector      = null
+      match_conditions = [{
+        operator = "IPMatch"
+        match_values = [
+          "5.170.228.15/32",
+          "5.170.228.70/32",
+          "5.170.225.166/32",
+          "5.170.224.137/32",
+          "5.171.44.52/32",
+          "167.99.51.14/32",
+          "82.52.27.54/32"
+        ]
+        match_variables = [{
+          variable_name = "RemoteAddr"
+          selector      = null
+        }]
+        negation_condition = false
+        transforms         = []
       }]
-      negation_condition = false
-      transforms         = []
-    }]
-  },
+    },
   ]
 
   managed_rules = {
@@ -86,9 +93,11 @@ inputs = {
           rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
           disabled_rules = [
             "942100",
+            "942120",
             "942190",
             "942200",
             "942210",
+            "942240",
             "942250",
             "942260",
             "942330",
