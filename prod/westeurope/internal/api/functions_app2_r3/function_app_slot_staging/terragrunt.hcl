@@ -151,7 +151,7 @@ inputs = {
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
     // Events configs
-    EventsQueueStorageConnection = dependency.storage_apievents.outputs.primary_connection_string
+    EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
