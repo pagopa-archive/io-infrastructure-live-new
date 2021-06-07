@@ -6,17 +6,21 @@ dependency "function_app" {
   config_path = "../function_app"
 }
 
-# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "subnet_apimapi" {
-  config_path = "../../../internal/api/apim/subnet/"
+dependency "storage_account_eucovidcert" {
+  config_path = "../../storage_eucovidcert/account"
 }
 
-dependency "subnet_azure_devops" {
-  config_path = "../../../common/subnet_azure_devops"
+dependency "storage_account_eucovidcert_queue_notify-new-profile" {
+  config_path = "../../storage_eucovidcert/queue_notify-new-profile"
+}
+
+# Internal
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet/"
 }
 
 dependency "subnet_appbackendl1" {
@@ -32,9 +36,16 @@ dependency "subnet_fnservices" {
 }
 
 dependency "functions_services" {
-  config_path = "../../../internal/api/functions_services_r3/function_app_slot_staging"
+  config_path = "../../../internal/api/functions_services_r3/function_app"
 }
 
+dependency "storage_account_apievents" {
+  config_path = "../../../internal/api/storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
+}
 
 # Common
 dependency "application_insights" {
@@ -43,6 +54,10 @@ dependency "application_insights" {
 
 dependency "key_vault" {
   config_path = "../../../common/key_vault"
+}
+
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
 }
 
 
@@ -100,9 +115,15 @@ inputs = {
     DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
     LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
 
-    DGC_UAT_URL       = "TBD"
+    DGC_UAT_URL       = "https://servizi-pnval.dgc.gov.it"
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
-    DGC_PROD_URL      = "TBD"
+    DGC_PROD_URL      = "https://servizi-pn.dgc.gov.it"
+
+    // Events configs
+    EventsQueueStorageConnection              = dependency.storage_account_apievents.outputs.primary_connection_string
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    QueueStorageConnection                    = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
