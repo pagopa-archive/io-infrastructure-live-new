@@ -31,10 +31,6 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
-dependency "subnet_fnservices" {
-  config_path = "../../../internal/api/functions_services_r3/subnet"
-}
-
 dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
 }
@@ -58,6 +54,11 @@ dependency "key_vault" {
 
 dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
+}
+
+# Services
+dependency "functions_services01" {
+  config_path = "../../../services/functions_services01_r3/function_app"
 }
 
 
@@ -135,7 +136,7 @@ inputs = {
 
     # ----
 
-    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1,https://${dependency.functions_services01.outputs.default_hostname}/api/v1"
   }
 
   app_settings_secrets = {

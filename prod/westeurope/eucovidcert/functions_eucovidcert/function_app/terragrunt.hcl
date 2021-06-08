@@ -48,6 +48,11 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
+# Services
+dependency "functions_services01" {
+  config_path = "../../../services/functions_services01_r3/function_app"
+}
+
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -122,7 +127,7 @@ inputs = {
 
     # ----
 
-    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1,https://${dependency.functions_services01.outputs.default_hostname}/api/v1"
   }
 
   app_settings_secrets = {
