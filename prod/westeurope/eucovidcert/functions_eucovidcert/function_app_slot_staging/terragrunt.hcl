@@ -143,10 +143,13 @@ inputs = {
     map = {
         DGC_PROD_CLIENT_CERT      = "eucovidcert-DGC-PROD-CLIENT-CERT"
         DGC_PROD_CLIENT_KEY       = "eucovidcert-DGC-PROD-CLIENT-KEY"
+        DGC_PROD_CLIENT_CA       = "eucovidcert-DGC-PROD-CLIENT-CA"
         DGC_UAT_CLIENT_CERT       = "eucovidcert-DGC-UAT-CLIENT-CERT"
         DGC_UAT_CLIENT_KEY        = "eucovidcert-DGC-UAT-CLIENT-KEY"
+        DGC_UAT_CLIENT_CA         = "eucovidcert-DGC-UAT-CLIENT-CA"
         DGC_LOAD_TEST_CLIENT_KEY  = "eucovidcert-DGC-LOAD-TEST-CLIENT-KEY"
         DGC_LOAD_TEST_CLIENT_CERT = "eucovidcert-DGC-LOAD-TEST-CLIENT-CERT"
+        DGC_LOAD_TEST_CLIENT_CA   = "eucovidcert-DGC-LOAD-TEST-CLIENT-CA"
         FNSERVICES_API_KEY        = "fn3services-KEY-EUCOVIDCERT"
     }
   }
