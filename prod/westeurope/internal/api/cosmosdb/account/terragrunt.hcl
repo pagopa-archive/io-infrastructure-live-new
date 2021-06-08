@@ -19,6 +19,10 @@ dependency "subnet_fn_service" {
   config_path = "../../functions_services_r3/subnet"
 }
 
+dependency "subnet_fn_service01" {
+  config_path = "../../../../services/functions_services01_r3/subnet"
+}
+
 # Operation logic app.
 
 dependency "logic_app_get_profiles" {
@@ -80,6 +84,7 @@ inputs = {
     dependency.subnet_fn_assets.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_service.outputs.id,
+    dependency.subnet_fn_service01.outputs.id,
   ]
 
   */
