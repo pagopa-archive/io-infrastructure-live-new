@@ -191,7 +191,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix},${dependency.subnet_fn3services01.outputs.address_prefix})"
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix},${dependency.subnet_fn3services01.outputs.address_prefix}"
 
     // LOCK / UNLOCK SESSION ENDPOINTS
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
