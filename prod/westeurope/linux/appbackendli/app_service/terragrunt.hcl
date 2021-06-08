@@ -176,10 +176,10 @@ inputs = {
     EUCOVIDCERT_API_URL   = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH               = "/api/v1"
-    BONUS_API_BASE_PATH         = "/api/v1"
-    CGN_API_BASE_PATH           = "/api/v1"
-    EUCOVIDCERT_API_BASE_PATH   = "/api/v1"
+    API_BASE_PATH             = "/api/v1"
+    BONUS_API_BASE_PATH       = "/api/v1"
+    CGN_API_BASE_PATH         = "/api/v1"
+    EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname

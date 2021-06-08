@@ -172,7 +172,7 @@ inputs = {
     API_BASE_PATH             = "/api/v1"
     BONUS_API_BASE_PATH       = "/api/v1"
     CGN_API_BASE_PATH         = "/api/v1"
-    EUCOVIDCERT_API_BASE_PATH = "/api/v1"
+    EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -209,6 +209,7 @@ inputs = {
     // Feature flags
     FF_BONUS_ENABLED        = 1
     FF_CGN_ENABLED          = 1
+    FF_EUCOVIDCERT_ENABLED  = 1
     TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
