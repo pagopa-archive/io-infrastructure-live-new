@@ -67,6 +67,10 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  testusersvars = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
+}
+
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
@@ -134,12 +138,12 @@ inputs = {
     # Variable used during transition to new NH management
 
     # Possible values : "none" | "all" | "beta" | "canary"
-    NH_PARTITION_FEATURE_FLAG             = "all"
-    BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_beta_test_users.outputs.primary_connection_string
-    BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_table_notificationhub.outputs.name
-    
+    NH_PARTITION_FEATURE_FLAG            = "all"
+    BETA_USERS_STORAGE_CONNECTION_STRING = dependency.storage_beta_test_users.outputs.primary_connection_string
+    BETA_USERS_TABLE_NAME                = dependency.storage_beta_test_users_table_notificationhub.outputs.name
+
     # Takes ~6,25% of users
-    CANARY_USERS_REGEX                    = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
+    CANARY_USERS_REGEX = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
     # ------------------------------------------------------------------------------
 
     // Disable functions
@@ -158,7 +162,7 @@ inputs = {
       NH2_ENDPOINT      = "common-partition-2-AZURE-NH-ENDPOINT"
       NH3_ENDPOINT      = "common-partition-3-AZURE-NH-ENDPOINT"
       NH4_ENDPOINT      = "common-partition-4-AZURE-NH-ENDPOINT"
-    }     
+    }
   }
 
   allowed_subnets = [
@@ -168,6 +172,6 @@ inputs = {
 
   allowed_ips = []
 
-  subnet_id = dependency.subnet.outputs.id
+  subnet_id       = dependency.subnet.outputs.id
   function_app_id = dependency.function_app.outputs.id
 }
