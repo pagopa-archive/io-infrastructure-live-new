@@ -65,6 +65,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
@@ -103,6 +104,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    TEST_LOGIN_FISCAL_CODES = test_users = join(",", local.testusersvars.test_users_internal_load)
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
