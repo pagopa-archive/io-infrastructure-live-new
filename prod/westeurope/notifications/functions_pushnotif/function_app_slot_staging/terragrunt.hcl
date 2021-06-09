@@ -105,6 +105,8 @@ inputs = {
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
+    FISCAL_CODE_NOTIFICATION_BLACKLIST = join(",", local.testusersvars.test_users_internal_load)
+
     // activity default retry attempts
     RETRY_ATTEMPT_NUMBER = 10
 
