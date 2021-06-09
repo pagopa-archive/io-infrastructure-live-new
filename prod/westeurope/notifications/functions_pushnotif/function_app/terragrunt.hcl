@@ -104,7 +104,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    FISCAL_CODE_NOTIFICATION_BLACKLIST = join(",", local.testusersvars.test_users_internal_load)
+    FISCAL_CODE_NOTIFICATION_BLACKLIST = join(",", local.testusersvars.locals.test_users_internal_load)
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
