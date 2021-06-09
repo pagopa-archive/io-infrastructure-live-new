@@ -78,15 +78,16 @@ inputs = {
   }
 
   named_values_map = {
-    io-fn3-admin-url          = "https://${dependency.functions_admin_r3.outputs.default_hostname}"
-    io-fn3-public-url         = "https://${dependency.functions_public_r3.outputs.default_hostname}"
-    io-functions-test-url     = "https://${dependency.functions_test.outputs.default_hostname}"
-    io-fn3-services-url       = "https://${dependency.functions_services_r3.outputs.default_hostname}"
-    io-functions-bonusapi-url = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
-    io-fn3-backoffice-url     = "https://${dependency.functions_backoffice.outputs.default_hostname}"
-    io-fn-pay-portal-url      = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
-    io-fn-cgnmerchant-url     = "https://${dependency.functions_cgnmerchant.outputs.default_hostname}"
-    io-fn3-eucovidcert-url    = "https://${dependency.functions_eucovidcert.outputs.default_hostname}"
+    io-fn3-admin-url            = "https://${dependency.functions_admin_r3.outputs.default_hostname}"
+    io-fn3-public-url           = "https://${dependency.functions_public_r3.outputs.default_hostname}"
+    io-functions-test-url       = "https://${dependency.functions_test.outputs.default_hostname}"
+    io-fn3-services-url         = "https://${dependency.functions_services_r3.outputs.default_hostname}"
+    io-functions-bonusapi-url   = "https://${dependency.functions_bonusapi.outputs.default_hostname}"
+    io-fn3-backoffice-url       = "https://${dependency.functions_backoffice.outputs.default_hostname}"
+    io-fn-pay-portal-url        = "https://${dependency.functions_iopayportal.outputs.default_hostname}"
+    io-fn-cgnmerchant-url       = "https://${dependency.functions_cgnmerchant.outputs.default_hostname}"
+    io-fn3-eucovidcert-url      = "https://${dependency.functions_eucovidcert.outputs.default_hostname}"
+    io-fn-cgnoperatorsearch-url = "https://cgnonboardingportal-p-os.azurewebsites.net"
   }
 
   named_values_secrets = {
@@ -102,6 +103,7 @@ inputs = {
       io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
       io-fn-cgnmerchant-key                         = "io-fn-cgnmerchant-KEY-APIM"
       io-fn3-eucovidcert-key                        = "io-fn3-eucovidcert-KEY-APIM"
+      io-fn-cgnoperatorsearch-key                   = "io-fn-cgnoperatorsearch-KEY-APIM"
     }
   }
 
