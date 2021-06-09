@@ -104,7 +104,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    TEST_LOGIN_FISCAL_CODES = test_users = join(",", local.testusersvars.test_users_internal_load)
+    FISCAL_CODE_NOTIFICATION_BLACKLIST = join(",", local.testusersvars.test_users_internal_load)
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
@@ -138,12 +138,12 @@ inputs = {
     # Variable used during transition to new NH management
 
     # Possible values : "none" | "all" | "beta" | "canary"
-    NH_PARTITION_FEATURE_FLAG             = "all"
-    BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_beta_test_users.outputs.primary_connection_string
-    BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_table_notificationhub.outputs.name
-    
+    NH_PARTITION_FEATURE_FLAG            = "all"
+    BETA_USERS_STORAGE_CONNECTION_STRING = dependency.storage_beta_test_users.outputs.primary_connection_string
+    BETA_USERS_TABLE_NAME                = dependency.storage_beta_test_users_table_notificationhub.outputs.name
+
     # Takes ~6,25% of users
-    CANARY_USERS_REGEX                    = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
+    CANARY_USERS_REGEX = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
     # ------------------------------------------------------------------------------
 
     // Disable functions
