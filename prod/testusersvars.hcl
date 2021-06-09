@@ -4,7 +4,8 @@ locals {
   test_users_internal = []
   # A list of fiscal codes to be used by internal team for load tests on IO
   test_users_internal_load = ["AAAAAA00A00A000C",
-                              "AAAAAA00A00A000D"]
+                              "AAAAAA00A00A000D",
+                              "AAAAAA00A00A000E",]
   # A list of fiscal codes to be used by app stores to review IO App
   test_users_store_review = ["AAAAAA00A00A000B"]
   # A list of fiscal codes to be used to test EU Covid Certificate initiative on IO  
