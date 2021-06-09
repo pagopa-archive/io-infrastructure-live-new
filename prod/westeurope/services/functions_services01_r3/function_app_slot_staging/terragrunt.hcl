@@ -1,7 +1,3 @@
-dependency "resource_group" {
-  config_path = "../../resource_group"
-}
-
 dependency "function_app" {
   config_path = "../function_app"
 }
@@ -10,8 +6,11 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
-# Internal
+dependency "resource_group" {
+  config_path = "../../resource_group"
+}
 
+# internal
 dependency "cosmosdb_account" {
   config_path = "../../../internal/api/cosmosdb/account"
 }
@@ -32,44 +31,13 @@ dependency "storage_table_subscriptionsfeedbyday" {
   config_path = "../../../internal/api/storage/table_subscriptionsfeedbyday"
 }
 
-dependency "notification_queue" {
-  config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet"
 }
 
-dependency "notification_storage_account" {
-  config_path = "../../../internal/api/storage_notifications/account"
-}
-
-dependency "storage_account_apievents" {
-  config_path = "../../../internal/api/storage_apievents/account"
-}
-
-dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
-  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
-}
-
-# common
-
-dependency "storage_account_assets" {
-  config_path = "../../../common/cdn/storage_account_assets"
-}
-
-# operation
-dependency "storage_account_logs" {
-  config_path = "../../../operations/storage_account_logs/account"
-}
-
-# Linux
-dependency "subnet_appbackend_l1" {
-  config_path = "../../../linux/appbackendl1/subnet"
-}
-
-dependency "subnet_appbackend_l2" {
-  config_path = "../../../linux/appbackendl2/subnet"
-}
-
-dependency "subnet_appbackend_li" {
-  config_path = "../../../linux/appbackendli/subnet"
+# eucovidcert
+dependency "subnet_fn3eucovidcert" {
+  config_path = "../../../eucovidcert/functions_eucovidcert/subnet"
 }
 
 # Common
@@ -83,10 +51,6 @@ dependency "application_insights" {
 
 dependency "key_vault" {
   config_path = "../../../common/key_vault"
-}
-
-dependency "notification_hub" {
-  config_path = "../../../common/notification_hub"
 }
 
 dependency "subnet_azure_devops" {
@@ -128,18 +92,12 @@ inputs = {
     // TODO: Rename to STORAGE_CONNECTION_STRING
     QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
-
-    LogsStorageConnection      = dependency.storage_account_logs.outputs.primary_connection_string
-    AssetsStorageConnection    = dependency.storage_account_assets.outputs.primary_connection_string
-    STATUS_ENDPOINT_URL        = "https://app-backend.io.italia.it/info"
-    STATUS_REFRESH_INTERVAL_MS = "300000"
-
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
     SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
-    MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
-    DPO_EMAIL_ADDRESS        = "dpo@pagopa.it"
-    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
-    FUNCTIONS_PUBLIC_URL     = "https://api.io.italia.it/public"
+
+    MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
+    // we keep this while we wait for new app version to be deployed
+    MAIL_FROM_DEFAULT = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
@@ -149,29 +107,10 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    // Push notifications
-    AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
-    NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
-    NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
-
-    // Events configs
-    EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
-
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
-    # Disabled functions on slot - trigger, queue and timer
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
-
-    # Cashback
-    IS_CASHBACK_ENABLED = "true"
-    # Only national service
-    FF_ONLY_NATIONAL_SERVICES = "true"
-    # Limit the number of local services
-    FF_LOCAL_SERVICES_LIMIT = "0"
-    # eucovidcert configs
-    FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "false"
-    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
@@ -181,18 +120,20 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      __DISABLED__SENDGRID_API_KEY = "common-SENDGRID-APIKEY"
-      MAILUP_USERNAME              = "common-MAILUP2-USERNAME"
-      MAILUP_SECRET                = "common-MAILUP2-SECRET"
-      PUBLIC_API_KEY               = "apim-IO-SERVICE-KEY"
-      SPID_LOGS_PUBLIC_KEY         = "funcapp-KEY-SPIDLOGS-PUB"
-      AZURE_NH_ENDPOINT            = "common-AZURE-NH-ENDPOINT"
+      MAILUP_USERNAME                        = "common-MAILUP-USERNAME"
+      MAILUP_SECRET                          = "common-MAILUP-SECRET"
+      WEBHOOK_CHANNEL_URL                    = "appbackend-WEBHOOK-CHANNEL-URL"
+      SANDBOX_FISCAL_CODE                    = "io-SANDBOX-FISCAL-CODE"
+      EMAIL_NOTIFICATION_SERVICE_BLACKLIST   = "io-EMAIL-SERVICE-BLACKLIST-ID"
+      WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
+      IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
     }
   }
 
   allowed_subnets = [
-    dependency.subnet_appbackend_l1.outputs.id,
-    dependency.subnet_appbackend_li.outputs.id,
+    dependency.subnet.outputs.id,
+    dependency.subnet_apimapi.outputs.id,
+    dependency.subnet_fn3eucovidcert.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]
 

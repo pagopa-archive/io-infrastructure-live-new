@@ -22,9 +22,18 @@ dependency "functions_cgn" {
   config_path = "../../../cgn/functions_cgn/function_app"
 }
 
+# EUCovidCert Api
+dependency "functions_eucovidcert" {
+  config_path = "../../../eucovidcert/functions_eucovidcert/function_app"
+}
+
 # Push notifications origin
 dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
+}
+
+dependency "subnet_fn3services01" {
+  config_path = "../../../services/functions_services01_r3/subnet"
 }
 
 # Session endpoints allowed origin
@@ -165,14 +174,16 @@ inputs = {
 
     // FUNCTIONS
     // this function shouldn't be called anymore by the appbackendli.
-    API_URL       = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
-    BONUS_API_URL = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
-    CGN_API_URL   = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    API_URL               = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
+    BONUS_API_URL         = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
+    CGN_API_URL           = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    EUCOVIDCERT_API_URL   = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
-    API_BASE_PATH       = "/api/v1"
-    BONUS_API_BASE_PATH = "/api/v1"
-    CGN_API_BASE_PATH   = "/api/v1"
+    API_BASE_PATH             = "/api/v1"
+    BONUS_API_BASE_PATH       = "/api/v1"
+    CGN_API_BASE_PATH         = "/api/v1"
+    EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -180,7 +191,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = dependency.subnet_fn3services.outputs.address_prefix
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix},${dependency.subnet_fn3services01.outputs.address_prefix}"
 
     // LOCK / UNLOCK SESSION ENDPOINTS
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
@@ -209,6 +220,7 @@ inputs = {
     // Feature flags
     FF_BONUS_ENABLED        = 1
     FF_CGN_ENABLED          = 1
+    FF_EUCOVIDCERT_ENABLED  = 1
     TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
@@ -226,9 +238,10 @@ inputs = {
       SAML_KEY  = "appbackend-SAML-KEY"
 
       // FUNCTIONS
-      API_KEY       = "funcapp-KEY-APPBACKEND"
-      BONUS_API_KEY = "funcbonus-KEY-APPBACKEND"
-      CGN_API_KEY   = "funccgn-KEY-APPBACKEND"
+      API_KEY             = "funcapp-KEY-APPBACKEND"
+      BONUS_API_KEY       = "funcbonus-KEY-APPBACKEND"
+      CGN_API_KEY         = "funccgn-KEY-APPBACKEND"
+      EUCOVIDCERT_API_KEY = "funceucovidcert-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
       PRE_SHARED_KEY = "appbackend-PRE-SHARED-KEY"
@@ -248,6 +261,8 @@ inputs = {
 
       // CGN BETA
       TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
+
+
     }
   }
 
@@ -256,6 +271,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
+    dependency.subnet_fn3services01.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
   ]
 
