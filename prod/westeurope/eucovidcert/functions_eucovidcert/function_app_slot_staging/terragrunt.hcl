@@ -132,6 +132,11 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
+
+    // Disable listener functions
+    "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "1"
+    "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "1"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
