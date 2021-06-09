@@ -118,6 +118,8 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
+    WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
+    AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
 
   app_settings_secrets = {
