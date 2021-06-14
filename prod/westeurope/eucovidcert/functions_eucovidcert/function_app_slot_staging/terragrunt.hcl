@@ -31,10 +31,6 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
-dependency "subnet_fnservices" {
-  config_path = "../../../internal/api/functions_services_r3/subnet"
-}
-
 dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
 }
@@ -58,6 +54,11 @@ dependency "key_vault" {
 
 dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
+}
+
+# Services
+dependency "functions_services01" {
+  config_path = "../../../services/functions_services01_r3/function_app"
 }
 
 
@@ -113,7 +114,9 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
-    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
+    # we need test_users_store_review_flat because app IO reviewers must read a valid certificate response
+    LOAD_TEST_FISCAL_CODES = join(",", [local.testusersvars.locals.test_users_store_review_flat,
+                                        local.testusersvars.locals.test_users_internal_load_flat])
 
     DGC_UAT_URL       = "https://servizi-pnval.dgc.gov.it"
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
@@ -129,13 +132,18 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
+
+    // Disable listener functions
+    "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "1"
+    "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "1"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
 
     # ----
-
-    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    FNSERVICES_API_URL = join(",", ["https://${dependency.functions_services.outputs.default_hostname}/api/v1",
+                                    "https://${dependency.functions_services01.outputs.default_hostname}/api/v1"])
   }
 
   app_settings_secrets = {
