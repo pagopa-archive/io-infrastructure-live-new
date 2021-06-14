@@ -115,6 +115,9 @@ inputs = {
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
+    // setting to true all the webhook message content will be disabled
+    FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "true"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
