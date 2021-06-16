@@ -34,13 +34,6 @@ inputs = {
       match_conditions = [{
         operator = "IPMatch"
         match_values = [
-          "5.170.228.15/32",
-          "5.170.228.70/32",
-          "5.170.225.166/32",
-          "5.170.224.137/32",
-          "5.171.44.52/32",
-          "167.99.51.14/32",
-          "82.52.27.54/32"
         ]
         match_variables = [{
           variable_name = "RemoteAddr"
