@@ -60,15 +60,16 @@ inputs = {
       type    = "OWASP"
       version = "3.1"
 
-      rule_group_override = [{
-        rule_group_name = "REQUEST-913-SCANNER-DETECTION"
-        disabled_rules = [
-          "913100",
-          "913101",
-          "913102",
-          "913110",
-          "913120",
-        ]
+      rule_group_override = [
+        {
+          rule_group_name = "REQUEST-913-SCANNER-DETECTION"
+          disabled_rules = [
+            "913100",
+            "913101",
+            "913102",
+            "913110",
+            "913120",
+          ]
         },
         {
           rule_group_name = "REQUEST-920-PROTOCOL-ENFORCEMENT"
@@ -90,6 +91,12 @@ inputs = {
           ]
         },
         {
+          rule_group_name = "REQUEST-941-APPLICATION-ATTACK-XSS"
+          disabled_rules = [
+            "941130"
+          ]
+        },
+        {
           rule_group_name = "REQUEST-942-APPLICATION-ATTACK-SQLI"
           disabled_rules = [
             "942100",
@@ -108,7 +115,8 @@ inputs = {
             "942440",
             "942450"
           ]
-      }]
+        }
+      ]
     }]
   }
 }
