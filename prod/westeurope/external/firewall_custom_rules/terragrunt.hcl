@@ -24,27 +24,6 @@ inputs = {
     max_request_body_size_in_kb = 128
   }
 
-  custom_rules = [
-    {
-      name      = "block-ips"
-      priority  = 1
-      rule_type = "MatchRule"
-      action    = "Block"
-
-      match_conditions = [{
-        operator = "IPMatch"
-        match_values = [
-        ]
-        match_variables = [{
-          variable_name = "RemoteAddr"
-          selector      = null
-        }]
-        negation_condition = false
-        transforms         = []
-      }]
-    },
-  ]
-
   managed_rules = {
 
     exclusion = []
