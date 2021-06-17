@@ -15,7 +15,7 @@ dependency "storage_account_eucovidcert_queue_notify-new-profile" {
 }
 
 dependency "storage_account_eucovidcert_table_trace_notify-new-profile" {
-  config_path = "../../storage_eucovidcert/tabel_trace-notify-new-profile"
+  config_path = "../../storage_eucovidcert/table-trace-notify-new-profile"
 }
 
 # Internal
@@ -123,7 +123,7 @@ inputs = {
     QueueStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
     EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME       = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
     TableStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
-    EUCOVIDCERT_TRACE_NOTIFY_NEW_PROFILE_TABLE_NAME = dependency.storage_account_eucovidcert_table_trace-notify-new-profile.outputs.name
+    EUCOVIDCERT_TRACE_NOTIFY_NEW_PROFILE_TABLE_NAME = dependency.storage_account_eucovidcert_table_trace_notify-new-profile.outputs.name
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
