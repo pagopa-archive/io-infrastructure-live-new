@@ -14,6 +14,10 @@ dependency "storage_account_eucovidcert_queue_notify-new-profile" {
   config_path = "../../storage_eucovidcert/queue_notify-new-profile"
 }
 
+dependency "storage_account_eucovidcert_table_trace_notify-new-profile" {
+  config_path = "../../storage_eucovidcert/tabel_trace-notify-new-profile"
+}
+
 # Internal
 dependency "subnet_apimapi" {
   config_path = "../../../internal/api/apim/subnet/"
@@ -114,10 +118,12 @@ inputs = {
     DGC_PROD_URL      = "https://servizi-pn.dgc.gov.it"
     
     // Events configs
-    EventsQueueStorageConnection              = dependency.storage_account_apievents.outputs.primary_connection_string
-    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME    = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
-    QueueStorageConnection                    = dependency.storage_account_eucovidcert.outputs.primary_connection_string
-    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
+    EventsQueueStorageConnection                    = dependency.storage_account_apievents.outputs.primary_connection_string
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME          = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    QueueStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME       = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
+    TableStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_TRACE_NOTIFY_NEW_PROFILE_TABLE_NAME = dependency.storage_account_eucovidcert_table_trace-notify-new-profile.outputs.name
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
