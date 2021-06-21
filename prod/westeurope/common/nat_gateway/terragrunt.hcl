@@ -8,7 +8,7 @@ dependency "resource_group" {
 }
 
 terraform {
-  source = "git::https://github.com/pagopa/azurerm.git//nat_gateway?ref=v1.0.18"
+  source = "git::https://github.com/pagopa/azurerm.git//nat_gateway?ref=v1.0.19"
 }
 inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
