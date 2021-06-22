@@ -12,6 +12,6 @@ terraform {
 }
 
 inputs = {
-  name                  = "TraceNotifyNewProfile"
-  storage_account_name  = dependency.storage_account.outputs.resource_name
+  name                 = "TraceNotifyNewProfile"
+  storage_account_name = dependency.storage_account.outputs.resource_name
 }
