@@ -41,8 +41,8 @@ inputs = {
       }
       actions = {
         base_blob = {
-          tier_to_cool_after_days_since_modification_greater_than    = 90
-          tier_to_archive_after_days_since_modification_greater_than = 0
+          tier_to_cool_after_days_since_modification_greater_than    = null
+          tier_to_archive_after_days_since_modification_greater_than = null
           delete_after_days_since_modification_greater_than          = 180 # ~ 6 months
         }
         snapshot = null
