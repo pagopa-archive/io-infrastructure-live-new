@@ -31,6 +31,22 @@ inputs = {
         }
         snapshot = null
       }
-    }
+    },
+    {
+      name    = "deleteafter6months"
+      enabled = true
+      filters = {
+        prefix_match = ["insights-activity-logs"]
+        blob_types   = ["appendBlob"]
+      }
+      actions = {
+        base_blob = {
+          tier_to_cool_after_days_since_modification_greater_than    = 90
+          tier_to_archive_after_days_since_modification_greater_than = 0
+          delete_after_days_since_modification_greater_than          = 180 # ~ 6 months
+        }
+        snapshot = null
+      }
+    },
   ]
 }
