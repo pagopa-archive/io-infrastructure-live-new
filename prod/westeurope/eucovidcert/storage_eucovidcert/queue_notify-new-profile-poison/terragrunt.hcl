@@ -12,6 +12,6 @@ terraform {
 }
 
 inputs = {
-  name                  = "notify-new-profile-poison"
-  storage_account_name  = dependency.storage_account.outputs.resource_name
+  name                 = "notify-new-profile-poison"
+  storage_account_name = dependency.storage_account.outputs.resource_name
 }
