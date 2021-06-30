@@ -8,10 +8,10 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_queue?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_table?ref=v3.0.3"
 }
 
 inputs = {
-  name                 = "notify-new-profile"
+  name                 = "TraceNotifyNewProfile"
   storage_account_name = dependency.storage_account.outputs.resource_name
 }
