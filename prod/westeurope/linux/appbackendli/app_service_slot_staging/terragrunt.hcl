@@ -200,7 +200,7 @@ inputs = {
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
     // MIT_VOUCHER JWT
-    JWT_MIT_VOUCHER_TOKEN_ISSUER=app-backend.io.italia.it
+    JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
     JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
 
     // BPD
