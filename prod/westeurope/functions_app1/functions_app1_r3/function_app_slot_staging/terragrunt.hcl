@@ -163,8 +163,8 @@ inputs = {
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
-    # Cashback
-    IS_CASHBACK_ENABLED = "true"
+    # Cashback welcome message
+    IS_CASHBACK_ENABLED = "false"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
