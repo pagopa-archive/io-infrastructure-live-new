@@ -177,6 +177,7 @@ inputs = {
     BONUS_API_BASE_PATH       = "/api/v1"
     CGN_API_BASE_PATH         = "/api/v1"
     EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
+    MIT_VOUCHER_API_BASE_PATH = "/api/v1/mitvoucher/auth"
 
     // REDIS
     REDIS_URL      = dependency.redis.outputs.hostname
@@ -197,6 +198,10 @@ inputs = {
     // MYPORTAL
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
+    // MIT_VOUCHER JWT
+    JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
+    JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
+
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
 
@@ -214,6 +219,7 @@ inputs = {
     FF_BONUS_ENABLED        = 1
     FF_CGN_ENABLED          = 1
     FF_EUCOVIDCERT_ENABLED  = 1
+    FF_MIT_VOUCHER_ENABLED  = 1
     TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
@@ -254,6 +260,10 @@ inputs = {
 
       // CGN BETA
       TEST_CGN_FISCAL_CODES             = "appbackend-TEST-CGN-FISCAL-CODES"
+
+      // MIT_VOUCHER JWT
+      JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY  = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
+      JWT_MIT_VOUCHER_TOKEN_AUDIENCE        = "appbackend-mitvoucher-JWT-AUDIENCE"
     }
   }
 
