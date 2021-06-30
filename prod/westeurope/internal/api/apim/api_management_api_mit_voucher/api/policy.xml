@@ -1,0 +1,32 @@
+<policies>
+    <inbound>
+        <base />
+        <set-backend-service id="apim-generated-policy" base-url="https://api.18app.italia.it/interop/siciliavola/SICUtenteWS" />
+        <set-query-parameter name="client_id" exists-action="override">
+            <value>{{io-mit-voucher-clientid}}</value>
+        </set-query-parameter>
+        <cors>
+            <allowed-origins>
+                <origin>*</origin>
+            </allowed-origins>
+            <allowed-methods>
+                <method>*</method>
+            </allowed-methods>
+            <allowed-headers>
+                <header>*</header>
+            </allowed-headers>
+            <expose-headers>
+                <header>*</header>
+            </expose-headers>
+        </cors>
+    </inbound>
+    <outbound>
+        <base />
+    </outbound>
+    <backend>
+        <base />
+    </backend>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

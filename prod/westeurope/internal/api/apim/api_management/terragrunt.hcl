@@ -102,6 +102,7 @@ inputs = {
       io-fn-pay-portal-key                          = "io-fn-pay-portal-KEY-APIM"
       io-fn-cgnmerchant-key                         = "io-fn-cgnmerchant-KEY-APIM"
       io-fn3-eucovidcert-key                        = "io-fn3-eucovidcert-KEY-APIM"
+      io-mit-voucher-clientid                       = "io-mit-voucher-clientid-KEY-APIM"
     }
   }
 
