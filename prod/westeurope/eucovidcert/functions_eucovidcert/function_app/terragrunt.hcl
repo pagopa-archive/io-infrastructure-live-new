@@ -134,8 +134,7 @@ inputs = {
     WEBSITE_CONTENTSHARE = "io-p-fn3-eucovidcert-content"
 
     # ----
-    FNSERVICES_API_URL = join(",", ["https://${dependency.functions_services.outputs.default_hostname}/api/v1",
-    "https://${dependency.functions_services01.outputs.default_hostname}/api/v1"])
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
     WEBSITE_VNET_ROUTE_ALL = 1
   }
 
