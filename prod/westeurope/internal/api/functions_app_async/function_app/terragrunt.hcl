@@ -186,8 +186,8 @@ inputs = {
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1" // Messages are handled by io-p-fn3-pushnotif
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "0"
 
-    # Cashback
-    IS_CASHBACK_ENABLED = "true"
+    # Cashback welcome message
+    IS_CASHBACK_ENABLED = "false"
     # Only national service
     FF_ONLY_NATIONAL_SERVICES = "true"
     # Limit the number of local services
