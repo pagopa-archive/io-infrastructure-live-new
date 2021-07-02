@@ -28,6 +28,6 @@ inputs = {
   partition_key_path  = "/serviceId"
 
   autoscale_settings = {
-    max_throughput = 50000
+    max_throughput = 10000
   }
 }

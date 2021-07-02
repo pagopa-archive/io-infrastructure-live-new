@@ -28,6 +28,6 @@ inputs = {
   partition_key_path  = "/fiscalCode"
 
   autoscale_settings = {
-    max_throughput = 40000
+    max_throughput = 20000
   }
 }

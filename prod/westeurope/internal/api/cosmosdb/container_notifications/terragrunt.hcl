@@ -28,7 +28,7 @@ inputs = {
   partition_key_path  = "/messageId"
 
   autoscale_settings = {
-    max_throughput = 10000
+    max_throughput = 7000
   }
 
 }
