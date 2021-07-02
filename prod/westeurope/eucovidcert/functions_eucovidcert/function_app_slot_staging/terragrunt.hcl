@@ -139,7 +139,6 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
-
     // Disable listener functions
     "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "1"
     "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "1"
