@@ -197,6 +197,8 @@ inputs = {
     FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "true"
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
+    OPT_OUT_EMAIL_SWITCH_DATE = "2021-07-09T00:00:00Z"
+
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
 
   }
