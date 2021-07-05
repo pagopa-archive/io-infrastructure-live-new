@@ -196,6 +196,8 @@ inputs = {
     FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "false"
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
+    OPT_OUT_EMAIL_SWITCH_DATE = "2021-07-09T00:00:00Z"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-appasync-content"

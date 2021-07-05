@@ -114,6 +114,8 @@ inputs = {
     // setting to true all the webhook message content will be disabled
     FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "true"
 
+    OPT_OUT_EMAIL_SWITCH_DATE = "2021-07-09T00:00:00Z"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
