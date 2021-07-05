@@ -95,6 +95,7 @@ locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   service_api_url              = local.commonvars.locals.service_api_url
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
 }
 
 inputs = {
@@ -197,7 +198,7 @@ inputs = {
     FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "true"
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
-    OPT_OUT_EMAIL_SWITCH_DATE = "2021-07-09T00:00:00Z"
+    OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
 
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
 

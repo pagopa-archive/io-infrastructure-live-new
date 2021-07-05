@@ -14,4 +14,9 @@ locals {
 
   service_api_url = "http://api-internal.io.italia.it/"
 
+  # Switch limit date for email opt out mode. This value should be used by functions that need to discriminate
+  # how to check isInboxEnabled property on IO profiles, since we have to disable email notifications for default
+  # for all profiles that have been updated before this date. This date should coincide with new IO App's release date
+  opt_out_email_switch_date = "2021-07-09T00:00:00Z"
+
 }

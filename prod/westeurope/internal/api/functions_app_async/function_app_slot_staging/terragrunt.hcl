@@ -98,6 +98,11 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
 
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
+}
+
 inputs = {
   name                       = "staging"
   resource_group_name        = dependency.resource_group.outputs.resource_name
@@ -169,7 +174,7 @@ inputs = {
     FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "false"
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
-    OPT_OUT_EMAIL_SWITCH_DATE = "2021-07-09T00:00:00Z"
+    OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
