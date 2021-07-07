@@ -51,7 +51,7 @@ dependency "storage_account_app" {
   config_path = "../../storage_app/account"
 }
 
-dependency "profile_migrate_services_preferences_queue" {
+dependency "storage_account_app_queue_profile-migrate-services-preferences" {
   config_path = "../../storage_app/queue_profilemigrateservicespreferences"
 }
 
@@ -159,7 +159,7 @@ inputs = {
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
     // Service Preferences Migration Queue
-    MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.profile_migrate_services_preferences_queue.outputs.name
+    MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
     FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
 
     // Events configs
