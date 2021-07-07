@@ -52,16 +52,16 @@ dependency "storage_table_subscriptionsfeedbyday" {
   config_path = "../../../internal/api/storage/table_subscriptionsfeedbyday"
 }
 
-dependency "profile_migrate_service_preferences_queue" {
-  config_path = "../../../internal/api/storage/queue_profilemigrateservicepreferences"
-}
-
 dependency "storage_account_apievents" {
   config_path = "../../../internal/api/storage_apievents/account"
 }
 
 dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
   config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
+}
+
+dependency "profile_migrate_service_preferences_queue" {
+  config_path = "../../../internal/api/storage_apievents/queue_profilemigrateservicepreferences"
 }
 
 # operation
