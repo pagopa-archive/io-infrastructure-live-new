@@ -12,6 +12,6 @@ terraform {
 }
 
 inputs = {
-  name                  = "profile-migrate-service-preferences-from-legacy"
+  name                  = "profile-migrate-services-preferences-from-legacy"
   storage_account_name  = dependency.storage_account.outputs.resource_name
 }
