@@ -43,6 +43,14 @@ dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
   config_path = "../../storage_apievents/queue_eucovidcert-profile-created"
 }
 
+dependency "storage_account_app" {
+  config_path = "../../storage_app/account"
+}
+
+dependency "storage_account_app_queue_profile-migrate-services-preferences" {
+  config_path = "../../storage_app/queue_profilemigrateservicespreferences"
+}
+
 # Linux
 dependency "subnet_appbackend_l1" {
   config_path = "../../../../linux/appbackendl1/subnet"
@@ -154,6 +162,10 @@ inputs = {
     AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // Service Preferences Migration Queue
+    MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
+    FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
