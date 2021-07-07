@@ -30,6 +30,10 @@ dependency "storage_table_subscriptionsfeedbyday" {
   config_path = "../../storage/table_subscriptionsfeedbyday"
 }
 
+dependency "profile_migrate_service_preferences_queue" {
+  config_path = "../../../internal/api/storage/queue_profilemigrateservicepreferences"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../../resource_group"
@@ -154,6 +158,9 @@ inputs = {
     AZURE_NH_HUB_NAME                       = dependency.notification_hub.outputs.name
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
+
+    // Service Preferences Migration Queue
+    MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.profile_migrate_service_preferences_queue.outputs.name
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
