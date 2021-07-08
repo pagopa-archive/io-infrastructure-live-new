@@ -20,4 +20,6 @@ locals {
   # 1625781600000 value refers to 2021-07-09T00:00:00Z
   opt_out_email_switch_date = 1625781600000
 
+  # Feature flag used to enable email opt-in with logic exposed by the previous variable usage
+  ff_opt_in_email_enabled = "true"
 }

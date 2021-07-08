@@ -96,6 +96,7 @@ locals {
   service_api_url              = local.commonvars.locals.service_api_url
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
   opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
 }
 
 inputs = {
@@ -199,6 +200,7 @@ inputs = {
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
 
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
+    FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
 

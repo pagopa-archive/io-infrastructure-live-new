@@ -68,6 +68,7 @@ terraform {
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
 }
 
 inputs = {
@@ -120,6 +121,7 @@ inputs = {
     FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "true"
 
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
+    FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
