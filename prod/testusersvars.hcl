@@ -1,7 +1,10 @@
 locals {
 
   # A list of fiscal codes to be used by internal team for functional, e2e tests on IO
-  test_users_internal = []
+  test_users_internal = ["EEEEEE00E00E000A",
+                         "EEEEEE00E00E000B",
+                         "EEEEEE00E00E000C",
+                         "EEEEEE00E00E000D",]
   # A list of fiscal codes to be used by internal team for load tests on IO
   test_users_internal_load = ["AAAAAA00A00A000C",
                               "AAAAAA00A00A000D",
