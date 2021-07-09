@@ -21,7 +21,7 @@ terraform {
 }
 
 inputs = {
-  name                = "service-preferences"
+  name                = "services-preferences"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
