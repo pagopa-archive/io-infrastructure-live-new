@@ -17,8 +17,8 @@ locals {
   # Switch limit date for email opt out mode. This value should be used by functions that need to discriminate
   # how to check isInboxEnabled property on IO profiles, since we have to disable email notifications for default
   # for all profiles that have been updated before this date. This date should coincide with new IO App's release date
-  # 1625781600000 value refers to 2021-07-09T00:00:00Z
-  opt_out_email_switch_date = 1625781600000
+  # 1625781600000000 value refers to 2021-07-09T00:00:00Z
+  opt_out_email_switch_date = 1625781600000000
 
   # Feature flag used to enable email opt-in with logic exposed by the previous variable usage
   ff_opt_in_email_enabled = "true"
