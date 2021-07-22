@@ -12,6 +12,8 @@
         <origin>https://checkout.pagopa.gov.it/</origin>
         <origin>https://io.italia.it/</origin>
         <origin>https://www.pagopa.gov.it/</origin>
+        <origin>https://www.pagopa.it/</origin>
+        <origin>https://www.uat.sitecorporate.pagopa.it/</origin>
       </allowed-origins>
       <allowed-methods>
         <method>POST</method>
