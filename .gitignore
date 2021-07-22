@@ -6,3 +6,5 @@
 # Terragrunt
 .terragrunt-cache
 *.lock.hcl
+
+*.DS_Store
