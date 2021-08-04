@@ -22,7 +22,7 @@ inputs = {
   api_management_name   = dependency.api_management.outputs.name
   display_name          = "IO MIT VOUCHER"
   description           = "MIT VOUCHER for IO app."
-  subscription_required = true
+  subscription_required = false
   approval_required     = false
-  published             = true
+  published             = false
 }
