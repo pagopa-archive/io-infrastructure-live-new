@@ -12,11 +12,11 @@ dependency "resource_group" {
 
 # Common
 dependency "resource_group_common" {
-  config_path = "../../../common/resource_group"
+  config_path = "../../../../common/resource_group"
 }
 
 dependency "private_dns_zone" {
-  config_path = "../../../common/private_dns_zones/privatelink-documents-azure-com/zone"
+  config_path = "../../../../common/private_dns_zones/privatelink-documents-azure-com/zone"
 }
 
 

@@ -4,12 +4,12 @@ dependency "cosmosdb_account" {
 
 # Internal
 dependency "resource_group" {
-  config_path = "../../resource_group"
+  config_path = "../../../resource_group"
 }
 
 # Common
 dependency "subnet_pendpoints" {
-  config_path = "../../../common/subnet_pendpoints"
+  config_path = "../../../../common/subnet_pendpoints"
 }
 
 # Include all settings from the root terragrunt.hcl file
