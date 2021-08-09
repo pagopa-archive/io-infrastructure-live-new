@@ -28,6 +28,6 @@ inputs = {
   partition_key_path  = "/notificationId"
 
   autoscale_settings = {
-    max_throughput = 7000
+    max_throughput = 10000
   }
 }
