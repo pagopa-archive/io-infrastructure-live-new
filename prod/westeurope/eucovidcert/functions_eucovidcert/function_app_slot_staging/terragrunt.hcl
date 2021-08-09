@@ -139,7 +139,6 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
-
     // Disable listener functions
     "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "1"
     "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "1"
@@ -149,8 +148,7 @@ inputs = {
     WEBSITE_CONTENTSHARE = "staging-content"
 
     # ----
-    FNSERVICES_API_URL = join(",", ["https://${dependency.functions_services.outputs.default_hostname}/api/v1",
-    "https://${dependency.functions_services01.outputs.default_hostname}/api/v1"])
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
     WEBSITE_VNET_ROUTE_ALL = 1
   }
 

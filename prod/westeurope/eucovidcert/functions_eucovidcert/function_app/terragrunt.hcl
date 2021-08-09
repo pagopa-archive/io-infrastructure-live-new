@@ -129,13 +129,16 @@ inputs = {
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
 
+    // Disable listener functions
+    "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "0"
+    "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "0"
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-eucovidcert-content"
 
     # ----
-    FNSERVICES_API_URL = join(",", ["https://${dependency.functions_services.outputs.default_hostname}/api/v1",
-    "https://${dependency.functions_services01.outputs.default_hostname}/api/v1"])
+    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
     WEBSITE_VNET_ROUTE_ALL = 1
   }
 

@@ -97,8 +97,8 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     // Mailup groups and lists
-    MAILUP_ALLOWED_GROUPS = "30,31,32,21,29"
-    MAILUP_ALLOWED_LISTS  = "2,4"
+    MAILUP_ALLOWED_GROUPS = "30,31,32,21,29,40,41,42,43,44,47,48,49,50,51"
+    MAILUP_ALLOWED_LISTS  = "2,4,6"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 

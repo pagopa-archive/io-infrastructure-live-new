@@ -48,6 +48,14 @@ dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
   config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
 }
 
+dependency "storage_account_app" {
+  config_path = "../../../internal/api/storage_app/account"
+}
+
+dependency "storage_account_app_queue_profile-migrate-services-preferences" {
+  config_path = "../../../internal/api/storage_app/queue_profilemigrateservicespreferences"
+}
+
 # common
 
 dependency "storage_account_assets" {
@@ -102,6 +110,12 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
 }
 
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
+}
+
 inputs = {
   name                       = "staging"
   resource_group_name        = dependency.resource_group.outputs.resource_name
@@ -154,6 +168,10 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.notification_queue.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.notification_storage_account.outputs.primary_connection_string
 
+    // Service Preferences Migration Queue
+    MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
+    FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
+
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
 
@@ -172,6 +190,9 @@ inputs = {
     # eucovidcert configs
     FF_NEW_USERS_EUCOVIDCERT_ENABLED       = "true"
     EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+
+    OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
+    FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
