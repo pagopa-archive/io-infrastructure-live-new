@@ -1,5 +1,5 @@
-dependency "resource_group_common" {
-  config_path = "../../resource_group"
+dependency "resource_group" {
+  config_path = "../../../resource_group"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -13,5 +13,5 @@ terraform {
 
 inputs = {
   name                = "io.pagopa.it"
-  resource_group_name = dependency.resource_group_common.outputs.resource_name
+  resource_group_name = dependency.resource_group.outputs.resource_name
 }
