@@ -12,6 +12,6 @@ terraform {
 }
 
 inputs = {
-  name                = ".io.pagopa.it"
+  name                = "io.pagopa.it"
   resource_group_name = dependency.resource_group_common.outputs.resource_name
 }
