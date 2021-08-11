@@ -3,29 +3,9 @@ dependency "resource_group" {
   config_path = "../../../resource_group"
 }
 
-dependency "subnet_fn_admin" {
-  config_path = "../../functions_admin_r3/subnet"
-}
-
-dependency "subnet_fn_assets" {
-  config_path = "../../functions_assets_r3/subnet"
-}
-
-dependency "subnet_fn_public" {
-  config_path = "../../functions_public_r3/subnet"
-}
-
-dependency "subnet_fn_service" {
-  config_path = "../../functions_services_r3/subnet"
-}
-
-dependency "subnet_fn_service01" {
-  config_path = "../../../../services/functions_services01_r3/subnet"
-}
-
 # Operation logic app.
 
-dependency "logic_app_get_profiles" {
+dependency "logic_app_privacy_get_profiles" {
   config_path = "../../../../operations/logic-apps/logic-app-privacy-get-profiles"
 }
 
@@ -33,11 +13,10 @@ dependency "logic_app_privacy_upsert_user_data_processing" {
   config_path = "../../../../operations/logic-apps/logic-app-privacy-upsert-user-data-processing"
 }
 
-
-locals {
-  fn3_slackbot_outbound_ips = "23.97.147.242,13.69.61.42,137.117.159.137,104.47.161.199,104.47.157.240"
-  other_azure_ips           = "13.69.67.192,40.74.26.40,40.74.27.106,40.74.27.92,52.148.245.13"
-}
+# only backup ips, probably not needed
+# locals {
+#   other_azure_ips = "13.69.67.192,40.74.26.40,40.74.27.106,40.74.27.92,52.148.245.13"
+# }
 
 # Include all settings from the root terragrunt.hcl file
 include {
@@ -69,25 +48,18 @@ inputs = {
     }
   ]
 
-  is_virtual_network_filter_enabled = false
+  is_virtual_network_filter_enabled = true
 
-  /**
-  ip_range = format("%s,%s,%s,%s",
-    local.fn3_slackbot_outbound_ips,
-    local.other_azure_ips,
-    join(",", dependency.logic_app_get_profiles.outputs.connector_outbound_ip_addresses),
+  ip_range = format("%s,%s",
+    join(",", dependency.logic_app_privacy_get_profiles.outputs.connector_outbound_ip_addresses),
     join(",", dependency.logic_app_privacy_upsert_user_data_processing.outputs.connector_outbound_ip_addresses)
   )
 
-  allowed_virtual_network_subnet_ids = [
-    dependency.subnet_fn_admin.outputs.id,
-    dependency.subnet_fn_assets.outputs.id,
-    dependency.subnet_fn_public.outputs.id,
-    dependency.subnet_fn_service.outputs.id,
-    dependency.subnet_fn_service01.outputs.id,
-  ]
-
+  /*
+  # IMPORTANT: with private endpoint enabled virtual_network_subnet not take any effect
+  allowed_virtual_network_subnet_ids = []
   */
+
   lock = {
     name       = "cosmos-api"
     lock_level = "CanNotDelete"
