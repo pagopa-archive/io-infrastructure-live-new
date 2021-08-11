@@ -110,6 +110,10 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
+    # DNS and VNET configuration to use private endpoint
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
+
     COSMOSDB_URI               = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY               = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME              = dependency.cosmosdb_database.outputs.name

@@ -134,6 +134,10 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
+    # DNS and VNET configuration to use private endpoint
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
+
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
@@ -215,7 +219,6 @@ inputs = {
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
     WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
-
   }
 
   app_settings_secrets = {
