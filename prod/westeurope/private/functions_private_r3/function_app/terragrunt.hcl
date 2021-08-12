@@ -63,8 +63,8 @@ inputs = {
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     # DNS and VNET configuration to use private endpoint
-    #WEBSITE_DNS_SERVER     = "168.63.129.16"
-    #WEBSITE_VNET_ROUTE_ALL = 1
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
