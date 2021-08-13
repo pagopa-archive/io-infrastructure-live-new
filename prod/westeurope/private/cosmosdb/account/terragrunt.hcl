@@ -36,6 +36,8 @@ inputs = {
       failover_priority = 1
     }
   ]
+  
+  # is_virtual_network_filter_enabled = false
 
   is_virtual_network_filter_enabled = true
 

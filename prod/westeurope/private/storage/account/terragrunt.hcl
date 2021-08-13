@@ -3,6 +3,10 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
+dependency "subnet_fn_private" {
+  config_path = "../../functions_private_r3/subnet"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -20,4 +24,17 @@ inputs = {
   account_replication_type = "GRS"
   access_tier              = "Hot"
   enable_versioning        = true
+
+  network_rules = {
+    default_action = "Deny"
+    ip_rules       = []
+    bypass = [
+      "Logging",
+      "Metrics",
+      "AzureServices",
+    ]
+    virtual_network_subnet_ids = [
+      dependency.subnet_fn_private.outputs.id,
+    ]
+  }
 }
