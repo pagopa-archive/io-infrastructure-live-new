@@ -10,6 +10,10 @@ dependency "cosmosdb_private_database" {
   config_path = "../../cosmosdb/database"
 }
 
+dependency "application_insights" {
+  config_path = "../../application_insights"
+}
+
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
@@ -48,7 +52,7 @@ inputs = {
 
   runtime_version = "~3"
 
-  application_insights_instrumentation_key = "NA"
+  application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"
