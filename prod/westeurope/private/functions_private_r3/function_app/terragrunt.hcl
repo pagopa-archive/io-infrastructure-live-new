@@ -60,6 +60,8 @@ inputs = {
   runtime_version = "~3"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
+  
+  health_check_path = "api/v1/info"
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"
@@ -90,11 +92,11 @@ inputs = {
     }
   }
 
-  allowed_subnets = [
-    dependency.subnet.outputs.id
-  ]
+  # allowed_subnets = [
+  #   dependency.subnet.outputs.id
+  # ]
 
-  allowed_ips = local.app_insights_ips_west_europe
+  # allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
