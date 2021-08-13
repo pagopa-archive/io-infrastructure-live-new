@@ -19,18 +19,5 @@ inputs = {
   virtual_network_name = dependency.virtual_network.outputs.resource_name
   address_prefix       = "10.0.240.0/23"
 
-  /*
-  delegation = {
-    name = "default"
-
-    service_delegation = {
-      name    = "Microsoft.Web/serverFarms"
-      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
-    }
-  }
-
-  service_endpoints = [
-    "Microsoft.Web"
-  ]
-  */
+  enforce_private_link_endpoint_network_policies = true
 }
