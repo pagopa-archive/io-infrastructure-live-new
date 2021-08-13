@@ -33,6 +33,11 @@ terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
 }
 
+locals {
+  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+}
+
 inputs = {
   name                = "private"
   resource_group_name = dependency.resource_group.outputs.resource_name
@@ -84,6 +89,8 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id
   ]
+
+  allowed_ips = local.app_insights_ips_west_europe
 
   subnet_id = dependency.subnet.outputs.id
 }
