@@ -31,7 +31,7 @@ terraform {
 
 inputs = {
   resource_group_name = dependency.resource_group_common.outputs.resource_name
-  zone_name           = dependency.private_dns_zone.outputs.name[0]
+  zone_name           = dependency.private_dns_zone.outputs.name
   name                = dependency.cosmosdb_bonus_account.outputs.name
   ttl                 = 3600
   records             = dependency.private_endpoint.outputs.private_ip_address
