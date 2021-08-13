@@ -12,13 +12,17 @@ dependency "subnet_pendpoints" {
   config_path = "../../../common/subnet_pendpoints"
 }
 
+dependency "private_dns_zone" {
+  config_path = "../../../common/private_dns_zones/privatelink-documents-azure-com/zone"
+}
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_endpoint?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_endpoint?ref=v3.0.10"
 }
 
 inputs = {
@@ -32,4 +36,6 @@ inputs = {
     is_manual_connection           = false
     subresource_names              = ["Sql"]
   }
+
+  private_dns_zone_ids = [dependency.private_dns_zone.outputs.id]
 }
