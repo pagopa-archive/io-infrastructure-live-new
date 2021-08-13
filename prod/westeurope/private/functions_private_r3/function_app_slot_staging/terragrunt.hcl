@@ -22,6 +22,10 @@ dependency "cosmosdb_private_database" {
   config_path = "../../cosmosdb/database"
 }
 
+dependency "storage_private" {
+  config_path = "../../storage/account"
+}
+
 dependency "application_insights" {
   config_path = "../../application_insights"
 }
@@ -59,9 +63,11 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
-    COSMOSDB_PRIVATE_URI  = dependency.cosmosdb_private_account.outputs.endpoint
-    COSMOSDB_PRIVATE_KEY  = dependency.cosmosdb_private_account.outputs.primary_master_key
-    COSMOSDB_PRIVATE_NAME = dependency.cosmosdb_private_database.outputs.name
+    COSMOSDB_URI  = dependency.cosmosdb_private_account.outputs.endpoint
+    COSMOSDB_KEY  = dependency.cosmosdb_private_account.outputs.primary_master_key
+    COSMOSDB_NAME = dependency.cosmosdb_private_database.outputs.name
+
+    QueueStorageConnection = dependency.storage_private.outputs.primary_connection_string
 
     SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
