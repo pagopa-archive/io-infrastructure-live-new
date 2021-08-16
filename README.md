@@ -102,3 +102,18 @@ Do you want to perform these actions?
 ```
 
 To go deeper in terraform **workflow** please refer to the [official documentation](https://www.terraform.io/guides/core-workflow.html).
+
+## Install custom provider
+
+Due an issue on function app module we need to use a custom provider https://github.com/hashicorp/terraform-provider-azurerm/pull/10494
+
+```sh
+### This script works only for MacOS
+wget "https://github.com/pagopa/terraform-provider-azurerm/releases/download/2.46-beta.1/terraform-provider-azurerm"
+
+mkdir -p ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/
+
+rm -rf ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/terraform-provider-azurerm_v2.46.1_x5
+
+mv terraform-provider-azurerm ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/terraform-provider-azurerm_v2.46.1_x5
+```
