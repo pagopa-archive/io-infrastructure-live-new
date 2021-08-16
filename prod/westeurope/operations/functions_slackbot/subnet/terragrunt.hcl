@@ -1,6 +1,6 @@
 # Common
 dependency "virtual_network" {
-  config_path = "../virtual_network"
+  config_path = "../../../common/virtual_network"
 }
 
 # Include all settings from the root terragrunt.hcl file
@@ -13,11 +13,23 @@ terraform {
 }
 
 inputs = {
-  name = "pendpoints"
+  name = "fn3slackbot"
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   virtual_network_name = dependency.virtual_network.outputs.resource_name
-  address_prefix       = "10.0.240.0/23"
+  address_prefix       = "10.0.105.0/24"
 
-  enforce_private_link_endpoint_network_policies = true
+  delegation = {
+    name = "default"
+
+    service_delegation = {
+      name    = "Microsoft.Web/serverFarms"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/action"]
+    }
+  }
+
+  service_endpoints = [
+    "Microsoft.Web",
+    "Microsoft.AzureCosmosDB"
+  ]
 }
