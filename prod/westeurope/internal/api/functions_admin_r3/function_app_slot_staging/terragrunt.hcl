@@ -103,6 +103,8 @@ inputs = {
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
+  health_check_path = "info"
+
   # site_config
   pre_warmed_instance_count = 1
 
