@@ -7,7 +7,7 @@ dependency "resource_group" {
 }
 
 dependency "virtual_network" {
-  config_path = "../../../virtual_network"
+  config_path = "../../../../vpnp2s/virtual_network"
 }
 
 
