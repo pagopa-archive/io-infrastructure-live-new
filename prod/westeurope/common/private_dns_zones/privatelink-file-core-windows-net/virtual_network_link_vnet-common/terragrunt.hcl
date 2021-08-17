@@ -23,6 +23,6 @@ terraform {
 inputs = {
   name                  = dependency.virtual_network.outputs.resource_name
   private_dns_zone_name = dependency.private_dns_zone.outputs.name
-  resource_group_name   = dependency.resource_group.outputs.resource_name
+  resource_group_name   = dependency.resource_group.outputs.resource_name # must be dns_zone resource_group
   virtual_network_id    = dependency.virtual_network.outputs.id
 }
