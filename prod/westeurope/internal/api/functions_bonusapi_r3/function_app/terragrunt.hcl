@@ -69,6 +69,8 @@ inputs = {
 
   runtime_version = "~3"
 
+  health_check_path = "v1/info"
+
   pre_warmed_instance_count = 2
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
