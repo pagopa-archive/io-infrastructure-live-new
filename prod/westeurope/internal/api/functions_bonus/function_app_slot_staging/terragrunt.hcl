@@ -78,6 +78,8 @@ inputs = {
 
   runtime_version = "~3"
 
+  health_check_path = "v1/bonus/info"
+
   pre_warmed_instance_count = 1
   auto_swap_slot_name       = "production"
 
