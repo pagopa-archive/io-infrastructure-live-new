@@ -6,17 +6,26 @@ dependency "function_app" {
   config_path = "../function_app"
 }
 
-# Subnet
 dependency "subnet" {
   config_path = "../subnet"
 }
 
-dependency "subnet_apimapi" {
-  config_path = "../../../internal/api/apim/subnet/"
+dependency "storage_account_eucovidcert" {
+  config_path = "../../storage_eucovidcert/account"
 }
 
-dependency "subnet_azure_devops" {
-  config_path = "../../../common/subnet_azure_devops"
+dependency "storage_account_eucovidcert_queue_notify-new-profile" {
+  config_path = "../../storage_eucovidcert/queue_notify-new-profile"
+}
+
+dependency "storage_account_eucovidcert_table_trace_notify-new-profile" {
+  config_path = "../../storage_eucovidcert/table-trace-notify-new-profile"
+}
+
+
+# Internal
+dependency "subnet_apimapi" {
+  config_path = "../../../internal/api/apim/subnet/"
 }
 
 dependency "subnet_appbackendl1" {
@@ -27,14 +36,17 @@ dependency "subnet_appbackendl2" {
   config_path = "../../../linux/appbackendl2/subnet"
 }
 
-dependency "subnet_fnservices" {
-  config_path = "../../../internal/api/functions_services_r3/subnet"
-}
-
 dependency "functions_services" {
-  config_path = "../../../internal/api/functions_services_r3/function_app_slot_staging"
+  config_path = "../../../internal/api/functions_services_r3/function_app"
 }
 
+dependency "storage_account_apievents" {
+  config_path = "../../../internal/api/storage_apievents/account"
+}
+
+dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
+  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
+}
 
 # Common
 dependency "application_insights" {
@@ -43,6 +55,15 @@ dependency "application_insights" {
 
 dependency "key_vault" {
   config_path = "../../../common/key_vault"
+}
+
+dependency "subnet_azure_devops" {
+  config_path = "../../../common/subnet_azure_devops"
+}
+
+# Services
+dependency "functions_services01" {
+  config_path = "../../../services/functions_services01_r3/function_app"
 }
 
 
@@ -97,36 +118,53 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    DGC_UAT_FISCAL_CODES   = local.testusersvars.locals.test_users_eu_covid_cert_flat
-    LOAD_TEST_FISCAL_CODES = local.testusersvars.locals.test_users_internal_load_flat
+    DGC_UAT_FISCAL_CODES = local.testusersvars.locals.test_users_eu_covid_cert_flat
+    # we need test_users_store_review_flat because app IO reviewers must read a valid certificate response
+    LOAD_TEST_FISCAL_CODES = join(",", [local.testusersvars.locals.test_users_store_review_flat,
+    local.testusersvars.locals.test_users_internal_load_flat])
 
-    DGC_UAT_URL       = "TBD"
+    DGC_UAT_URL       = "https://servizi-pnval.dgc.gov.it"
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
-    DGC_PROD_URL      = "TBD"
+    DGC_PROD_URL      = "https://servizi-pn.dgc.gov.it"
+
+    // Events configs
+    EventsQueueStorageConnection                    = dependency.storage_account_apievents.outputs.primary_connection_string
+    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME          = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
+    QueueStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME       = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
+    TableStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
+    EUCOVIDCERT_TRACE_NOTIFY_NEW_PROFILE_TABLE_NAME = dependency.storage_account_eucovidcert_table_trace_notify-new-profile.outputs.name
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     APPINSIGHTS_SAMPLING_PERCENTAGE = 5
+
+    // Disable listener functions
+    "AzureWebJobs.NotifyNewProfileToDGC.Disabled" = "1"
+    "AzureWebJobs.OnProfileCreatedEvent.Disabled" = "1"
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "staging-content"
 
     # ----
-
     FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    WEBSITE_VNET_ROUTE_ALL = 1
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-        DGC_PROD_CLIENT_CERT      = "eucovidcert-DGC-PROD-CLIENT-CERT"
-        DGC_PROD_CLIENT_KEY       = "eucovidcert-DGC-PROD-CLIENT-KEY"
-        DGC_UAT_CLIENT_CERT       = "eucovidcert-DGC-UAT-CLIENT-CERT"
-        DGC_UAT_CLIENT_KEY        = "eucovidcert-DGC-UAT-CLIENT-KEY"
-        DGC_LOAD_TEST_CLIENT_KEY  = "eucovidcert-DGC-LOAD-TEST-CLIENT-KEY"
-        DGC_LOAD_TEST_CLIENT_CERT = "eucovidcert-DGC-LOAD-TEST-CLIENT-CERT"
-        FNSERVICES_API_KEY        = "fn3services-KEY-EUCOVIDCERT"
+      DGC_PROD_CLIENT_CERT      = "eucovidcert-DGC-PROD-CLIENT-CERT"
+      DGC_PROD_CLIENT_KEY       = "eucovidcert-DGC-PROD-CLIENT-KEY"
+      DGC_PROD_SERVER_CA        = "eucovidcert-DGC-PROD-SERVER-CA"
+      DGC_UAT_CLIENT_CERT       = "eucovidcert-DGC-UAT-CLIENT-CERT"
+      DGC_UAT_CLIENT_KEY        = "eucovidcert-DGC-UAT-CLIENT-KEY"
+      DGC_UAT_SERVER_CA         = "eucovidcert-DGC-UAT-SERVER-CA"
+      DGC_LOAD_TEST_CLIENT_KEY  = "eucovidcert-DGC-LOAD-TEST-CLIENT-KEY"
+      DGC_LOAD_TEST_CLIENT_CERT = "eucovidcert-DGC-LOAD-TEST-CLIENT-CERT"
+      DGC_LOAD_TEST_SERVER_CA   = "eucovidcert-DGC-LOAD-TEST-SERVER-CA"
+      FNSERVICES_API_KEY        = "fn3services-KEY-EUCOVIDCERT"
     }
   }
 

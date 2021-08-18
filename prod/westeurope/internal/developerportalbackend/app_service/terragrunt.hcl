@@ -39,9 +39,11 @@ inputs = {
   resource_group_name = dependency.resource_group.outputs.resource_name
 
   app_service_plan_info = {
-    kind     = "Windows"
-    sku_tier = "PremiumV2"
-    sku_size = "P1v2"
+    kind             = "Windows"
+    sku_tier         = "PremiumV2"
+    sku_size         = "P1v2"
+    reserved         = false
+    per_site_scaling = false
   }
 
   app_enabled         = true
@@ -69,6 +71,18 @@ inputs = {
     ADMIN_API_URL                = "http://api-internal.io.italia.it"
     TENANT_NAME                  = "agidweb"
     LOGO_URL                     = "https://assets.cdn.io.italia.it/logos"
+    JIRA_USERNAME                = "github-bot@pagopa.it"
+    JIRA_NAMESPACE_URL           = "https://pagopa.atlassian.net"
+    JIRA_BOARD                   = "IES"
+    JIRA_STATUS_COMPLETE         = "DONE"
+    JIRA_STATUS_IN_PROGRESS      = "REVIEW"
+    JIRA_STATUS_NEW              = "NEW"
+    JIRA_STATUS_NEW_ID           = "11"
+    JIRA_STATUS_REJECTED         = "REJECTED"
+    JIRA_SERVICE_TAG_PREFIX      = "SERVICE-"
+    JIRA_TRANSITION_START_ID     = "31"
+    JIRA_TRANSITION_REJECT_ID    = "21"
+    JIRA_TRANSITION_UPDATED_ID   = "41"
   }
 
   app_settings_secrets = {
@@ -85,6 +99,7 @@ inputs = {
       SERVICE_PRINCIPAL_SECRET    = "devportal-SERVICE-PRINCIPAL-SECRET"
       SERVICE_PRINCIPAL_TENANT_ID = "devportal-SERVICE-PRINCIPAL-TENANT-ID"
       SANDBOX_FISCAL_CODE         = "io-SANDBOX-FISCAL-CODE"
+      JIRA_TOKEN                  = "devportal-JIRA-TOKEN"
     }
   }
 
