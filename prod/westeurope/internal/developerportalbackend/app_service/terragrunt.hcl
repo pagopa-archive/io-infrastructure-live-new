@@ -83,6 +83,9 @@ inputs = {
     JIRA_TRANSITION_START_ID     = "31"
     JIRA_TRANSITION_REJECT_ID    = "21"
     JIRA_TRANSITION_UPDATED_ID   = "41"
+    JIRA_DELEGATE_ID_FIELD       = "customfield_10087"
+    JIRA_EMAIL_ID_FIELD          = "customfield_10084"
+    JIRA_ORGANIZATION_ID_FIELD   = "customfield_10088"
   }
 
   app_settings_secrets = {
