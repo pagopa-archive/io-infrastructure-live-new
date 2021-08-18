@@ -36,8 +36,8 @@ inputs = {
 
   app_service_plan_info = {
     kind     = "elastic"
-    sku_tier = "ElasticPremium"
-    sku_size = "EP1"
+    sku_tier = "Standard"
+    sku_size = "S1"
   }
 
   runtime_version = "~3"
@@ -64,6 +64,8 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-mockdgc-content"
+    
+    WEBSITE_ENABLE_SYNC_UPDATE_SITE = "true"
   }
 
   app_settings_secrets = {
