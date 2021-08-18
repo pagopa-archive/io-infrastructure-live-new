@@ -109,11 +109,14 @@ Due an issue on function app module we need to use a custom provider https://git
 
 ```sh
 ### This script works only for MacOS
-wget "https://github.com/pagopa/terraform-provider-azurerm/releases/download/2.46-beta.1/terraform-provider-azurerm"
+wget "https://github.com/pagopa/terraform-provider-azurerm/releases/download/2.46-beta.1/terraform-provider-azurerm-darwin-amd64"
 
 mkdir -p ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/
 
 rm -rf ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/terraform-provider-azurerm_v2.46.1_x5
 
-mv terraform-provider-azurerm ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/terraform-provider-azurerm_v2.46.1_x5
+mv terraform-provider-azurerm-darwin-amd64 ${HOME}/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/azurerm/2.46.1/darwin_amd64/terraform-provider-azurerm_v2.46.1_x5
+
+### First plan will fail, you need to authorize terraform-provider-azurerm_v2.46.1_x5 execution in
+### System Preferences -> Security & Privacy -> General -> Allow apps downloaded from
 ```
