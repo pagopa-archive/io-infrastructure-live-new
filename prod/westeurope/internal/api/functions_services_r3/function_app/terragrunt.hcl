@@ -60,6 +60,8 @@ terraform {
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
+  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
 }
 
 inputs = {
@@ -89,6 +91,10 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
+    # DNS and VNET configuration to use private endpoint
+    WEBSITE_DNS_SERVER     = "168.63.129.16"
+    WEBSITE_VNET_ROUTE_ALL = 1
+
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
@@ -115,9 +121,17 @@ inputs = {
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
+    // setting to true all the webhook message content will be disabled
+    FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "true"
+
+    OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
+    FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
+
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
+    WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
+    AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
 
   app_settings_secrets = {

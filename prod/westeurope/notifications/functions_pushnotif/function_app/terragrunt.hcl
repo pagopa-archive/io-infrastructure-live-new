@@ -65,6 +65,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
@@ -103,6 +104,7 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
+    FISCAL_CODE_NOTIFICATION_BLACKLIST = join(",", local.testusersvars.locals.test_users_internal_load)
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
@@ -136,12 +138,12 @@ inputs = {
     # Variable used during transition to new NH management
 
     # Possible values : "none" | "all" | "beta" | "canary"
-    NH_PARTITION_FEATURE_FLAG             = "all"
-    BETA_USERS_STORAGE_CONNECTION_STRING  = dependency.storage_beta_test_users.outputs.primary_connection_string
-    BETA_USERS_TABLE_NAME                 = dependency.storage_beta_test_users_table_notificationhub.outputs.name
-    
+    NH_PARTITION_FEATURE_FLAG            = "all"
+    BETA_USERS_STORAGE_CONNECTION_STRING = dependency.storage_beta_test_users.outputs.primary_connection_string
+    BETA_USERS_TABLE_NAME                = dependency.storage_beta_test_users_table_notificationhub.outputs.name
+
     # Takes ~6,25% of users
-    CANARY_USERS_REGEX                    = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
+    CANARY_USERS_REGEX = "^([(0-9)|(a-f)|(A-F)]{63}0)$"
     # ------------------------------------------------------------------------------
 
     // Disable functions
@@ -150,6 +152,8 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-pushnotif-content"
+    WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
+    AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
 
   app_settings_secrets = {
