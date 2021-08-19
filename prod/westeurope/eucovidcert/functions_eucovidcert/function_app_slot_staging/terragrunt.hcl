@@ -61,12 +61,6 @@ dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
 }
 
-# Services
-dependency "functions_services01" {
-  config_path = "../../../services/functions_services01_r3/function_app"
-}
-
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
