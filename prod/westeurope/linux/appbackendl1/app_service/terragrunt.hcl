@@ -32,10 +32,6 @@ dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
 }
 
-dependency "subnet_fn3services01" {
-  config_path = "../../../services/functions_services01_r3/subnet"
-}
-
 # Session endpoints allowed origin
 dependency "subnet_funcadmin_r3" {
   config_path = "../../../internal/api/functions_admin_r3/subnet"
@@ -191,7 +187,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix},${dependency.subnet_fn3services01.outputs.address_prefix}"
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix}"
 
     // LOCK / UNLOCK SESSION ENDPOINTS
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
@@ -278,7 +274,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
-    dependency.subnet_fn3services01.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
   ]
 

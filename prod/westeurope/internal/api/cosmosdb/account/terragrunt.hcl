@@ -31,10 +31,6 @@ dependency "subnet_fn_services" {
   config_path = "../../functions_services_r3/subnet"
 }
 
-dependency "subnet_fn_services01" {
-  config_path = "../../../../services/functions_services01_r3/subnet"
-}
-
 dependency "subnet_fn_servicescache" {
   config_path = "../../functions_servicescache_r3/subnet"
 }
@@ -104,7 +100,6 @@ inputs = {
     dependency.subnet_fn_assets.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_services.outputs.id,
-    dependency.subnet_fn_services01.outputs.id,
     dependency.subnet_fn_servicescache.outputs.id,
     dependency.subnet_fn_slackbot.outputs.id,
   ]
