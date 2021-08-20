@@ -63,6 +63,7 @@ include {
 
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=fn-app-private-storage"
+  # source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
