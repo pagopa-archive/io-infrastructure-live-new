@@ -87,11 +87,13 @@ inputs = {
 
   runtime_version = "~3"
 
+  health_check_path = "api/v1/info"
+
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
+    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -153,7 +155,7 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-fn3-pushnotif-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
-    AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+    # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
 
   app_settings_secrets = {

@@ -61,12 +61,6 @@ dependency "subnet_azure_devops" {
   config_path = "../../../common/subnet_azure_devops"
 }
 
-# Services
-dependency "functions_services01" {
-  config_path = "../../../services/functions_services01_r3/function_app"
-}
-
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -100,6 +94,8 @@ inputs = {
   }
 
   runtime_version = "~3"
+
+  health_check_path = "api/v1/info"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
