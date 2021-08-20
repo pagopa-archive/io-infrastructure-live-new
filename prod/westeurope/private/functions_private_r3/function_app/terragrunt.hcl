@@ -10,6 +10,22 @@ dependency "subnet" {
   config_path = "../subnet"
 }
 
+dependency "subnet_pendpoints" {
+  config_path = "../../subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "cosmosdb_private_account" {
   config_path = "../../cosmosdb/account"
 }
@@ -32,7 +48,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=fn-app-private-storage"
 }
 
 locals {
@@ -43,7 +59,6 @@ locals {
 inputs = {
   name                = "private"
   resource_group_name = dependency.resource_group.outputs.resource_name
-
 
   resources_prefix = {
     function_app     = "fn3"
@@ -74,16 +89,6 @@ inputs = {
     COSMOSDB_NAME = dependency.cosmosdb_private_database.outputs.name
 
     QueueStorageConnection = dependency.storage_private.outputs.primary_connection_string
-
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
-
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-private"
   }
 
   app_settings_secrets = {
@@ -92,9 +97,12 @@ inputs = {
     }
   }
 
-  # allowed_subnets = [
-  #   dependency.subnet.outputs.id
-  # ]
+  storage_durable_function_private_endpoint = {
+    subnet_id                  = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+  }
 
   # allowed_ips = local.app_insights_ips_west_europe
 

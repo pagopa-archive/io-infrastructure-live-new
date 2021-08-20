@@ -36,7 +36,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=fn-app-private-storage"
 }
 
 locals {
@@ -45,13 +45,14 @@ locals {
 }
 
 inputs = {
-  name                       = "staging"
-  resource_group_name        = dependency.resource_group.outputs.resource_name
-  function_app_name          = dependency.function_app.outputs.name
-  function_app_resource_name = dependency.function_app.outputs.resource_name
-  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
-  storage_account_name       = dependency.function_app.outputs.storage_account.name
-  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  name                                               = "staging"
+  resource_group_name                                = dependency.resource_group.outputs.resource_name
+  function_app_name                                  = dependency.function_app.outputs.name
+  function_app_resource_name                         = dependency.function_app.outputs.resource_name
+  app_service_plan_id                                = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name                               = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key                         = dependency.function_app.outputs.storage_account.primary_access_key
+  storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
 
@@ -70,16 +71,6 @@ inputs = {
     COSMOSDB_NAME = dependency.cosmosdb_private_database.outputs.name
 
     QueueStorageConnection = dependency.storage_private.outputs.primary_connection_string
-
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
-
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {
