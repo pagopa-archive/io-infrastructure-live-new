@@ -174,7 +174,7 @@ inputs = {
 
     // Service Preferences Migration Queue
     MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
-    FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
+    FN_APP_STORAGE_CONNECTION_STRING                = dependency.storage_account_app.outputs.primary_connection_string
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string

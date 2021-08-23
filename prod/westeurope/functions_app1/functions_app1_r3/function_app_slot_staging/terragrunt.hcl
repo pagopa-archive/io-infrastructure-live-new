@@ -57,6 +57,21 @@ dependency "storage_account_app_queue_profile-migrate-services-preferences" {
 }
 
 # common
+dependency "subnet_pendpoints" {
+  config_path = "../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
 
 dependency "storage_account_assets" {
   config_path = "../../../common/cdn/storage_account_assets"
@@ -107,13 +122,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.12"
 }
 
 locals {
-  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
-  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
+  commonvars                = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  opt_out_email_switch_date = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled   = local.commonvars.locals.ff_opt_in_email_enabled
 }
 
 inputs = {
@@ -138,9 +153,6 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -176,7 +188,7 @@ inputs = {
 
     // Service Preferences Migration Queue
     MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
-    FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
+    FN_APP_STORAGE_CONNECTION_STRING                = dependency.storage_account_app.outputs.primary_connection_string
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
@@ -200,9 +212,6 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "staging-content"
   }
 
   app_settings_secrets = {
