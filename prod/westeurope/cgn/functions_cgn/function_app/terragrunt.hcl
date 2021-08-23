@@ -132,10 +132,8 @@ inputs = {
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
     SERVICES_API_URL = local.service_api_url
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-func-cgn-content"
-
+    
+    
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
     EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"
 
