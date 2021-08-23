@@ -7,6 +7,22 @@ dependency "subnet" {
 }
 
 # common
+dependency "subnet_pendpoints" {
+  config_path = "../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "storage_account_assets" {
   config_path = "../../../common/cdn/storage_account_assets"
 }
@@ -96,7 +112,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
@@ -135,10 +151,6 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
-
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -179,31 +191,9 @@ inputs = {
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
     // Disable functions
-    #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
-    #"AzureWebJobs.EmailValidationProcessOrchestrator.Disabled"     = "1"
-    #"AzureWebJobs.GetMessage.Disabled"                             = "1"
-    #"AzureWebJobs.GetMessages.Disabled"                            = "1"
-    #"AzureWebJobs.GetProfile.Disabled"                             = "1"
-    #"AzureWebJobs.GetService.Disabled"                             = "1"
-    #"AzureWebJobs.GetUserDataProcessing.Disabled"                  = "1"
-    #"AzureWebJobs.GetVisibleServices.Disabled"                     = "1"
-    #"AzureWebJobs.HandleNHNotificationCall.Disabled"               = "1"
-    #"AzureWebJobs.HandleNHNotificationCallActivity.Disabled"       = "1"
-    #"AzureWebJobs.HandleNHNotificationCallOrchestrator.Disabled"   = "1"
-    #"AzureWebJobs.SendUserDataProcessingEmailActivity.Disabled"    = "1"
-    #"AzureWebJobs.SendValidationEmailActivity.Disabled"            = "1"
-    #"AzureWebJobs.SendWelcomeMessagesActivity.Disabled"            = "1"
-    #"AzureWebJobs.StartEmailValidationProcess.Disabled"            = "1"
-    #"AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateSubscriptionsFeedActivity.Disabled"        = "1"
-    #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
-    #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
-    #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
+    
+    "AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
@@ -220,7 +210,6 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
-    WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
   }
 
   app_settings_secrets = {
@@ -233,6 +222,14 @@ inputs = {
       SPID_LOGS_PUBLIC_KEY         = "funcapp-KEY-SPIDLOGS-PUB"
       AZURE_NH_ENDPOINT            = "common-AZURE-NH-ENDPOINT"
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
   }
 
   allowed_subnets = [

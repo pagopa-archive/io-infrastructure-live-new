@@ -139,6 +139,7 @@ inputs = {
   app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
   storage_account_name       = dependency.function_app.outputs.storage_account.name
   storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
 
