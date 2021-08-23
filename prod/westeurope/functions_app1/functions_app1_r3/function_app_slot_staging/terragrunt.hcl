@@ -132,13 +132,13 @@ locals {
 }
 
 inputs = {
-  name                       = "staging"
-  resource_group_name        = dependency.resource_group.outputs.resource_name
-  function_app_name          = dependency.function_app.outputs.name
-  function_app_resource_name = dependency.function_app.outputs.resource_name
-  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
-  storage_account_name       = dependency.function_app.outputs.storage_account.name
-  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  name                                               = "staging"
+  resource_group_name                                = dependency.resource_group.outputs.resource_name
+  function_app_name                                  = dependency.function_app.outputs.name
+  function_app_resource_name                         = dependency.function_app.outputs.resource_name
+  app_service_plan_id                                = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name                               = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key                         = dependency.function_app.outputs.storage_account.primary_access_key
   storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
@@ -229,6 +229,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]

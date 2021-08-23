@@ -192,8 +192,8 @@ inputs = {
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
 
     // Disable functions
-    
-    "AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
+
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
@@ -235,6 +235,7 @@ inputs = {
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
 
