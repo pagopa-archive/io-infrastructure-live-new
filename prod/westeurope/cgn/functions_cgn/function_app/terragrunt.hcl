@@ -32,6 +32,22 @@ dependency "storage_table_eycacardexpiration" {
 }
 
 # Common
+dependency "subnet_pendpoints" {
+  config_path = "../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "virtual_network" {
   config_path = "../../../common/virtual_network"
 }
@@ -63,7 +79,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
@@ -107,7 +123,7 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    #SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     CGN_EXPIRATION_TABLE_NAME  = dependency.storage_table_cardexpiration.outputs.name
     EYCA_EXPIRATION_TABLE_NAME = dependency.storage_table_eycacardexpiration.outputs.name
@@ -141,6 +157,14 @@ inputs = {
       EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
       EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
   }
 
   allowed_subnets = [
