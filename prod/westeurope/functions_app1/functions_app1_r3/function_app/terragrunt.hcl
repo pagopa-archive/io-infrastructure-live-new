@@ -195,8 +195,7 @@ inputs = {
 
     "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
-
+    
     # Cashback welcome message
     IS_CASHBACK_ENABLED = "false"
     # Only national service
