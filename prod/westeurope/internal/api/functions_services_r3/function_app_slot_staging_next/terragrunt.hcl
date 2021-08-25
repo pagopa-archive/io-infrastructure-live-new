@@ -72,7 +72,7 @@ locals {
 }
 
 inputs = {
-  name                       = "staging"
+  name                       = "next"
   resource_group_name        = dependency.resource_group.outputs.resource_name
   function_app_name          = dependency.function_app.outputs.name
   function_app_resource_name = dependency.function_app.outputs.resource_name
@@ -114,8 +114,6 @@ inputs = {
     FETCH_KEEPALIVE_MAX_FREE_SOCKETS    = "10"
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
-
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
 
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
