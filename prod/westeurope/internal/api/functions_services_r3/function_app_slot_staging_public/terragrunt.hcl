@@ -72,7 +72,7 @@ locals {
 }
 
 inputs = {
-  name                       = "next"
+  name                       = "public"
   resource_group_name        = dependency.resource_group.outputs.resource_name
   function_app_name          = dependency.function_app.outputs.name
   function_app_resource_name = dependency.function_app.outputs.resource_name
