@@ -24,6 +24,22 @@ dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
 }
 
+dependency "subnet_pendpoints" {
+  config_path = "../../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "application_insights" {
   config_path = "../../../../common/application_insights"
 }
@@ -46,7 +62,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
@@ -76,10 +92,6 @@ inputs = {
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
-
     COSMOSDB_URI               = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY               = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME              = dependency.cosmosdb_database.outputs.name
@@ -91,18 +103,20 @@ inputs = {
 
     // Disabled functions on slot function
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "0"
-
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
-    # it is required due to this issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    # at the time we applied these chages the value is the following.
-    WEBSITE_CONTENTSHARE = "io-p-fn3-servicescache-content"
   }
 
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
   }
 
   allowed_subnets = [
