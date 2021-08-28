@@ -104,9 +104,9 @@ inputs = {
     NODE_ENV                       = "production"
 
     COSMOSDB_CGN_URI           = dependency.cosmosdb_cgn_account.outputs.endpoint
-    COSMOSDB_CGN_KEY           = dependency.cosmosdb_cgn_account.outputs.secondary_key
+    COSMOSDB_CGN_KEY           = dependency.cosmosdb_cgn_account.outputs.primary_master_key
     COSMOSDB_CGN_DATABASE_NAME = dependency.cosmosdb_cgn_database.outputs.name
-    COSMOSDB_CONNECTION_STRING = dependency.cosmosdb_cgn_account.outputs.connection_strings[1]
+    COSMOSDB_CONNECTION_STRING = dependency.cosmosdb_cgn_account.outputs.connection_strings[0]
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
