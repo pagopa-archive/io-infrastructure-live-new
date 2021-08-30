@@ -117,9 +117,9 @@ inputs = {
     WEBSITE_VNET_ROUTE_ALL = 1
 
     COSMOSDB_URI               = dependency.cosmosdb_account.outputs.endpoint
-    COSMOSDB_KEY               = dependency.cosmosdb_account.outputs.primary_master_key
+    COSMOSDB_KEY               = dependency.cosmosdb_account.outputs.secondary_key
     COSMOSDB_NAME              = dependency.cosmosdb_database.outputs.name
-    COSMOSDB_CONNECTION_STRING = dependency.cosmosdb_account.outputs.connection_strings[0]
+    COSMOSDB_CONNECTION_STRING = dependency.cosmosdb_account.outputs.connection_strings[1]
 
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
