@@ -89,7 +89,7 @@ inputs = {
     REDEEMED_REQUESTS_CONTAINER_NAME = "redeemed-requests"
 
     COSMOSDB_BONUS_URI           = dependency.cosmosdb_bonus_account.outputs.endpoint
-    COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.secondary_key
+    COSMOSDB_BONUS_KEY           = dependency.cosmosdb_bonus_account.outputs.primary_master_key
     COSMOSDB_BONUS_DATABASE_NAME = dependency.cosmosdb_bonus_database.outputs.name
 
     SERVICES_API_URL = local.service_api_url
