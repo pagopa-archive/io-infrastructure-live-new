@@ -123,13 +123,12 @@ inputs = {
   client_cert_enabled = false
   https_only          = false
 
-  linux_fx_version = "NODE|10-lts"
+  linux_fx_version = "NODE|14-lts"
   app_command_line = "node /home/site/wwwroot/src/server.js"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
 
     // ENVIRONMENT
