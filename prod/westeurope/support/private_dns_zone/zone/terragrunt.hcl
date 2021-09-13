@@ -41,5 +41,11 @@ inputs = {
       records            = ["10.1.134.4"]
       target_resource_id = null
     },
+    {
+      name               = "cstar-p-postgresql"
+      ttl                = 3600
+      records            = ["10.1.129.4"]
+      target_resource_id = null
+    },
   ]
 }
