@@ -16,10 +16,18 @@ inputs = {
   name                = "cstar.pagopa.it"
   resource_group_name = dependency.resource_group.outputs.resource_name
 
-  dns_a_records = [ {
+  dns_a_records = [
+    {
       name               = "prod"
       ttl                = 3600
       records            = ["10.70.133.6"]
       target_resource_id = null
-  } ]
+    },
+    {
+      name               = "api"
+      ttl                = 3600
+      records            = ["10.230.6.6"]
+      target_resource_id = null
+    },
+  ]
 }

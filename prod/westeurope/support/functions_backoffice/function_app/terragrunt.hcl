@@ -89,8 +89,6 @@ inputs = {
     DASHBOARD_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
     DASHBOARD_LOGS_TABLE_NAME           = dependency.storage_table_backoffice.outputs.name
 
-    #SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
     # milliseconds
     IN_MEMORY_CACHE_TTL = 3600000
 
@@ -105,7 +103,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // CSTAR
-    CSTAR_API_URL       = "https://prod.cstar.pagopa.it"
+    CSTAR_API_URL       = "https://api.cstar.pagopa.it"
     CSTAR_API_BASE_PATH = "backoffice"
   }
 
