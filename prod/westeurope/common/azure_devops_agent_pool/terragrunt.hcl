@@ -20,6 +20,5 @@ inputs = {
   name = "deploy-pipeline-healthcheck"
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
-  virtual_network_name = dependency.virtual_network.outputs.resource_name
-
+  subnet_id            = dependency.subnet_azure_devops.outputs.id  
 }
