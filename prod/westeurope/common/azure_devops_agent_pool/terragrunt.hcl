@@ -1,4 +1,8 @@
 # Common
+dependency "resource_group" {
+  config_path = "../resource_group"
+}
+
 dependency "subnet_azure_devops" {
   config_path = "../subnet_azure_devops"
 }
@@ -21,4 +25,6 @@ inputs = {
 
   resource_group_name  = dependency.virtual_network.outputs.resource_group_name
   subnet_id            = dependency.subnet_azure_devops.outputs.id  
+  #subscription         =   
+  tags                 = { "environment" : "dev" }
 }
