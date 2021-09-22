@@ -19,13 +19,6 @@ inputs = {
   virtual_network_name = dependency.virtual_network.outputs.resource_name
   address_prefix       = "10.0.250.0/24"
 
-  delegation = {
-    name = "default"
-
-    service_delegation = {
-      name    = "Microsoft.ContainerInstance/containerGroups"
-      actions = []
-    }
-  }
-
+  enforce_private_link_endpoint_network_policies = true
+  
 }
