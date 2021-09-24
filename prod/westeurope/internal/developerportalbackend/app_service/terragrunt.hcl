@@ -82,7 +82,7 @@ inputs = {
     JIRA_SERVICE_TAG_PREFIX      = "SERVICE-"
     JIRA_TRANSITION_START_ID     = "31"
     JIRA_TRANSITION_REJECT_ID    = "21"
-    JIRA_TRANSITION_UPDATED_ID   = "41"
+    JIRA_TRANSITION_UPDATED_ID   = "51"
   }
 
   app_settings_secrets = {
