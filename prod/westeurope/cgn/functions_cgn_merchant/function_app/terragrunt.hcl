@@ -48,7 +48,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.14"
 }
 
 locals {
@@ -72,7 +72,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
+    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"

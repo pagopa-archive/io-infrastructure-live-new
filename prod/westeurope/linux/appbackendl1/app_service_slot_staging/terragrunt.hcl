@@ -40,10 +40,6 @@ dependency "subnet_fn3services" {
   config_path = "../../../internal/api/functions_services_r3/subnet"
 }
 
-dependency "subnet_fn3services01" {
-  config_path = "../../../services/functions_services01_r3/subnet"
-}
-
 # Session endpoints allowed origin
 dependency "subnet_funcadmin_r3" {
   config_path = "../../../internal/api/functions_admin_r3/subnet"
@@ -127,13 +123,12 @@ inputs = {
   client_cert_enabled = false
   https_only          = false
 
-  linux_fx_version = "NODE|10-lts"
+  linux_fx_version = "NODE|14-lts"
   app_command_line = "node /home/site/wwwroot/src/server.js"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_NODE_DEFAULT_VERSION = "10.14.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
 
     // ENVIRONMENT
@@ -185,7 +180,7 @@ inputs = {
     REDIS_PASSWORD = dependency.redis.outputs.primary_access_key
 
     // PUSH NOTIFICATIONS
-    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix},${dependency.subnet_fn3services01.outputs.address_prefix}"
+    ALLOW_NOTIFY_IP_SOURCE_RANGE = "${dependency.subnet_fn3services.outputs.address_prefix}"
 
     // LOCK / UNLOCK SESSION ENDPOINTS
     ALLOW_SESSION_HANDLER_IP_SOURCE_RANGE = dependency.subnet_funcadmin_r3.outputs.address_prefix
@@ -273,7 +268,6 @@ inputs = {
   allowed_subnets = [
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
-    dependency.subnet_fn3services01.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
   ]

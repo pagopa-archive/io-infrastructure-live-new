@@ -46,6 +46,22 @@ dependency "storage_beta_test_users_table_notificationhub" {
 }
 
 # Common
+dependency "subnet_pendpoints" {
+  config_path = "../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
 }
@@ -60,7 +76,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
@@ -87,11 +103,13 @@ inputs = {
 
   runtime_version = "~3"
 
+  health_check_path = "api/v1/info"
+
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
+    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -108,8 +126,6 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
-
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
 
     // activity default retry attempts
     RETRY_ATTEMPT_NUMBER = 10
@@ -147,13 +163,10 @@ inputs = {
     # ------------------------------------------------------------------------------
 
     // Disable functions
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "0"
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
 
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-pushnotif-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
-    AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+    # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
 
   app_settings_secrets = {
@@ -165,6 +178,14 @@ inputs = {
       NH3_ENDPOINT      = "common-partition-3-AZURE-NH-ENDPOINT"
       NH4_ENDPOINT      = "common-partition-4-AZURE-NH-ENDPOINT"
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
   }
 
   allowed_subnets = [
