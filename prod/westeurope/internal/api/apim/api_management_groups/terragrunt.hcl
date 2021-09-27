@@ -124,6 +124,10 @@ inputs = {
     {
       display_name = "ApiMessageWriteEUCovidCert"
       name         = "apimessagewriteeucovidcert"
+    },
+    {
+      display_name = "ApiMessageWriteWithPayee"
+      name         = "apimessagewritewithpayee"
     }
   ]
 }
