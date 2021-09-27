@@ -20,5 +20,10 @@ inputs = {
   address_prefix       = "10.0.250.0/24"
 
   enforce_private_link_endpoint_network_policies = true
+
+  # To allow web request to app services under this subnet
+  service_endpoints = [
+    "Microsoft.Web",
+  ]
   
 }
