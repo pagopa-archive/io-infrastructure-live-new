@@ -22,4 +22,7 @@ locals {
 
   # Feature flag used to enable email opt-in with logic exposed by the previous variable usage
   ff_opt_in_email_enabled = "true"
+
+  # Azure production subscription name
+  subscription = "PROD-IO"
 }
