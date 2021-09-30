@@ -55,8 +55,13 @@ inputs = {
       {
         action = "Append"
         name   = "Content-Security-Policy"
-        value  = "img-src 'self' https://wisp2.pagopa.gov.it data:; script-src 'self'; style-src 'self'  'unsafe-inline'; worker-src 'none';"
-      } 
+        value  = "img-src 'self' https://acardste.vaservices.eu https://wisp2.pagopa.gov.it data:;"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy"
+        value  = "script-src 'self'; style-src 'self'  'unsafe-inline'; worker-src 'none';"
+      }  
     ]
   }
   
