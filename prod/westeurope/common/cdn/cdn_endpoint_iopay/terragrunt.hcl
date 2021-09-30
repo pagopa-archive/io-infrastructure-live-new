@@ -45,7 +45,12 @@ inputs = {
       {
         action = "Overwrite"
         name   = "Content-Security-Policy"
-        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com https://wisp2.pagopa.gov.it;"
+        value  = "default-src 'self'; connect-src 'self' https://api.io.italia.it https://api-eu.mixpanel.com https://wisp2.pagopa.gov.it"
+      },
+      {
+        action = "Append"
+        name   = "Content-Security-Policy"
+        value  = " https://acardste.vaservices.eu;"
       },
       {
         action = "Append"
