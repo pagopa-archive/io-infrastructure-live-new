@@ -3,6 +3,11 @@ dependency "storage_account" {
   config_path = "../account"
 }
 
+dependency "storage_container_user-data-download" {
+  config_path = "../container_user-data-download"
+}
+
+
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -20,7 +25,7 @@ inputs = {
       name    = "deleteafter14days"
       enabled = true
       filters = {
-        prefix_match = []
+        prefix_match = [dependency.storage_container_user-data-download.outputs.name]
         blob_types   = ["blockBlob"]
       }
       actions = {
