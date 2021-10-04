@@ -32,9 +32,14 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
+      # normal capacity
       default = 3
       minimum = 1
       maximum = 20
+      # high priority event capacity
+      # default = 5
+      # minimum = 3
+      # maximum = 20
     }
 
     rules = [
@@ -71,7 +76,7 @@ inputs = {
           time_window              = "PT5M"
           time_aggregation         = "Average"
           operator                 = "LessThan"
-          threshold                = 2500
+          threshold                = 3000
           divide_by_instance_count = false
         }
 
@@ -93,8 +98,8 @@ inputs = {
     email = {
       send_to_subscription_administrator    = false
       send_to_subscription_co_administrator = false
-      custom_emails                         = ["appbackend-AUTOSCALING-NOTIFICATION-EMAILS"]
+      custom_emails                         = ["disabed-email@pagopa.it"]
     }
-    key_vault_id = dependency.key_vault.outputs.id
+    key_vault_id = null
   }
 }
