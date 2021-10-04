@@ -19,9 +19,8 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_autoscale_setting?ref=v3.0.15"
 }
-
 
 inputs = {
   name = "autoscaling-appbackendl2"
@@ -33,23 +32,30 @@ inputs = {
     name = "DefaultProfile"
 
     capacity = {
-      default = 5
-      minimum = 5
+      # normal capacity
+      default = 3
+      minimum = 1
       maximum = 20
+      # high priority event capacity
+      # default = 5
+      # minimum = 3
+      # maximum = 20
     }
 
     rules = [
       {
-        name = "ScaleOutCpu"
+        name = "ScaleOutRequests"
         metric_trigger = {
-          metric_name        = "CpuPercentage"
-          metric_resource_id = dependency.app_service.outputs.app_service_plan_id
-          time_grain         = "PT1M"
-          statistic          = "Average"
-          time_window        = "PT1M"
-          time_aggregation   = "Average"
-          operator           = "GreaterThan"
-          threshold          = 75
+          metric_name              = "Requests"
+          metric_resource_id       = dependency.app_service.outputs.id
+          metric_namespace         = "microsoft.web/sites"
+          time_grain               = "PT1M"
+          statistic                = "Average"
+          time_window              = "PT5M"
+          time_aggregation         = "Average"
+          operator                 = "GreaterThan"
+          threshold                = 4000
+          divide_by_instance_count = false
         }
 
         scale_action = {
@@ -60,23 +66,25 @@ inputs = {
         }
       },
       {
-        name = "ScaleInCpu"
+        name = "ScaleInRequests"
         metric_trigger = {
-          metric_name        = "CpuPercentage"
-          metric_resource_id = dependency.app_service.outputs.app_service_plan_id
-          time_grain         = "PT1M"
-          statistic          = "Average"
-          time_window        = "PT5M"
-          time_aggregation   = "Average"
-          operator           = "LessThan"
-          threshold          = 25
+          metric_name              = "Requests"
+          metric_resource_id       = dependency.app_service.outputs.id
+          metric_namespace         = "microsoft.web/sites"
+          time_grain               = "PT1M"
+          statistic                = "Average"
+          time_window              = "PT5M"
+          time_aggregation         = "Average"
+          operator                 = "LessThan"
+          threshold                = 3000
+          divide_by_instance_count = false
         }
 
         scale_action = {
           direction = "Decrease"
           type      = "ChangeCount"
           value     = "1"
-          cooldown  = "PT5M"
+          cooldown  = "PT20M"
         }
       }
     ]
@@ -90,8 +98,8 @@ inputs = {
     email = {
       send_to_subscription_administrator    = false
       send_to_subscription_co_administrator = false
-      custom_emails                         = ["appbackend-AUTOSCALING-NOTIFICATION-EMAILS"]
+      custom_emails                         = ["disabed-email@pagopa.it"]
     }
-    key_vault_id = dependency.key_vault.outputs.id
+    key_vault_id = null
   }
 }
