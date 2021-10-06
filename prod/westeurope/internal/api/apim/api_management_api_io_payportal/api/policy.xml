@@ -5,7 +5,7 @@
     <set-header name="x-functions-key" exists-action="override">
         <value>{{io-fn-pay-portal-key}}</value>
     </set-header>
-    <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" />
+    <!-- <rate-limit-by-key calls="20" renewal-period="30" counter-key="@(context.Request.IpAddress)" /> -->
     <cors>
       <allowed-origins>
         <origin>https://paga.io.italia.it/</origin>
