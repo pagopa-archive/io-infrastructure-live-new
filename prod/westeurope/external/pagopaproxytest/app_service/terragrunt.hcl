@@ -58,6 +58,7 @@ inputs = {
   // TODO: Enable client certificate
   client_cert_enabled = false
   https_only          = true
+  health_check_path   = "/ping"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
