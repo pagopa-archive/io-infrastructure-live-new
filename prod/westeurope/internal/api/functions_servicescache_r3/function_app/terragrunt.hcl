@@ -101,6 +101,8 @@ inputs = {
 
     AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
 
+    SERVICEID_EXCLUSION_LIST   = "01DBJNFSJYB53TP0AZNA8FQGJJ,01EB8AXKNV6NMSP2R25KSGF743,01ERMMC1QXZWH05X4Y49JNKW2D,01EQXCQT6DR20N53MVHC3QTA78"
+
     // Disabled functions on slot function
     "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "0"
   }
