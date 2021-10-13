@@ -108,6 +108,7 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
+      SERVICEID_EXCLUSION_LIST = "io-fn-services-SERVICEID-EXCLUSION-LIST"
     }
   }
 
