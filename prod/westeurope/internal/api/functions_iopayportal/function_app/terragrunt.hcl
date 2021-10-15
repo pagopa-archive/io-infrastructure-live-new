@@ -104,9 +104,9 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
 
-    IO_PAY_CHALLENGE_RESUME_URL = "https://checkout.pagopa.gov.it/response.html?id=idTransaction"
-    IO_PAY_ORIGIN               = "https://checkout.pagopa.gov.it"
-    IO_PAY_XPAY_REDIRECT        = "https://checkout.pagopa.gov.it/response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
+    IO_PAY_CHALLENGE_RESUME_URL = "https://uat.checkout.pagopa.it/response.html?id=idTransaction"
+    IO_PAY_ORIGIN               = "https://uat.checkout.pagopa.it"
+    IO_PAY_XPAY_REDIRECT        = "https://uat.checkout.pagopa.it/response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {
