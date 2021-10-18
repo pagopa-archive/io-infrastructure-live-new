@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 dependency "functions_test" {
   config_path = "../../functions_test/function_app"
 }
