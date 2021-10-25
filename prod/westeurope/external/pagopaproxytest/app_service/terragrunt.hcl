@@ -94,7 +94,6 @@ inputs = {
     key_vault_secret = "pagopaproxytest-ALLOWED-IPS"
   }
 
-
   allowed_subnets = [
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
