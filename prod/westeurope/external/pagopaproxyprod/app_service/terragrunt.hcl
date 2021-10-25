@@ -93,6 +93,11 @@ inputs = {
 
   allowed_ips = []
 
+  allowed_ips_secret = {
+    key_vault_id     = dependency.key_vault.outputs.id
+    key_vault_secret = "pagopaproxyprod-ALLOWED-IPS"
+  }
+
   allowed_subnets = [
     dependency.subnet_agpagopagateway.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
