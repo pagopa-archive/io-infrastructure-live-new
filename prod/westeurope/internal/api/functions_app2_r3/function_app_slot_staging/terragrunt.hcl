@@ -173,6 +173,7 @@ inputs = {
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
+    EventsQueueName              = "events" # reference to https://github.com/pagopa/io-infra/blob/12a2f3bffa49dab481990fccc9f2a904004862ec/src/core/storage_apievents.tf#L7
 
     # Disabled functions on slot - trigger, queue and timer
     "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
