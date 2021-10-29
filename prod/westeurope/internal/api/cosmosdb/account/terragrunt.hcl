@@ -31,10 +31,6 @@ dependency "subnet_fn_services" {
   config_path = "../../functions_services_r3/subnet"
 }
 
-dependency "subnet_fn_services01" {
-  config_path = "../../../../services/functions_services01_r3/subnet"
-}
-
 dependency "subnet_fn_servicescache" {
   config_path = "../../functions_servicescache_r3/subnet"
 }
@@ -64,7 +60,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_account?ref=v3.0.13"
 }
 
 inputs = {
@@ -104,7 +100,6 @@ inputs = {
     dependency.subnet_fn_assets.outputs.id,
     dependency.subnet_fn_public.outputs.id,
     dependency.subnet_fn_services.outputs.id,
-    dependency.subnet_fn_services01.outputs.id,
     dependency.subnet_fn_servicescache.outputs.id,
     dependency.subnet_fn_slackbot.outputs.id,
   ]

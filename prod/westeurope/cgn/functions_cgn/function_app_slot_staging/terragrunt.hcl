@@ -77,17 +77,18 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.12"
 }
 
 inputs = {
-  name                       = "staging"
-  resource_group_name        = dependency.resource_group.outputs.resource_name
-  function_app_name          = dependency.function_app.outputs.name
-  function_app_resource_name = dependency.function_app.outputs.resource_name
-  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
-  storage_account_name       = dependency.function_app.outputs.storage_account.name
-  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  name                                               = "staging"
+  resource_group_name                                = dependency.resource_group.outputs.resource_name
+  function_app_name                                  = dependency.function_app.outputs.name
+  function_app_resource_name                         = dependency.function_app.outputs.resource_name
+  app_service_plan_id                                = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name                               = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key                         = dependency.function_app.outputs.storage_account.primary_access_key
+  storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
 
@@ -97,7 +98,7 @@ inputs = {
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "12.18.0"
+    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
@@ -124,9 +125,6 @@ inputs = {
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
     SERVICES_API_URL = local.service_api_url
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "staging-content"
 
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
     EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"

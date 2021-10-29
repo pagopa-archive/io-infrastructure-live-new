@@ -52,12 +52,6 @@ dependency "key_vault" {
   config_path = "../../../common/key_vault"
 }
 
-# Services
-dependency "functions_services01" {
-  config_path = "../../../services/functions_services01_r3/function_app"
-}
-
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -90,6 +84,8 @@ inputs = {
   }
 
   runtime_version = "~3"
+
+  health_check_path = "api/v1/info"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 

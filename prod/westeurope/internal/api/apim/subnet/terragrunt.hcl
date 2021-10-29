@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 # Common
 dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"

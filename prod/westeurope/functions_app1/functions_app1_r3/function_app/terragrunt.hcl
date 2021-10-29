@@ -7,6 +7,22 @@ dependency "subnet" {
 }
 
 # common
+dependency "subnet_pendpoints" {
+  config_path = "../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "storage_account_assets" {
   config_path = "../../../common/cdn/storage_account_assets"
 }
@@ -96,7 +112,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
 }
 
 locals {
@@ -125,18 +141,16 @@ inputs = {
 
   runtime_version = "~3"
 
+  health_check_path = "api/v1/info"
+
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
-    WEBSITE_NODE_DEFAULT_VERSION   = "10.14.1"
+    WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
-
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -172,39 +186,17 @@ inputs = {
 
     // Service Preferences Migration Queue
     MIGRATE_SERVICES_PREFERENCES_PROFILE_QUEUE_NAME = dependency.storage_account_app_queue_profile-migrate-services-preferences.outputs.name
-    FN_APP_STORAGE_CONNECTION_STRING = dependency.storage_account_app.outputs.primary_connection_string
+    FN_APP_STORAGE_CONNECTION_STRING                = dependency.storage_account_app.outputs.primary_connection_string
 
     // Events configs
     EventsQueueStorageConnection = dependency.storage_account_apievents.outputs.primary_connection_string
-
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
+    EventsQueueName              = "events" # reference to https://github.com/pagopa/io-infra/blob/12a2f3bffa49dab481990fccc9f2a904004862ec/src/core/storage_apievents.tf#L7
 
     // Disable functions
-    #"AzureWebJobs.CreateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.CreateValidationTokenActivity.Disabled"          = "1"
-    #"AzureWebJobs.EmailValidationProcessOrchestrator.Disabled"     = "1"
-    #"AzureWebJobs.GetMessage.Disabled"                             = "1"
-    #"AzureWebJobs.GetMessages.Disabled"                            = "1"
-    #"AzureWebJobs.GetProfile.Disabled"                             = "1"
-    #"AzureWebJobs.GetService.Disabled"                             = "1"
-    #"AzureWebJobs.GetUserDataProcessing.Disabled"                  = "1"
-    #"AzureWebJobs.GetVisibleServices.Disabled"                     = "1"
-    #"AzureWebJobs.HandleNHNotificationCall.Disabled"               = "1"
-    #"AzureWebJobs.HandleNHNotificationCallActivity.Disabled"       = "1"
-    #"AzureWebJobs.HandleNHNotificationCallOrchestrator.Disabled"   = "1"
-    #"AzureWebJobs.SendUserDataProcessingEmailActivity.Disabled"    = "1"
-    #"AzureWebJobs.SendValidationEmailActivity.Disabled"            = "1"
-    #"AzureWebJobs.SendWelcomeMessagesActivity.Disabled"            = "1"
-    #"AzureWebJobs.StartEmailValidationProcess.Disabled"            = "1"
-    #"AzureWebJobs.StoreSpidLogs.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateProfile.Disabled"                          = "1"
-    #"AzureWebJobs.UpdateSubscriptionsFeedActivity.Disabled"        = "1"
-    #"AzureWebJobs.UpsertUserDataProcessing.Disabled"               = "1"
-    #"AzureWebJobs.UpsertedProfileOrchestrator.Disabled"            = "1"
-    #"AzureWebJobs.UpsertedUserDataProcessingOrchestrator.Disabled" = "1"
-    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
-    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
 
+    "AzureWebJobs.StoreSpidLogs.Disabled"            = "1"
+    "AzureWebJobs.HandleNHNotificationCall.Disabled" = "1"
+    
     # Cashback welcome message
     IS_CASHBACK_ENABLED = "false"
     # Only national service
@@ -218,7 +210,6 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
-    WEBSITE_CONTENTSHARE = "io-p-fn3-app1-content"
   }
 
   app_settings_secrets = {
@@ -233,9 +224,18 @@ inputs = {
     }
   }
 
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+  }
+
   allowed_subnets = [
     dependency.subnet.outputs.id,
     dependency.subnet_appbackend_l1.outputs.id,
+    dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
   ]
 

@@ -182,7 +182,7 @@ inputs = {
   }]
 
   autoscale_configuration = {
-    min_capacity = 5
+    min_capacity = 3
     max_capacity = 50
   }
 }

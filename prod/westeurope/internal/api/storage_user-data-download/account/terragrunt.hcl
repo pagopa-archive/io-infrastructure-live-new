@@ -19,5 +19,4 @@ inputs = {
   account_tier                                 = "Standard"
   account_replication_type                     = "GRS"
   access_tier                                  = "Hot"
-  blob_properties_delete_retention_policy_days = 15
 }
