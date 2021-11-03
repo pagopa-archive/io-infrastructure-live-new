@@ -30,6 +30,10 @@ include {
   path = find_in_parent_folders()
 }
 
+locals {
+  external_resources = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
+}
+
 terraform {
   source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.3"
 }
@@ -110,7 +114,8 @@ inputs = {
   allowed_ips = []
 
   allowed_subnets = [
-    dependency.subnet_apigateway.outputs.id
+    dependency.subnet_apigateway.outputs.id,
+    local.external_resources.subnets.io-p-appgateway-snet,
   ]
 
   subnet_id = dependency.subnet.outputs.id
