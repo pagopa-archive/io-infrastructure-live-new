@@ -100,6 +100,7 @@ locals {
   # allow application insight web test to call the function.
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
   testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
+  external_resources           = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
 
@@ -274,6 +275,8 @@ inputs = {
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
+    local.external_resources.subnets.io-p-appgateway-snet,
+    local.external_resources.subnets.apimapi,
   ]
 
   subnet_id = dependency.subnet.outputs.id

@@ -105,7 +105,8 @@ include {
 }
 
 locals {
-  testusersvars = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
+  testusersvars      = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
+  external_resources = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
 }
 
 terraform {
@@ -270,6 +271,8 @@ inputs = {
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
+    local.external_resources.locals.subnets.io-p-appgateway-snet,
+    local.external_resources.subnets.apimapi,
   ]
 
   subnet_id = dependency.subnet.outputs.id

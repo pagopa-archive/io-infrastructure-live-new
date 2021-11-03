@@ -127,6 +127,7 @@ terraform {
 
 locals {
   commonvars                = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  external_resources        = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
   opt_out_email_switch_date = local.commonvars.locals.opt_out_email_switch_date
   ff_opt_in_email_enabled   = local.commonvars.locals.ff_opt_in_email_enabled
 }
@@ -233,6 +234,7 @@ inputs = {
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
+    local.external_resources.subnets.apimapi,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

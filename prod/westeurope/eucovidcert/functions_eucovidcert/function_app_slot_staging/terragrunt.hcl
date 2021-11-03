@@ -72,6 +72,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  external_resources           = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
   testusersvars                = read_terragrunt_config(find_in_parent_folders("testusersvars.hcl"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
 }
@@ -169,7 +170,8 @@ inputs = {
     dependency.subnet_apimapi.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
-    dependency.subnet_appbackendl2.outputs.id
+    dependency.subnet_appbackendl2.outputs.id,
+    local.external_resources.subnets.fnpblevtdispatcherout,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
