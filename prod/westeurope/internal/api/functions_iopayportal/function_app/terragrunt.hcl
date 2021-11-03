@@ -33,10 +33,6 @@ dependency "key_vault" {
   config_path = "../../../../common/key_vault"
 }
 
-dependency "storage_account_iopay" {
-  config_path = "../../../../common/cdn/storage_account_iopay"
-}
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()

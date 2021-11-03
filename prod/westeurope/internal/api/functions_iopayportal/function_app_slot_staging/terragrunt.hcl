@@ -41,10 +41,6 @@ dependency "subnet_azure_devops" {
   config_path = "../../../../common/subnet_azure_devops"
 }
 
-dependency "storage_account_iopay" {
-  config_path = "../../../../common/cdn/storage_account_iopay"
-}
-
 # Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -116,7 +112,7 @@ inputs = {
     map = {
       RECAPTCHA_SECRET            = "newsletter-GOOGLE-RECAPTCHA-SECRET"
       PAY_PORTAL_RECAPTCHA_SECRET = "payportal-GOOGLE-RECAPTCHA-SECRET"
-      
+
       # Mailup account:
       MAILUP_CLIENT_ID = "newsletter-MAILUP-CLIENT-ID"
       MAILUP_SECRET    = "newsletter-MAILUP-SECRET"
