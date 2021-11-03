@@ -272,7 +272,7 @@ inputs = {
     dependency.subnet_funcadmin_r3.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
     local.external_resources.locals.subnets.io-p-appgateway-snet,
-    local.external_resources.subnets.apimapi,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   subnet_id = dependency.subnet.outputs.id

@@ -212,7 +212,7 @@ inputs = {
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
     dependency.subnet_azure_devops.outputs.id,
-    local.external_resources.subnets.apimapi,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   subnet_id       = dependency.subnet.outputs.id

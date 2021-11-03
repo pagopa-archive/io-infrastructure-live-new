@@ -115,7 +115,7 @@ inputs = {
 
   allowed_subnets = [
     dependency.subnet_apigateway.outputs.id,
-    local.external_resources.subnets.io-p-appgateway-snet,
+    local.external_resources.locals.subnets.io-p-appgateway-snet,
   ]
 
   subnet_id = dependency.subnet.outputs.id

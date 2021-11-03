@@ -160,7 +160,7 @@ inputs = {
     dependency.subnet_apimapi.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
-    local.external_resources.subnets.fnpblevtdispatcherout,
+    local.external_resources.locals.subnets.fnpblevtdispatcherout,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe

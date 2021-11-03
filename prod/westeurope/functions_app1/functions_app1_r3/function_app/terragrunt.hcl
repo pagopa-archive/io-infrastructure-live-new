@@ -238,7 +238,7 @@ inputs = {
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
-    local.external_resources.subnets.apimapi,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe

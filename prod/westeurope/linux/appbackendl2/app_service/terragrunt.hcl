@@ -275,8 +275,8 @@ inputs = {
     dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
-    local.external_resources.subnets.io-p-appgateway-snet,
-    local.external_resources.subnets.apimapi,
+    local.external_resources.locals.subnets.io-p-appgateway-snet,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   subnet_id = dependency.subnet.outputs.id
