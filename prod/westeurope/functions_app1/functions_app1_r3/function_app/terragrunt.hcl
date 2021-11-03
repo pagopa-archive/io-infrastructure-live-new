@@ -117,6 +117,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  external_resources           = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
   service_api_url              = local.commonvars.locals.service_api_url
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
   opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
@@ -237,6 +238,7 @@ inputs = {
     dependency.subnet_appbackend_l1.outputs.id,
     dependency.subnet_appbackend_l2.outputs.id,
     dependency.subnet_appbackend_li.outputs.id,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
