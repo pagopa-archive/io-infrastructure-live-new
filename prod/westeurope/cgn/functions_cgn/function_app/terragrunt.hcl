@@ -84,6 +84,7 @@ terraform {
 
 locals {
   commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  external_resources           = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
   app_insights_ips_west_europe = local.commonvars.locals.app_insights_ips_west_europe
   cet_time_zone_win            = local.commonvars.locals.cet_time_zone_win
   service_api_url              = local.commonvars.locals.service_api_url
@@ -170,6 +171,7 @@ inputs = {
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
     dependency.subnet_appbackendli.outputs.id,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   allowed_ips = local.app_insights_ips_west_europe
