@@ -35,14 +35,6 @@ dependency "functions_services" {
   config_path = "../../../internal/api/functions_services_r3/function_app"
 }
 
-dependency "storage_account_apievents" {
-  config_path = "../../../internal/api/storage_apievents/account"
-}
-
-dependency "storage_account_apievents_queue_eucovidcert-profile-created" {
-  config_path = "../../../internal/api/storage_apievents/queue_eucovidcert-profile-created"
-}
-
 # Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -114,9 +106,6 @@ inputs = {
     DGC_LOAD_TEST_URL = "https://io-p-fn3-mockdgc.azurewebsites.net"
     DGC_PROD_URL      = "https://servizi-pn.dgc.gov.it"
 
-    // Events configs
-    EventsQueueStorageConnection                    = dependency.storage_account_apievents.outputs.primary_connection_string
-    EUCOVIDCERT_PROFILE_CREATED_QUEUE_NAME          = dependency.storage_account_apievents_queue_eucovidcert-profile-created.outputs.name
     QueueStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
     EUCOVIDCERT_NOTIFY_NEW_PROFILE_QUEUE_NAME       = dependency.storage_account_eucovidcert_queue_notify-new-profile.outputs.name
     TableStorageConnection                          = dependency.storage_account_eucovidcert.outputs.primary_connection_string
