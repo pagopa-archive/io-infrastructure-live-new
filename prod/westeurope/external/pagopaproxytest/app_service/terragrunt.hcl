@@ -69,7 +69,7 @@ inputs = {
     REDIS_DB_PORT     = dependency.redis.outputs.ssl_port
     REDIS_DB_PASSWORD = dependency.redis.outputs.primary_access_key
     REDIS_USE_CLUSTER = true
-    NM3_ENABLED       = false
+    NM3_ENABLED       = true
   }
 
   app_settings_secrets = {
