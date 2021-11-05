@@ -1,4 +1,3 @@
-# Autoscaling appbackend
 dependency "app_service" {
   config_path = "../app_service"
 }
@@ -6,11 +5,6 @@ dependency "app_service" {
 # Internal
 dependency "resource_group" {
   config_path = "../../resource_group"
-}
-
-# common
-dependency "key_vault" {
-  config_path = "../../../common/key_vault"
 }
 
 # Include all settings from the root terragrunt.hcl file

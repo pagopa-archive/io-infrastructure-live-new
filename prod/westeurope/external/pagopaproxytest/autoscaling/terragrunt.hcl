@@ -1,4 +1,3 @@
-# Autoscaling appbackend
 dependency "app_service" {
   config_path = "../app_service"
 }
@@ -33,8 +32,8 @@ inputs = {
       maximum = 10
       # high priority event capacity
       # default = 5
-      # minimum = 3
-      # maximum = 20
+      # minimum = 1
+      # maximum = 10
     }
 
     rules = [
