@@ -71,9 +71,10 @@ include {
 }
 
 locals {
-  commonvars        = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  cet_time_zone_win = local.commonvars.locals.cet_time_zone_win
-  service_api_url   = local.commonvars.locals.service_api_url
+  commonvars         = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  external_resources = read_terragrunt_config(find_in_parent_folders("external_resources.tf"))
+  cet_time_zone_win  = local.commonvars.locals.cet_time_zone_win
+  service_api_url    = local.commonvars.locals.service_api_url
 }
 
 terraform {
@@ -158,6 +159,7 @@ inputs = {
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
     dependency.subnet_appbackendli.outputs.id,
+    local.external_resources.locals.subnets.apimapi,
   ]
 
   subnet_id       = dependency.subnet.outputs.id
