@@ -119,8 +119,8 @@ inputs = {
 
   app_service_plan_info = {
     kind             = "Linux"
-    sku_tier         = "PremiumV2"
-    sku_size         = "P2v2"
+    sku_tier         = "PremiumV3"
+    sku_size         = "P1v3"
     reserved         = true
     per_site_scaling = false
   }
