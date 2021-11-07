@@ -21,12 +21,12 @@ terraform {
 }
 
 inputs = {
-  name                = "notification-status"
+  name                = "change-feed-leases"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
-  partition_key_path  = "/notificationId"
-  throughput          = 1500
+  partition_key_path  = "/id"
+  throughput          = 600
 
   /*
   autoscale_settings = {
@@ -34,3 +34,4 @@ inputs = {
   }
   */
 }
+
