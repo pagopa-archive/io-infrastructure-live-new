@@ -26,7 +26,7 @@ inputs = {
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/id"
-  throughput          = 
+  throughput          = 1200
 
   /*
   autoscale_settings = {

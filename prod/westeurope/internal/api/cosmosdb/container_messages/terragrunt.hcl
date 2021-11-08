@@ -26,11 +26,9 @@ inputs = {
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/fiscalCode"
-  throughput          = 2200
-
-  /*
+  
   autoscale_settings = {
-    max_throughput = 20000
+    max_throughput = 14000
   }
-  */
+  
 }
