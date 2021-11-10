@@ -9,7 +9,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone?ref=v4.0.0"
 }
 
 inputs = {
@@ -18,10 +18,10 @@ inputs = {
 
   dns_a_records = [
     {
-    name               = "u87psqlp01"
-    ttl                = 3600
-    records            = ["10.70.132.5"]
-    target_resource_id = null
+      name               = "u87psqlp01"
+      ttl                = 3600
+      records            = ["10.70.132.5"]
+      target_resource_id = null
     },
     {
       name               = "u87psqlp01-rep"

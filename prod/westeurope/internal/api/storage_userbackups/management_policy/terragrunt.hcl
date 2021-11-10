@@ -9,15 +9,15 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_management_policy?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_management_policy?ref=v4.0.0"
 }
 
 inputs = {
-  storage_account_id   = dependency.storage_account.outputs.id
+  storage_account_id = dependency.storage_account.outputs.id
 
   rules = [
     {
-      name = "deleteafter3yrs"
+      name    = "deleteafter3yrs"
       enabled = true
       filters = {
         prefix_match = ["user-data-backup"]

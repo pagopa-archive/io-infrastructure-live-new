@@ -87,7 +87,7 @@ include {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v4.0.0"
 }
 
 inputs = {
@@ -146,10 +146,10 @@ inputs = {
     FF_ENABLE_USER_DATA_DELETE      = 1
 
     // Disabled functions - Slot settings only.
-    "AzureWebJobs.UserDataProcessingTrigger.Disabled"  = "1"
-    "AzureWebJobs.UpdateVisibleServicesCache.Disabled" = "1"
+    "AzureWebJobs.UserDataProcessingTrigger.Disabled"              = "1"
+    "AzureWebJobs.UpdateVisibleServicesCache.Disabled"             = "1"
     "AzureWebJobs.UpdateVisibleServicesCacheOrchestrator.Disabled" = "1"
-    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled" = "1"
+    "AzureWebJobs.UpdateVisibleServicesCacheActivity.Disabled"     = "1"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 

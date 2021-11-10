@@ -17,7 +17,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v4.0.0"
 }
 
 inputs = {
@@ -27,7 +27,7 @@ inputs = {
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/messageId"
 
-   autoscale_settings = {
+  autoscale_settings = {
     max_throughput = 7000
   }
 }

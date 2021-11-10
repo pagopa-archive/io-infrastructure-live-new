@@ -8,10 +8,10 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_queue?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_storage_queue?ref=v4.0.0"
 }
 
 inputs = {
-  name                  = "bonusactivations"
-  storage_account_name  = dependency.storage_account.outputs.resource_name
+  name                 = "bonusactivations"
+  storage_account_name = dependency.storage_account.outputs.resource_name
 }

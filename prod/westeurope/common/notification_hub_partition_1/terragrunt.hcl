@@ -13,14 +13,14 @@ dependency "key_vault" {
 
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_notification_hub?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_notification_hub?ref=v4.0.0"
 }
 
 inputs = {
-  name                                  = "common-partition-1"
-  resource_group_name                   = dependency.resource_group.outputs.resource_name
-  key_vault_id                          = dependency.key_vault.outputs.id
-  ntfns_namespace_type                  = "NotificationHub"
-  ntfns_sku_name                        = "Standard"
-  ntf_apns_credential_application_mode  = "Production"
+  name                                 = "common-partition-1"
+  resource_group_name                  = dependency.resource_group.outputs.resource_name
+  key_vault_id                         = dependency.key_vault.outputs.id
+  ntfns_namespace_type                 = "NotificationHub"
+  ntfns_sku_name                       = "Standard"
+  ntf_apns_credential_application_mode = "Production"
 }

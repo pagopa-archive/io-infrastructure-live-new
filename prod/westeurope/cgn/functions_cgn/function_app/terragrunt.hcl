@@ -79,7 +79,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=update-azurerm-2.84.0"
 }
 
 locals {
@@ -133,8 +133,8 @@ inputs = {
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
     SERVICES_API_URL = local.service_api_url
-    
-    
+
+
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
     EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"
 

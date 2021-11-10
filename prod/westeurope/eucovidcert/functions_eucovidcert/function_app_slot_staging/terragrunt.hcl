@@ -67,7 +67,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v4.0.0"
 }
 
 locals {
@@ -145,7 +145,7 @@ inputs = {
     WEBSITE_CONTENTSHARE = "staging-content"
 
     # ----
-    FNSERVICES_API_URL = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
+    FNSERVICES_API_URL     = "https://${dependency.functions_services.outputs.default_hostname}/api/v1"
     WEBSITE_VNET_ROUTE_ALL = 1
   }
 

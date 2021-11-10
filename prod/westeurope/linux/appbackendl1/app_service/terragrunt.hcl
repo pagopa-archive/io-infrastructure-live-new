@@ -105,7 +105,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v4.0.0"
 
   after_hook "check_slots" {
     commands     = ["apply"]
@@ -136,7 +136,7 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
+    WEBSITE_RUN_FROM_PACKAGE = "1"
 
     // ENVIRONMENT
     NODE_ENV = "production"
@@ -201,8 +201,8 @@ inputs = {
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
     // MIT_VOUCHER JWT
-    JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
-    JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
+    JWT_MIT_VOUCHER_TOKEN_ISSUER     = "app-backend.io.italia.it"
+    JWT_MIT_VOUCHER_TOKEN_EXPIRATION = 1200
 
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
@@ -264,8 +264,8 @@ inputs = {
       TEST_CGN_FISCAL_CODES = "appbackend-TEST-CGN-FISCAL-CODES"
 
       // MIT_VOUCHER JWT
-      JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY  = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
-      JWT_MIT_VOUCHER_TOKEN_AUDIENCE        = "appbackend-mitvoucher-JWT-AUDIENCE"
+      JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
+      JWT_MIT_VOUCHER_TOKEN_AUDIENCE       = "appbackend-mitvoucher-JWT-AUDIENCE"
     }
   }
 

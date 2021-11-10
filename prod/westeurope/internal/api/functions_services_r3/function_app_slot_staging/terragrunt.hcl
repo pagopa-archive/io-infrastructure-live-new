@@ -62,13 +62,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v4.0.0"
 }
 
 locals {
-  commonvars                   = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
-  opt_out_email_switch_date    = local.commonvars.locals.opt_out_email_switch_date
-  ff_opt_in_email_enabled      = local.commonvars.locals.ff_opt_in_email_enabled
+  commonvars                = read_terragrunt_config(find_in_parent_folders("commonvars.hcl"))
+  opt_out_email_switch_date = local.commonvars.locals.opt_out_email_switch_date
+  ff_opt_in_email_enabled   = local.commonvars.locals.ff_opt_in_email_enabled
 }
 
 inputs = {
@@ -131,7 +131,7 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "staging-content"
+    WEBSITE_CONTENTSHARE               = "staging-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }

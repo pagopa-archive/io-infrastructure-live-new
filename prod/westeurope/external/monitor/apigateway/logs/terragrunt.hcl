@@ -12,13 +12,13 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_monitor_diagnostic_setting?ref=v4.0.0"
 }
 
 inputs = {
-  name                         = "apigateway-logs"
-  target_resource_id           = dependency.apigateway.outputs.id
-  storage_account_id           = dependency.storage_account_logs.outputs.id
+  name               = "apigateway-logs"
+  target_resource_id = dependency.apigateway.outputs.id
+  storage_account_id = dependency.storage_account_logs.outputs.id
 
   logs = [{
     category = "ApplicationGatewayAccessLog"

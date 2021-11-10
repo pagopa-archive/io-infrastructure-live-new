@@ -4,11 +4,11 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_subnet?ref=v4.0.0"
 }
 
 inputs = {
-  name = "vml-instabug-snet"
+  name                 = "vml-instabug-snet"
   resource_group_name  = "io-p-rg-vpnp2s"
   virtual_network_name = "io-p-vnet-vpnp2s"
   address_prefix       = "10.1.2.0/24"

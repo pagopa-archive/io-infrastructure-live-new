@@ -54,7 +54,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v4.0.0"
 }
 
 locals {
@@ -81,7 +81,7 @@ inputs = {
   }
 
   runtime_version = "~3"
-  
+
   health_check_path = "api/info"
 
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
@@ -131,7 +131,7 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
+    WEBSITE_CONTENTSHARE               = "io-p-fn3-services-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
