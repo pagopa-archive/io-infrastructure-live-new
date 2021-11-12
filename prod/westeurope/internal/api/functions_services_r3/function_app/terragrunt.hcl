@@ -113,13 +113,8 @@ inputs = {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
-    WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
-
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -142,8 +137,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
@@ -155,7 +148,6 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
