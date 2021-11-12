@@ -96,6 +96,7 @@ inputs = {
     sku_size = "EP1"
   }
 
+  # temp, disable advanced_threat_protection_enable asap
   storage_account_info = {
     account_tier                      = "Standard"
     account_replication_type          = "LRS"
