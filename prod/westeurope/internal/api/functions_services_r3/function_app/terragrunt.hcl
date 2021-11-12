@@ -96,6 +96,13 @@ inputs = {
     sku_size = "EP1"
   }
 
+  storage_account_info = {
+    account_tier                      = "Standard"
+    account_replication_type          = "LRS"
+    access_tier                       = "Hot"
+    advanced_threat_protection_enable = true
+  }
+
   runtime_version = "~3"
   
   health_check_path = "api/info"
