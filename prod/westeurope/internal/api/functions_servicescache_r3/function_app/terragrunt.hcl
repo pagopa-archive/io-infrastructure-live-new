@@ -62,7 +62,8 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
+  # source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
+  source = "/Users/pasqualedevita/Documents/github/io-infrastructure-modules-new/azurerm_function_app"
 }
 
 locals {
@@ -89,7 +90,6 @@ inputs = {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME     = "node"
     WEBSITE_NODE_DEFAULT_VERSION = "14.16.0"
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
     NODE_ENV                     = "production"
 
     COSMOSDB_URI               = dependency.cosmosdb_account.outputs.endpoint
@@ -118,6 +118,7 @@ inputs = {
     private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
     private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = []
   }
 
   allowed_subnets = [
