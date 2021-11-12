@@ -62,7 +62,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.16"
 }
 
 locals {
@@ -72,13 +72,14 @@ locals {
 }
 
 inputs = {
-  name                       = "staging"
-  resource_group_name        = dependency.resource_group.outputs.resource_name
-  function_app_name          = dependency.function_app.outputs.name
-  function_app_resource_name = dependency.function_app.outputs.resource_name
-  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
-  storage_account_name       = dependency.function_app.outputs.storage_account.name
-  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  name                                               = "staging"
+  resource_group_name                                = dependency.resource_group.outputs.resource_name
+  function_app_name                                  = dependency.function_app.outputs.name
+  function_app_resource_name                         = dependency.function_app.outputs.resource_name
+  app_service_plan_id                                = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name                               = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key                         = dependency.function_app.outputs.storage_account.primary_access_key
+  storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
 

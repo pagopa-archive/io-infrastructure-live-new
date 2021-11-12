@@ -40,6 +40,22 @@ dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
 }
 
+dependency "subnet_pendpoints" {
+  config_path = "../../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "application_insights" {
   config_path = "../../../../common/application_insights"
 }
@@ -54,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.16"
 }
 
 locals {
@@ -147,6 +163,20 @@ inputs = {
       WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
       IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = [
+      "message-created",
+      "message-processed",
+      "notification-created-email",
+      "notification-created-webhook",
+    ]
   }
 
   allowed_subnets = [
