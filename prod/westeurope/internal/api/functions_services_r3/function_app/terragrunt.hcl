@@ -70,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.17"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.18"
 }
 
 locals {
@@ -115,6 +115,12 @@ inputs = {
     WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
+
+    PROCESSING_MESSAGE_CONTAINER_NAME       = "processing-messages"
+    MESSAGE_CREATED_QUEUE_NAME              = "message-created"
+    MESSAGE_PROCESSED_QUEUE_NAME            = "message-processed"
+    NOTIFICATION_CREATED_EMAIL_QUEUE_NAME   = "notification-created-email"
+    NOTIFICATION_CREATED_WEBHOOK_QUEUE_NAME = "notification-created-webhook"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -177,6 +183,10 @@ inputs = {
       "notification-created-email",
       "notification-created-webhook",
     ]
+    containers = [
+      "processing-messages",
+    ]
+    blobs_retention_days = 1
   }
 
   allowed_subnets = [

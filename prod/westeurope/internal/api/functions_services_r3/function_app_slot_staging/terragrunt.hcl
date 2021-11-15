@@ -93,6 +93,12 @@ inputs = {
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
+    PROCESSING_MESSAGE_CONTAINER_NAME       = "processing-messages"
+    MESSAGE_CREATED_QUEUE_NAME              = "message-created"
+    MESSAGE_PROCESSED_QUEUE_NAME            = "message-processed"
+    NOTIFICATION_CREATED_EMAIL_QUEUE_NAME   = "notification-created-email"
+    NOTIFICATION_CREATED_WEBHOOK_QUEUE_NAME = "notification-created-webhook"
+
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
