@@ -62,7 +62,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.19"
 }
 
 locals {
@@ -72,13 +72,14 @@ locals {
 }
 
 inputs = {
-  name                       = "staging"
-  resource_group_name        = dependency.resource_group.outputs.resource_name
-  function_app_name          = dependency.function_app.outputs.name
-  function_app_resource_name = dependency.function_app.outputs.resource_name
-  app_service_plan_id        = dependency.function_app.outputs.app_service_plan_id
-  storage_account_name       = dependency.function_app.outputs.storage_account.name
-  storage_account_access_key = dependency.function_app.outputs.storage_account.primary_access_key
+  name                                               = "staging"
+  resource_group_name                                = dependency.resource_group.outputs.resource_name
+  function_app_name                                  = dependency.function_app.outputs.name
+  function_app_resource_name                         = dependency.function_app.outputs.resource_name
+  app_service_plan_id                                = dependency.function_app.outputs.app_service_plan_id
+  storage_account_name                               = dependency.function_app.outputs.storage_account.name
+  storage_account_access_key                         = dependency.function_app.outputs.storage_account.primary_access_key
+  storage_account_durable_function_connection_string = dependency.function_app.outputs.storage_account_durable_function.primary_connection_string
 
   runtime_version = "~3"
 
@@ -89,13 +90,14 @@ inputs = {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
-    WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
+    PROCESSING_MESSAGE_CONTAINER_NAME       = "processing-messages"
+    MESSAGE_CREATED_QUEUE_NAME              = "message-created"
+    MESSAGE_PROCESSED_QUEUE_NAME            = "message-processed"
+    NOTIFICATION_CREATED_EMAIL_QUEUE_NAME   = "notification-created-email"
+    NOTIFICATION_CREATED_WEBHOOK_QUEUE_NAME = "notification-created-webhook"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
@@ -118,8 +120,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "StagingTaskHub"
-
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
@@ -129,9 +129,6 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
-    # this app settings is required to solve the issue:
-    # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "staging-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
   }
