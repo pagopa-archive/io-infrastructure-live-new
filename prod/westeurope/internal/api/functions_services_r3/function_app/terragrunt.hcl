@@ -96,7 +96,7 @@ inputs = {
     sku_size = "EP1"
   }
 
-  # temp, disable advanced_threat_protection_enable asap
+  # advanced_threat_protection_enable enabled on function storage (code only)
   storage_account_info = {
     account_tier                      = "Standard"
     account_replication_type          = "LRS"
