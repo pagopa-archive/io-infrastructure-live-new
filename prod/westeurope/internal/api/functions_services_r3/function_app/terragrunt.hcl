@@ -96,7 +96,7 @@ inputs = {
     sku_size = "EP1"
   }
 
-  # temp, disable advanced_threat_protection_enable asap
+  # advanced_threat_protection_enable enabled on function storage (code only)
   storage_account_info = {
     account_tier                      = "Standard"
     account_replication_type          = "LRS"
@@ -125,11 +125,12 @@ inputs = {
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    // TODO: Rename to STORAGE_CONNECTION_STRING
-    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
-    // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
-    SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    
+    MESSAGE_CONTENT_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    MESSAGE_CONTAINER_NAME                    = dependency.storage_container_message-content.outputs.name
+    
+    SUBSCRIPTION_FEED_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    SUBSCRIPTIONS_FEED_TABLE                    = dependency.storage_table_subscriptionsfeedbyday.outputs.name
 
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     // we keep this while we wait for new app version to be deployed
