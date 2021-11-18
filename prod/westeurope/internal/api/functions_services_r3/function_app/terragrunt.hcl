@@ -157,6 +157,14 @@ inputs = {
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+
+    # Disabled functions on slot - trigger, queue and timer
+    # mark this configurations as slot settings
+    "AzureWebJobs.CreateNotification.Disabled"     = "0"
+    "AzureWebJobs.EmailNotification.Disabled"      = "0"
+    "AzureWebJobs.OnFailedProcessMessage.Disabled" = "0"
+    "AzureWebJobs.ProcessMessage.Disabled"         = "0"
+    "AzureWebJobs.WebhookNotification.Disabled"    = "0"
   }
 
   app_settings_secrets = {

@@ -132,6 +132,14 @@ inputs = {
 
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+
+    # Disabled functions on slot - trigger, queue and timer
+    # mark this configurations as slot settings
+    "AzureWebJobs.CreateNotification.Disabled"     = "1"
+    "AzureWebJobs.EmailNotification.Disabled"      = "1"
+    "AzureWebJobs.OnFailedProcessMessage.Disabled" = "1"
+    "AzureWebJobs.ProcessMessage.Disabled"         = "1"
+    "AzureWebJobs.WebhookNotification.Disabled"    = "1"
   }
 
   app_settings_secrets = {
