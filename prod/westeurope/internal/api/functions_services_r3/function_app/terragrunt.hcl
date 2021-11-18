@@ -179,6 +179,7 @@ inputs = {
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
     queues                     = [
       "message-created",
+      "message-created-poison",
       "message-processed",
       "notification-created-email",
       "notification-created-webhook",
