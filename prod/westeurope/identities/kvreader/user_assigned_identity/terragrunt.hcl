@@ -8,7 +8,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_user_assigned_identity?ref=update-azurerm-v2.87.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_user_assigned_identity?ref=v4.0.0"
 }
 
 inputs = {

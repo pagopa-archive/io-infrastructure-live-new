@@ -12,7 +12,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_dns_forwarder?ref=update-azurerm-v2.87.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_dns_forwarder?ref=v4.0.0"
 }
 
 inputs = {
