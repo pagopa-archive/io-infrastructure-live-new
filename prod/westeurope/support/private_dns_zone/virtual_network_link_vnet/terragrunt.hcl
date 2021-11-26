@@ -18,7 +18,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone_virtual_network_link?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_private_dns_zone_virtual_network_link?ref=update-azurerm-v2.87.0"
 }
 
 inputs = {
