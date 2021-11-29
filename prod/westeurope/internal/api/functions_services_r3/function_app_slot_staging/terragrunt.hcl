@@ -62,7 +62,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.19"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v4.0.0"
 }
 
 locals {
@@ -102,11 +102,12 @@ inputs = {
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    // TODO: Rename to STORAGE_CONNECTION_STRING
-    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
-    // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
-    SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+
+    MESSAGE_CONTENT_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    MESSAGE_CONTAINER_NAME                    = dependency.storage_container_message-content.outputs.name
+    
+    SUBSCRIPTION_FEED_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    SUBSCRIPTIONS_FEED_TABLE                    = dependency.storage_table_subscriptionsfeedbyday.outputs.name
 
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     // we keep this while we wait for new app version to be deployed
@@ -131,6 +132,14 @@ inputs = {
 
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+
+    # Disabled functions on slot - trigger, queue and timer
+    # mark this configurations as slot settings
+    "AzureWebJobs.CreateNotification.Disabled"     = "1"
+    "AzureWebJobs.EmailNotification.Disabled"      = "1"
+    "AzureWebJobs.OnFailedProcessMessage.Disabled" = "1"
+    "AzureWebJobs.ProcessMessage.Disabled"         = "1"
+    "AzureWebJobs.WebhookNotification.Disabled"    = "1"
   }
 
   app_settings_secrets = {

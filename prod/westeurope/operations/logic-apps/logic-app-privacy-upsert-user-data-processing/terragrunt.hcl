@@ -12,7 +12,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_logic_app?ref=v3.0.8"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_logic_app?ref=v4.0.0"
 }
 
 inputs = {

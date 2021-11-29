@@ -110,7 +110,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v4.0.0"
 }
 
 inputs = {
@@ -217,11 +217,12 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED        = 1
-    FF_CGN_ENABLED          = 1
-    FF_EUCOVIDCERT_ENABLED  = 1
-    FF_MIT_VOUCHER_ENABLED  = 1
-    TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
+    FF_BONUS_ENABLED          = 1
+    FF_CGN_ENABLED            = 1
+    FF_EUCOVIDCERT_ENABLED    = 1
+    FF_MIT_VOUCHER_ENABLED    = 1
+    FF_USER_AGE_LIMIT_ENABLED = 1
+    TEST_LOGIN_FISCAL_CODES   = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
