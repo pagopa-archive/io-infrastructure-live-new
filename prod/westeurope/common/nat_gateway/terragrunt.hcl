@@ -13,7 +13,7 @@ include {
 }
 
 terraform {
-  source = "git::https://github.com/pagopa/azurerm.git//nat_gateway?ref=v1.0.19"
+  source = "git::https://github.com/pagopa/azurerm.git//nat_gateway?ref=v4.0.0"
 }
 
 inputs = {
