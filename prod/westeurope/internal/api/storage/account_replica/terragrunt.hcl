@@ -1,3 +1,8 @@
+# Internal
+dependency "resource_group" {
+  config_path = "../../../resource_group"
+}
+
 # Internal# Include all settings from the root terragrunt.hcl file
 include {
   path = find_in_parent_folders()
@@ -14,7 +19,7 @@ inputs = {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   access_tier              = "Hot"
-  enable_versioning        = true
+  enable_versioning        = false
 
   network_rules = {
     default_action = "Deny"
