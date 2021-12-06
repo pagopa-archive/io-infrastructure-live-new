@@ -17,11 +17,6 @@ dependency "subnet_agpagopagateway" {
   config_path = "../../../pagopa/network/subnet_agpagopagateway"
 }
 
-# iopayportal
-dependency "subnet_fniopayportal" {
-  config_path = "../../../internal/api/functions_iopayportal/subnet"
-}
-
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -103,7 +98,6 @@ inputs = {
     dependency.subnet_agpagopagateway.outputs.id,
     dependency.subnet_appbackendl1.outputs.id,
     dependency.subnet_appbackendl2.outputs.id,
-    dependency.subnet_fniopayportal.outputs.id,
   ]
 
   virtual_network_info = {

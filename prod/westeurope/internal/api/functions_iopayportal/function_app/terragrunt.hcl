@@ -77,11 +77,6 @@ inputs = {
 
     SERVICES_API_URL = "http://api-internal.io.italia.it/"
 
-    // PAGOPA : endpoints use to call pagopa-proxy service : getPaymentInfo, activatePayment, getActivationStatus
-    IO_PAGOPA_PROXY_PROD_BASE_URL = "https://${dependency.app_service_pagopaproxyprod.outputs.default_site_hostname}"
-    IO_PAGOPA_PROXY_TEST_BASE_URL = "https://${dependency.app_service_pagopaproxytest.outputs.default_site_hostname}"
-    PAGOPA_BASE_PATH              = "/pagopa/api/v1"
-
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
     FETCH_KEEPALIVE_SOCKET_ACTIVE_TTL   = "110000"
@@ -99,10 +94,6 @@ inputs = {
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
     WEBSITE_CONTENTSHARE = "io-p-func-iopayportal-content"
-
-    IO_PAY_CHALLENGE_RESUME_URL = "https://uat.checkout.pagopa.it/response.html?id=idTransaction"
-    IO_PAY_ORIGIN               = "https://uat.checkout.pagopa.it"
-    IO_PAY_XPAY_REDIRECT        = "https://uat.checkout.pagopa.it/response.html?id=_id_&resumeType=_resumeType_&_queryParams_"
   }
 
   app_settings_secrets = {

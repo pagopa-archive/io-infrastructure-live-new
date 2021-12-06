@@ -9,9 +9,6 @@
     <cors>
       <allowed-origins>
         <origin>https://paga.io.italia.it/</origin>
-        <origin>https://checkout.pagopa.gov.it/</origin>
-        <origin>https://checkout.pagopa.it/</origin>
-        <origin>https://uat.checkout.pagopa.it/</origin>
         <origin>https://io.italia.it/</origin>
         <origin>https://www.pagopa.gov.it/</origin>
         <origin>https://www.pagopa.it/</origin>
