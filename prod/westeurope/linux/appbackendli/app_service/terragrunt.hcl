@@ -38,10 +38,6 @@ dependency "subnet_funcadmin_r3" {
 }
 
 # External
-dependency "subnet_appgateway" {
-  config_path = "../../../external/appgateway/subnet"
-}
-
 dependency "app_service_pagopaproxyprod" {
   config_path = "../../../external/pagopaproxyprod/app_service"
 }
@@ -282,7 +278,6 @@ inputs = {
   allowed_ips = concat([], local.app_insights_ips_west_europe)
 
   allowed_subnets = [
-    dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
   ]
