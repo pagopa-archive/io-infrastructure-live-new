@@ -138,7 +138,7 @@ inputs = {
     OTP_TTL_IN_SECONDS = 600
 
     CGN_UPPER_BOUND_AGE  = 61
-    EYCA_UPPER_BOUND_AGE = 51
+    EYCA_UPPER_BOUND_AGE = 19
 
     # Disabled functions on slot - slot settings only
     "AzureWebJobs.ContinueEycaActivation.Disabled" = "1"
