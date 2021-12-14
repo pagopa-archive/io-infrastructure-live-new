@@ -146,7 +146,7 @@ inputs = {
     OTP_TTL_IN_SECONDS = 600
 
     CGN_UPPER_BOUND_AGE  = 61
-    EYCA_UPPER_BOUND_AGE = 51
+    EYCA_UPPER_BOUND_AGE = 19
   }
 
   app_settings_secrets = {
