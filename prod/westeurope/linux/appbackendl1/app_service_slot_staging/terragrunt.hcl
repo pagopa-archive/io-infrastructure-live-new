@@ -126,7 +126,9 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
+    WEBSITE_RUN_FROM_PACKAGE = "1"
+    WEBSITE_VNET_ROUTE_ALL   = "1"
+    WEBSITE_DNS_SERVER       = "168.63.129.16"
 
     // ENVIRONMENT
     NODE_ENV = "production"
