@@ -10,6 +10,18 @@ dependency "subnet_cgn_merchant" {
   config_path = "../../cgn/functions_cgn_merchant/subnet"
 }
 
+dependency "subnet_appbackendl1" {
+  config_path = "../../linux/appbackendl1/subnet"
+}
+
+dependency "subnet_appbackendl2" {
+  config_path = "../../linux/appbackendl2/subnet"
+}
+
+dependency "subnet_appbackendli" {
+  config_path = "../../linux/appbackendli/subnet"
+}
+
 # Common
 dependency "resource_group" {
   config_path = "../resource_group"
@@ -31,6 +43,9 @@ inputs = {
     dependency.subnet_fneucovidcert.outputs.id,
     dependency.subnet_cgn.outputs.id,
     dependency.subnet_cgn_merchant.outputs.id,
+    dependency.subnet_appbackendl1.outputs.id,
+    dependency.subnet_appbackendl2.outputs.id,
+    dependency.subnet_appbackendli.outputs.id,
   ]
   location         = "westeurope"
   public_ips_count = 2
