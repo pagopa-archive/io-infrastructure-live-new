@@ -211,6 +211,7 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
+    VISIBLE_SERVICE_BLOB_ID = "visible-services-national.json"
   }
 
   app_settings_secrets = {
