@@ -128,6 +128,18 @@ inputs = {
     {
       display_name = "ApiMessageWriteWithPayee"
       name         = "apimessagewritewithpayee"
+    },
+    {
+      display_name = "ApiMessageWriteWithLegalData"
+      name         = "apimessagewritewithlegaldata"
+    },
+    {
+      display_name = "ApiMessageWriteWithLegalDataWithoutImpersonification"
+      name         = "apimessagewritewithlegaldatawithoutimpersonification"
+    },
+    {
+      display_name = "ApiLegalMessageRead"
+      name         = "apilegalmessageread"
     }
   ]
 }
