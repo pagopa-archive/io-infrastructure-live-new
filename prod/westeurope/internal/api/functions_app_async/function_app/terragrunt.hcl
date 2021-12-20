@@ -229,6 +229,9 @@ inputs = {
     private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
     private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = []
+    containers                 = []
+    blobs_retention_days       = 0
   }
 
   allowed_subnets = [
