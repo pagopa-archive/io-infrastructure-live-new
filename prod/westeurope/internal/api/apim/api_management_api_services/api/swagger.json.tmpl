@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.16.0",
-    "title": "IO SERVICES API",
+    "version": "3.1.1",
+    "title": "IO API for Public Administration Services",
     "contact": {
       "name": "Digital Transformation Team",
       "url": "https://forum.italia.it/c/progetto-io"
@@ -23,6 +23,78 @@
     }
   ],
   "paths": {
+    "/legal-messages/{legalmail}": {
+      "post": {
+        "operationId": "submitLegalMessageforUserWithFiscalCodeInBodyOnBehalfOfService",
+        "summary": "Submit a Legal Message passing the user fiscal_code in the request body",
+        "description": "Submits a legal message to a user on behalf of a service identitfied by legalMail\nOn error, the reason is returned in the response payload.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/LegalMail"
+          },
+          {
+            "name": "message",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/NewMessage"
+            },
+            "x-examples": {
+              "application/json": {
+                "time_to_live": 3600,
+                "content": {
+                  "subject": "ipsum labore deserunt fugiat",
+                  "markdown": "Nullam dapibus metus sed elementum efficitur. Curabitur facilisis sagittis risus nec sodales.\nVestibulum in eros sapien. Donec ac odio sit amet dui semper ornare eget nec odio. Pellentesque habitant\nmorbi tristique senectus et netus et malesuada fames ac turpis egestas. Praesent nibh ex, mattis sit amet\nfelis id, sodales euismod velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message created.",
+            "schema": {
+              "$ref": "#/definitions/CreatedMessage"
+            },
+            "headers": {
+              "Location": {
+                "type": "string",
+                "description": "Location (URL) of created message resource.\nA GET request to this URL returns the message status and details."
+              }
+            },
+            "examples": {
+              "application/json": {
+                "id": "01BX9NSMKVXXS5PSP2FATZMYYY"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            },
+            "examples": {}
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "Not Found."
+          },
+          "429": {
+            "description": "Too many requests"
+          },
+          "500": {
+            "description": "The message cannot be delivered.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        }
+      }
+    },
     "/messages": {
       "post": {
         "operationId": "submitMessageforUserWithFiscalCodeInBody",
@@ -50,13 +122,7 @@
           "201": {
             "description": "Message created.",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "The identifier of the created message."
-                }
-              }
+              "$ref": "#/definitions/CreatedMessage"
             },
             "headers": {
               "Location": {
@@ -773,7 +839,7 @@
               "$ref": "#/definitions/Timestamp"
             },
             "content": {
-              "$ref": "#/definitions/MessageContent"
+              "$ref": "#/definitions/NewMessageContent"
             },
             "sender_service_id": {
               "$ref": "#/definitions/ServiceId"
@@ -814,6 +880,25 @@
       "required": [
         "message"
       ]
+    },
+    "EUCovidCert": {
+      "type": "object",
+      "description": "Paylod with access token to retrieve a EU Covid Certificate",
+      "properties": {
+        "auth_code": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "auth_code"
+      ]
+    },
+    "OrganizationFiscalCode": {
+      "type": "string",
+      "description": "Organization fiscal code.",
+      "format": "OrganizationFiscalCode",
+      "x-import": "@pagopa/ts-commons/lib/strings",
+      "example": "12345678901"
     },
     "FiscalCode": {
       "type": "string",
@@ -865,7 +950,44 @@
       "description": "This parameter specifies for how long (in seconds) the system will\ntry to deliver the message to the channels configured by the user.",
       "example": 3600
     },
-    "MessageContent": {
+    "PrescriptionData": {
+      "type": "object",
+      "description": "Metadata needed to process medical prescriptions.",
+      "properties": {
+        "nre": {
+          "$ref": "#/definitions/PrescriptionNRE"
+        },
+        "iup": {
+          "$ref": "#/definitions/PrescriptionIUP"
+        },
+        "prescriber_fiscal_code": {
+          "$ref": "#/definitions/PrescriberFiscalCode"
+        }
+      },
+      "required": [
+        "nre"
+      ]
+    },
+    "PrescriptionNRE": {
+      "description": "The field *Numero ricetta elettronica* identifies the medical prescription at national level.",
+      "type": "string",
+      "minLength": 15,
+      "maxLength": 15
+    },
+    "PrescriptionIUP": {
+      "description": "The field *Identificativo Unico di Prescrizione* identifies the medical prescription at regional level.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 16
+    },
+    "PrescriberFiscalCode": {
+      "type": "string",
+      "description": "Fiscal code of the Doctor that made the prescription.",
+      "format": "FiscalCode",
+      "x-import": "@pagopa/ts-commons/lib/strings",
+      "example": "TCNZRO80R13C555Y"
+    },
+    "MessageContentBase": {
       "type": "object",
       "properties": {
         "subject": {
@@ -881,79 +1003,65 @@
           "minLength": 80,
           "maxLength": 10000,
           "example": "# This is a markdown header\n\nto show how easily markdown can be converted to **HTML**\n\nRemember: this has to be a long text."
-        },
-        "payment_data": {
-          "type": "object",
-          "description": "Metadata needed to process pagoPA payments.",
-          "properties": {
-            "amount": {
-              "description": "Amount of payment in euro cent. PagoPA accepts up to 9999999999 euro cents.",
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 9999999999
-            },
-            "notice_number": {
-              "description": "The field [\"Numero Avviso\"](https://pagopa-specifichepagamenti.readthedocs.io/it/latest/_docs/Capitolo7.html#il-numero-avviso-e-larchivio-dei-pagamenti-in-attesa) of pagoPa, needed to identify the payment. Format is `<aux digit (1n)>[<application code> (2n)]<codice IUV (15|17n)>`. See [pagoPa specs](https://www.agid.gov.it/sites/default/files/repository_files/specifiche_attuative_pagamenti_1_3_1_0.pdf) for more info on this field and the IUV.",
-              "type": "string",
-              "pattern": "^[0123][0-9]{17}$"
-            },
-            "invalid_after_due_date": {
-              "type": "boolean",
-              "default": false
-            }
-          },
-          "required": [
-            "amount",
-            "notice_number"
-          ]
-        },
-        "prescription_data": {
-          "type": "object",
-          "description": "Metadata needed to process medical prescriptions.",
-          "properties": {
-            "nre": {
-              "description": "The field *Numero ricetta elettronica* identifies the medical prescription at national level.",
-              "type": "string",
-              "minLength": 15,
-              "maxLength": 15
-            },
-            "iup": {
-              "description": "The field *Identificativo Unico di Prescrizione* identifies the medical prescription at regional level.",
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 16
-            },
-            "prescriber_fiscal_code": {
-              "type": "string",
-              "description": "Fiscal code of the Doctor that made the prescription.",
-              "format": "FiscalCode",
-              "x-import": "@pagopa/ts-commons/lib/strings",
-              "example": "TCNZRO80R13C555Y"
-            }
-          },
-          "required": [
-            "nre"
-          ]
-        },
-        "eu_covid_cert": {
-          "type": "object",
-          "description": "Paylod with access token to retrieve a EU Covid Certificate",
-          "properties": {
-            "auth_code": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "auth_code"
-          ]
-        },
-        "due_date": {
-          "$ref": "#/definitions/Timestamp"
         }
       },
       "required": [
         "subject",
         "markdown"
+      ]
+    },
+    "MessageContent": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MessageContentBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "payment_data": {
+              "$ref": "#/definitions/PaymentData"
+            },
+            "prescription_data": {
+              "$ref": "#/definitions/PrescriptionData"
+            },
+            "legal_data": {
+              "$ref": "#/definitions/LegalData"
+            },
+            "eu_covid_cert": {
+              "$ref": "#/definitions/EUCovidCert"
+            },
+            "due_date": {
+              "$ref": "#/definitions/Timestamp"
+            }
+          }
+        }
+      ]
+    },
+    "NewMessageContent": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/MessageContentBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "payment_data": {
+              "$ref": "#/definitions/PaymentDataWithRequiredPayee"
+            },
+            "due_date": {
+              "$ref": "#/definitions/Timestamp"
+            },
+            "prescription_data": {
+              "$ref": "#/definitions/PrescriptionData"
+            },
+            "eu_covid_cert": {
+              "$ref": "#/definitions/EUCovidCert"
+            },
+            "legal_data": {
+              "$ref": "#/definitions/LegalData"
+            }
+          }
+        }
       ]
     },
     "NewMessage": {
@@ -1019,7 +1127,8 @@
               "description": "It indicates that service is hidden"
             },
             "service_metadata": {
-              "$ref": "#/definitions/ServiceMetadata"
+              "description": "That service can't handle some ServiceMetadata fields (es. category)",
+              "$ref": "#/definitions/CommonServiceMetadata"
             }
           }
         }
@@ -1042,13 +1151,29 @@
               "description": "It indicates that service appears in the service list"
             },
             "service_metadata": {
-              "$ref": "#/definitions/ServiceMetadata"
+              "description": "That service can't handle some ServiceMetadata fields (es. category)",
+              "$ref": "#/definitions/CommonServiceMetadata"
             }
           },
           "required": [
             "is_visible",
             "service_metadata"
           ]
+        }
+      ]
+    },
+    "ExtendedServicePayload": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ServicePayload"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "service_metadata": {
+              "$ref": "#/definitions/ServiceMetadata"
+            }
+          }
         }
       ]
     },
@@ -1066,11 +1191,7 @@
           "$ref": "#/definitions/OrganizationName"
         },
         "organization_fiscal_code": {
-          "type": "string",
-          "description": "Organization fiscal code.",
-          "format": "OrganizationFiscalCode",
-          "x-import": "@pagopa/ts-commons/lib/strings",
-          "example": "12345678901"
+          "$ref": "#/definitions/OrganizationFiscalCode"
         },
         "authorized_cidrs": {
           "description": "Allowed source IPs or CIDRs for this service.\nWhen empty, every IP address it's authorized to call the IO API on behalf of the service.",
@@ -1100,7 +1221,7 @@
       "description": "A service tied to user's subscription.",
       "allOf": [
         {
-          "$ref": "#/definitions/ServicePayload"
+          "$ref": "#/definitions/ExtendedServicePayload"
         },
         {
           "type": "object",
@@ -1134,6 +1255,66 @@
       ]
     },
     "ServiceMetadata": {
+      "x-one-of": true,
+      "allOf": [
+        {
+          "$ref": "#/definitions/StandardServiceMetadata"
+        },
+        {
+          "$ref": "#/definitions/SpecialServiceMetadata"
+        },
+        {
+          "$ref": "#/definitions/CommonServiceMetadata"
+        }
+      ]
+    },
+    "StandardServiceMetadata": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServiceMetadata"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "x-extensible-enum": [
+                "STANDARD"
+              ]
+            }
+          },
+          "required": [
+            "category"
+          ]
+        }
+      ]
+    },
+    "SpecialServiceMetadata": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CommonServiceMetadata"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "category": {
+              "type": "string",
+              "x-extensible-enum": [
+                "SPECIAL"
+              ]
+            },
+            "custom_special_flow": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "category"
+          ]
+        }
+      ]
+    },
+    "CommonServiceMetadata": {
       "type": "object",
       "description": "A set of metadata properties related to this service.",
       "properties": {
@@ -1224,6 +1405,102 @@
       "description": "The department inside the organization that runs the service. Will\nbe added to the content of sent messages.",
       "minLength": 1
     },
+    "PaymentDataBase": {
+      "type": "object",
+      "description": "Metadata needed to process pagoPA payments.",
+      "properties": {
+        "amount": {
+          "description": "Amount of payment in euro cent. PagoPA accepts up to 9999999999 euro cents.",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 9999999999
+        },
+        "notice_number": {
+          "description": "The field [\"Numero Avviso\"](https://pagopa-specifichepagamenti.readthedocs.io/it/latest/_docs/Capitolo7.html#il-numero-avviso-e-larchivio-dei-pagamenti-in-attesa) of pagoPa, needed to identify the payment. Format is `<aux digit (1n)>[<application code> (2n)]<codice IUV (15|17n)>`. See [pagoPa specs](https://www.agid.gov.it/sites/default/files/repository_files/specifiche_attuative_pagamenti_1_3_1_0.pdf) for more info on this field and the IUV.",
+          "type": "string",
+          "pattern": "^[0123][0-9]{17}$"
+        },
+        "invalid_after_due_date": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "amount",
+        "notice_number"
+      ]
+    },
+    "PaymentData": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/PaymentDataBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "payee": {
+              "$ref": "#/definitions/Payee"
+            }
+          }
+        }
+      ]
+    },
+    "Payee": {
+      "type": "object",
+      "description": "Metadata needed to explicit payment's payee.",
+      "properties": {
+        "fiscal_code": {
+          "$ref": "#/definitions/OrganizationFiscalCode"
+        }
+      },
+      "required": [
+        "fiscal_code"
+      ]
+    },
+    "PaymentDataWithRequiredPayee": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/PaymentDataBase"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "payee": {
+              "$ref": "#/definitions/Payee"
+            }
+          },
+          "required": [
+            "payee"
+          ]
+        }
+      ]
+    },
+    "LegalData": {
+      "type": "object",
+      "properties": {
+        "sender_mail_from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "has_attachment": {
+          "type": "boolean",
+          "default": false
+        },
+        "message_unique_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "original_message_url": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "sender_mail_from",
+        "has_attachment",
+        "message_unique_id"
+      ]
+    },
     "SubscriptionKeys": {
       "type": "object",
       "properties": {
@@ -1293,10 +1570,29 @@
         "PRIMARY_KEY",
         "SECONDARY_KEY"
       ]
+    },
+    "CreatedMessage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The identifier of the created message."
+        }
+      }
     }
   },
   "responses": {},
   "parameters": {
+    "LegalMail": {
+      "name": "legalmail",
+      "in": "path",
+      "type": "string",
+      "required": true,
+      "description": "The legal mail related to a legal message' s sender.",
+      "format": "EmailString",
+      "x-example": "demo@pec.it",
+      "x-import": "italia-ts-commons/lib/strings"
+    },
     "FiscalCode": {
       "name": "fiscal_code",
       "in": "path",
