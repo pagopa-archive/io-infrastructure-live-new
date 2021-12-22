@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "3.1.1",
+    "version": "3.3.0",
     "title": "IO API for Public Administration Services",
     "contact": {
       "name": "Digital Transformation Team",
@@ -334,7 +334,7 @@
             "name": "payload",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/GetLimitedProfileByPOSTPayload"
+              "$ref": "#/definitions/FiscalCodePayload"
             }
           }
         ]
@@ -719,10 +719,161 @@
           }
         }
       }
+    },
+    "/activations": {
+      "post": {
+        "operationId": "getServiceActivationByPOST",
+        "summary": "Get a Service Activation for a User",
+        "description": "Returns the current Activation for a couple Service/User",
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/Activation"
+            },
+            "examples": {
+              "application/json": {
+                "serviceId": "AAAAAAAAAAAAAAA",
+                "fiscalCode": "AAAAAA00B00C000D",
+                "status": "ACTIVE",
+                "version": 1
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "No user activation found for the provided fiscal code.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "429": {
+            "description": "Too many requests"
+          },
+          "500": {
+            "description": "Internal server error retrieving the Activation",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/FiscalCodePayload"
+            }
+          }
+        ]
+      },
+      "put": {
+        "operationId": "upsertServiceActivation",
+        "summary": "Upsert a Service Activation for a User",
+        "description": "Create or update an Activation for a couple Service/User",
+        "responses": {
+          "200": {
+            "description": "Found.",
+            "schema": {
+              "$ref": "#/definitions/Activation"
+            },
+            "examples": {
+              "application/json": {
+                "serviceId": "AAAAAAAAAAAAAAA",
+                "fiscalCode": "AAAAAA00B00C000D",
+                "status": "ACTIVE",
+                "version": 1
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden."
+          },
+          "404": {
+            "description": "No user activation found for the provided fiscal code.",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          },
+          "429": {
+            "description": "Too many requests"
+          },
+          "500": {
+            "description": "The activation cannot be created or updated",
+            "schema": {
+              "$ref": "#/definitions/ProblemJson"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "payload",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ActivationPayload"
+            }
+          }
+        ]
+      }
     }
   },
   "definitions": {
-    "GetLimitedProfileByPOSTPayload": {
+    "ActivationStatus": {
+      "type": "string",
+      "x-extensible-enum": [
+        "ACTIVE",
+        "INACTIVE",
+        "PENDING"
+      ]
+    },
+    "Activation": {
+      "type": "object",
+      "properties": {
+        "service_id": {
+          "$ref": "#/definitions/ServiceId"
+        },
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "status": {
+          "$ref": "#/definitions/ActivationStatus"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "service_id",
+        "fiscal_code",
+        "status",
+        "version"
+      ]
+    },
+    "ActivationPayload": {
+      "type": "object",
+      "properties": {
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "status": {
+          "$ref": "#/definitions/ActivationStatus"
+        }
+      },
+      "required": [
+        "fiscal_code",
+        "status"
+      ]
+    },
+    "FiscalCodePayload": {
       "type": "object",
       "properties": {
         "fiscal_code": {
