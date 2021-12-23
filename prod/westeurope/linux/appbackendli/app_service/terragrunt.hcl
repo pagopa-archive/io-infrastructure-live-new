@@ -233,6 +233,7 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
+    PECSERVER_TOKEN_ISSUER = "app-backend.io.italia.it"
 
     // PECSERVER
     PECSERVER_URL="https://poc.pagopa.poste.it"

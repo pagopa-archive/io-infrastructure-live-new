@@ -199,15 +199,15 @@ inputs = {
     MYPORTAL_BASE_PATH = "/myportal/api/v1"
 
     // MIT_VOUCHER JWT
-    JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
-    JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
+    JWT_MIT_VOUCHER_TOKEN_ISSUER     = "app-backend.io.italia.it"
+    JWT_MIT_VOUCHER_TOKEN_EXPIRATION = 1200
 
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
 
     // ZENDESK
-    ZENDESK_BASE_PATH = "/api/backend/zendesk/v1"
-    JWT_ZENDESK_SUPPORT_TOKEN_ISSUER = "app-backend.io.italia.it"
+    ZENDESK_BASE_PATH                    = "/api/backend/zendesk/v1"
+    JWT_ZENDESK_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_ZENDESK_SUPPORT_TOKEN_EXPIRATION = 1200
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
@@ -233,10 +233,11 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
+    PECSERVER_TOKEN_ISSUER       = "app-backend.io.italia.it"
 
     // PECSERVER
-    PECSERVER_URL="https://poc.pagopa.poste.it"
-    PECSERVER_BASE_PATH=""
+    PECSERVER_URL       = "https://poc.pagopa.poste.it"
+    PECSERVER_BASE_PATH = ""
     //
   }
 
@@ -273,15 +274,15 @@ inputs = {
       TEST_CGN_FISCAL_CODES = "appbackend-TEST-CGN-FISCAL-CODES"
 
       // MIT_VOUCHER JWT
-      JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY  = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
-      JWT_MIT_VOUCHER_TOKEN_AUDIENCE        = "appbackend-mitvoucher-JWT-AUDIENCE"
+      JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
+      JWT_MIT_VOUCHER_TOKEN_AUDIENCE       = "appbackend-mitvoucher-JWT-AUDIENCE"
 
       // ZENDESK
-      ALLOW_ZENDESK_IP_SOURCE_RANGE="appbackend-ALLOW-ZENDESK-IP-SOURCE-RANGE"
-      JWT_ZENDESK_SUPPORT_TOKEN_SECRET="appbackend-JWT-ZENDESK-SUPPORT-TOKEN-SECRET"
+      ALLOW_ZENDESK_IP_SOURCE_RANGE    = "appbackend-ALLOW-ZENDESK-IP-SOURCE-RANGE"
+      JWT_ZENDESK_SUPPORT_TOKEN_SECRET = "appbackend-JWT-ZENDESK-SUPPORT-TOKEN-SECRET"
 
       // PECSERVER
-      PECSERVER_TOKEN_SECRET="appbackend-PECSERVER-TOKEN-SECRET"
+      PECSERVER_TOKEN_SECRET = "appbackend-PECSERVER-TOKEN-SECRET"
       //
     }
   }

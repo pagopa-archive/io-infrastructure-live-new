@@ -195,6 +195,7 @@ inputs = {
     // MIT_VOUCHER JWT
     JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
     JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
+    PECSERVER_TOKEN_ISSUER = "app-backend.io.italia.it"
 
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
