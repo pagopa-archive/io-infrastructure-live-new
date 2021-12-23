@@ -175,7 +175,8 @@ inputs = {
     // EXPOSED API
     API_BASE_PATH             = "/api/v1"
     BONUS_API_BASE_PATH       = "/api/v1"
-    CGN_API_BASE_PATH         = "/api/v1"
+    CGN_API_BASE_PATH         = "/api/v1/cgn"
+    CGN_OPERATOR_SEARCH_API_BASE_PATH = "/api/v1/cgn-operator-search"
     EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
     MIT_VOUCHER_API_BASE_PATH = "/api/v1/mitvoucher/auth"
 
