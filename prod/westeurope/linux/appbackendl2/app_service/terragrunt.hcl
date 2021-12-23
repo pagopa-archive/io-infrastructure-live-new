@@ -233,6 +233,11 @@ inputs = {
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
+
+    // PECSERVER
+    PECSERVER_URL="https://poc.pagopa.poste.it"
+    PECSERVER_BASE_PATH=""
+    //
   }
 
   app_settings_secrets = {
@@ -274,6 +279,9 @@ inputs = {
       // ZENDESK
       ALLOW_ZENDESK_IP_SOURCE_RANGE="appbackend-ALLOW-ZENDESK-IP-SOURCE-RANGE"
       JWT_ZENDESK_SUPPORT_TOKEN_SECRET="appbackend-JWT-ZENDESK-SUPPORT-TOKEN-SECRET"
+
+      // PECSERVER
+      PECSERVER_TOKEN_SECRET="appbackend-PECSERVER-TOKEN-SECRET"
     }
   }
 
