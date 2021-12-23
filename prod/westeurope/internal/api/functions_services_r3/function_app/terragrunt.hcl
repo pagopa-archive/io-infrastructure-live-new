@@ -40,6 +40,22 @@ dependency "virtual_network" {
   config_path = "../../../../common/virtual_network"
 }
 
+dependency "subnet_pendpoints" {
+  config_path = "../../../../common/subnet_pendpoints"
+}
+
+dependency "private_dns_zone_blob" {
+  config_path = "../../../../common/private_dns_zones/privatelink-blob-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_queue" {
+  config_path = "../../../../common/private_dns_zones/privatelink-queue-core-windows-net/zone"
+}
+
+dependency "private_dns_zone_table" {
+  config_path = "../../../../common/private_dns_zones/privatelink-table-core-windows-net/zone"
+}
+
 dependency "application_insights" {
   config_path = "../../../../common/application_insights"
 }
@@ -54,7 +70,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v4.0.0"
 }
 
 locals {
@@ -80,6 +96,14 @@ inputs = {
     sku_size = "EP1"
   }
 
+  # advanced_threat_protection_enable enabled on function storage (code only)
+  storage_account_info = {
+    account_tier                      = "Standard"
+    account_replication_type          = "LRS"
+    access_tier                       = "Hot"
+    advanced_threat_protection_enable = true
+  }
+
   runtime_version = "~3"
   
   health_check_path = "api/info"
@@ -89,22 +113,24 @@ inputs = {
   app_settings = {
     FUNCTIONS_WORKER_RUNTIME       = "node"
     WEBSITE_NODE_DEFAULT_VERSION   = "14.16.0"
-    WEBSITE_RUN_FROM_PACKAGE       = "1"
     FUNCTIONS_WORKER_PROCESS_COUNT = 4
     NODE_ENV                       = "production"
 
-    # DNS and VNET configuration to use private endpoint
-    WEBSITE_DNS_SERVER     = "168.63.129.16"
-    WEBSITE_VNET_ROUTE_ALL = 1
+    PROCESSING_MESSAGE_CONTAINER_NAME       = "processing-messages"
+    MESSAGE_CREATED_QUEUE_NAME              = "message-created"
+    MESSAGE_PROCESSED_QUEUE_NAME            = "message-processed"
+    NOTIFICATION_CREATED_EMAIL_QUEUE_NAME   = "notification-created-email"
+    NOTIFICATION_CREATED_WEBHOOK_QUEUE_NAME = "notification-created-webhook"
 
     COSMOSDB_URI  = dependency.cosmosdb_account.outputs.endpoint
     COSMOSDB_KEY  = dependency.cosmosdb_account.outputs.primary_master_key
     COSMOSDB_NAME = dependency.cosmosdb_database.outputs.name
-    // TODO: Rename to STORAGE_CONNECTION_STRING
-    QueueStorageConnection = dependency.storage_account.outputs.primary_connection_string
-    MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
-    // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
-    SUBSCRIPTIONS_FEED_TABLE = dependency.storage_table_subscriptionsfeedbyday.outputs.name
+    
+    MESSAGE_CONTENT_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    MESSAGE_CONTAINER_NAME                    = dependency.storage_container_message-content.outputs.name
+    
+    SUBSCRIPTION_FEED_STORAGE_CONNECTION_STRING = dependency.storage_account.outputs.primary_connection_string
+    SUBSCRIPTIONS_FEED_TABLE                    = dependency.storage_table_subscriptionsfeedbyday.outputs.name
 
     MAIL_FROM = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     // we keep this while we wait for new app version to be deployed
@@ -118,8 +144,6 @@ inputs = {
     FETCH_KEEPALIVE_FREE_SOCKET_TIMEOUT = "30000"
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
-    SLOT_TASK_HUBNAME = "ProductionTaskHub"
-
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
@@ -131,9 +155,16 @@ inputs = {
 
     # this app settings is required to solve the issue:
     # https://github.com/terraform-providers/terraform-provider-azurerm/issues/10499
-    WEBSITE_CONTENTSHARE = "io-p-fn3-services-content"
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
     # AzureFunctionsJobHost__extensions__durableTask__storageProvider__partitionCount = "16"
+
+    # Disabled functions on slot - trigger, queue and timer
+    # mark this configurations as slot settings
+    "AzureWebJobs.CreateNotification.Disabled"     = "0"
+    "AzureWebJobs.EmailNotification.Disabled"      = "0"
+    "AzureWebJobs.OnFailedProcessMessage.Disabled" = "0"
+    "AzureWebJobs.ProcessMessage.Disabled"         = "0"
+    "AzureWebJobs.WebhookNotification.Disabled"    = "0"
   }
 
   app_settings_secrets = {
@@ -147,6 +178,25 @@ inputs = {
       WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
       IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
     }
+  }
+
+  durable_function = {
+    enable                     = true
+    private_endpoint_subnet_id = dependency.subnet_pendpoints.outputs.id
+    private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
+    private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
+    private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = [
+      "message-created",
+      "message-created-poison",
+      "message-processed",
+      "notification-created-email",
+      "notification-created-webhook",
+    ]
+    containers = [
+      "processing-messages",
+    ]
+    blobs_retention_days = 1
   }
 
   allowed_subnets = [

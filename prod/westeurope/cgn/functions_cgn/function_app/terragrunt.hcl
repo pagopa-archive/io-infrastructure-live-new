@@ -79,7 +79,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v4.0.0"
 }
 
 locals {
@@ -146,7 +146,7 @@ inputs = {
     OTP_TTL_IN_SECONDS = 600
 
     CGN_UPPER_BOUND_AGE  = 61
-    EYCA_UPPER_BOUND_AGE = 51
+    EYCA_UPPER_BOUND_AGE = 19
   }
 
   app_settings_secrets = {
@@ -164,6 +164,9 @@ inputs = {
     private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
     private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    containers                 = []
+    queues                     = []
+    blobs_retention_days       = 0
   }
 
   allowed_subnets = [

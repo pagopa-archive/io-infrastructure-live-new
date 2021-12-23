@@ -107,7 +107,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v3.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app?ref=v4.0.0"
 }
 
 locals {
@@ -201,6 +201,7 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
+    VISIBLE_SERVICE_BLOB_ID = "visible-services-national.json"
   }
 
   app_settings_secrets = {
@@ -221,6 +222,9 @@ inputs = {
     private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
     private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = []
+    containers                 = []
+    blobs_retention_days       = 0
   }
 
   allowed_subnets = [

@@ -21,13 +21,10 @@ terraform {
 }
 
 inputs = {
-  name                = "eligibility-checks"
+  name                = "activations"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
-  partition_key_path  = "/id"
-
-  autoscale_settings = {
-    max_throughput = 10000
-  }
+  partition_key_path  = "/fiscalCode"
+  throughput          = 400
 }

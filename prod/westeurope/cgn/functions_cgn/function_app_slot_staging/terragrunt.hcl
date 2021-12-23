@@ -78,7 +78,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v3.0.12"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_function_app_slot?ref=v4.0.0"
 }
 
 inputs = {
@@ -138,7 +138,7 @@ inputs = {
     OTP_TTL_IN_SECONDS = 600
 
     CGN_UPPER_BOUND_AGE  = 61
-    EYCA_UPPER_BOUND_AGE = 51
+    EYCA_UPPER_BOUND_AGE = 19
 
     # Disabled functions on slot - slot settings only
     "AzureWebJobs.ContinueEycaActivation.Disabled" = "1"

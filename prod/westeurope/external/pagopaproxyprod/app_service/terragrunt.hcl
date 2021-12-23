@@ -45,7 +45,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service?ref=v4.0.0"
 }
 
 inputs = {
@@ -75,7 +75,7 @@ inputs = {
     REDIS_DB_PORT     = dependency.redis.outputs.ssl_port
     REDIS_DB_PASSWORD = dependency.redis.outputs.primary_access_key
     REDIS_USE_CLUSTER = true
-    NM3_ENABLED       = false
+    NM3_ENABLED       = true
   }
 
   app_settings_secrets = {
