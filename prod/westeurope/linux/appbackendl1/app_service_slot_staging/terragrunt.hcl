@@ -164,6 +164,7 @@ inputs = {
     API_URL             = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL       = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
     CGN_API_URL         = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    CGN_OPERATOR_SEARCH_API_URL = "https://cgnonboardingportal-p-os.azurewebsites.net/api/v1"
     EUCOVIDCERT_API_URL = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
@@ -247,6 +248,7 @@ inputs = {
       API_KEY             = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY       = "funcbonus-KEY-APPBACKEND"
       CGN_API_KEY         = "funccgn-KEY-APPBACKEND"
+      CGN_OPERATOR_SEARCH_API_KEY = "funccgnoperatorsearch-KEY-APPBACKEND"
       EUCOVIDCERT_API_KEY = "funceucovidcert-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
