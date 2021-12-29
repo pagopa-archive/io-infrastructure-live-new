@@ -7,11 +7,6 @@ dependency "resource_group" {
   config_path = "../../resource_group"
 }
 
-# External
-dependency "subnet_apigateway" {
-  config_path = "../../../external/apigateway/subnet"
-}
-
 // Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"
@@ -114,7 +109,6 @@ inputs = {
   allowed_ips = []
 
   allowed_subnets = [
-    dependency.subnet_apigateway.outputs.id,
     local.external_resources.locals.subnets.io-p-appgateway-snet,
   ]
 
