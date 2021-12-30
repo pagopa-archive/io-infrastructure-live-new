@@ -52,8 +52,7 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_NODE_DEFAULT_VERSION = "6.11.2"
-    WEBSITE_NPM_DEFAULT_VERSION  = "6.1.0"
+    WEBSITE_NODE_DEFAULT_VERSION = "14.18.1"
     WEBSITE_RUN_FROM_PACKAGE     = "1"
     APIM_PRODUCT_NAME            = "io-services-api"
     APIM_USER_GROUPS             = "apilimitedmessagewrite,apiinforead,apimessageread,apilimitedprofileread"
