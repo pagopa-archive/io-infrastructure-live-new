@@ -46,10 +46,6 @@ dependency "subnet_funcadmin_r3" {
 }
 
 # External
-dependency "subnet_appgateway" {
-  config_path = "../../../external/appgateway/subnet"
-}
-
 dependency "app_service_pagopaproxyprod" {
   config_path = "../../../external/pagopaproxyprod/app_service"
 }
@@ -110,7 +106,7 @@ locals {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_app_service_slot?ref=v4.0.0"
 }
 
 inputs = {
@@ -130,7 +126,9 @@ inputs = {
   application_insights_instrumentation_key = dependency.application_insights.outputs.instrumentation_key
 
   app_settings = {
-    WEBSITE_RUN_FROM_PACKAGE     = "1"
+    WEBSITE_RUN_FROM_PACKAGE = "1"
+    WEBSITE_VNET_ROUTE_ALL   = "1"
+    WEBSITE_DNS_SERVER       = "168.63.129.16"
 
     // ENVIRONMENT
     NODE_ENV = "production"
@@ -166,12 +164,14 @@ inputs = {
     API_URL             = "http://${dependency.functions_app1_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL       = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
     CGN_API_URL         = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
+    CGN_OPERATOR_SEARCH_API_URL = "https://cgnonboardingportal-p-os.azurewebsites.net/api/v1"
     EUCOVIDCERT_API_URL = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH             = "/api/v1"
     BONUS_API_BASE_PATH       = "/api/v1"
-    CGN_API_BASE_PATH         = "/api/v1"
+    CGN_API_BASE_PATH         = "/api/v1/cgn"
+    CGN_OPERATOR_SEARCH_API_BASE_PATH = "/api/v1/cgn-operator-search"    
     EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
     MIT_VOUCHER_API_BASE_PATH = "/api/v1/mitvoucher/auth"
 
@@ -197,9 +197,15 @@ inputs = {
     // MIT_VOUCHER JWT
     JWT_MIT_VOUCHER_TOKEN_ISSUER="app-backend.io.italia.it"
     JWT_MIT_VOUCHER_TOKEN_EXPIRATION=1200
+    PECSERVER_TOKEN_ISSUER = "app-backend.io.italia.it"
 
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
+
+    // ZENDESK
+    ZENDESK_BASE_PATH = "/api/backend/zendesk/v1"
+    JWT_ZENDESK_SUPPORT_TOKEN_ISSUER = "app-backend.io.italia.it"
+    JWT_ZENDESK_SUPPORT_TOKEN_EXPIRATION = 1200
 
     SPID_LOG_QUEUE_NAME                = dependency.storage_queue_spid_logs.outputs.name
     SPID_LOG_STORAGE_CONNECTION_STRING = dependency.storage_account_logs.outputs.primary_connection_string
@@ -212,17 +218,23 @@ inputs = {
     USERS_LOGIN_QUEUE_NAME                = dependency.storage_queue_users_login.outputs.name
 
     // Feature flags
-    FF_BONUS_ENABLED        = 1
-    FF_CGN_ENABLED          = 1
-    FF_EUCOVIDCERT_ENABLED  = 1
-    FF_MIT_VOUCHER_ENABLED  = 1
-    TEST_LOGIN_FISCAL_CODES = local.testusersvars.locals.test_users
+    FF_BONUS_ENABLED          = 1
+    FF_CGN_ENABLED            = 1
+    FF_EUCOVIDCERT_ENABLED    = 1
+    FF_MIT_VOUCHER_ENABLED    = 1
+    FF_USER_AGE_LIMIT_ENABLED = 1
+    TEST_LOGIN_FISCAL_CODES   = local.testusersvars.locals.test_users
 
     # No downtime on slots swap
     WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG = 1
 
     JWT_SUPPORT_TOKEN_ISSUER     = "app-backend.io.italia.it"
     JWT_SUPPORT_TOKEN_EXPIRATION = 1209600
+
+    // PECSERVER
+    PECSERVER_URL="https://poc.pagopa.poste.it"
+    PECSERVER_BASE_PATH=""
+    //
   }
 
   app_settings_secrets = {
@@ -236,6 +248,7 @@ inputs = {
       API_KEY             = "funcapp-KEY-APPBACKEND"
       BONUS_API_KEY       = "funcbonus-KEY-APPBACKEND"
       CGN_API_KEY         = "funccgn-KEY-APPBACKEND"
+      CGN_OPERATOR_SEARCH_API_KEY = "funccgnoperatorsearch-KEY-APPBACKEND"
       EUCOVIDCERT_API_KEY = "funceucovidcert-KEY-APPBACKEND"
 
       // PUSH NOTIFICATIONS
@@ -260,6 +273,14 @@ inputs = {
       // MIT_VOUCHER JWT
       JWT_MIT_VOUCHER_TOKEN_PRIVATE_ES_KEY  = "appbackend-mitvoucher-JWT-PRIVATE-ES-KEY"
       JWT_MIT_VOUCHER_TOKEN_AUDIENCE        = "appbackend-mitvoucher-JWT-AUDIENCE"
+
+      // ZENDESK
+      ALLOW_ZENDESK_IP_SOURCE_RANGE="appbackend-ALLOW-ZENDESK-IP-SOURCE-RANGE"
+      JWT_ZENDESK_SUPPORT_TOKEN_SECRET="appbackend-JWT-ZENDESK-SUPPORT-TOKEN-SECRET"
+
+      // PECSERVER
+      PECSERVER_TOKEN_SECRET="appbackend-PECSERVER-TOKEN-SECRET"
+      //
     }
   }
 
@@ -267,7 +288,6 @@ inputs = {
   allowed_ips = []
 
   allowed_subnets = [
-    dependency.subnet_appgateway.outputs.id,
     dependency.subnet_fn3services.outputs.id,
     dependency.subnet_funcadmin_r3.outputs.id,
     dependency.subnet_azure_devops.outputs.id,

@@ -13,7 +13,7 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management_groups?ref=v3.0.3"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_api_management_groups?ref=v4.0.0"
 }
 
 inputs = {
@@ -128,6 +128,18 @@ inputs = {
     {
       display_name = "ApiMessageWriteWithPayee"
       name         = "apimessagewritewithpayee"
+    },
+    {
+      display_name = "ApiMessageWriteWithLegalData"
+      name         = "apimessagewritewithlegaldata"
+    },
+    {
+      display_name = "ApiMessageWriteWithLegalDataWithoutImpersonification"
+      name         = "apimessagewritewithlegaldatawithoutimpersonification"
+    },
+    {
+      display_name = "ApiLegalMessageRead"
+      name         = "apilegalmessageread"
     }
   ]
 }
