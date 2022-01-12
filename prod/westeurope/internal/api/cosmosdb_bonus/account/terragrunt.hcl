@@ -53,7 +53,7 @@ inputs = {
     dependency.subnet_fn3slackbot.outputs.id,
   ]
 
-   lock = {
+  lock = {
     name       = "cosmos-bonus"
     lock_level = "CanNotDelete"
     notes      = null

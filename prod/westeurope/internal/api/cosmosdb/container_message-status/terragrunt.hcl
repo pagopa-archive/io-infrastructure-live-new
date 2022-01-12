@@ -27,7 +27,8 @@ inputs = {
   database_name       = dependency.cosmosdb_database.outputs.name
   partition_key_path  = "/messageId"
 
-   autoscale_settings = {
-    max_throughput = 7000
+  autoscale_settings = {
+    max_throughput = 10000
   }
+
 }

@@ -17,20 +17,21 @@ include {
 }
 
 terraform {
-  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v4.0.0"
+  source = "git::git@github.com:pagopa/io-infrastructure-modules-new.git//azurerm_cosmosdb_sql_container?ref=v3.0.3"
 }
 
 inputs = {
-  name                = "user-bonuses"
+  name                = "change-feed-leases"
   resource_group_name = dependency.resource_group.outputs.resource_name
   account_name        = dependency.cosmosdb_account.outputs.name
   database_name       = dependency.cosmosdb_database.outputs.name
-  partition_key_path  = "/fiscalCode"
-  throughput          = 1200
+  partition_key_path  = "/id"
+  throughput          = 400
 
   /*
   autoscale_settings = {
-    max_throughput = 15000
+    max_throughput = 10000
   }
   */
 }
+
