@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 dependency "subnet" {
   config_path = "../subnet"
 }
