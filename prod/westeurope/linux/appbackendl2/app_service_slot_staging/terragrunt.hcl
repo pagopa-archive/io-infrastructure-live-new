@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 dependency "app_service" {
   config_path = "../app_service"
 }
@@ -163,15 +168,15 @@ inputs = {
     // FUNCTIONS
     API_URL             = "http://${dependency.functions_app2_r3.outputs.default_hostname}/api/v1"
     BONUS_API_URL       = "http://${dependency.functions_bonus.outputs.default_hostname}/api/v1"
-    CGN_API_URL         = "http://${dependency.functions_cgn.outputs.default_hostname}/api/v1"
-    CGN_OPERATOR_SEARCH_API_URL = "https://cgnonboardingportal-p-os.azurewebsites.net/api/v1"
+    CGN_API_URL         = "http://${dependency.functions_cgn.outputs.default_hostname}"
+    CGN_OPERATOR_SEARCH_API_URL = "https://cgnonboardingportal-p-os.azurewebsites.net"
     EUCOVIDCERT_API_URL = "http://${dependency.functions_eucovidcert.outputs.default_hostname}/api/v1"
 
     // EXPOSED API
     API_BASE_PATH             = "/api/v1"
     BONUS_API_BASE_PATH       = "/api/v1"
     CGN_API_BASE_PATH         = "/api/v1/cgn"
-    CGN_OPERATOR_SEARCH_API_BASE_PATH = "/api/v1/cgn-operator-search"    
+    CGN_OPERATOR_SEARCH_API_BASE_PATH = "/api/v1/cgn/operator-search"    
     EUCOVIDCERT_API_BASE_PATH = "/api/v1/eucovidcert"
     MIT_VOUCHER_API_BASE_PATH = "/api/v1/mitvoucher/auth"
 

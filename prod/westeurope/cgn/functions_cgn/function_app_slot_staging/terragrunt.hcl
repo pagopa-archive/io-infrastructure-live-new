@@ -150,6 +150,7 @@ inputs = {
       SERVICES_API_KEY  = "apim-CGN-SERVICE-KEY"
       EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
       EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
+      CGN_SERVICE_ID    = "funccgn-CGN-SERVICE-ID"
     }
   }
 
