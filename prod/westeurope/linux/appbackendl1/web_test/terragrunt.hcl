@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 # Common
 dependency "application_insights" {
   config_path = "../../../common/application_insights"

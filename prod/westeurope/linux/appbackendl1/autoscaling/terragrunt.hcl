@@ -1,3 +1,8 @@
+/*
+  DEPRECATED !!!
+  Use instead: https://github.com/pagopa/io-infra
+*/
+
 dependency "app_service" {
   config_path = "../app_service"
 }
