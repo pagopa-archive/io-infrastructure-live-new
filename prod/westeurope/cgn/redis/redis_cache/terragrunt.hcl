@@ -1,3 +1,8 @@
+##########
+## WARNING 
+## THIS RESOURCE HAS BEEN DEPRECATED. USE INSTEAD https://github.com/pagopa/io-infra/blob/main/src/core/cgn.tf
+#########
+
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
