@@ -1,4 +1,11 @@
+##########################
+## WARNING: deprecated. ##
+## moved into https://github.com/pagopa/io-infra/blob/main/src/core/cgn.tf
+##########################
+
 # cgn
+
+
 dependency "resource_group" {
   config_path = "../../resource_group"
 }
