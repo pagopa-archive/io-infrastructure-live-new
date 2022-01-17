@@ -133,8 +133,8 @@ inputs = {
     CGN_STORAGE_CONNECTION_STRING = dependency.storage_account_cgn.outputs.primary_connection_string
 
     SERVICES_API_URL = local.service_api_url
-    
-    
+
+
     WEBSITE_TIME_ZONE = local.cet_time_zone_win
     EYCA_API_BASE_URL = "https://ccdb.eyca.org/api"
 

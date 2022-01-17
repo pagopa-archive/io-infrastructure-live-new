@@ -1,3 +1,6 @@
+## WARNING: deprecated. ##
+## moved into https://github.com/pagopa/io-infra/blob/main/src/core/cgn.tf
+
 dependency "cosmosdb_account" {
   config_path = "../account"
 }
