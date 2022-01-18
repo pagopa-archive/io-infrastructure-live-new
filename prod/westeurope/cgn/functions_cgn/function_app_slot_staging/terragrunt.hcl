@@ -140,6 +140,9 @@ inputs = {
     CGN_UPPER_BOUND_AGE  = 61
     EYCA_UPPER_BOUND_AGE = 19
 
+    CGN_CARDS_DATA_BACKUP_CONTAINER_NAME = "cgn-legalbackup-blob"
+    CGN_CARDS_DATA_BACKUP_FOLDER_NAME    = "cgn"
+
     # Disabled functions on slot - slot settings only
     "AzureWebJobs.ContinueEycaActivation.Disabled" = "1"
   }
@@ -147,10 +150,11 @@ inputs = {
   app_settings_secrets = {
     key_vault_id = dependency.key_vault.outputs.id
     map = {
-      SERVICES_API_KEY  = "apim-CGN-SERVICE-KEY"
-      EYCA_API_USERNAME = "funccgn-EYCA-API-USERNAME"
-      EYCA_API_PASSWORD = "funccgn-EYCA-API-PASSWORD"
-      CGN_SERVICE_ID    = "funccgn-CGN-SERVICE-ID"
+      SERVICES_API_KEY           = "apim-CGN-SERVICE-KEY"
+      EYCA_API_USERNAME          = "funccgn-EYCA-API-USERNAME"
+      EYCA_API_PASSWORD          = "funccgn-EYCA-API-PASSWORD"
+      CGN_SERVICE_ID             = "funccgn-CGN-SERVICE-ID"
+      CGN_DATA_BACKUP_CONNECTION = "cgn-legalbackup-storage-connection-string"
     }
   }
 
