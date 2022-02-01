@@ -87,6 +87,13 @@ inputs = {
             "942440",
             "942450"
           ]
+        },
+        {
+          rule_group_name = "REQUEST-944-APPLICATION-ATTACK-JAVA"
+          disabled_rules = [
+            "944210",
+            "944300"
+          ]
         }
       ]
     }]
