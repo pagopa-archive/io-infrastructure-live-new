@@ -206,6 +206,9 @@ inputs = {
     // BPD
     BPD_BASE_PATH = "/bpd/api/v1"
 
+    // FIMS
+    FIMS_BASE_PATH = "/fims/api/v1"
+
     // ZENDESK
     ZENDESK_BASE_PATH = "/api/backend/zendesk/v1"
     JWT_ZENDESK_SUPPORT_TOKEN_ISSUER = "app-backend.io.italia.it"
