@@ -36,6 +36,10 @@ dependency "storage_notifications_queue_push-notifications" {
   config_path = "../../../internal/api/storage_notifications/queue_push-notifications"
 }
 
+dependency "storage_notifications_queue_notify-message" {
+  config_path = "../../../internal/api/storage_notifications/queue_notify-message"
+}
+
 # Beta test users storage
 dependency "storage_beta_test_users" {
   config_path = "../../../internal/api/storage_beta_test_users/account"
@@ -126,6 +130,8 @@ inputs = {
 
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
+    NOTIFY_MESSAGE_QUEUE_NAME               = dependency.storage_notifications_queue_notify-message.outputs.name
+    INTERNAL_STORAGE_CONNECTION_STRING      = dependency.storage_notifications.outputs.primary_connection_string
 
     // activity default retry attempts
     RETRY_ATTEMPT_NUMBER = 10
