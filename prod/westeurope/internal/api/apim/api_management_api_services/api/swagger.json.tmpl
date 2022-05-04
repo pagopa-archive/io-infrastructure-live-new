@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "3.3.0",
+    "version": "3.8.0",
     "title": "IO API for Public Administration Services",
     "contact": {
       "name": "Digital Transformation Team",
@@ -257,10 +257,11 @@
           "200": {
             "description": "Message found.",
             "schema": {
-              "$ref": "#/definitions/MessageResponseWithContent"
+              "$ref": "#/definitions/ExternalMessageResponseWithContent"
             },
             "examples": {
               "application/json": {
+                "status": "PROCESSED",
                 "message": {
                   "id": "01BX9NSMKAAAS5PSP2FATZM6BQ",
                   "fiscal_code": "QXJNTX9RCRVD6V4O",
@@ -385,7 +386,7 @@
       "get": {
         "operationId": "getSubscriptionsFeedForDate",
         "summary": "Get Subscriptions Feed",
-        "description": "Returns the **hashed fiscal codes** of users that **subscribed to** or\n**unsubscribed from** your service **on the provided date** (UTC).\n\nBy querying this feed on each day, you will be able to retrieve the\n\"delta\" of users that subscribed and unsubscribed fom your service.\nYou will have to keep a list of users somewhere in your infrastructure\nthat you will update each day by adding the subscribed users and\nremoving the unsunbscribed users.\n\nYou will then be able to query this local list to know which users you\ncan send messages, to without having to query `getProfile` for each message.\n\nTo avoid sharing the citizens fiscal codes, the API will\nprovide the hex encoding of the SHA256 hash of the upper case fiscal code.\nIn pseudo code `CF_HASH = LOWERCASE(HEX(SHA256(UPPERCASE(CF))))`.\n\nNote that this is an optimization for those services that need to send very high\nvolumes of messages per day, to avoid having to make two API calls for each message.",
+        "description": "Returns the **hashed fiscal codes** of users that **subscribed to** or\n**unsubscribed from** your service **on the provided date** (UTC).\n\nBy querying this feed everyday, you will be able to retrieve the\n\"delta\" of users that subscribed and unsubscribed from your service.\nYou will have to keep a list of users somewhere in your infrastructure\nthat you will keep updated at all times by adding the subscribed users and\nremoving the unsubscribed users.\n\nYou will then be able to query this local list to know which users you\ncan send messages, to without having to query `getProfile` for each message.\n\nTo avoid sharing the citizens fiscal codes, the API will\nprovide the hex encoding of the SHA256 hash of the upper case fiscal code.\nIn pseudo code `CF_HASH = LOWERCASE(HEX(SHA256(UPPERCASE(CF))))`.\n\nAccess to this feed is subject to case-by-case authorization, and it is\nprimarily intended for large-scale services, such as those pertaining\nto organizations that have an extensive user base (including geographically),\nand/or need to send very high volumes of messages per day.\n\nThis feed serves the purpose of minimizing data processing activities\nwhile preserving optimization of API calls and data accuracy.\nOrganizations allowed are required to query this feed everyday.",
         "responses": {
           "200": {
             "description": "Found.",
@@ -975,61 +976,113 @@
       "type": "object",
       "properties": {
         "message": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string"
-            },
-            "fiscal_code": {
-              "$ref": "#/definitions/FiscalCode"
-            },
-            "time_to_live": {
-              "$ref": "#/definitions/TimeToLiveSeconds"
-            },
-            "created_at": {
-              "$ref": "#/definitions/Timestamp"
-            },
-            "content": {
-              "$ref": "#/definitions/NewMessageContent"
-            },
-            "sender_service_id": {
-              "$ref": "#/definitions/ServiceId"
-            }
-          },
-          "required": [
-            "id",
-            "fiscal_code",
-            "created_at",
-            "content",
-            "sender_service_id"
-          ]
+          "$ref": "#/definitions/CreatedMessageWithContent"
         },
         "notification": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "$ref": "#/definitions/NotificationChannelStatusValue"
-            },
-            "webhook": {
-              "$ref": "#/definitions/NotificationChannelStatusValue"
-            }
-          }
+          "$ref": "#/definitions/MessageResponseNotificationStatus"
         },
         "status": {
-          "type": "string",
-          "description": "The processing status of a message.\n\"ACCEPTED\": the message has been accepted and will be processed for delivery;\n  we'll try to store its content in the user's inbox and notify him on his preferred channels\n\"THROTTLED\": a temporary failure caused a retry during the message processing;\n  any notification associated with this message will be delayed for a maximum of 7 days\n\"FAILED\": a permanent failure caused the process to exit with an error, no notification will be sent for this message\n\"PROCESSED\": the message was succesfully processed and is now stored in the user's inbox;\n  we'll try to send a notification for each of the selected channels\n\"REJECTED\": either the recipient does not exist, or the sender has been blocked",
-          "x-extensible-enum": [
-            "ACCEPTED",
-            "THROTTLED",
-            "FAILED",
-            "PROCESSED",
-            "REJECTED"
-          ],
-          "example": "ACCEPTED"
+          "$ref": "#/definitions/MessageStatusValue"
         }
       },
       "required": [
         "message"
+      ]
+    },
+    "ExternalMessageResponseWithContent": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/ExternalCreatedMessageWithContent"
+        },
+        "notification": {
+          "$ref": "#/definitions/MessageResponseNotificationStatus"
+        },
+        "status": {
+          "$ref": "#/definitions/MessageStatusValue"
+        },
+        "read_status": {
+          "$ref": "#/definitions/ReadStatus",
+          "description": "Describes whether a user has read the message or not\nNOTE  : This value is only available for ADVANCED messages\nNOTE 2: `UNAVAILABLE` will be returned if user revoked the permission to access to read status"
+        },
+        "payment_status": {
+          "$ref": "#/definitions/PaymentStatus",
+          "description": "Describes the state of the related payment notice\nNOTE: This value is only available for ADVANCED payment messages"
+        }
+      },
+      "required": [
+        "message"
+      ]
+    },
+    "MessageResponseNotificationStatus": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "$ref": "#/definitions/NotificationChannelStatusValue"
+        },
+        "webhook": {
+          "$ref": "#/definitions/NotificationChannelStatusValue"
+        }
+      }
+    },
+    "MessageStatusValue": {
+      "type": "string",
+      "description": "The processing status of a message.\n\"ACCEPTED\": the message has been accepted and will be processed for delivery;\n  we'll try to store its content in the user's inbox and notify him on his preferred channels\n\"THROTTLED\": a temporary failure caused a retry during the message processing;\n  any notification associated with this message will be delayed for a maximum of 7 days\n\"FAILED\": a permanent failure caused the process to exit with an error, no notification will be sent for this message\n\"PROCESSED\": the message was succesfully processed and is now stored in the user's inbox;\n  we'll try to send a notification for each of the selected channels\n\"REJECTED\": either the recipient does not exist, or the sender has been blocked",
+      "x-extensible-enum": [
+        "ACCEPTED",
+        "THROTTLED",
+        "FAILED",
+        "PROCESSED",
+        "REJECTED"
+      ],
+      "example": "ACCEPTED"
+    },
+    "ExternalCreatedMessageWithContent": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/CreatedMessageWithContent"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "feature_level_type": {
+              "$ref": "#/definitions/FeatureLevelType"
+            }
+          },
+          "required": [
+            "feature_level_type"
+          ]
+        }
+      ]
+    },
+    "CreatedMessageWithContent": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "fiscal_code": {
+          "$ref": "#/definitions/FiscalCode"
+        },
+        "time_to_live": {
+          "$ref": "#/definitions/TimeToLiveSeconds"
+        },
+        "created_at": {
+          "$ref": "#/definitions/Timestamp"
+        },
+        "content": {
+          "$ref": "#/definitions/NewMessageContent"
+        },
+        "sender_service_id": {
+          "$ref": "#/definitions/ServiceId"
+        }
+      },
+      "required": [
+        "id",
+        "fiscal_code",
+        "created_at",
+        "content",
+        "sender_service_id"
       ]
     },
     "EUCovidCert": {
@@ -1237,11 +1290,42 @@
         },
         "fiscal_code": {
           "$ref": "#/definitions/FiscalCode"
+        },
+        "feature_level_type": {
+          "$ref": "#/definitions/FeatureLevelType"
         }
       },
       "required": [
         "content"
       ]
+    },
+    "FeatureLevelType": {
+      "type": "string",
+      "default": "STANDARD",
+      "x-extensible-enum": [
+        "STANDARD",
+        "ADVANCED"
+      ],
+      "example": "STANDARD"
+    },
+    "ReadStatus": {
+      "type": "string",
+      "x-extensible-enum": [
+        "UNAVAILABLE",
+        "UNREAD",
+        "READ"
+      ],
+      "example": "UNREAD",
+      "description": "Api definition of read status enumeration"
+    },
+    "PaymentStatus": {
+      "type": "string",
+      "description": "Payment status enumeration",
+      "x-extensible-enum": [
+        "PAID",
+        "NOT_PAID"
+      ],
+      "example": "NOT_PAID"
     },
     "CIDR": {
       "type": "string",
@@ -1644,6 +1728,9 @@
         "original_message_url": {
           "type": "string",
           "minLength": 1
+        },
+        "pec_server_service_id": {
+          "$ref": "#/definitions/ServiceId"
         }
       },
       "required": [
