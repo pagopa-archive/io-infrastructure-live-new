@@ -140,6 +140,10 @@ inputs = {
     {
       display_name = "ApiLegalMessageRead"
       name         = "apilegalmessageread"
+    },
+    {
+      display_name = "ApiThirdPartyMessageWrite"
+      name         = "apithirdpartymessagewrite"
     }
   ]
 }
