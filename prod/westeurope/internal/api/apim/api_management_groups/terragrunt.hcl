@@ -140,6 +140,18 @@ inputs = {
     {
       display_name = "ApiLegalMessageRead"
       name         = "apilegalmessageread"
+    },
+    {
+      display_name = "ApiMessageWriteAdvanced"
+      name         = "apimessagewriteadvanced"
+    },
+    {
+      display_name = "ApiMessageReadAdvanced"
+      name         = "apimessagereadadvanced"
+    },
+    {
+      display_name = "ApiThirdPartyMessageWrite"
+      name         = "apithirdpartymessagewrite"
     }
   ]
 }
