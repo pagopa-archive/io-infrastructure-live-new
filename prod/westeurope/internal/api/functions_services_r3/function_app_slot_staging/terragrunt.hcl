@@ -122,6 +122,7 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    APIM_BASE_URL                     = "http://api-internal.io.italia.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
     // setting to true all the webhook message content will be disabled
@@ -158,6 +159,7 @@ inputs = {
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST   = "io-EMAIL-SERVICE-BLACKLIST-ID"
       WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
       IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
+      APIM_SUBSCRIPTION_KEY                  = "apim-IO-SERVICE-KEY"
     }
   }
 
