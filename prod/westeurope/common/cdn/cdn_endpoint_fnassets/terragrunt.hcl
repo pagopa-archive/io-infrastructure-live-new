@@ -70,6 +70,14 @@ inputs = {
       match_values = ["/status"]
       behavior     = "Override"
       duration     = "00:05:00"
+    },
+    {
+      name         = "zendeskjson"
+      order        = 4
+      operator     = "BeginsWith"
+      match_values = ["/assistanceTools/zendesk.json"]
+      behavior     = "Override"
+      duration     = "00:05:00"
     }
   ]
 
