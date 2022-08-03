@@ -122,7 +122,7 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
-    APIM_BASE_URL                     = "http://api-internal.io.italia.it"
+    APIM_BASE_URL                     = "https://api-app.internal.io.pagopa.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
     // setting to true all the webhook message content will be disabled
