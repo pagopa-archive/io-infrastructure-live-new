@@ -154,10 +154,13 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
+    # setting to allow the retrieve of the payment status from payment-updater
+    FF_PAYMENT_STATUS_ENABLED = "true"
+
     // minimum app version that introduces read status opt-out
     // NOTE: right now is set to a non existing version, since it's not yet deployed
     // This way we can safely deploy fn-services without enabling ADVANCED functionalities
-    MIN_APP_VERSION_WITH_READ_AUTH = "2.13.0"
+    MIN_APP_VERSION_WITH_READ_AUTH = "2.14.0"
 
 
     # this app settings is required to solve the issue:
