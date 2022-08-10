@@ -127,6 +127,8 @@ inputs = {
     NOTIFICATIONS_QUEUE_NAME                = dependency.storage_notifications_queue_push-notifications.outputs.name
     NOTIFICATIONS_STORAGE_CONNECTION_STRING = dependency.storage_notifications.outputs.primary_connection_string
 
+    NOTIFY_MESSAGE_QUEUE_NAME = "notify-message"
+
     // activity default retry attempts
     RETRY_ATTEMPT_NUMBER = 10
 
@@ -155,6 +157,7 @@ inputs = {
 
     # Possible values : "none" | "all" | "beta" | "canary"
     NH_PARTITION_FEATURE_FLAG            = "all"
+    NOTIFY_VIA_QUEUE_FEATURE_FLAG        = "beta"
     BETA_USERS_STORAGE_CONNECTION_STRING = dependency.storage_beta_test_users.outputs.primary_connection_string
     BETA_USERS_TABLE_NAME                = dependency.storage_beta_test_users_table_notificationhub.outputs.name
 
@@ -186,6 +189,10 @@ inputs = {
     private_dns_zone_blob_ids  = [dependency.private_dns_zone_blob.outputs.id]
     private_dns_zone_queue_ids = [dependency.private_dns_zone_queue.outputs.id]
     private_dns_zone_table_ids = [dependency.private_dns_zone_table.outputs.id]
+    queues                     = [
+      "notify-message",
+      "notify-message-poison"
+    ]
   }
 
   allowed_subnets = [
