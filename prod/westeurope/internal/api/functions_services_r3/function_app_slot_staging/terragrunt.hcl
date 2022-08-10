@@ -122,6 +122,7 @@ inputs = {
     FETCH_KEEPALIVE_TIMEOUT             = "60000"
 
     IO_FUNCTIONS_ADMIN_BASE_URL       = "http://api-internal.io.italia.it"
+    APIM_BASE_URL                     = "https://api-app.internal.io.pagopa.it"
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
     // setting to true all the webhook message content will be disabled
@@ -130,10 +131,13 @@ inputs = {
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
 
+    # setting to allow the retrieve of the payment status from payment-updater
+    FF_PAYMENT_STATUS_ENABLED = "true"
+
     // minimum app version that introduces read status opt-out
     // NOTE: right now is set to a non existing version, since it's not yet deployed
     // This way we can safely deploy fn-services without enabling ADVANCED functionalities
-    MIN_APP_VERSION_WITH_READ_AUTH = "2.13.0"
+    MIN_APP_VERSION_WITH_READ_AUTH = "2.14.0"
 
 
     WEBSITE_PROACTIVE_AUTOHEAL_ENABLED = "True"
@@ -158,6 +162,7 @@ inputs = {
       EMAIL_NOTIFICATION_SERVICE_BLACKLIST   = "io-EMAIL-SERVICE-BLACKLIST-ID"
       WEBHOOK_NOTIFICATION_SERVICE_BLACKLIST = "io-NOTIFICATION-SERVICE-BLACKLIST-ID"
       IO_FUNCTIONS_ADMIN_API_TOKEN           = "apim-IO-SERVICE-KEY"
+      APIM_SUBSCRIPTION_KEY                  = "apim-IO-SERVICE-KEY"
     }
   }
 
