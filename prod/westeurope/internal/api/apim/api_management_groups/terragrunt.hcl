@@ -140,6 +140,14 @@ inputs = {
     {
       display_name = "ApiLegalMessageRead"
       name         = "apilegalmessageread"
+    },
+    {
+      display_name = "ApiNewMessageNotify"
+      name         = "apinewmessagenotify"
+    },
+    {
+      display_name = "ApiReminderNotify"
+      name         = "apiremindernotify"
     }
   ]
 }
