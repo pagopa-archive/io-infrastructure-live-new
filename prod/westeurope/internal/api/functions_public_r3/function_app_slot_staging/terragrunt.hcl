@@ -84,7 +84,7 @@ inputs = {
     COSMOSDB_NAME     = dependency.cosmosdb_database.outputs.name
     StorageConnection = dependency.storage_account.outputs.primary_connection_string
 
-    VALIDATION_CALLBACK_URL = "https://app-backend.io.italia.it/email_verification.html"
+    VALIDATION_CALLBACK_URL = "https://api-app.io.pagopa.it/email_verification.html"
 
     SLOT_TASK_HUBNAME = "StagingTaskHub"
 
