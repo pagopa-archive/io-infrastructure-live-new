@@ -126,7 +126,7 @@ inputs = {
     AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
 
     AZURE_APIM                = "io-p-apim-api"
-    AZURE_APIM_HOST           = "api-internal.io.italia.it"
+    AZURE_APIM_HOST           = "api-app.internal.io.pagopa.it"
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
 
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name

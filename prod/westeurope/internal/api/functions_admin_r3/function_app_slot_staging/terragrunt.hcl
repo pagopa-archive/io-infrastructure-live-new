@@ -128,7 +128,7 @@ inputs = {
     AssetsStorageConnection = dependency.storage_account_assets.outputs.primary_connection_string
 
     AZURE_APIM                = "io-p-apim-api"
-    AZURE_APIM_HOST           = "api-internal.io.italia.it"
+    AZURE_APIM_HOST           = "api-app.internal.io.pagopa.it"
     AZURE_APIM_RESOURCE_GROUP = "io-p-rg-internal"
 
     MESSAGE_CONTAINER_NAME = dependency.storage_container_message-content.outputs.name
@@ -136,7 +136,7 @@ inputs = {
     UserDataArchiveStorageConnection = dependency.storage_account_user-data-download.outputs.primary_connection_string
     USER_DATA_CONTAINER_NAME         = dependency.storage_container_user-data-download.outputs.name
 
-    PUBLIC_API_URL           = "http://api-internal.io.italia.it/"
+    PUBLIC_API_URL           = "http://api-app.internal.io.pagopa.it/"
     PUBLIC_DOWNLOAD_BASE_URL = "https://${dependency.storage_account_user-data-download.outputs.primary_blob_host}/${dependency.storage_container_user-data-download.outputs.name}"
 
     SESSION_API_URL                 = "https://${dependency.app_service_appbackend.outputs.default_site_hostname}"

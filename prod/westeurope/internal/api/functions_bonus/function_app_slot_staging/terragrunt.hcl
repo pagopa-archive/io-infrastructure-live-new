@@ -117,7 +117,7 @@ inputs = {
     # Storage account connection string:
     BONUS_STORAGE_CONNECTION_STRING = dependency.storage_account_bonus.outputs.primary_connection_string
 
-    SERVICES_API_URL = "http://api-internal.io.italia.it/"
+    SERVICES_API_URL = "http://api-app.internal.io.pagopa.it/"
 
     # Disabled functions on slot
     #"AzureWebJobs.FunctionName.Disabled" = "1"
