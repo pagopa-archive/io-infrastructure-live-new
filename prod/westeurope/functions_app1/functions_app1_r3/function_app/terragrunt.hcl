@@ -162,7 +162,7 @@ inputs = {
 
     LogsStorageConnection      = dependency.storage_account_logs.outputs.primary_connection_string
     AssetsStorageConnection    = dependency.storage_account_assets.outputs.primary_connection_string
-    STATUS_ENDPOINT_URL        = "https://app-backend.io.italia.it/info"
+    STATUS_ENDPOINT_URL        = "https://api-app.io.pagopa.it/info"
     STATUS_REFRESH_INTERVAL_MS = "300000"
 
     // TODO: Rename to SUBSCRIPTIONSFEEDBYDAY_TABLE_NAME
@@ -170,7 +170,7 @@ inputs = {
     MAIL_FROM                = "IO - l'app dei servizi pubblici <no-reply@io.italia.it>"
     DPO_EMAIL_ADDRESS        = "dpo@pagopa.it"
     PUBLIC_API_URL           = local.service_api_url
-    FUNCTIONS_PUBLIC_URL     = "https://api.io.italia.it/public"
+    FUNCTIONS_PUBLIC_URL     = "https://api.io.pagopa.it/public"
 
     // Keepalive fields are all optionals
     FETCH_KEEPALIVE_ENABLED             = "true"
