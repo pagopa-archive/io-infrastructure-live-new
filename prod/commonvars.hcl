@@ -12,7 +12,7 @@ locals {
   # windows standatd. It can be different in linux service plan.
   cet_time_zone_win = "Central Europe Standard Time"
 
-  service_api_url = "http://api-internal.io.italia.it/"
+  service_api_url = "http://api-app.internal.io.pagopa.it/"
 
   # Switch limit date for email opt out mode. This value should be used by functions that need to discriminate
   # how to check isInboxEnabled property on IO profiles, since we have to disable email notifications for default
