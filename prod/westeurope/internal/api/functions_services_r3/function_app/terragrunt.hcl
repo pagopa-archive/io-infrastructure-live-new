@@ -179,6 +179,7 @@ inputs = {
     // the duration of message and message-status for those messages sent to user not registered on IO.
     TTL_FOR_USER_NOT_FOUND = 94670856 //3 years in seconds
     FEATURE_FLAG = ALL
+    BETA_USERS = [] // list of CF representing beta users
   }
 
   app_settings_secrets = {
