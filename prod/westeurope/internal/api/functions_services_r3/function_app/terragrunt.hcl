@@ -175,6 +175,8 @@ inputs = {
     "AzureWebJobs.OnFailedProcessMessage.Disabled" = "0"
     "AzureWebJobs.ProcessMessage.Disabled"         = "0"
     "AzureWebJobs.WebhookNotification.Disabled"    = "0"
+
+    TTL_FOR_USER_NOT_FOUND = 300 // 5 minutes 
   }
 
   app_settings_secrets = {
