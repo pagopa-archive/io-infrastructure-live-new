@@ -175,6 +175,11 @@ inputs = {
     "AzureWebJobs.OnFailedProcessMessage.Disabled" = "0"
     "AzureWebJobs.ProcessMessage.Disabled"         = "0"
     "AzureWebJobs.WebhookNotification.Disabled"    = "0"
+
+    // the duration of message and message-status for those messages sent to user not registered on IO.
+    TTL_FOR_USER_NOT_FOUND = 60 * 60 * 24 * 365 * 3 //3 years in seconds
+    FEATURE_FLAG = ALL
+    BETA_USERS = [] // list of CF representing beta users
   }
 
   app_settings_secrets = {
