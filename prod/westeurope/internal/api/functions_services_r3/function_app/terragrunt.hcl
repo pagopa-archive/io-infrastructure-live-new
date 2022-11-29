@@ -149,7 +149,7 @@ inputs = {
     DEFAULT_SUBSCRIPTION_PRODUCT_NAME = "io-services-api"
 
     // setting to true all the webhook message content will be disabled
-    FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "true"
+    FF_DISABLE_WEBHOOK_MESSAGE_CONTENT = "false"
 
     OPT_OUT_EMAIL_SWITCH_DATE = local.opt_out_email_switch_date
     FF_OPT_IN_EMAIL_ENABLED   = local.ff_opt_in_email_enabled
