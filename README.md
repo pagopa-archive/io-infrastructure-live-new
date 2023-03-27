@@ -1,3 +1,7 @@
+# :warning: Archived repository :warning:
+
+This repository is archived. New contents has been migrated in https://github.com/pagopa/io-infra
+
 # Io infrastructure live
 
 This repository contains the full set of [terragunt](https://terragrunt.gruntwork.io/) modules useful to build the **cloud infrastructure** which hosts the backend applications of the [mobile app IO](https://io.italia.it/).
